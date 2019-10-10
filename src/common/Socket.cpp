@@ -23,7 +23,7 @@ Socket::Socket(int fd) {
     this->fd = fd;
 }
 
-Socket::Socket(Socket&& other) {
+Socket::Socket(Socket&& other) noexcept {
     this->fd = other.fd;
     other.fd = INVALID_FD;
 }
