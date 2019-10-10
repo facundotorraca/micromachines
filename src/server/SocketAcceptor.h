@@ -12,18 +12,18 @@
 class SocketAcceptor {
     int fd;
 
-public:
-    SocketAcceptor();
+    public:
+        SocketAcceptor();
 
-    int bind(const std::string port);
+        void bind(const std::string& port);
 
-int listen();
+        void listen();
 
-void close();
+        void close();
 
-Socket accept();
+        Socket accept();
 
-~SocketAcceptor();
+        ~SocketAcceptor();
 };
 
 #endif //MICROMACHINES_SOCKETACCEPTOR_H

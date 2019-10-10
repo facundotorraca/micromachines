@@ -20,10 +20,10 @@ SocketAcceptor::SocketAcceptor() {
     this->fd = INVALID_FD;
 }
 
-int SocketAcceptor::bind(const std::string port) {
+void SocketAcceptor::bind(const std::string& port) {
     struct addrinfo *result;  //Pointer to the result list
 
-    struct addrinfo hints; //Criteria for selecting the socket addr structures
+    struct addrinfo hints = {}; //Criteria for selecting the socket addr structures
     memset(&hints, 0, sizeof(struct addrinfo));
     hints.ai_family = AF_INET;        //IPv4
     hints.ai_socktype = SOCK_STREAM;  //TCP
@@ -32,26 +32,23 @@ int SocketAcceptor::bind(const std::string port) {
 
     struct addrinfo *rst_iter = result;
     while (rst_iter) {
-        this->fd = socket(rst_iter->ai_family,
-                          rst_iter->ai_socktype,
-                          rst_iter->ai_protocol);
+        this->fd = socket(rst_iter->ai_family, rst_iter->ai_socktype, rst_iter->ai_protocol);
 
         if (::bind(this->fd, rst_iter->ai_addr, rst_iter->ai_addrlen) == SUCCESS) {
             freeaddrinfo(result);
-            return SUCCESS;
+            return; //Bound successfully
         }
         ::close(this->fd);
         rst_iter = rst_iter->ai_next;
     }
     freeaddrinfo(result);
-    return ERROR;
+    throw SocketAcceptorError("SocketAcceptor: BIND Error");
 }
 
-int SocketAcceptor::listen() {
+void SocketAcceptor::listen() {
     if (::listen(this->fd, MAX_PENDING_CONNECTIONS) == ERROR) {
-        return ERROR;
+        throw SocketAcceptorError("SocketAceptor: LISTEN ERROR")
     }
-    return SUCCESS;
 }
 
 Socket SocketAcceptor::accept() {
@@ -60,18 +57,18 @@ Socket SocketAcceptor::accept() {
         throw SocketAcceptorError("Accept Failed");
     }
     Socket new_socket(new_fd);
-    return std::move(new_socket);
+    return new_socket;
 }
 
 void SocketAcceptor::close() {
-    shutdown(this->fd, SHUT_RDWR);
-    ::close(this->fd);
-    this->fd = INVALID_FD;
+    if (this->fd != INVALID_FD) {
+        shutdown(this->fd, SHUT_RDWR);
+        ::close(this->fd);
+        this->fd = INVALID_FD;
+    }
 }
 
 /*--------------------------PRIVATE-----------------------------*/
 SocketAcceptor::~SocketAcceptor() {
-    if (this->fd != INVALID_FD) {
-        this->close();
-    }
+    this->close();
 }

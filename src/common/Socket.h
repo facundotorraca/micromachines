@@ -17,15 +17,15 @@ public:
 
     Socket();
 
-    Socket(int fd);
+    explicit Socket(int fd);
 
-    Socket(Socket&& other);
+    Socket(Socket&& other) noexcept;
 
-    int receive(std::string& buf);
+    int receive(uint8_t* buf, size_t len);
 
-    int send(const std::string& msg);
+    int send(uint8_t* buf, size_t len);
 
-    int connect(const std::string host, const std::string port);
+    vois connect(const std::string& host, const std::string& port);
 
     void close();
 
