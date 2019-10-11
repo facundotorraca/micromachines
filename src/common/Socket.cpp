@@ -52,7 +52,7 @@ int Socket::send(uint8_t* buf, size_t len) {
     return total_bytes;
 }
 
-void Socket::connect(const std::string& host, const std:: string& port) {
+void Socket::connect(const std::string& host, const std::string& port) {
     struct addrinfo *result;  //Pointer to the result list
 
     struct addrinfo hints = {}; //Criteria for selecting the socket addr structures

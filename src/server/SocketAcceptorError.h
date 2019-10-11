@@ -1,6 +1,4 @@
-//
-// Created by facundotorraca on 9/10/19.
-//
+
 #ifndef MICROMACHINES_SOCKETACCEPTORERROR_H
 #define MICROMACHINES_SOCKETACCEPTORERROR_H
 

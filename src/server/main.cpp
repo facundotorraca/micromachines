@@ -1,12 +1,14 @@
 #include <iostream>
 #include <string>
+#include "Server.h"
 
 #define SUCCESS 0
 
-int main(int argc, char *argv[]) {
-    std::string port(argv[1]);
+int main() {
+    std::string port("8585");
 
-    std::cout << "Port: " << port << "\n";
+    Server server(port);
+    server.start();
 
     return SUCCESS;
 }

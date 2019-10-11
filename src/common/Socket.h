@@ -1,7 +1,3 @@
-//
-// Created by facundotorraca on 9/10/19.
-//
-
 #ifndef MICROMACHINES_SOCKET_H
 #define MICROMACHINES_SOCKET_H
 
@@ -13,23 +9,23 @@
 class Socket {
     int fd;
 
-public:
+    public:
 
-    Socket();
+        Socket();
 
-    explicit Socket(int fd);
+        explicit Socket(int fd);
 
-    Socket(Socket&& other) noexcept;
+        Socket(Socket&& other) noexcept;
 
-    int receive(uint8_t* buf, size_t len);
+        int receive(uint8_t* buf, size_t len);
 
-    int send(uint8_t* buf, size_t len);
+        int send(uint8_t* buf, size_t len);
 
-    vois connect(const std::string& host, const std::string& port);
+        void connect(const std::string& host, const std::string& port);
 
-    void close();
+        void close();
 
-    ~Socket();
+        ~Socket();
 };
 
 #endif //MICROMACHINES_SOCKET_H

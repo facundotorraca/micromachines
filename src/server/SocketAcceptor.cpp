@@ -47,7 +47,7 @@ void SocketAcceptor::bind(const std::string& port) {
 
 void SocketAcceptor::listen() {
     if (::listen(this->fd, MAX_PENDING_CONNECTIONS) == ERROR) {
-        throw SocketAcceptorError("SocketAceptor: LISTEN ERROR")
+        throw SocketAcceptorError("SocketAceptor: LISTEN ERROR");
     }
 }
 
