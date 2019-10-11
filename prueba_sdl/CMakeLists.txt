@@ -1,0 +1,5 @@
+project(prueba_sdl)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/prueba_sdl)
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
+add_executable(prueba_sdl main.cpp)
