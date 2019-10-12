@@ -1,6 +1,3 @@
-//
-// Created by facundotorraca on 9/10/19.
-//
 #include "Socket.h"
 #include "SocketError.h"
 #include <sys/socket.h>

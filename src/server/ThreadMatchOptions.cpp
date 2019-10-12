@@ -16,17 +16,14 @@ void ThreadMatchOptions::run() {
 
     while (option != START_MATCH) {
         option = this->creator.receive_option();
-        /*
-         * MATCH APLICATE OPTION
-         */
+        /*MATCH APLICATE OPTION*/
     }
     /*Put the creator on the match*/
     this->match->add_player(std::move(creator));
     this->match->start();
-
     this->dead = true;
 }
 
-bool ThreadMatchOptions::options_setted() {
+bool ThreadMatchOptions::options_set() {
     return this->dead;
 }

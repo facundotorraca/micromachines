@@ -8,17 +8,6 @@ ProtectedQueue::ProtectedQueue(size_t max_q_len) {
     this->max_q_len = max_q_len;
     this->q_closed = false;
 }
-/*
-ProtectedQueue::ProtectedQueue(ProtectedQueue&& p_queue):
-    queue(p_queue.queue)
-{
-    this->max_q_len = p_queue.max_q_len;
-    this->q_closed = p_queue.q_closed;
-
-    p_queue.max_q_len = 0;
-    p_queue.q_closed = true;
-}
-*/
 
 void ProtectedQueue::push(Player&& player) {
     std::unique_lock<std::mutex> lock(this->q_mtx);
@@ -66,3 +55,15 @@ bool ProtectedQueue::closed() {
 
 /*--------------Private--------------*/
 ProtectedQueue::~ProtectedQueue() {}
+
+/*
+ProtectedQueue::ProtectedQueue(ProtectedQueue&& p_queue):
+    queue(p_queue.queue)
+{
+    this->max_q_len = p_queue.max_q_len;
+    this->q_closed = p_queue.q_closed;
+
+    p_queue.max_q_len = 0;
+    p_queue.q_closed = true;
+}
+*/

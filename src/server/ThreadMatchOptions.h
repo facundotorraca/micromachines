@@ -7,17 +7,17 @@
 #include "Player.h"
 
 class ThreadMatchOptions : public Thread {
-    std::atomic<bool> dead{};
-    Player creator;
     Match* match;
+    Player creator;
+    std::atomic<bool> dead{};
 
     private:
-        void run();
+        void run() override;
 
     public:
         ThreadMatchOptions(Player &&player, Match* match);
 
-        bool options_setted();
+        bool options_set();
 
 };
 

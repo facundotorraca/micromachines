@@ -6,16 +6,17 @@
 #include <string>
 
 class Player {
-    std::string username;
     Socket socket;
     GameMode game_mode;
+    std::string username;
+    std::string match_name;
 
     public:
-        Player(Socket&& socket, GameMode game_mode, std::string username);
+        Player(Socket&& socket, GameMode game_mode, std::string username, std::string match_name);
 
-        Player(Player&& other);
+        Player(Player&& other) noexcept;
 
-        void send(std::string msg);
+        void send(std::string& msg);
 
         bool is_on_join_mode();
 

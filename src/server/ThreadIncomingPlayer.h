@@ -1,16 +1,17 @@
 #ifndef MICROMACHINES_THREADINCOMINGPLAYER_H
 #define MICROMACHINES_THREADINCOMINGPLAYER_H
 
-#include "common/Socket.h"
+#include <atomic>
 #include "Thread.h"
+#include "common/Socket.h"
 
 class ThreadIncomingPlayer : public Thread {
-    ProtectedQueue& incoming_players;
     Socket socket;
-    bool dead;
+    ProtectedQueue& incoming_players;
+    std::atomic<bool> dead;
 
     private:
-        void run();
+        void run() override;
 
     public:
         ThreadIncomingPlayer(Socket&& socket, ProtectedQueue& incoming_players);

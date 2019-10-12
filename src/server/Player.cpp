@@ -1,16 +1,16 @@
 #include <common/Socket.h>
 #include <string>
-#include <iostream>
 #include "Player.h"
 
-Player::Player(Socket&& socket, GameMode game_mode, std::string username):
+Player::Player(Socket&& socket, GameMode game_mode, std::string username, std::string match_name):
     socket(std::move(socket)),
     game_mode(game_mode)
 {
     this->username = username;
+    this->match_name = match_name;
 }
 
-Player::Player(Player&& other):
+Player::Player(Player&& other) noexcept:
     socket(std::move(other.socket)),
     game_mode(other.game_mode)
 {}
@@ -20,14 +20,14 @@ bool Player::is_on_join_mode() {
 }
 
 std::string Player::get_match_name() {
-    return this->game_mode.get_match_name();
+    return this->match_name;
 }
 
 std::string Player::get_username() {
     return this->username;
 }
 
-void Player::send(std::string msg) {
+void Player::send(std::string& msg) {
     this->socket.send((uint8_t*)msg.data(), msg.length());
 }
 

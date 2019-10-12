@@ -6,14 +6,11 @@
 
 class GameMode {
     uint8_t mode;
-    std::string match_name;
 
     public:
-        GameMode(uint8_t mode, std::string match_name);
+        explicit GameMode(uint8_t mode);
 
         bool is_join();
-
-        std::string get_match_name();
 };
 
 

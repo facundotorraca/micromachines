@@ -9,7 +9,7 @@
 
 class Match {
     std::atomic<bool> ready;
-    std::atomic<bool> stoped;
+    std::atomic<bool> stopped;
     std::atomic<bool> running;
 
     std::mutex mtx;
@@ -19,6 +19,8 @@ class Match {
     public:
         explicit Match(std::string match_creator);
 
+        void send_to_all(std::string message);
+
         void add_player(Player&& player);
 
         bool is_running();
@@ -27,14 +29,11 @@ class Match {
 
         void start();
 
+        bool ended();
+
         void run();
 
-        void send_to_all(std::string message);
-
-
-    void stop();
-
-    bool ended();
+        void stop();
 };
 
 

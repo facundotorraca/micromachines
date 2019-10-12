@@ -8,6 +8,7 @@
 
 class ThreadMatchStarter : public Thread {
     ProtectedMap& matches;
+
     std::list<ThreadMatch*>& running_matches;
     std::atomic<bool> server_running{};
 

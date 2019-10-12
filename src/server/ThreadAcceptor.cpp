@@ -33,9 +33,9 @@ void ThreadAcceptor::run() {
             Socket socket = this->acceptor.accept();
 
             auto* incoming_client = new ThreadIncomingPlayer(std::move(socket), this->incoming_players);
+            this->new_players.push_back(incoming_client);
             incoming_client->start();
 
-            this->new_players.push_back(incoming_client);
             this->remove_confirmed_players();
         } catch (const SocketAcceptorError &exception) {
             this->server_running = false;

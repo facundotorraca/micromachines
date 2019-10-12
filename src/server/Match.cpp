@@ -6,7 +6,7 @@
 Match::Match(std::string match_creator):
     running(false),
     ready(false),
-    stoped(false)
+    stopped(false)
 {
     this->match_creator = match_creator;
 }
@@ -40,11 +40,11 @@ void Match::send_to_all(std::string message) {
     }
 }
 
-void Match::stop() {
-    this->stoped = true;
+bool Match::ended() {
+    return this->stopped;
 }
 
-bool Match::ended() {
-    return this->stoped;
+void Match::stop() {
+    this->stopped = true;
 }
 

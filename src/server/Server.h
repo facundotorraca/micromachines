@@ -16,6 +16,7 @@ class Server {
     ThreadAcceptor* acceptor;
     ThreadPlayerLocator* player_locator;
     ThreadMatchStarter* match_starter;
+
     std::list<ThreadMatch*> running_matches;
 
     private:

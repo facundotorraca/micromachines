@@ -8,11 +8,13 @@
 #include "Player.h"
 
 class ProtectedQueue {
-        size_t max_q_len;
         std::queue<Player> queue;
+        size_t max_q_len;
+
         std::condition_variable cv_pop;
         std::condition_variable cv_push;
         std::mutex q_mtx;
+
         bool q_closed;
 
     public:

@@ -12,10 +12,10 @@
 class ThreadAcceptor : public Thread {
     SocketAcceptor acceptor;
 
-    std::atomic<bool> server_running{};
-
     ProtectedQueue& incoming_players;
+
     std::list<ThreadIncomingPlayer*> new_players;
+    std::atomic<bool> server_running{};
 
     private:
         void run() override;
@@ -23,7 +23,6 @@ class ThreadAcceptor : public Thread {
         void remove_confirmed_players();
 
     public:
-
         ThreadAcceptor(const std::string& port, ProtectedQueue& incoming_players);
 
         void stop();

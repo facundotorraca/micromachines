@@ -29,9 +29,11 @@ Match* ProtectedMap::get_next_ready() {
 
 void ProtectedMap::remove_end_matches() {
     std::lock_guard<std::mutex> lock(this->mtx);
-    for (auto const& match : this->map) {
-        if (match.second->ended()) {
-            std::cout << match.first << "\n";
+    for (auto it = this->map.begin(); it != this->map.end();) {
+        if ((*it).second->ended()) {
+            it = this->map.erase(it);
+        } else {
+            it++;
         }
     }
 }
