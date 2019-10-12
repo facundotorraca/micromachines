@@ -1,5 +1,6 @@
 #include <common/Socket.h>
 #include <string>
+#include <iostream>
 #include "Player.h"
 
 Player::Player(Socket&& socket, GameMode game_mode, std::string username, std::string match_name):
@@ -12,7 +13,9 @@ Player::Player(Socket&& socket, GameMode game_mode, std::string username, std::s
 
 Player::Player(Player&& other) noexcept:
     socket(std::move(other.socket)),
-    game_mode(other.game_mode)
+    game_mode(other.game_mode),
+    username(other.username),
+    match_name(other.match_name)
 {}
 
 bool Player::is_on_join_mode() {

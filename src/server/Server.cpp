@@ -2,11 +2,12 @@
 #include "Server.h"
 
 Server::Server(const std::string &port):
-    incoming_players(50)
+    incoming_players(50),
+    not_ready_matches(50)
 {
     this->acceptor = new ThreadAcceptor(port, this->incoming_players);
-    this->player_locator = new ThreadPlayerLocator(this->incoming_players,this->matches);
-    this->match_starter = new ThreadMatchStarter(this->matches, this->running_matches);
+    this->player_locator = new ThreadPlayerLocator(this->incoming_players, this->matches, this->not_ready_matches);
+    this->match_starter = new ThreadMatchStarter(this->matches, this->running_matches, this->not_ready_matches);
 }
 
 void Server::wait_quit() {

@@ -5,9 +5,11 @@
 #include "Thread.h"
 #include "ThreadMatch.h"
 #include "ProtectedMap.h"
+#include "ProtectedQueueMatch.h"
 
 class ThreadMatchStarter : public Thread {
     ProtectedMap& matches;
+    ProtectedQueueMatch& not_ready_matches;
 
     std::list<ThreadMatch*>& running_matches;
     std::atomic<bool> server_running{};
@@ -18,7 +20,7 @@ class ThreadMatchStarter : public Thread {
         void close_ended_matches();
 
     public:
-        ThreadMatchStarter(ProtectedMap& matches, std::list<ThreadMatch*>& running_matches);
+        ThreadMatchStarter(ProtectedMap& matches, std::list<ThreadMatch*>& running_matches, ProtectedQueueMatch& not_ready_matches);
 
 
 

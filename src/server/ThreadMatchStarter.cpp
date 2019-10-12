@@ -2,12 +2,10 @@
 #include "ProtectedMap.h"
 #include "ThreadMatchStarter.h"
 
-#include <chrono>
-#include <thread>
-
-ThreadMatchStarter::ThreadMatchStarter(ProtectedMap& matches, std::list<ThreadMatch *>& running_matches):
+ThreadMatchStarter::ThreadMatchStarter(ProtectedMap& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueueMatch& not_ready_matches):
     matches(matches),
     running_matches(running_matches),
+    not_ready_matches(not_ready_matches),
     server_running(true)
 {}
 
@@ -21,12 +19,13 @@ void ThreadMatchStarter::close_ended_matches() {
             running_match++;
         }
     }
-    this->matches.remove_end_matches();
+   this->matches.remove_end_matches();
 }
 
 void ThreadMatchStarter::run() {
     while (this->server_running) {
-        Match* match = this->matches.get_next_ready();
+        std::cout << "Waiting not_ready_matches" << "\n";
+        Match* match = this->not_ready_matches.pop();
         if (match) {
             match->run();
             auto* new_running_match = new ThreadMatch(match);

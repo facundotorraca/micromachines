@@ -1,4 +1,8 @@
+#include <iostream>
 #include "ThreadMatch.h"
+
+#include <thread>
+#include <chrono>
 
 ThreadMatch::ThreadMatch(Match *match):
     dead(false)
@@ -7,12 +11,18 @@ ThreadMatch::ThreadMatch(Match *match):
 }
 
 void ThreadMatch::run() {
+    std::cout << "Entre" << "\n";
     std::string hola("hello");
-    this->match->send_to_all(hola);
+
+    bool a = true;
+    while (a)  {
+        this->match->send_to_all(hola);
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    }
     this->match->stop();
     this->dead = true;
 }
 
 bool ThreadMatch::is_running() {
-    return this->dead;
+    return !this->dead;
 }

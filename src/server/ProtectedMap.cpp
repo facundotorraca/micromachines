@@ -17,16 +17,6 @@ Match* ProtectedMap::get(std::string match_name) {
     return this->map[match_name];
 }
 
-Match* ProtectedMap::get_next_ready() {
-    std::lock_guard<std::mutex> lock(this->mtx);
-    for (auto const& match : this->map) {
-        if (match.second->is_ready() && !match.second->is_running()) {
-            return this->map[match.first];
-        }
-    }
-    return nullptr;
-}
-
 void ProtectedMap::remove_end_matches() {
     std::lock_guard<std::mutex> lock(this->mtx);
     for (auto it = this->map.begin(); it != this->map.end();) {

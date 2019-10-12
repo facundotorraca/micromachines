@@ -6,9 +6,10 @@
 #include "ProtectedQueue.h"
 #include "ThreadPlayerLocator.h"
 
-ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue& incoming_players, ProtectedMap &matches):
+ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue& incoming_players, ProtectedMap &matches, ProtectedQueueMatch& not_read_matches):
     matches(matches),
     incoming_players(incoming_players),
+    not_ready_matches(not_read_matches),
     server_running(true)
 {}
 
@@ -35,7 +36,7 @@ void ThreadPlayerLocator::run() {
             auto* new_match = new Match(new_player.get_username());
             this->matches.add(new_player.get_match_name(), new_match);
 
-            auto* setter = new ThreadMatchOptions(std::move(new_player), new_match);
+            auto* setter = new ThreadMatchOptions(std::move(new_player), new_match, this->not_ready_matches);
             this->options_setters.push_back(setter);
             setter->start();
         }

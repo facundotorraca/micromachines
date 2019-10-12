@@ -18,8 +18,6 @@ class ProtectedMap {
         Match* get(std::string match_name);
 
         void remove_end_matches();
-
-        Match* get_next_ready();
 };
 
 
