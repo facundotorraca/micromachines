@@ -1,37 +1,33 @@
 #ifndef MICROMACHINES_THREADACCEPTOR_H
 #define MICROMACHINES_THREADACCEPTOR_H
 
-#include <vector>
+#include <list>
 #include <string>
-#include <thread>
 #include <atomic>
+#include "Thread.h"
 #include "SocketAcceptor.h"
 #include "ProtectedQueue.h"
-#include "ThreadIncomingClient.h"
+#include "ThreadIncomingPlayer.h"
 
-class ThreadAcceptor {
+class ThreadAcceptor : public Thread {
     SocketAcceptor acceptor;
-    std::thread thread;
-    ProtectedQueue& incoming_players;
+
     std::atomic<bool> server_running{};
-    std::vector<ThreadIncomingClient*> incoming_clients;
+
+    ProtectedQueue& incoming_players;
+    std::list<ThreadIncomingPlayer*> new_players;
 
     private:
-        void accept_clients();
+        void run() override;
 
-        void verify_client_answer();
+        void remove_confirmed_players();
 
     public:
 
         ThreadAcceptor(const std::string& port, ProtectedQueue& incoming_players);
 
-        void start();
-
         void stop();
-
-        void join();
-
-        ~ThreadAcceptor();
 };
+
 
 #endif //MICROMACHINES_THREADACCEPTOR_H

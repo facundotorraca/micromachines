@@ -6,8 +6,10 @@ Server::Server(const std::string &port):
 {
     this->acceptor = new ThreadAcceptor(port, this->incoming_players);
     this->player_locator = new ThreadPlayerLocator(this->incoming_players,
-                                                   this->lobbies,
                                                    this->matches);
+
+    this->match_starter = new ThreadMatchStarter(this->matches,
+                                                 this->running_matches);
 }
 
 void Server::wait_quit() {
@@ -26,6 +28,7 @@ void Server::stop_matches() {
 void Server::start() {
     this->acceptor->start();
     this->player_locator->start();
+    this->match_starter->start();
 
     this->wait_quit();
     this->stop_matches();
@@ -35,9 +38,9 @@ void Server::start() {
 
     this->acceptor->join();
     this->player_locator->join();
+}
 
+Server::~Server() {
     delete this->acceptor;
     delete this->player_locator;
 }
-
-Server::~Server() {}

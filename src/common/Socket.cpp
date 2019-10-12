@@ -40,7 +40,7 @@ int Socket::receive(uint8_t* buf, size_t len) {
     return total_bytes;
 }
 
-int Socket::send(uint8_t* buf, size_t len) {
+int Socket::send(uint8_t* buf, size_t len) const {
     size_t bytes_sent = 0, total_bytes = 0;
     while (total_bytes < len) {
         bytes_sent = ::send(this->fd, (void*)&buf[total_bytes], len -total_bytes, MSG_NOSIGNAL);

@@ -1,25 +1,18 @@
 #include "ThreadMatch.h"
-#include <vector>
-#include <iostream>
-#include "Player.h"
 
-ThreadMatch::ThreadMatch(ProtectedList* lobby):
-    lobby(lobby)
-{}
-
-void ThreadMatch::start() {
-    this->thread = std::thread(&ThreadMatch::run, this);
+ThreadMatch::ThreadMatch(Match *match):
+    dead(false)
+{
+    this->match = match;
 }
 
 void ThreadMatch::run() {
-    bool a = true;
-    size_t size = 0;
-    while (a) {
-        if (size != this->lobby->size()) {
-            size = this->lobby->size();
-            Player *player = this->lobby->back();
-            std::string a("hello");
-            player->send(a);
-        }
-    }
+    std::string hola("hello");
+    this->match->send_to_all(hola);
+    this->match->stop();
+    this->dead = true;
+}
+
+bool ThreadMatch::is_running() {
+    return this->dead;
 }

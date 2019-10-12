@@ -1,7 +1,3 @@
-//
-// Created by facundotorraca on 10/10/19.
-//
-
 #ifndef MICROMACHINES_PROTECTEDQUEUE_H
 #define MICROMACHINES_PROTECTEDQUEUE_H
 
@@ -13,7 +9,7 @@
 
 class ProtectedQueue {
         size_t max_q_len;
-        std::queue<Player*> queue;
+        std::queue<Player> queue;
         std::condition_variable cv_pop;
         std::condition_variable cv_push;
         std::mutex q_mtx;
@@ -22,9 +18,9 @@ class ProtectedQueue {
     public:
         explicit ProtectedQueue(size_t max_q_len);
 
-        ProtectedQueue(ProtectedQueue&& p_queue);
+//        ProtectedQueue(ProtectedQueue&& p_queue);
 
-        void push(Player* player);
+        void push(Player&& player);
 
         bool empty();
 
@@ -32,7 +28,7 @@ class ProtectedQueue {
 
         bool closed();
 
-        Player* pop();
+        Player pop();
 
         ~ProtectedQueue();
 };

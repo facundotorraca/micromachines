@@ -1,16 +1,43 @@
 #include "ProtectedMap.h"
-#include "Player.h"
-#include <vector>
 #include <mutex>
+#include <list>
 #include <map>
+#include <iostream>
 
-void ProtectedMap::add(std::string match_name, ProtectedList* lobby) {
+void ProtectedMap::add(std::string match_name, Match* match) {
     std::lock_guard<std::mutex> lock(this->mtx);
-    this->map.insert(std::pair<std::string, ProtectedList*>(match_name, lobby));
-
+    if (!this->map.insert(std::pair<std::string, Match*>(match_name, match)).second) {
+        std::cout << "error" << "\n";
+    }
+    std::cout << this->map.size() <<"\n";
 }
 
-ProtectedList* ProtectedMap::get(std::string match_name) {
+Match* ProtectedMap::get(std::string match_name) {
     std::lock_guard<std::mutex> lock(this->mtx);
     return this->map[match_name];
 }
+
+Match* ProtectedMap::get_next_ready() {
+    std::lock_guard<std::mutex> lock(this->mtx);
+    for (auto const& match : this->map) {
+        if (match.second->is_ready() && !match.second->is_running()) {
+            return this->map[match.first];
+        }
+    }
+    return nullptr;
+}
+
+void ProtectedMap::remove_end_matches() {
+    std::lock_guard<std::mutex> lock(this->mtx);
+    for (auto const& match : this->map) {
+        if (match.second->ended()) {
+            std::cout << match.first << "\n";
+        }
+    }
+}
+
+
+
+
+
+

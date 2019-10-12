@@ -1,25 +1,27 @@
 #ifndef MICROMACHINES_SERVER_H
 #define MICROMACHINES_SERVER_H
 
-#include <string>
+#include <list>
+#include "ThreadMatch.h"
+#include "ProtectedMap.h"
+#include "ProtectedQueue.h"
 #include "ThreadAcceptor.h"
 #include "ThreadPlayerLocator.h"
-#include "ProtectedQueue.h"
-#include "ProtectedMap.h"
-#include "ThreadMatch.h"
+#include "ThreadMatchStarter.h"
 
 class Server {
-    ProtectedMap lobbies;
+    ProtectedMap matches;
     ProtectedQueue incoming_players;
 
     ThreadAcceptor* acceptor;
     ThreadPlayerLocator* player_locator;
-    std::list<ThreadMatch*> matches;
+    ThreadMatchStarter* match_starter;
+    std::list<ThreadMatch*> running_matches;
 
     private:
-        static void wait_quit();
+        void wait_quit();
 
-        static void stop_matches();
+        void stop_matches();
 
     public:
         explicit Server(const std::string& port);

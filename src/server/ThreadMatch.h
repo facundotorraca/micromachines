@@ -1,22 +1,22 @@
 #ifndef MICROMACHINES_THREADMATCH_H
 #define MICROMACHINES_THREADMATCH_H
 
-#include <thread>
-#include "Player.h"
-#include "ProtectedList.h"
+#include "Thread.h"
+#include "Match.h"
+#include <atomic>
 
-class ThreadMatch {
-    std::thread thread{};
-    ProtectedList* lobby;
+class ThreadMatch : public Thread {
+    std::atomic<bool> dead;
+    Match* match;
 
     private:
-        void run();
+        void run() override;
 
     public:
-        explicit ThreadMatch(ProtectedList* lobby);
+        explicit ThreadMatch(Match *match);
 
-        void start();
+        bool is_running();
 };
 
-#endif //MICROMACHINES_THREADMATCH_H
 
+#endif //MICROMACHINES_THREADMATCH_H

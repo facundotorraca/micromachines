@@ -19,7 +19,7 @@ class Socket {
 
         int receive(uint8_t* buf, size_t len);
 
-        int send(uint8_t* buf, size_t len);
+        int send(uint8_t* buf, size_t len) const;
 
         void connect(const std::string& host, const std::string& port);
 

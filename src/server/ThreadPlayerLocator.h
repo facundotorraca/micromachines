@@ -2,27 +2,31 @@
 #define MICROMACHINES_THREADPLAYERLOCATOR_H
 
 #include <list>
+#include <atomic>
+#include "Thread.h"
 #include "ProtectedMap.h"
-#include "ProtectedQueue.h"
+#include "server/ProtectedQueue.h"
 #include "ThreadMatch.h"
+#include "ThreadMatchOptions.h"
 
-class ThreadPlayerLocator {
-    std::thread thread{};
-    ProtectedMap& lobbies;
-    ProtectedQueue& incoming_players;
-    std::list<ThreadMatch*>& matches;
+class ThreadPlayerLocator : public Thread {
+    ProtectedMap &matches;
+    ProtectedQueue &incoming_players;
+    std::list<ThreadMatchOptions*> options_setters;
+    std::atomic<bool> server_running{};
 
     private:
-        void run();
+        void run() override;
+
+        void remove_running_matches();
 
     public:
-        explicit ThreadPlayerLocator(ProtectedQueue& incoming_players, ProtectedMap& lobbies, std::list<ThreadMatch*>& matches);
 
-        static void stop();
+        explicit ThreadPlayerLocator(ProtectedQueue &incoming_players, ProtectedMap &matches);
 
-        void join();
-
-        void start();
+        void stop();
 };
+
+
 
 #endif //MICROMACHINES_THREADPLAYERLOCATOR_H

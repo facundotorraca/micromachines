@@ -1,10 +1,5 @@
-//
-// Created by facundotorraca on 10/10/19.
-//
-
 #include "ProtectedQueue.h"
 #include "Player.h"
-#include "SocketAcceptor.h"
 #include "ProtectedQueueError.h"
 #include <mutex>
 
@@ -13,7 +8,7 @@ ProtectedQueue::ProtectedQueue(size_t max_q_len) {
     this->max_q_len = max_q_len;
     this->q_closed = false;
 }
-
+/*
 ProtectedQueue::ProtectedQueue(ProtectedQueue&& p_queue):
     queue(p_queue.queue)
 {
@@ -23,18 +18,19 @@ ProtectedQueue::ProtectedQueue(ProtectedQueue&& p_queue):
     p_queue.max_q_len = 0;
     p_queue.q_closed = true;
 }
+*/
 
-void ProtectedQueue::push(Player* player) {
+void ProtectedQueue::push(Player&& player) {
     std::unique_lock<std::mutex> lock(this->q_mtx);
     while (this->queue.size() >= this->max_q_len) {
         this->cv_push.wait(lock);
     }
 
-    this->queue.push(player);
+    this->queue.push(std::move(player));
     this->cv_pop.notify_all();
 }
 
-Player* ProtectedQueue::pop() {
+Player ProtectedQueue::pop() {
     std::unique_lock<std::mutex> lock(this->q_mtx);
     while (this->queue.empty() && !this->q_closed) {
         this->cv_pop.wait(lock);
@@ -44,10 +40,10 @@ Player* ProtectedQueue::pop() {
         //The queue is not receiving more elements
         throw ProtectedQueueError("ProtectedQueue: POP Error");
     } else {
-        Player* player = this->queue.front();
+        Player player = std::move(this->queue.front());
         this->queue.pop();
         this->cv_push.notify_all();
-        return player;
+        return std::move(player);
     }
 }
 

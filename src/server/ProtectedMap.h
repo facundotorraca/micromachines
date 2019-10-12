@@ -1,21 +1,27 @@
 #ifndef MICROMACHINES_PROTECTEDMAP_H
 #define MICROMACHINES_PROTECTEDMAP_H
 
-#include "Player.h"
-#include "ProtectedList.h"
+#include "server/Player.h"
+#include "Match.h"
 #include <vector>
 #include <mutex>
+#include <list>
 #include <map>
 
 class ProtectedMap {
     std::mutex mtx;
-    std::map<std::string, ProtectedList*> map;
+    std::map<std::string, Match*> map;
 
     public:
-        void add(std::string match_name, ProtectedList* lobby);
+        void add(std::string match_name, Match* match);
 
-        ProtectedList* get(std::string match_name);
+        Match* get(std::string match_name);
+
+        void remove_end_matches();
+
+        Match* get_next_ready();
 };
 
 
 #endif //MICROMACHINES_PROTECTEDMAP_H
+
