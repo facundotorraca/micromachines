@@ -6,7 +6,7 @@
 #include "ProtectedQueue.h"
 #include "ThreadPlayerLocator.h"
 
-ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue& incoming_players, ProtectedMap &matches, ProtectedQueueMatch& not_read_matches):
+ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, ProtectedMap &matches, ProtectedQueueMatch& not_read_matches):
     matches(matches),
     incoming_players(incoming_players),
     not_ready_matches(not_read_matches),

@@ -3,18 +3,19 @@
 
 #include <atomic>
 #include "Thread.h"
+#include "Player.h"
 #include "common/Socket.h"
 
 class ThreadIncomingPlayer : public Thread {
     Socket socket;
-    ProtectedQueue& incoming_players;
+    ProtectedQueue<Player>& incoming_players;
     std::atomic<bool> dead;
 
     private:
         void run() override;
 
     public:
-        ThreadIncomingPlayer(Socket&& socket, ProtectedQueue& incoming_players);
+        ThreadIncomingPlayer(Socket&& socket, ProtectedQueue<Player>& incoming_players);
 
         bool answered();
 };

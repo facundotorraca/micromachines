@@ -12,7 +12,7 @@
 
 class Server {
     ProtectedMap matches;
-    ProtectedQueue incoming_players;
+    ProtectedQueue<Player> incoming_players;
     ProtectedQueueMatch not_ready_matches;
 
     ThreadAcceptor* acceptor;

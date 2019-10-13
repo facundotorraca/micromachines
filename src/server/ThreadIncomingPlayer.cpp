@@ -6,7 +6,7 @@
 #include "server/Player.h"
 #include "GameMode.h"
 
-ThreadIncomingPlayer::ThreadIncomingPlayer(Socket&& socket, ProtectedQueue& incoming_players):
+ThreadIncomingPlayer::ThreadIncomingPlayer(Socket&& socket, ProtectedQueue<Player>& incoming_players):
     incoming_players(incoming_players),
     socket(std::move(socket)),
     dead(false)
