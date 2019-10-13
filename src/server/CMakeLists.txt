@@ -8,4 +8,5 @@ list(REMOVE_ITEM server_lib "main.cpp")
 add_library(server ${server_lib})
 target_link_libraries(server
         pthread
-        common)
+        common
+        Box2D)
