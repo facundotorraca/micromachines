@@ -5,3 +5,8 @@
 /cmake-build-release/
 /prueba_lua/prueba_lua
 /prueba_sdl/prueba_sdl
+CMakeFiles/
+build/
+*.a
+CMakeCache.txt
+*.cmake
