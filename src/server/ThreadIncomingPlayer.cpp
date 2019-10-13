@@ -1,14 +1,14 @@
-#include <iostream>
 #include <cstring>
-#include "common/Socket.h"
-#include "server/ProtectedQueue.h"
-#include "ThreadIncomingPlayer.h"
+#include <iostream>
 #include "server/Player.h"
-#include "GameMode.h"
+#include "common/Socket.h"
+#include "ThreadIncomingPlayer.h"
+#include "server/ProtectedQueue.h"
 
-ThreadIncomingPlayer::ThreadIncomingPlayer(Socket&& socket, ProtectedQueue<Player>& incoming_players):
+ThreadIncomingPlayer::ThreadIncomingPlayer(Socket&& socket, ProtectedQueue<Player>& incoming_players, ProtectedMap& matches):
     incoming_players(incoming_players),
     socket(std::move(socket)),
+    matches(matches),
     dead(false)
 {}
 
@@ -17,6 +17,8 @@ bool ThreadIncomingPlayer::answered() {
 }
 
 void ThreadIncomingPlayer::run() {
+    this->matches.send_matches(this->socket);
+
     uint8_t buf[20];
     memset(buf, 0, 20 * sizeof(uint8_t));
 
@@ -37,8 +39,7 @@ void ThreadIncomingPlayer::run() {
     std::string username(reinterpret_cast<const char *>(buf), len_username);
     memset(buf, 0, 20 * sizeof(uint8_t));
 
-    GameMode gamemode(mode);
-    Player new_player(std::move(this->socket), gamemode, username, match_name);
+    Player new_player(std::move(this->socket), mode, username, match_name);
     this->incoming_players.push(std::move(new_player));
 
     this->dead = true;

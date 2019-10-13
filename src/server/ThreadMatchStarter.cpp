@@ -24,14 +24,10 @@ void ThreadMatchStarter::close_ended_matches() {
 
 void ThreadMatchStarter::run() {
     while (this->server_running) {
-        std::cout << "Waiting not_ready_matches" << "\n";
         Match* match = this->not_ready_matches.pop();
-        if (match) {
-            match->run();
-            auto* new_running_match = new ThreadMatch(match);
-            this->running_matches.push_back(new_running_match);
-            new_running_match->start();
-        }
+        auto* new_running_match = new ThreadMatch(match);
+        this->running_matches.push_back(new_running_match);
+        new_running_match->start();
         this->close_ended_matches();
     }
 }

@@ -6,8 +6,8 @@
 #include "ProtectedMap.h"
 #include "ProtectedQueue.h"
 #include "ThreadAcceptor.h"
-#include "ThreadPlayerLocator.h"
 #include "ThreadMatchStarter.h"
+#include "ThreadPlayerLocator.h"
 
 class Server {
     ProtectedMap matches;
@@ -21,7 +21,7 @@ class Server {
     std::list<ThreadMatch*> running_matches;
 
     private:
-        void wait_quit();
+        static void wait_quit();
 
         void stop_matches();
 

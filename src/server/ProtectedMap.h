@@ -1,21 +1,24 @@
 #ifndef MICROMACHINES_PROTECTEDMAP_H
 #define MICROMACHINES_PROTECTEDMAP_H
 
-#include "server/Player.h"
-#include "Match.h"
-#include <vector>
-#include <mutex>
-#include <list>
 #include <map>
+#include <list>
+#include <mutex>
+#include <vector>
+#include "Match.h"
+#include "common/Socket.h"
+#include "server/Player.h"
 
 class ProtectedMap {
     std::mutex mtx;
     std::map<std::string, Match*> map;
 
     public:
-        void add(std::string match_name, Match* match);
+        void add(const std::string& match_name, Match* match);
 
-        Match* get(std::string match_name);
+        Match* get(const std::string& match_name);
+
+        void send_matches(Socket& socket);
 
         void remove_end_matches();
 };

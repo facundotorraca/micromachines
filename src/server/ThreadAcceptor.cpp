@@ -4,7 +4,8 @@
 #include "ThreadAcceptor.h"
 #include "SocketAcceptorError.h"
 
-ThreadAcceptor::ThreadAcceptor(const std::string &port, ProtectedQueue<Player>& incoming_players):
+ThreadAcceptor::ThreadAcceptor(const std::string &port, ProtectedQueue<Player>& incoming_players, ProtectedMap& matches):
+    matches(matches),
     incoming_players(incoming_players),
     server_running(true)
 {
@@ -33,7 +34,7 @@ void ThreadAcceptor::run() {
         try {
             Socket socket = this->acceptor.accept();
 
-            auto* incoming_client = new ThreadIncomingPlayer(std::move(socket), this->incoming_players);
+            auto* incoming_client = new ThreadIncomingPlayer(std::move(socket), this->incoming_players, this->matches);
             this->new_players.push_back(incoming_client);
             incoming_client->start();
 

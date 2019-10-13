@@ -22,7 +22,6 @@ void ThreadMatchOptions::run() {
     }
     /*Put the creator on the match*/
     this->match->add_player(std::move(creator));
-    this->match->start();
     this->not_ready_matches.push(this->match);
     this->dead = true;
 }

@@ -4,18 +4,23 @@
 #include <atomic>
 #include "Thread.h"
 #include "Player.h"
+#include "ProtectedMap.h"
 #include "common/Socket.h"
+#include "ProtectedQueue.h"
 
 class ThreadIncomingPlayer : public Thread {
     Socket socket;
+
+    ProtectedMap& matches;
     ProtectedQueue<Player>& incoming_players;
+
     std::atomic<bool> dead;
 
     private:
         void run() override;
 
     public:
-        ThreadIncomingPlayer(Socket&& socket, ProtectedQueue<Player>& incoming_players);
+        ThreadIncomingPlayer(Socket&& socket, ProtectedQueue<Player>& incoming_players,  ProtectedMap& matches);
 
         bool answered();
 };

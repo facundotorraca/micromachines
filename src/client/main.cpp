@@ -5,12 +5,36 @@
 
 #define SUCCESS 0
 
+void get_matches(Socket& socket) {
+    uint8_t buf[20];
+    memset(buf, 0, 20 * sizeof(uint8_t));
+
+    bool cont_recv = true; int i = 1;
+    std::cout << "#-----------------PARTIDAS EXISTENTES---------------##\n";
+    do {
+        uint8_t len_next_msg;
+        socket.receive(&len_next_msg, 1);
+        socket.receive((uint8_t*)buf, len_next_msg);
+        std::string match_name(reinterpret_cast<const char *>(buf), len_next_msg);
+        if (buf[0] == '\0') {
+            cont_recv = false;
+        } else {
+            memset(buf, 0, 20 * sizeof(uint8_t));
+            std::cout << i << " - " << match_name << "\n";
+            i++;
+        }
+    } while (cont_recv);
+    std::cout << "#---------------------------------------------------##\n";
+}
+
 int main(int argc, char* argv[]) {
     std::string port("7778");
     std::string host("127.0.0.1");
 
     Socket s;
     s.connect(host, port);
+
+    get_matches(s);
 
     std::cout << "Press 1 to join match" << "\n";
     std::cout << "Press 2 to start match" << "\n";

@@ -1,18 +1,17 @@
 #ifndef MICROMACHINES_PLAYER_H
 #define MICROMACHINES_PLAYER_H
 
-#include "common/Socket.h"
-#include "GameMode.h"
 #include <string>
+#include "common/Socket.h"
 
 class Player {
     Socket socket;
-    GameMode game_mode;
+    uint8_t mode;
     std::string username;
     std::string match_name;
 
     public:
-        Player(Socket&& socket, GameMode game_mode, std::string username, std::string match_name);
+        Player(Socket&& socket, uint8_t mode, std::string username, std::string match_name);
 
         Player(Player&& other) noexcept;
 

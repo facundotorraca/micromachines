@@ -33,7 +33,7 @@ void ThreadPlayerLocator::run() {
             Match* match = this->matches.get(new_player.get_match_name());
             match->add_player(std::move(new_player));
         } else {
-            auto* new_match = new Match(new_player.get_username());
+            auto* new_match = new Match(new_player.get_username(), new_player.get_match_name());
             this->matches.add(new_player.get_match_name(), new_match);
 
             auto* setter = new ThreadMatchOptions(std::move(new_player), new_match, this->not_ready_matches);
