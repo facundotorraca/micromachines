@@ -3,15 +3,16 @@
 
 #include <string>
 #include "common/Socket.h"
+#include <common/ProtocolSocket.h>
 
 class Player {
-    Socket socket;
+    ProtocolSocket p_socket;
     uint8_t mode;
     std::string username;
     std::string match_name;
 
     public:
-        Player(Socket&& socket, uint8_t mode, std::string username, std::string match_name);
+        Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name);
 
         Player(Player&& other) noexcept;
 

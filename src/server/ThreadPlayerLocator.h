@@ -6,12 +6,12 @@
 #include "Thread.h"
 #include "Player.h"
 #include "ThreadMatch.h"
-#include "ProtectedMap.h"
+#include "MatchTable.h"
 #include "ThreadMatchOptions.h"
 #include "server/ProtectedQueue.h"
 
 class ThreadPlayerLocator : public Thread {
-    ProtectedMap& matches;
+    MatchTable& matches;
     ProtectedQueue<Player>& incoming_players;
     ProtectedQueue<Match*>& not_ready_matches;
 
@@ -25,7 +25,7 @@ class ThreadPlayerLocator : public Thread {
 
     public:
 
-        explicit ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, ProtectedMap& matches, ProtectedQueue<Match*>& not_ready_matches);
+        explicit ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, MatchTable& matches, ProtectedQueue<Match*>& not_ready_matches);
 
         void stop();
 };

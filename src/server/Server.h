@@ -3,14 +3,14 @@
 
 #include <list>
 #include "ThreadMatch.h"
-#include "ProtectedMap.h"
+#include "MatchTable.h"
 #include "ProtectedQueue.h"
 #include "ThreadAcceptor.h"
 #include "ThreadMatchStarter.h"
 #include "ThreadPlayerLocator.h"
 
 class Server {
-    ProtectedMap matches;
+    MatchTable matches;
     ProtectedQueue<Player> incoming_players;
     ProtectedQueue<Match*> not_ready_matches;
 

@@ -4,14 +4,15 @@
 #include <atomic>
 #include "Thread.h"
 #include "Player.h"
-#include "ProtectedMap.h"
+#include "MatchTable.h"
 #include "common/Socket.h"
 #include "ProtectedQueue.h"
+#include <common/ProtocolSocket.h>
 
 class ThreadIncomingPlayer : public Thread {
-    Socket socket;
+    ProtocolSocket p_socket;
 
-    ProtectedMap& matches;
+    MatchTable& matches;
     ProtectedQueue<Player>& incoming_players;
 
     std::atomic<bool> dead;
@@ -20,7 +21,7 @@ class ThreadIncomingPlayer : public Thread {
         void run() override;
 
     public:
-        ThreadIncomingPlayer(Socket&& socket, ProtectedQueue<Player>& incoming_players,  ProtectedMap& matches);
+        ThreadIncomingPlayer(ProtocolSocket&& p_socket, ProtectedQueue<Player>& incoming_players, MatchTable& matches);
 
         bool answered();
 };

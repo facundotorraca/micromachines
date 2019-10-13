@@ -3,11 +3,12 @@
 #include "Player.h"
 #include "ThreadAcceptor.h"
 #include "SocketAcceptorError.h"
+#include "common/ProtocolSocket.h"
 
-ThreadAcceptor::ThreadAcceptor(const std::string &port, ProtectedQueue<Player>& incoming_players, ProtectedMap& matches):
-    matches(matches),
+ThreadAcceptor::ThreadAcceptor(const std::string &port, ProtectedQueue<Player>& incoming_players, MatchTable& matches):
     incoming_players(incoming_players),
-    server_running(true)
+    server_running(true),
+    matches(matches)
 {
     this->acceptor.bind(port);
     this->acceptor.listen();
@@ -33,8 +34,9 @@ void ThreadAcceptor::run() {
     while (this->server_running) {
         try {
             Socket socket = this->acceptor.accept();
+            ProtocolSocket p_socket(std::move(socket));
 
-            auto* incoming_client = new ThreadIncomingPlayer(std::move(socket), this->incoming_players, this->matches);
+            auto* incoming_client = new ThreadIncomingPlayer(std::move(p_socket), this->incoming_players, this->matches);
             this->new_players.push_back(incoming_client);
             incoming_client->start();
 

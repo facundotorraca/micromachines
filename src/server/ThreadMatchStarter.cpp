@@ -1,8 +1,8 @@
 #include <iostream>
-#include "ProtectedMap.h"
+#include "MatchTable.h"
 #include "ThreadMatchStarter.h"
 
-ThreadMatchStarter::ThreadMatchStarter(ProtectedMap& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueue<Match*>& not_ready_matches):
+ThreadMatchStarter::ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueue<Match*>& not_ready_matches):
     matches(matches),
     running_matches(running_matches),
     not_ready_matches(not_ready_matches),

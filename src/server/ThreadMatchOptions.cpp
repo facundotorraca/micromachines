@@ -5,9 +5,9 @@
 
 #define START_MATCH 1
 
-ThreadMatchOptions::ThreadMatchOptions(Player &&player, Match* match, ProtectedQueue<Match*>& not_ready_matches):
-    creator(std::move(player)),
+ThreadMatchOptions::ThreadMatchOptions(Player&& player, Match* match, ProtectedQueue<Match*>& not_ready_matches):
     not_ready_matches(not_ready_matches),
+    creator(std::move(player)),
     dead(false)
 {
     this->match = match;
@@ -18,7 +18,7 @@ void ThreadMatchOptions::run() {
 
     while (option != START_MATCH) {
         option = this->creator.receive_option();
-        /*MATCH APLICATE OPTION*/
+        /*MATCH APPLY OPTION*/
     }
     /*Put the creator on the match*/
     this->match->add_player(std::move(creator));

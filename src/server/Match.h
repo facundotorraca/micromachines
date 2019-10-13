@@ -10,7 +10,6 @@
 class Match {
     std::atomic<bool> stopped;
 
-    std::mutex mtx;
     std::list<Player> players;
 
     std::string match_name;
@@ -19,9 +18,13 @@ class Match {
     public:
         explicit Match(std::string match_creator, std::string match_name);
 
-        void send_to_all(std::string message);
+        std::string get_match_name_to_send(int match_index);
+
+        void send_to_all(std::string& message);
 
         void add_player(Player&& player);
+
+        std::string get_match_creator();
 
         std::string get_match_name();
 

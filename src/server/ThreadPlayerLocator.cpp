@@ -2,15 +2,15 @@
 #include "Match.h"
 #include "Player.h"
 #include <iostream>
-#include "ProtectedMap.h"
+#include "MatchTable.h"
 #include "ProtectedQueue.h"
 #include "ThreadPlayerLocator.h"
 
-ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, ProtectedMap &matches, ProtectedQueue<Match*>& not_read_matches):
-    matches(matches),
-    incoming_players(incoming_players),
+ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, MatchTable &matches, ProtectedQueue<Match*>& not_read_matches):
     not_ready_matches(not_read_matches),
-    server_running(true)
+    incoming_players(incoming_players),
+    server_running(true),
+    matches(matches)
 {}
 
 void ThreadPlayerLocator::remove_running_matches() {
@@ -23,6 +23,11 @@ void ThreadPlayerLocator::remove_running_matches() {
             setter++;
         }
     }
+}
+
+void ThreadPlayerLocator::stop() {
+    /* creo que esta incompleto*/
+    this->server_running = false;
 }
 
 void ThreadPlayerLocator::run() {
@@ -43,9 +48,4 @@ void ThreadPlayerLocator::run() {
 
         this->remove_running_matches();
     }
-}
-
-void ThreadPlayerLocator::stop() {
-    /* creo que esta incompleto*/
-    this->server_running = false;
 }

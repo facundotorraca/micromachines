@@ -6,7 +6,7 @@
 #include <atomic>
 #include "Thread.h"
 #include "Player.h"
-#include "ProtectedMap.h"
+#include "MatchTable.h"
 #include "SocketAcceptor.h"
 #include "ProtectedQueue.h"
 #include "ThreadIncomingPlayer.h"
@@ -14,7 +14,7 @@
 class ThreadAcceptor : public Thread {
     SocketAcceptor acceptor;
 
-    ProtectedMap& matches;
+    MatchTable& matches;
     ProtectedQueue<Player>& incoming_players;
 
     std::list<ThreadIncomingPlayer*> new_players;
@@ -26,7 +26,7 @@ class ThreadAcceptor : public Thread {
         void remove_confirmed_players();
 
     public:
-        ThreadAcceptor(const std::string& port, ProtectedQueue<Player>& incoming_players, ProtectedMap& matches);
+        ThreadAcceptor(const std::string& port, ProtectedQueue<Player>& incoming_players, MatchTable& matches);
 
         void stop();
 };
