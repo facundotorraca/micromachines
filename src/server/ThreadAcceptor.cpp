@@ -1,9 +1,10 @@
 #include <list>
 #include <iostream>
+#include "Player.h"
 #include "ThreadAcceptor.h"
 #include "SocketAcceptorError.h"
 
-ThreadAcceptor::ThreadAcceptor(const std::string &port, ProtectedQueue& incoming_players):
+ThreadAcceptor::ThreadAcceptor(const std::string &port, ProtectedQueue<Player>& incoming_players):
     incoming_players(incoming_players),
     server_running(true)
 {

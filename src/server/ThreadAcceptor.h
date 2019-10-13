@@ -5,6 +5,7 @@
 #include <string>
 #include <atomic>
 #include "Thread.h"
+#include "Player.h"
 #include "SocketAcceptor.h"
 #include "ProtectedQueue.h"
 #include "ThreadIncomingPlayer.h"
@@ -12,7 +13,7 @@
 class ThreadAcceptor : public Thread {
     SocketAcceptor acceptor;
 
-    ProtectedQueue& incoming_players;
+    ProtectedQueue<Player>& incoming_players;
 
     std::list<ThreadIncomingPlayer*> new_players;
     std::atomic<bool> server_running{};
@@ -23,7 +24,7 @@ class ThreadAcceptor : public Thread {
         void remove_confirmed_players();
 
     public:
-        ThreadAcceptor(const std::string& port, ProtectedQueue& incoming_players);
+        ThreadAcceptor(const std::string& port, ProtectedQueue<Player>& incoming_players);
 
         void stop();
 };

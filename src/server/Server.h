@@ -8,12 +8,11 @@
 #include "ThreadAcceptor.h"
 #include "ThreadPlayerLocator.h"
 #include "ThreadMatchStarter.h"
-#include "ProtectedQueueMatch.h"
 
 class Server {
     ProtectedMap matches;
-    ProtectedQueue incoming_players;
-    ProtectedQueueMatch not_ready_matches;
+    ProtectedQueue<Player> incoming_players;
+    ProtectedQueue<Match*> not_ready_matches;
 
     ThreadAcceptor* acceptor;
     ThreadPlayerLocator* player_locator;
