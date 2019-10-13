@@ -26,6 +26,7 @@ class ProtectedQueue {
             this->q_closed = false;
         }
 
+        /* Esta bien esto*/
         void push(T&& t) {
             std::unique_lock<std::mutex> lock(this->q_mtx);
             while (this->queue.size() >= this->max_q_len) {
@@ -35,6 +36,18 @@ class ProtectedQueue {
             this->queue.push(std::move(t));
             this->cv_pop.notify_all();
         }
+
+
+        void push(T& t) {
+            std::unique_lock<std::mutex> lock(this->q_mtx);
+            while (this->queue.size() >= this->max_q_len) {
+                this->cv_push.wait(lock);
+            }
+
+            this->queue.push(t);
+            this->cv_pop.notify_all();
+        }
+
 
         bool empty() {
             std::unique_lock<std::mutex> lock(this->q_mtx);
@@ -69,6 +82,24 @@ class ProtectedQueue {
                 return std::move(t);
             }
         }
+
+        /*
+        T* pop() {
+            std::unique_lock<std::mutex> lock(this->q_mtx);
+            while (this->queue.empty() && !this->q_closed) {
+                this->cv_pop.wait(lock);
+            }
+
+            if (this->queue.empty()) {
+                throw ProtectedQueueError("ProtectedQueue: POP Error");
+            } else {
+                T* t = this->queue.front();
+                this->queue.pop();
+                this->cv_push.notify_all();
+                return t;
+            }
+        }
+        */
 };
 
 

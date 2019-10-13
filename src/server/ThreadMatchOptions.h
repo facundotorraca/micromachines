@@ -5,10 +5,10 @@
 #include "Match.h"
 #include <atomic>
 #include "Player.h"
-#include "ProtectedQueueMatch.h"
+#include "ProtectedQueue.h"
 
 class ThreadMatchOptions : public Thread {
-    ProtectedQueueMatch& not_ready_matches;
+    ProtectedQueue<Match*>& not_ready_matches;
 
     Match* match;
     Player creator;
@@ -19,7 +19,7 @@ class ThreadMatchOptions : public Thread {
         void run() override;
 
     public:
-        ThreadMatchOptions(Player &&player, Match* match, ProtectedQueueMatch& not_ready_matches);
+        ThreadMatchOptions(Player &&player, Match* match, ProtectedQueue<Match*>& not_ready_matches);
 
         bool options_set();
 

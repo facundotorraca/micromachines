@@ -2,7 +2,7 @@
 #include "ProtectedMap.h"
 #include "ThreadMatchStarter.h"
 
-ThreadMatchStarter::ThreadMatchStarter(ProtectedMap& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueueMatch& not_ready_matches):
+ThreadMatchStarter::ThreadMatchStarter(ProtectedMap& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueue<Match*>& not_ready_matches):
     matches(matches),
     running_matches(running_matches),
     not_ready_matches(not_ready_matches),
