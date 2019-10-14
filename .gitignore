@@ -10,3 +10,4 @@ build/
 *.a
 CMakeCache.txt
 *.cmake
+.DS_Store
