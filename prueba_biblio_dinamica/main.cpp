@@ -5,6 +5,6 @@ typedef int (*func_pointer)(void);
 
 
 int main(int argc, char *argv[]) {
-  DynamicLib<int, int> myLib("../gretting/build/libgretting.1.0.2.dylib");
+  DynamicLib<int, int> myLib("../count/build/libcount.1.0.2.dylib");
   std::cout << myLib.run_fun("say_one") << std::endl;
 }

@@ -1,7 +1,7 @@
 #ifndef GRETTING_H_
 #define GRETTING_H_
 
-char* say_hello();
-char* say_goodbye();
+char* say_one();
+char* say_two();
 
 #endif  //  GRETTING_H_
