@@ -18,9 +18,6 @@ void Server::wait_quit() {
 }
 
 void Server::stop_matches() {
-    /*
-     * Aca frenamos las partidas!
-     */
 }
 
 void Server::start() {

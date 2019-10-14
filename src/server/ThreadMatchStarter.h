@@ -9,7 +9,7 @@
 
 class ThreadMatchStarter : public Thread {
     MatchTable& matches;
-    ProtectedQueue<Match*>& not_ready_matches;
+    ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches;
 
     std::list<ThreadMatch*>& running_matches;
     std::atomic<bool> server_running{};
@@ -20,7 +20,7 @@ class ThreadMatchStarter : public Thread {
         void close_ended_matches();
 
     public:
-        ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch*>& running_matches, ProtectedQueue<Match*>& not_ready_matches);
+        ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch*>& running_matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches);
 
 
 

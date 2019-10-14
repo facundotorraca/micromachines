@@ -1,19 +1,20 @@
 #ifndef MICROMACHINES_THREADMATCH_H
 #define MICROMACHINES_THREADMATCH_H
 
-#include "Thread.h"
-#include "Match.h"
 #include <atomic>
+#include <memory>
+#include "Match.h"
+#include "Thread.h"
 
 class ThreadMatch : public Thread {
+    std::shared_ptr<Match> match;
     std::atomic<bool> dead;
-    Match* match;
 
     private:
         void run() override;
 
     public:
-        explicit ThreadMatch(Match *match);
+        explicit ThreadMatch(std::shared_ptr<Match>&& match);
 
         bool is_running();
 };

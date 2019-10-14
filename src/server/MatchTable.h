@@ -5,6 +5,7 @@
 #include <list>
 #include <mutex>
 #include <vector>
+#include <memory>
 #include "Match.h"
 #include "common/Socket.h"
 #include "server/Player.h"
@@ -12,12 +13,12 @@
 
 class MatchTable {
     std::mutex mtx;
-    std::map<std::string, Match*> map;
+    std::map<std::string, std::shared_ptr<Match>> map;
 
     public:
-        void add(const std::string& match_name, Match* match);
+        void add(const std::string& match_name, std::shared_ptr<Match> match);
 
-        Match* get(const std::string& match_name);
+        std::shared_ptr<Match> get(const std::string& match_name);
 
         void send_matches(ProtocolSocket &p_socket);
 

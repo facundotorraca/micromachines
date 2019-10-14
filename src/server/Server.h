@@ -2,6 +2,7 @@
 #define MICROMACHINES_SERVER_H
 
 #include <list>
+#include <memory>
 #include "ThreadMatch.h"
 #include "MatchTable.h"
 #include "ProtectedQueue.h"
@@ -12,7 +13,7 @@
 class Server {
     MatchTable matches;
     ProtectedQueue<Player> incoming_players;
-    ProtectedQueue<Match*> not_ready_matches;
+    ProtectedQueue<std::shared_ptr<Match>> not_ready_matches;
 
     ThreadAcceptor* acceptor;
     ThreadPlayerLocator* player_locator;

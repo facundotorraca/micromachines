@@ -1,17 +1,17 @@
 #include "Player.h"
 #include <iostream>
+#include <utility>
 #include "ProtectedQueue.h"
 #include "ThreadMatchOptions.h"
 
 #define START_MATCH 1
 
-ThreadMatchOptions::ThreadMatchOptions(Player&& player, Match* match, ProtectedQueue<Match*>& not_ready_matches):
+ThreadMatchOptions::ThreadMatchOptions(Player&& player, std::shared_ptr<Match>&& match, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches):
     not_ready_matches(not_ready_matches),
     creator(std::move(player)),
+    match(std::move(match)),
     dead(false)
-{
-    this->match = match;
-}
+{}
 
 void ThreadMatchOptions::run() {
     uint8_t option = 0;

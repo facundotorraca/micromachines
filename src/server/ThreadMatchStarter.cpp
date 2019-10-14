@@ -1,12 +1,13 @@
+#include <memory>
 #include <iostream>
 #include "MatchTable.h"
 #include "ThreadMatchStarter.h"
 
-ThreadMatchStarter::ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueue<Match*>& not_ready_matches):
-    matches(matches),
-    running_matches(running_matches),
+ThreadMatchStarter::ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches):
     not_ready_matches(not_ready_matches),
-    server_running(true)
+    running_matches(running_matches),
+    server_running(true),
+    matches(matches)
 {}
 
 void ThreadMatchStarter::close_ended_matches() {
@@ -24,8 +25,8 @@ void ThreadMatchStarter::close_ended_matches() {
 
 void ThreadMatchStarter::run() {
     while (this->server_running) {
-        Match* match = this->not_ready_matches.pop();
-        auto* new_running_match = new ThreadMatch(match);
+        std::shared_ptr<Match> match = this->not_ready_matches.pop();
+        auto* new_running_match = new ThreadMatch(std::move(match));
         this->running_matches.push_back(new_running_match);
         new_running_match->start();
         this->close_ended_matches();

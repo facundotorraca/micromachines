@@ -1,14 +1,12 @@
+#include <thread>
+#include <chrono>
 #include <iostream>
 #include "ThreadMatch.h"
 
-#include <thread>
-#include <chrono>
-
-ThreadMatch::ThreadMatch(Match *match):
+ThreadMatch::ThreadMatch(std::shared_ptr<Match>&& match):
+    match(std::move(match)),
     dead(false)
-{
-    this->match = match;
-}
+{}
 
 void ThreadMatch::run() {
     std::string hola("hello");

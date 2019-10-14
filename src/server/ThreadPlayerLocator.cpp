@@ -1,4 +1,5 @@
 #include <list>
+#include <memory>
 #include "Match.h"
 #include "Player.h"
 #include <iostream>
@@ -6,7 +7,7 @@
 #include "ProtectedQueue.h"
 #include "ThreadPlayerLocator.h"
 
-ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, MatchTable &matches, ProtectedQueue<Match*>& not_read_matches):
+ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, MatchTable &matches, ProtectedQueue<std::shared_ptr<Match>>& not_read_matches):
     not_ready_matches(not_read_matches),
     incoming_players(incoming_players),
     server_running(true),
@@ -35,13 +36,13 @@ void ThreadPlayerLocator::run() {
         Player new_player = this->incoming_players.pop();
 
         if (new_player.is_on_join_mode()) {
-            Match* match = this->matches.get(new_player.get_match_name());
+            std::shared_ptr<Match> match = this->matches.get(new_player.get_match_name());
             match->add_player(std::move(new_player));
         } else {
-            auto* new_match = new Match(new_player.get_username(), new_player.get_match_name());
+            std::shared_ptr<Match> new_match(new Match(new_player.get_username(), new_player.get_match_name()));
             this->matches.add(new_player.get_match_name(), new_match);
 
-            auto* setter = new ThreadMatchOptions(std::move(new_player), new_match, this->not_ready_matches);
+            auto* setter = new ThreadMatchOptions(std::move(new_player), std::move(new_match), this->not_ready_matches);
             this->options_setters.push_back(setter);
             setter->start();
         }

@@ -1,18 +1,19 @@
 #include <map>
 #include <list>
 #include <mutex>
+#include <memory>
 #include <iostream>
 #include "MatchTable.h"
 #include <common/ProtocolSocket.h>
 
-void MatchTable::add(const std::string& match_name, Match* match) {
+void MatchTable::add(const std::string& match_name, std::shared_ptr<Match> match) {
     std::lock_guard<std::mutex> lock(this->mtx);
-    if (!this->map.insert(std::pair<std::string, Match*>(match_name, match)).second) {
+    if (!this->map.insert(std::pair<std::string, std::shared_ptr<Match>>(match_name, match)).second) {
         std::cout << "error" << "\n";
     }
 }
 
-Match* MatchTable::get(const std::string& match_name) {
+std::shared_ptr<Match> MatchTable::get(const std::string& match_name) {
     std::lock_guard<std::mutex> lock(this->mtx);
     return this->map[match_name];
 }
