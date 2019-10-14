@@ -43,6 +43,8 @@ void ThreadAcceptor::run() {
             this->remove_confirmed_players();
         } catch (const SocketAcceptorError &exception) {
             this->server_running = false;
+            this->remove_confirmed_players();
+            /* Falta eliminar los que no confirmaron */
         }
     }
 }

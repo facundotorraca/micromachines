@@ -25,6 +25,8 @@ class ThreadAcceptor : public Thread {
 
         void remove_confirmed_players();
 
+        void remove_all_players();
+
     public:
         ThreadAcceptor(const std::string& port, ProtectedQueue<Player>& incoming_players, MatchTable& matches);
 

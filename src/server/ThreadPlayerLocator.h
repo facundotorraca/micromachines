@@ -25,7 +25,6 @@ class ThreadPlayerLocator : public Thread {
         void remove_running_matches();
 
     public:
-
         explicit ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, MatchTable& matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches);
 
         void stop();

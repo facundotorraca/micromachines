@@ -18,6 +18,12 @@ void Server::wait_quit() {
 }
 
 void Server::stop_matches() {
+    for (auto running_match = this->running_matches.begin(); running_match != this->running_matches.end();) {
+        (*running_match)->stop() ;
+        (*running_match)->join();
+        delete (*running_match);
+        running_match = running_matches.erase(running_match);
+    }
 }
 
 void Server::start() {
@@ -29,13 +35,16 @@ void Server::start() {
     this->stop_matches();
 
     this->acceptor->stop();
+    this->match_starter->stop();
     this->player_locator->stop();
 
-    this->acceptor->join();
     this->player_locator->join();
+    this->match_starter->join();
+    this->acceptor->join();
 }
 
 Server::~Server() {
-    delete this->acceptor;
     delete this->player_locator;
+    delete this->match_starter;
+    delete this->acceptor;
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "MatchTable.h"
 #include "ThreadMatchStarter.h"
+#include "ProtectedQueueError.h"
 
 ThreadMatchStarter::ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches):
     not_ready_matches(not_ready_matches),
@@ -23,12 +24,22 @@ void ThreadMatchStarter::close_ended_matches() {
    this->matches.remove_end_matches();
 }
 
+void ThreadMatchStarter::stop() {
+    this->not_ready_matches.close();
+}
+
+
 void ThreadMatchStarter::run() {
     while (this->server_running) {
-        std::shared_ptr<Match> match = this->not_ready_matches.pop();
-        auto* new_running_match = new ThreadMatch(std::move(match));
-        this->running_matches.push_back(new_running_match);
-        new_running_match->start();
-        this->close_ended_matches();
+        try {
+            std::shared_ptr<Match> match = this->not_ready_matches.pop();
+            auto* new_running_match = new ThreadMatch(std::move(match));
+            this->running_matches.push_back(new_running_match);
+            new_running_match->start();
+            this->close_ended_matches();
+        } catch (ProtectedQueueError& exception) {
+            this->server_running = false;
+        }
+
     }
 }

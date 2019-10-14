@@ -12,7 +12,7 @@ void ThreadMatch::run() {
     std::string hola("hello");
 
     bool a = true;
-    while (a)  {
+    while (!dead)  {
         this->match->send_to_all(hola);
         std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     }
@@ -22,4 +22,8 @@ void ThreadMatch::run() {
 
 bool ThreadMatch::is_running() {
     return !this->dead;
+}
+
+void ThreadMatch::stop() {
+    this->dead = true;
 }

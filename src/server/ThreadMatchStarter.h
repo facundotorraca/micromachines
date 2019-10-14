@@ -22,7 +22,7 @@ class ThreadMatchStarter : public Thread {
     public:
         ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch*>& running_matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches);
 
-
+        void stop();
 
 };
 

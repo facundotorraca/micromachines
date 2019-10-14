@@ -17,6 +17,8 @@ class ThreadMatch : public Thread {
         explicit ThreadMatch(std::shared_ptr<Match>&& match);
 
         bool is_running();
+
+        void stop();
 };
 
 

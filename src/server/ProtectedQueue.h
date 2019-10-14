@@ -73,7 +73,6 @@ class ProtectedQueue {
             }
 
             if (this->queue.empty()) {
-                //The queue is not receiving more elements
                 throw ProtectedQueueError("ProtectedQueue: POP Error");
             } else {
                 T t = std::move(this->queue.front());
