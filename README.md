@@ -32,4 +32,4 @@ cmake ..
 
 ## Documentacion
 
-La documentacion de la implementacion se encuentra en [GITHUB](https://codedocs.xyz/jbeder/yaml-cpp/index.html)
+La documentacion de la implementacion se encuentra en [GITHUB](https://github.com/facutorraca/Micromachines/blob/master/DOC.md)
