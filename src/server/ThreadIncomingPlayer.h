@@ -3,10 +3,10 @@
 
 #include <atomic>
 #include "Thread.h"
-#include "Player.h"
-#include "MatchTable.h"
+#include "server/Player.h"
+#include "server/MatchTable.h"
 #include "common/Socket.h"
-#include "ProtectedQueue.h"
+#include "server/ProtectedQueue.h"
 #include <common/ProtocolSocket.h>
 
 class ThreadIncomingPlayer : public Thread {
@@ -24,6 +24,8 @@ class ThreadIncomingPlayer : public Thread {
         ThreadIncomingPlayer(ProtocolSocket&& p_socket, ProtectedQueue<Player>& incoming_players, MatchTable& matches);
 
         bool answered();
+
+        void stop();
 };
 
 #endif //MICROMACHINES_THREADINCOMINGPLAYER_H

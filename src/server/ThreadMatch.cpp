@@ -9,6 +9,7 @@ ThreadMatch::ThreadMatch(std::shared_ptr<Match>&& match):
 {}
 
 void ThreadMatch::run() {
+    this->match->run();
     std::string hola("hello");
 
     bool a = true;

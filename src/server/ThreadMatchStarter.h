@@ -4,8 +4,8 @@
 #include <atomic>
 #include "Thread.h"
 #include "ThreadMatch.h"
-#include "MatchTable.h"
-#include "ProtectedQueue.h"
+#include "server/MatchTable.h"
+#include "server/ProtectedQueue.h"
 
 class ThreadMatchStarter : public Thread {
     MatchTable& matches;

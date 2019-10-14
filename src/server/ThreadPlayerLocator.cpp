@@ -1,12 +1,12 @@
 #include <list>
 #include <memory>
-#include "Match.h"
-#include "Player.h"
+#include "server/Match.h"
+#include "server/Player.h"
 #include <iostream>
-#include "MatchTable.h"
-#include "ProtectedQueue.h"
+#include "server/MatchTable.h"
+#include "server/ProtectedQueue.h"
 #include "ThreadPlayerLocator.h"
-#include "ProtectedQueueError.h"
+#include "server/ProtectedQueueError.h"
 
 ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, MatchTable &matches, ProtectedQueue<std::shared_ptr<Match>>& not_read_matches):
     not_ready_matches(not_read_matches),
@@ -31,6 +31,12 @@ void ThreadPlayerLocator::stop() {
     this->incoming_players.close();
 }
 
+void ThreadPlayerLocator::kill_all_setter() {
+    for (auto & setter : this->options_setters) {
+        setter->stop();
+    }
+}
+
 void ThreadPlayerLocator::run() {
     while (this->server_running) {
         try {
@@ -50,9 +56,9 @@ void ThreadPlayerLocator::run() {
 
             this->remove_running_matches();
         } catch (const ProtectedQueueError &exception) {
-            this->server_running = false;
+            this->kill_all_setter();
             this->remove_running_matches();
-            /* Falta el caso de los partidos en espera*/
+            this->server_running = false;
         }
     }
 }

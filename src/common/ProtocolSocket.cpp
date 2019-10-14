@@ -54,4 +54,8 @@ void ProtocolSocket::receive_until_end_byte(std::vector<uint8_t>& buffer) {
     } while (buffer.back() != END_BYTE && len_next_msg == 1);
 }
 
+void ProtocolSocket::close() {
+    this->socket.close();
+}
+
 

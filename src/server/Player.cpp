@@ -44,4 +44,8 @@ uint8_t Player::receive_option() {
     return option;
 }
 
+void Player::kill() {
+    this->p_socket.close();
+}
+
 

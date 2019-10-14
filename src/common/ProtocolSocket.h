@@ -25,6 +25,8 @@ class ProtocolSocket {
         void receive(std::vector<uint8_t>& buffer);
 
         void receive_until_end_byte(std::vector<uint8_t>& buffer);
+
+    void close();
 };
 
 

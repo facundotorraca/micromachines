@@ -9,6 +9,7 @@
 
 class Match {
     std::atomic<bool> stopped;
+    std::atomic<bool> running;
 
     std::list<Player> players;
 
@@ -31,6 +32,8 @@ class Match {
         bool ended();
 
         void stop();
+
+        void run();
 };
 
 

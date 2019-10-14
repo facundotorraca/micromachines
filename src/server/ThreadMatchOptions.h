@@ -3,10 +3,10 @@
 
 #include <memory>
 #include "Thread.h"
-#include "Match.h"
+#include "server/Match.h"
 #include <atomic>
-#include "Player.h"
-#include "ProtectedQueue.h"
+#include "server/Player.h"
+#include "server/ProtectedQueue.h"
 
 class ThreadMatchOptions : public Thread {
     ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches;
@@ -23,6 +23,8 @@ class ThreadMatchOptions : public Thread {
         ThreadMatchOptions(Player &&player, std::shared_ptr<Match>&& match, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches);
 
         bool options_set();
+
+        void stop();
 
 };
 

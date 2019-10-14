@@ -1,8 +1,8 @@
 #include <list>
 #include <iostream>
-#include "Player.h"
+#include "server/Player.h"
 #include "ThreadAcceptor.h"
-#include "SocketAcceptorError.h"
+#include "server/SocketAcceptorError.h"
 #include "common/ProtocolSocket.h"
 
 ThreadAcceptor::ThreadAcceptor(const std::string &port, ProtectedQueue<Player>& incoming_players, MatchTable& matches):
@@ -24,9 +24,16 @@ void ThreadAcceptor::remove_confirmed_players() {
             (*new_player)->join();
             delete (*new_player);
             new_player = new_players.erase(new_player);
+            std::cout << "deleteado" << "\n";
         } else {
             new_player++;
         }
+    }
+}
+
+void ThreadAcceptor::kill_incoming_players() {
+    for (auto & new_player : this->new_players) {
+        new_player->stop();
     }
 }
 
@@ -42,9 +49,9 @@ void ThreadAcceptor::run() {
 
             this->remove_confirmed_players();
         } catch (const SocketAcceptorError &exception) {
-            this->server_running = false;
+            this->kill_incoming_players();
             this->remove_confirmed_players();
-            /* Falta eliminar los que no confirmaron */
+            this->server_running = false;
         }
     }
 }

@@ -18,7 +18,7 @@ void get_matches(ProtocolSocket& ps) {
 }
 
 int main(int argc, char* argv[]) {
-    std::string port("7778");
+    std::string port("7777");
     std::string host("127.0.0.1");
 
     Socket s;

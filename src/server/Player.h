@@ -25,6 +25,8 @@ class Player {
         std::string get_username();
 
         uint8_t receive_option();
+
+    void kill();
 };
 
 #endif //MICROMACHINES_PLAYER_H

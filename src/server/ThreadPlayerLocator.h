@@ -5,9 +5,9 @@
 #include <memory>
 #include <atomic>
 #include "Thread.h"
-#include "Player.h"
+#include "server/Player.h"
 #include "ThreadMatch.h"
-#include "MatchTable.h"
+#include "server/MatchTable.h"
 #include "ThreadMatchOptions.h"
 #include "server/ProtectedQueue.h"
 
@@ -21,6 +21,8 @@ class ThreadPlayerLocator : public Thread {
 
     private:
         void run() override;
+
+        void kill_all_setter();
 
         void remove_running_matches();
 
