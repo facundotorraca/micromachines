@@ -1,21 +1,19 @@
+#include <thread>
+#include <chrono>
 #include <iostream>
 #include "ThreadMatch.h"
 
-#include <thread>
-#include <chrono>
-
-ThreadMatch::ThreadMatch(Match *match):
+ThreadMatch::ThreadMatch(std::shared_ptr<Match>&& match):
+    match(std::move(match)),
     dead(false)
-{
-    this->match = match;
-}
+{}
 
 void ThreadMatch::run() {
-    std::cout << "Entre" << "\n";
+    this->match->run();
     std::string hola("hello");
 
     bool a = true;
-    while (a)  {
+    while (!dead)  {
         this->match->send_to_all(hola);
         std::this_thread::sleep_for(std::chrono::milliseconds(5000));
     }
@@ -25,4 +23,8 @@ void ThreadMatch::run() {
 
 bool ThreadMatch::is_running() {
     return !this->dead;
+}
+
+void ThreadMatch::stop() {
+    this->dead = true;
 }

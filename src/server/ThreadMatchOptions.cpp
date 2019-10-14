@@ -1,32 +1,42 @@
-#include "Player.h"
 #include <iostream>
-#include "ProtectedQueue.h"
+#include <utility>
+#include "server/Player.h"
 #include "ThreadMatchOptions.h"
+#include <common/SocketError.h>
+#include "server/ProtectedQueue.h"
 
 #define START_MATCH 1
 
-ThreadMatchOptions::ThreadMatchOptions(Player &&player, Match* match, ProtectedQueue<Match*>& not_ready_matches):
-    creator(std::move(player)),
+ThreadMatchOptions::ThreadMatchOptions(Player&& player, std::shared_ptr<Match>&& match, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches):
     not_ready_matches(not_ready_matches),
+    creator(std::move(player)),
+    match(std::move(match)),
     dead(false)
-{
-    this->match = match;
-}
+{}
 
 void ThreadMatchOptions::run() {
-    uint8_t option = 0;
+    try {
+        uint8_t option = 0;
 
-    while (option != START_MATCH) {
-        option = this->creator.receive_option();
-        /*MATCH APLICATE OPTION*/
+        while (option != START_MATCH) {
+            option = this->creator.receive_option();
+            /*MATCH APPLY OPTION*/
+        }
+        /*Put the creator on the match*/
+        this->match->add_player(std::move(creator));
+        this->not_ready_matches.push(this->match);
+        this->dead = true;
+    } catch (const SocketError& exception) {
+        this->dead = true;
     }
-    /*Put the creator on the match*/
-    this->match->add_player(std::move(creator));
-    this->match->start();
-    this->not_ready_matches.push(this->match);
-    this->dead = true;
 }
+
 
 bool ThreadMatchOptions::options_set() {
     return this->dead;
+}
+
+void ThreadMatchOptions::stop() {
+    this->creator.kill();
+    this->dead = true;
 }

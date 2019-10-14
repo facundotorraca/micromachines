@@ -1,14 +1,14 @@
-#include <mutex>
 #include <string>
+#include <utility>
 #include "Match.h"
 #include "Player.h"
 
-Match::Match(std::string match_creator):
-    running(false),
-    ready(false),
-    stopped(false)
+Match::Match(std::string match_creator, std::string match_name):
+    stopped(false),
+    running(false)
 {
-    this->match_creator = match_creator;
+    this->match_name = std::move(match_name);
+    this->match_creator = std::move(match_creator);
 }
 
 void Match::add_player(Player&& player) {
@@ -16,25 +16,7 @@ void Match::add_player(Player&& player) {
     this->players.push_back(std::move(player));
 }
 
-bool Match::is_ready() {
-    std::lock_guard<std::mutex> lock(this->mtx);
-    return this->ready;
-}
-
-void Match::start() {
-    std::lock_guard<std::mutex> lock(this->mtx);
-    this->ready = true;
-}
-
-bool Match::is_running() {
-    return this->running;
-}
-
-void Match::run() {
-    this->running = true;
-}
-
-void Match::send_to_all(std::string message) {
+void Match::send_to_all(std::string& message) {
     for (auto& player : this->players) {
         player.send(message);
     }
@@ -48,3 +30,24 @@ void Match::stop() {
     this->stopped = true;
 }
 
+std::string Match::get_match_name() {
+    return this->match_name;
+}
+
+std::string Match::get_match_creator() {
+    return this->match_creator;
+}
+
+std::string Match::get_match_name_to_send(int match_index) {
+    std::string match_name_to_send;
+    match_name_to_send.append("Match (" +  std::to_string(match_index) + ")");
+    match_name_to_send.append(" " + this->match_name + " ");
+    match_name_to_send.append("Created by: " + this->match_creator);
+    if (this->running) match_name_to_send.append(" c||");
+    match_name_to_send.append("\n");
+    return match_name_to_send;
+}
+
+void Match::run() {
+    this->running = true;
+}

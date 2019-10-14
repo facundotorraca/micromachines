@@ -8,32 +8,32 @@
 #include "Player.h"
 
 class Match {
-    std::atomic<bool> ready;
     std::atomic<bool> stopped;
     std::atomic<bool> running;
 
-    std::mutex mtx;
     std::list<Player> players;
+
+    std::string match_name;
     std::string match_creator;
 
     public:
-        explicit Match(std::string match_creator);
+        explicit Match(std::string match_creator, std::string match_name);
 
-        void send_to_all(std::string message);
+        std::string get_match_name_to_send(int match_index);
+
+        void send_to_all(std::string& message);
 
         void add_player(Player&& player);
 
-        bool is_running();
+        std::string get_match_creator();
 
-        bool is_ready();
-
-        void start();
+        std::string get_match_name();
 
         bool ended();
 
-        void run();
-
         void stop();
+
+        void run();
 };
 
 
