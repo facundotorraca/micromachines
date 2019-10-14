@@ -4,7 +4,7 @@
 #include "Socket.h"
 #include "ProtocolSocket.h"
 
-#define END_BYTE '\0'
+#define END_BYTE '\n'
 
 ProtocolSocket::ProtocolSocket(Socket &&socket):
     socket(std::move(socket))
@@ -46,13 +46,12 @@ void ProtocolSocket::send_end_byte() {
 void ProtocolSocket::receive_until_end_byte(std::vector<uint8_t>& buffer) {
     std::vector<uint8_t> internal_buffer(4096);
     uint8_t len_next_msg;
-    size_t bytes_recv = 0;
+    size_t bytes_recv = 0, bytes_saved = 0;
     do  {
         this->socket.receive(&len_next_msg, 1);
-        bytes_recv += this->socket.receive((uint8_t*)internal_buffer.data(), len_next_msg);
-        buffer.insert(buffer.end(), internal_buffer.begin(), internal_buffer.end());
-        internal_buffer.erase(internal_buffer.begin(), internal_buffer.end());
-    } while (buffer.back() != END_BYTE);
+        bytes_recv += this->socket.receive(&buffer[bytes_recv], len_next_msg);
+        std::cout << "Tam" << buffer.size() << "\n";
+    } while (buffer.back() != END_BYTE && len_next_msg == 1);
 }
 
 

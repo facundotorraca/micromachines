@@ -2,7 +2,6 @@
 #include <utility>
 #include "Match.h"
 #include "Player.h"
-#include <iostream>
 
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false)
@@ -41,9 +40,7 @@ std::string Match::get_match_creator() {
 std::string Match::get_match_name_to_send(int match_index) {
     std::string match_name_to_send;
     match_name_to_send.append("Match (" +  std::to_string(match_index) + ")");
-    match_name_to_send.append(" ");
-    match_name_to_send.append(this->match_name);
-    match_name_to_send.append(" ");
+    match_name_to_send.append(" " + this->match_name + " ");
     match_name_to_send.append("Created by: " + this->match_creator);
     match_name_to_send.append("\n");
     return match_name_to_send;

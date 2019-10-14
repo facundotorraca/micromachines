@@ -11,7 +11,6 @@ ThreadMatch::ThreadMatch(Match *match):
 }
 
 void ThreadMatch::run() {
-    std::cout << "Entre" << "\n";
     std::string hola("hello");
 
     bool a = true;

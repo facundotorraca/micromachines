@@ -10,7 +10,6 @@ void MatchTable::add(const std::string& match_name, Match* match) {
     if (!this->map.insert(std::pair<std::string, Match*>(match_name, match)).second) {
         std::cout << "error" << "\n";
     }
-    std::cout << this->map.size() <<"\n";
 }
 
 Match* MatchTable::get(const std::string& match_name) {
@@ -31,12 +30,12 @@ void MatchTable::remove_end_matches() {
 
 void MatchTable::send_matches(ProtocolSocket &p_socket) {
     int match_index = 1;
+    std::string match_name_to_send;
     for (auto & it : this->map) {
-        std::string match_name_to_send = it.second->get_match_name_to_send(match_index);
-        p_socket.send(match_name_to_send);
+        match_name_to_send.append(it.second->get_match_name_to_send(match_index));
         match_index++;
     }
-    p_socket.send_end_byte();
+    p_socket.send(match_name_to_send);
 }
 
 

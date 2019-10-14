@@ -7,14 +7,14 @@
 #define SUCCESS 0
 
 void get_matches(ProtocolSocket& ps) {
-    std::vector<uint8_t> buffer(4096);
+    std::vector<uint8_t> buffer(4096, 1);
 
-    ps.receive_until_end_byte(buffer);
+    ps.receive(buffer);
     std::string matches(reinterpret_cast<const char *>(buffer.data()), buffer.size());
 
-    std::cout << "#-----------------PARTIDAS EXISTENTES---------------##\n";
+    std::cout << "#-----------------PARTIDAS EXISTENTES---------------#\n";
     std::cout << matches;
-    std::cout << "#---------------------------------------------------##\n";
+    std::cout << "#---------------------------------------------------#\n";
 }
 
 int main(int argc, char* argv[]) {
