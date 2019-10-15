@@ -28,7 +28,18 @@ cd build
 cmake ..
 ```
 
-4. Compilado!
+4. Para compilar introduzca:
+
+```
+make
+```
+
+5. Ahora puede ejecutar el cliente y el servidor:
+
+```
+./micromachines-client
+./micromachines-server
+```
 
 ## Documentacion
 
