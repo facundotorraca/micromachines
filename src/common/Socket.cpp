@@ -6,6 +6,7 @@
 #include <cstring>
 #include <netdb.h>
 #include <string>
+#include <iostream>
 
 #define ERROR -1
 #define SUCCESS 0

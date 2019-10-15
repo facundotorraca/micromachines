@@ -48,4 +48,8 @@ void Player::kill() {
     this->p_socket.close();
 }
 
+bool Player::is_called(std::string &username) {
+    return this->username == username;
+}
+
 

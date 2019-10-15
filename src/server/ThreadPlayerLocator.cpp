@@ -1,8 +1,8 @@
 #include <list>
 #include <memory>
+#include <iostream>
 #include "server/Match.h"
 #include "server/Player.h"
-#include <iostream>
 #include "server/MatchTable.h"
 #include "server/ProtectedQueue.h"
 #include "ThreadPlayerLocator.h"

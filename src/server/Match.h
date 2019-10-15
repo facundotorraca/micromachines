@@ -21,6 +21,8 @@ class Match {
 
         std::string get_match_name_to_send(int match_index);
 
+        bool has_username(std::string& username);
+
         void send_to_all(std::string& message);
 
         void add_player(Player&& player);

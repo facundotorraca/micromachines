@@ -30,6 +30,7 @@ void MatchTable::remove_end_matches() {
 }
 
 void MatchTable::send_matches(ProtocolSocket &p_socket) {
+    std::lock_guard<std::mutex> lock(this->mtx);
     int match_index = 1;
     std::string match_name_to_send;
     for (auto & it : this->map) {
@@ -37,6 +38,17 @@ void MatchTable::send_matches(ProtocolSocket &p_socket) {
         match_index++;
     }
     p_socket.send(match_name_to_send);
+}
+
+bool MatchTable::match_name_available(std::string &match_name) {
+    std::lock_guard<std::mutex> lock(this->mtx);
+    return !(this->map.find(match_name) != this->map.end());
+}
+
+bool MatchTable::username_available(std::string &username, std::string &match_name) {
+    std::lock_guard<std::mutex> lock(this->mtx);
+    std::shared_ptr<Match> match = this->map[match_name];
+    return !match->has_username(username);
 }
 
 

@@ -16,9 +16,13 @@ class MatchTable {
     std::map<std::string, std::shared_ptr<Match>> map;
 
     public:
+        bool username_available(std::string& username, std::string& match_name);
+
         void add(const std::string& match_name, std::shared_ptr<Match> match);
 
         std::shared_ptr<Match> get(const std::string& match_name);
+
+        bool match_name_available(std::string& match_name);
 
         void send_matches(ProtocolSocket &p_socket);
 

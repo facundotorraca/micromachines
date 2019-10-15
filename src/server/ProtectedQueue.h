@@ -81,24 +81,6 @@ class ProtectedQueue {
                 return std::move(t);
             }
         }
-
-        /*
-        T* pop() {
-            std::unique_lock<std::mutex> lock(this->q_mtx);
-            while (this->queue.empty() && !this->q_closed) {
-                this->cv_pop.wait(lock);
-            }
-
-            if (this->queue.empty()) {
-                throw ProtectedQueueError("ProtectedQueue: POP Error");
-            } else {
-                T* t = this->queue.front();
-                this->queue.pop();
-                this->cv_push.notify_all();
-                return t;
-            }
-        }
-        */
 };
 
 

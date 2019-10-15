@@ -28,7 +28,6 @@ void ThreadMatchStarter::stop() {
     this->not_ready_matches.close();
 }
 
-
 void ThreadMatchStarter::run() {
     while (this->server_running) {
         try {
