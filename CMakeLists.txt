@@ -22,7 +22,6 @@ add_subdirectory(src/server)
 add_subdirectory(libs/Box2D)
 add_subdirectory(libs/yaml-cpp)
 add_subdirectory(src/client)
-add_subdirectory(prueba_sdl)
 
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)
