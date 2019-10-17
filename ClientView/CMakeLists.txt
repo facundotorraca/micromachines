@@ -14,13 +14,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 add_executable(ClientView
-  main.cpp
-  newmatchview.cpp
-  newmatchview.h
-  newmatchview.ui
-  mainwindow.cpp
-  mainwindow.h
-  mainwindow.ui
+        main.cpp
+        newmatchview.cpp
+        newmatchview.h
+        newmatchview.ui
+        mainwindow.cpp
+        mainwindow.h
+        mainwindow.ui
 )
 
 target_link_libraries(ClientView PRIVATE Qt5::Widgets)
