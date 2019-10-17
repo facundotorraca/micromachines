@@ -1,7 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <cmath>
-#include <iostream>
 
 #define SUCCESS 0
 
@@ -9,14 +8,13 @@ int main() {
     SDL_Window *win = nullptr;
     SDL_Renderer *renderer = nullptr;
     SDL_Texture *bitmapTex = nullptr;
-    int width = 800, height = 600;
+    int width = 1024, height = 720;
 
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &win, &renderer);
 
     bitmapTex = IMG_LoadTexture(renderer, "sprites/pitstop_car_1.png");
-
 
     bool rotleft = false;
     bool rotright = false;

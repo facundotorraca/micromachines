@@ -14,15 +14,18 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunreachable-code -Wformat=2")
 
 # Todos los #include son relativos a src
 include_directories(src)
+include_directories(libs)
 # Archivos generados por CMake
 include_directories(${PROJECT_BINARY_DIR}/src)
+
+file(GLOB_RECURSE BOX2D_SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "libs/Box2D/*.cpp" "libs/Box2D/*.h")
+add_library(Box2D STATIC ${BOX2D_SOURCES})
 
 add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)
-add_subdirectory(src/model)
-add_subdirectory(libs/Box2D)
 add_subdirectory(libs/yaml-cpp)
+add_subdirectory(model)
 
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)
