@@ -14,8 +14,8 @@
 GameMain::GameMain(ProtocolSocket &socket) : socket(std::move(socket)) {}
 
 void GameMain::start() {
-    Scene scene;
     ProtectedQueue<std::vector<uint8_t>> sender_queue(10);
+    Scene scene(sender_queue);
 
     ThreadDrawer drawer(scene);
     ThreadKeyMonitor key_monitor(scene);
@@ -26,4 +26,9 @@ void GameMain::start() {
     key_monitor.run();
     receiver.run();
     sender.run();
+
+    sender.join();
+    receiver.join();
+    key_monitor.join();
+    drawer.join();
 }

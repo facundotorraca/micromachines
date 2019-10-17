@@ -17,3 +17,5 @@ void Scene::handleServerEvent(std::vector<uint8_t>& vector) {
 void Scene::draw() {
 
 }
+
+Scene::Scene(ProtectedQueue<std::vector<uint8_t>> &queue) : queue(&queue){}

@@ -9,4 +9,13 @@ ThreadSender::ThreadSender(ProtocolSocket& socket,
         ProtectedQueue<std::vector<uint8_t>>& queue) : socket(&socket), queue(&queue){}
 
 void ThreadSender::run() {
+    auto running = true;
+    while (running) {
+        try {
+            auto data = queue->pop();
+            socket->send(data);
+        } catch (ProtectedQueueError& e) {
+            running = false;
+        }
+    }
 }

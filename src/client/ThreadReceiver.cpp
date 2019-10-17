@@ -3,6 +3,7 @@
 //
 
 #include <common/ProtocolSocket.h>
+#include <common/SocketError.h>
 #include "ThreadReceiver.h"
 #include "Scene.h"
 
@@ -12,7 +13,11 @@ void ThreadReceiver::run() {
     std::vector<uint8_t> buffer;
     auto running = true;
     while (running) {
-        this->socket->receive(buffer);
-        this->scene->handleServerEvent(buffer);
+        try {
+            this->socket->receive(buffer);
+            this->scene->handleServerEvent(buffer);
+        } catch (SocketError& e) {
+            running = false;
+        }
     }
 }

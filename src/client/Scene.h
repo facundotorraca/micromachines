@@ -7,10 +7,13 @@
 
 
 #include <SDL2/SDL_events.h>
+#include <common/ProtectedQueue.h>
 
 class Scene {
-
+    ProtectedQueue<std::vector<uint8_t>>* queue;
 public:
+    explicit Scene(ProtectedQueue<std::vector<uint8_t>> &queue);
+
     void handleKeyEvent(int key, SDL_EventType type);
 
     void handleServerEvent(std::vector<uint8_t>& vector);

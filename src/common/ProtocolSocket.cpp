@@ -39,4 +39,12 @@ void ProtocolSocket::close() {
     this->socket.close();
 }
 
+void ProtocolSocket::send(std::vector<uint8_t> &bytes) {
+    uint8_t r = bytes.size();
+    this->socket.send(&r, 1);
+    for (auto byte : bytes) {
+        this->socket.send(&byte, 1);
+    }
+}
+
 
