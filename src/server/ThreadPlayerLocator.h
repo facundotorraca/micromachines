@@ -4,12 +4,12 @@
 #include <list>
 #include <memory>
 #include <atomic>
-#include "Thread.h"
+#include "common/Thread.h"
 #include "server/Player.h"
 #include "ThreadMatch.h"
 #include "server/MatchTable.h"
 #include "ThreadMatchOptions.h"
-#include "server/ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 
 class ThreadPlayerLocator : public Thread {
     MatchTable& matches;

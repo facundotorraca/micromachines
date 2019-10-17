@@ -2,7 +2,7 @@
 #include <iostream>
 #include "server/MatchTable.h"
 #include "ThreadMatchStarter.h"
-#include "server/ProtectedQueueError.h"
+#include "common/ProtectedQueueError.h"
 
 ThreadMatchStarter::ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch *>& running_matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches):
     not_ready_matches(not_ready_matches),

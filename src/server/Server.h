@@ -5,7 +5,7 @@
 #include <memory>
 #include "ThreadMatch.h"
 #include "MatchTable.h"
-#include "ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 #include "ThreadAcceptor.h"
 #include "ThreadMatchStarter.h"
 #include "ThreadPlayerLocator.h"

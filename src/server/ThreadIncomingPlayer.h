@@ -2,11 +2,11 @@
 #define MICROMACHINES_THREADINCOMINGPLAYER_H
 
 #include <atomic>
-#include "Thread.h"
+#include "common/Thread.h"
 #include "server/Player.h"
 #include "server/MatchTable.h"
 #include "common/Socket.h"
-#include "server/ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 #include <common/ProtocolSocket.h>
 
 class ThreadIncomingPlayer : public Thread {

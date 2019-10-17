@@ -7,4 +7,6 @@ list(REMOVE_ITEM client_lib "main.cpp")
 
 add_library(client ${client_lib})
 target_link_libraries(client
-        common)
+        common
+        SDL2
+        SDL2_image)

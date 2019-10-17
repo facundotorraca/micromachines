@@ -4,7 +4,7 @@
 #include <atomic>
 #include <memory>
 #include "server/Match.h"
-#include "Thread.h"
+#include "common/Thread.h"
 
 class ThreadMatch : public Thread {
     std::shared_ptr<Match> match;

@@ -4,11 +4,11 @@
 #include <list>
 #include <string>
 #include <atomic>
-#include "Thread.h"
+#include "common/Thread.h"
 #include "server/Player.h"
 #include "server/MatchTable.h"
 #include "server/SocketAcceptor.h"
-#include "server/ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 #include "ThreadIncomingPlayer.h"
 
 class ThreadAcceptor : public Thread {

@@ -3,7 +3,7 @@
 #include "server/Player.h"
 #include "ThreadMatchOptions.h"
 #include <common/SocketError.h>
-#include "server/ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 
 #define START_MATCH 1
 

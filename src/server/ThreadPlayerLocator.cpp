@@ -4,9 +4,9 @@
 #include "server/Match.h"
 #include "server/Player.h"
 #include "server/MatchTable.h"
-#include "server/ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 #include "ThreadPlayerLocator.h"
-#include "server/ProtectedQueueError.h"
+#include "common/ProtectedQueueError.h"
 
 ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue<Player>& incoming_players, MatchTable &matches, ProtectedQueue<std::shared_ptr<Match>>& not_read_matches):
     not_ready_matches(not_read_matches),

@@ -2,10 +2,10 @@
 #define MICROMACHINES_THREADMATCHSTARTER_H
 
 #include <atomic>
-#include "Thread.h"
+#include "common/Thread.h"
 #include "ThreadMatch.h"
 #include "server/MatchTable.h"
-#include "server/ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 
 class ThreadMatchStarter : public Thread {
     MatchTable& matches;

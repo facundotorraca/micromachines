@@ -2,7 +2,7 @@
 #include "server/Player.h"
 #include "common/SocketError.h"
 #include "ThreadIncomingPlayer.h"
-#include "server/ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 #include <common/ProtocolSocket.h>
 
 #define JOIN_MODE 1

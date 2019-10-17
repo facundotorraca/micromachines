@@ -2,11 +2,11 @@
 #define MICROMACHINES_THREADMATCHOPTIONS_H
 
 #include <memory>
-#include "Thread.h"
+#include "common/Thread.h"
 #include "server/Match.h"
 #include <atomic>
 #include "server/Player.h"
-#include "server/ProtectedQueue.h"
+#include "common/ProtectedQueue.h"
 
 class ThreadMatchOptions : public Thread {
     ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches;
