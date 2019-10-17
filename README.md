@@ -13,9 +13,9 @@ tantos clientes como jugadores.
 
 Micromachines usa [CMake](http://www.cmake.org) para soportar la compilacion multiplataforma. Los pasos basicos para compilarse son:
 
-1. Descarge e instale [CMake](http://www.cmake.org) (Resources -> Download).
+1. Descargue e instale [CMake](http://www.cmake.org) (Resources -> Download).
 
-2. Dirigase al direcotirio raiz de micromachines y escriba:
+2. Diríjase al direcotirio raiz de Micromachines y escriba:
 
 ```
 mkdir build
@@ -28,7 +28,18 @@ cd build
 cmake ..
 ```
 
-4. Compilado!
+4. Para compilar introduzca:
+
+```
+make
+```
+
+5. Ahora puede ejecutar el cliente y el servidor:
+
+```
+./micromachines-client
+./micromachines-server
+```
 
 ## Documentacion
 
