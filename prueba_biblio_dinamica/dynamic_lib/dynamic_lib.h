@@ -1,8 +1,8 @@
 #ifndef DYNAMIC_LIB_
 #define DYNAMIC_LIB_
 
-#include <dlfcn.h>
 #include <string>
+#include <dlfcn.h>
 
 template <class INPUT, class OUTPUT>
 class DynamicLib{
