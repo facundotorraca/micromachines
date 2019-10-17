@@ -6,11 +6,17 @@
 #define MICROMACHINES_SCENE_H
 
 
-#include <SDL2/SDL_events.h>
+#include <SDL2/SDL.h>
+#include <string>
 #include <common/ProtectedQueue.h>
+#include <map>
+#include <client/Entities/Entity.h>
 
 class Scene {
     ProtectedQueue<std::vector<uint8_t>>* queue;
+    SDL_Window* win;
+    SDL_Renderer* rend;
+    std::map<uint8_t, std::unique_ptr<Entity>> entities;
 public:
     explicit Scene(ProtectedQueue<std::vector<uint8_t>> &queue);
 
@@ -19,6 +25,8 @@ public:
     void handleServerEvent(std::vector<uint8_t>& vector);
 
     void draw();
+
+    ~Scene();
 };
 
 

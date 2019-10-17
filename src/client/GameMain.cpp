@@ -4,6 +4,7 @@
 
 #include <common/ProtocolSocket.h>
 #include <common/ProtectedQueue.h>
+#include <SDL2/SDL.h>
 #include "GameMain.h"
 #include "Scene.h"
 #include "ThreadDrawer.h"
@@ -14,6 +15,8 @@
 GameMain::GameMain(ProtocolSocket &socket) : socket(std::move(socket)) {}
 
 void GameMain::start() {
+    SDL_Init(SDL_INIT_VIDEO);
+
     ProtectedQueue<std::vector<uint8_t>> sender_queue(10);
     Scene scene(sender_queue);
 
@@ -31,4 +34,6 @@ void GameMain::start() {
     receiver.join();
     key_monitor.join();
     drawer.join();
+
+    SDL_Quit();
 }

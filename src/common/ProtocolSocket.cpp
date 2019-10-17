@@ -26,9 +26,12 @@ void ProtocolSocket::send(uint8_t byte) {
 
 void ProtocolSocket::receive(std::vector<uint8_t>& buffer) {
     uint8_t len_next_message = 0;
+    uint8_t buf[4096];
     this->socket.receive(&len_next_message, 1);
-    size_t bytes_recv = this->socket.receive(buffer.data(), len_next_message);
-    buffer.resize(bytes_recv);
+    size_t bytes_recv = this->socket.receive(buf, len_next_message);
+    for (int i = 0; i < bytes_recv && i < 4096; i++){
+        buffer.emplace_back(buf[i]);
+    }
 }
 
 void ProtocolSocket::receive(uint8_t& byte) {
