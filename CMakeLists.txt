@@ -20,16 +20,14 @@ include_directories(${PROJECT_BINARY_DIR}/src)
 add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)
+add_subdirectory(src/model)
 add_subdirectory(libs/Box2D)
 add_subdirectory(libs/yaml-cpp)
-add_subdirectory(prueba_sdl)
-add_subdirectory(prueba_biblio_dinamica)
-
 
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)
-target_link_libraries(micromachines-server server common)
+target_link_libraries(micromachines-server server common model)
 
 # Generar el cliente
 add_executable(micromachines-client src/client/main.cpp)
-target_link_libraries(micromachines-client client common)
+target_link_libraries(micromachines-client client common model)
