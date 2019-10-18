@@ -11,4 +11,4 @@ build/
 CMakeCache.txt
 *.cmake
 .DS_Store
-/model/car
+/src/model/car
