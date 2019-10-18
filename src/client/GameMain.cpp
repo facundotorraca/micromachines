@@ -32,6 +32,7 @@ void GameMain::start() {
 
     key_monitor.join();
 
+    sender_queue.close();
     sender.shutdown();
     sender.join();
 

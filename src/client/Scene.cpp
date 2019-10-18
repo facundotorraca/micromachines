@@ -8,6 +8,7 @@
 #include <common/EntityType.h>
 #include <client/Entities/Car.h>
 #include <common/Key.h>
+#include <iostream>
 
 void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
 
@@ -51,16 +52,17 @@ void Scene::handleServerEvent(std::vector<uint8_t>& vector) {
     uint8_t posY = vector[3];
     uint8_t rot = vector[4];
 
+    std::unique_lock<std::mutex> lock(mtx);
     try {
         auto& entity = entities.at(id);
     } catch (std::exception& e) {
         entities.emplace(id, new Car(rend));
     }
-
     entities[id]->update(posX, posY, rot);
 }
 
 void Scene::draw() {
+    std::unique_lock<std::mutex> lock(mtx);
     SDL_RenderClear(rend);
     for (const auto& entity : entities) {
         entity.second->draw();
@@ -69,7 +71,7 @@ void Scene::draw() {
 }
 
 Scene::Scene(ProtectedQueue<std::vector<uint8_t>> &queue) : queue(&queue), win(nullptr),
-        rend(nullptr){
+        rend(nullptr), mtx(){
     SDL_CreateWindowAndRenderer(800, 600, 0, &win, &rend);
 }
 

@@ -17,6 +17,7 @@ class Scene {
     SDL_Window* win;
     SDL_Renderer* rend;
     std::map<uint8_t, std::unique_ptr<Entity>> entities;
+    std::mutex mtx;
 public:
     explicit Scene(ProtectedQueue<std::vector<uint8_t>> &queue);
 

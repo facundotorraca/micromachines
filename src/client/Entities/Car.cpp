@@ -13,7 +13,7 @@ void Car::draw() {
 }
 
 Car::Car(SDL_Renderer* r) : Entity(r) {
-    this->tex = IMG_LoadTexture(rend, "/mnt/c/Users/javif/Desktop/facultad/taller/Micromachines/src/client/Entities/sprites/pitstop_car_1.png");
+    this->tex = IMG_LoadTexture(rend, "/home/javier/Facultad/Taller/Micromachines/src/client/Entities/sprites/pitstop_car_1.png");
     if (!tex) {
         std::cout << "Cague" << std::endl;
     }

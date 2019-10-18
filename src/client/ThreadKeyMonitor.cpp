@@ -15,9 +15,11 @@ void ThreadKeyMonitor::run() {
             case SDL_QUIT: running = false; break;
             case SDL_KEYDOWN: {
                 scene->handleKeyEvent(keyEvent.keysym.sym, SDL_KEYDOWN);
+                break;
             }
             case SDL_KEYUP: {
                 scene->handleKeyEvent(keyEvent.keysym.sym, SDL_KEYUP);
+                break;
             }
         }
     }
