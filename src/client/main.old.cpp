@@ -2,7 +2,6 @@
 #include <iostream>
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-#include <client/qt_views/view_manager.h>
 
 #define SUCCESS 0
 
@@ -17,17 +16,12 @@ void get_matches(ProtocolSocket& ps) {
     std::cout << "#---------------------------------------------------#\n";
 }
 
-int main(int argc, char *argv[]) {
-
+int main() {
     std::string port("7778");
     std::string host("127.0.0.1");
 
     Socket s;
-    ViewManager view_manager(argc, argv, s);
-    view_manager.run();
-
-    std::cout << "SALI DE LAS VISTAS";
-    //s.connect(host, port);
+    s.connect(host, port);
     ProtocolSocket ps(std::move(s));
 
     get_matches(ps);
