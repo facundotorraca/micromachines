@@ -18,6 +18,8 @@ class Scene {
     SDL_Renderer* rend;
     std::map<uint8_t, std::unique_ptr<Entity>> entities;
     std::mutex mtx;
+    uint8_t my_car_id;
+    SDL_Point camera{};
 public:
     explicit Scene(ProtectedQueue<std::vector<uint8_t>> &queue);
 

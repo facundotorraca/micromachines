@@ -17,8 +17,10 @@ void ThreadMatch::run() {
     while (!dead)  {
         i++;
         std::vector<uint8_t> hola{1, TYPE_CAR, i, 100, 0};
+        std::vector<uint8_t> chau{2, TYPE_CAR, 30, 10, 30};
         this->match->send_to_all(hola);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        this->match->send_to_all(chau);
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     this->match->stop();
     this->dead = true;

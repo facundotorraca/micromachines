@@ -12,7 +12,7 @@
 class Car : public Entity {
 public:
     explicit Car(SDL_Renderer* r);
-    void draw() override;
+    void draw(SDL_Point camera) override;
 };
 
 

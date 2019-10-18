@@ -16,7 +16,7 @@ protected:
     SDL_Renderer* rend;
 public:
     explicit Entity(SDL_Renderer* rend) : rend(rend){};
-    virtual void draw() = 0;
+    virtual void draw(SDL_Point camera) = 0;
     void update(int px, int py, int r) {
         this->posX = px;
         this->posY = py;
