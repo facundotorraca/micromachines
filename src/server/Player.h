@@ -20,6 +20,8 @@ class Player {
 
         std::string get_match_name();
 
+        void send(std::vector<int32_t>& msg);
+
         void send(std::string& msg);
 
         std::string get_username();

@@ -23,7 +23,7 @@ class Match {
 
         bool has_username(std::string& username);
 
-        void send_to_all(std::string& message);
+        void send_to_all(std::vector<int32_t>& message);
 
         void add_player(Player&& player);
 

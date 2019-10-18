@@ -2,12 +2,14 @@
 #define MICROMACHINES_THREAD_H
 
 #include <thread>
+#include <atomic>
 
 class Thread {
-    std::thread thread{};
-
+        std::thread thread;
+    protected:
+        std::atomic<bool> running;
     public:
-        Thread() {}
+        Thread() : thread(), running(true){}
 
         void start() {
             thread = std::thread(&Thread::run, this);
@@ -19,7 +21,11 @@ class Thread {
 
         virtual void run() = 0;
 
-        virtual ~Thread() {}
+        virtual ~Thread() = default;
+
+        void shutdown() {
+            this->running = false;
+        }
 };
 
 

@@ -26,7 +26,7 @@ void Match::add_player(Player&& player) {
     }
 }
 
-void Match::send_to_all(std::string& message) {
+void Match::send_to_all(std::vector<int32_t>& message) {
     for (auto& player : this->players) {
         player.send(message);
     }

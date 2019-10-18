@@ -9,7 +9,7 @@
 #include <common/Thread.h>
 #include "Scene.h"
 
-class ThreadDrawer : public Thread{
+class ThreadDrawer : public Thread {
     Scene* scene;
 public:
     explicit ThreadDrawer(Scene& scene);

@@ -78,6 +78,7 @@ public:
 	int32 m_count;
 };
 
+
 inline b2PolygonShape::b2PolygonShape()
 {
 	m_type = e_polygon;

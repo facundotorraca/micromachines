@@ -5,8 +5,9 @@
 #ifndef MICROMACHINES_THREADRECEIVER_H
 #define MICROMACHINES_THREADRECEIVER_H
 
-#include "common/ProtocolSocket.h"
 #include "Scene.h"
+#include "common/Thread.h"
+#include "common/ProtocolSocket.h"
 
 class ThreadReceiver : public Thread {
     Scene* scene;

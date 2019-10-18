@@ -15,5 +15,4 @@ public:
     void start();
 };
 
-
 #endif //MICROMACHINES_GAMEMAIN_H

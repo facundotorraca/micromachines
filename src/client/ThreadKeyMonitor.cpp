@@ -5,20 +5,21 @@
 #include "ThreadKeyMonitor.h"
 #include <SDL2/SDL.h>
 
-ThreadKeyMonitor::ThreadKeyMonitor(Scene &scene) : scene(&scene) {}
+ThreadKeyMonitor::ThreadKeyMonitor(Scene &scene) : Thread(), scene(&scene) {}
 
 void ThreadKeyMonitor::run() {
-    auto running = true;
     SDL_Event e;
-    while (SDL_WaitEvent(&e) && running) {
+    while (SDL_WaitEvent(&e) && this->running) {
         auto& keyEvent = (SDL_KeyboardEvent&) e;
         switch (e.type) {
             case SDL_QUIT: running = false; break;
             case SDL_KEYDOWN: {
                 scene->handleKeyEvent(keyEvent.keysym.sym, SDL_KEYDOWN);
+                break;
             }
             case SDL_KEYUP: {
                 scene->handleKeyEvent(keyEvent.keysym.sym, SDL_KEYUP);
+                break;
             }
         }
     }

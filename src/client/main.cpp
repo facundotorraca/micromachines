@@ -3,6 +3,7 @@
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
 #include <client/qt_views/view_manager.h>
+#include "GameMain.h"
 
 #define SUCCESS 0
 
@@ -18,6 +19,8 @@ void get_matches(ProtocolSocket& ps) {
 }
 
 int main(int argc, char *argv[]) {
+      /*Todo esto es lo que hizo facu
+     * Habría que reemplazarlo por Qt*/
 
     std::string port("7778");
     std::string host("127.0.0.1");
@@ -87,12 +90,13 @@ int main(int argc, char *argv[]) {
         continue_receiving = false;
     }
 
-    while (continue_receiving) {
-        buffer.clear(); buffer.resize(4096);
+    /* Aca empieza SDL
+     * "ps" es el ProtocolSocket ya conectado al servidor
+     * se debería conectar en la ventana de qt
+     */
 
-        ps.receive(buffer);
-        std::string msg(reinterpret_cast<const char *>(buffer.data()), 5);
-        std::cout << msg << "\n";
-    }
+    GameMain game(ps);
+    game.start();
+
     return SUCCESS;
 }

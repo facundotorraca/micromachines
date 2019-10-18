@@ -18,8 +18,12 @@ class ProtocolSocket {
 
         void send(std::string& message);
 
+        void send(std::vector<int32_t>& bytes);
+        void send(std::vector<uint8_t>& bytes);
+
         void receive(uint8_t& byte);
 
+        void receive(std::vector<int32_t>& buffer);
         void receive(std::vector<uint8_t>& buffer);
 
     void close();
