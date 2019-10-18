@@ -6,7 +6,7 @@
 #include "ThreadSender.h"
 
 ThreadSender::ThreadSender(ProtocolSocket& socket,
-        ProtectedQueue<std::vector<uint8_t>>& queue) : socket(&socket), queue(&queue){}
+        ProtectedQueue<std::vector<int32_t>>& queue) : socket(&socket), queue(&queue){}
 
 void ThreadSender::run() {
     while (running) {

@@ -1,0 +1,12 @@
+//
+// Created by javier on 18/10/19.
+//
+
+#ifndef MICROMACHINES_MSGTYPES_H
+#define MICROMACHINES_MSGTYPES_H
+
+#define MSG_UPDATE_ENTITY 41
+#define MSG_MAP 42
+#define MSG_CAR_ID 43
+
+#endif //MICROMACHINES_MSGTYPES_H

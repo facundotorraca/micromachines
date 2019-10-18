@@ -5,7 +5,6 @@
 #include "Car.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <iostream>
 
 void Car::draw(SDL_Point camera) {
     int x = (1280/2) + (posX-camera.x);
@@ -17,4 +16,3 @@ void Car::draw(SDL_Point camera) {
 Car::Car(SDL_Renderer* r) : Entity(r) {
     this->tex = IMG_LoadTexture(rend, "/home/javier/Facultad/Taller/Micromachines/src/client/Entities/sprites/pitstop_car_1.png");
 }
-

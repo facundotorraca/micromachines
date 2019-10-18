@@ -11,7 +11,7 @@ ThreadReceiver::ThreadReceiver(ProtocolSocket& socket, Scene& scene) : scene(&sc
 
 void ThreadReceiver::run() {
     while (running) {
-        std::vector<uint8_t> buffer;
+        std::vector<int32_t> buffer;
         try {
             this->socket->receive(buffer);
             this->scene->handleServerEvent(buffer);

@@ -17,7 +17,7 @@ GameMain::GameMain(ProtocolSocket &socket) : socket(std::move(socket)) {}
 void GameMain::start() {
     SDL_Init(SDL_INIT_VIDEO);
 
-    ProtectedQueue<std::vector<uint8_t>> sender_queue(10);
+    ProtectedQueue<std::vector<int32_t>> sender_queue(10);
     Scene scene(sender_queue);
 
     ThreadDrawer drawer(scene);
