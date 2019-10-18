@@ -34,6 +34,10 @@ std::string Player::get_username() {
     return this->username;
 }
 
+void Player::send(std::vector<uint8_t>& msg) {
+    this->p_socket.send(msg);
+}
+
 void Player::send(std::string& msg) {
     this->p_socket.send(msg);
 }

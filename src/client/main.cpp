@@ -2,7 +2,7 @@
 #include <iostream>
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-#include "../../client_logic/GameMain.h"
+#include "GameMain.h"
 
 #define SUCCESS 0
 
@@ -90,8 +90,8 @@ int main() {
      * se debería conectar en la ventana de qt
      */
 
-    //GameMain game(ps);
-    //game.start();
+    GameMain game(ps);
+    game.start();
 
     return SUCCESS;
 }
