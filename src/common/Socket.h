@@ -8,6 +8,7 @@
 
 class Socket {
     int fd;
+    bool is_connect;
 
     public:
 
@@ -22,6 +23,8 @@ class Socket {
         int send(uint8_t* buf, size_t len) const;
 
         void connect(const std::string& host, const std::string& port);
+
+        bool get_connect();
 
         void close();
 

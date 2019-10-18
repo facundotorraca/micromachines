@@ -12,18 +12,20 @@
 #define SUCCESS 0
 #define INVALID_FD -1
 
-/*--------------------------PUBLIC------------------------------*/
-Socket::Socket() {
-    this->fd = INVALID_FD;
-}
+#define MSG_NOSIGNAL 0
 
-Socket::Socket(int fd) {
-    this->fd = fd;
-}
+/*--------------------------PUBLIC------------------------------*/
+Socket::Socket() : is_connect(false),
+                   fd(INVALID_FD) {}
+
+Socket::Socket(int fd) : is_connect(true),
+                          fd(fd){}
 
 Socket::Socket(Socket&& other) noexcept {
     this->fd = other.fd;
+    this->is_connect = other.is_connect;
     other.fd = INVALID_FD;
+    other.is_connect = false;
 }
 
 int Socket::receive(uint8_t* buf, size_t len) {
@@ -71,6 +73,7 @@ void Socket::connect(const std::string& host, const std::string& port) {
 
         if (::connect(this->fd, rst_iter->ai_addr, rst_iter->ai_addrlen) == SUCCESS) {
             freeaddrinfo(result);
+            this->is_connect = true;
             return; //Connect succesfully
         }
         ::close(this->fd);
@@ -78,6 +81,10 @@ void Socket::connect(const std::string& host, const std::string& port) {
     }
     freeaddrinfo(result);
     throw SocketError("Socket: CONNECT Error");
+}
+
+bool Socket::get_connect() {
+  return this->is_connect;
 }
 
 void Socket::close() {
