@@ -44,16 +44,17 @@ void ThreadPlayerLocator::run() {
 
             if (new_player.is_on_join_mode()) {
                 std::shared_ptr<Match> match = this->matches.get(new_player.get_match_name());
-                match->add_player(std::move(new_player));
+                auto* setter = new ThreadMatchOptions(std::move(new_player), std::move(match));
+                setter->start_player_options();
+                /*agregarlo a algun lado*/
             } else {
                 std::shared_ptr<Match> new_match(new Match(new_player.get_username(), new_player.get_match_name()));
                 this->matches.add(new_player.get_match_name(), new_match);
 
-                auto* setter = new ThreadMatchOptions(std::move(new_player), std::move(new_match), this->not_ready_matches);
+                auto* setter = new ThreadMatchOptions(std::move(new_player), std::move(new_match));
                 this->options_setters.push_back(setter);
-                setter->start();
+                setter->start_match_options(&this->not_ready_matches);
             }
-
             this->remove_running_matches();
         } catch (const ProtectedQueueError &exception) {
             this->kill_all_setter();

@@ -8,6 +8,8 @@
 class Player {
     ProtocolSocket p_socket;
     uint8_t mode;
+
+    uint8_t car_model; /* esto despues se puede cambiar*/
     std::string username;
     std::string match_name;
 
@@ -29,6 +31,8 @@ class Player {
         uint8_t receive_option();
 
         bool is_on_join_mode();
+
+        void set_car_model(uint8_t car_model);
 
         void kill();
 };

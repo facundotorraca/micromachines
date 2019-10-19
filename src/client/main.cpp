@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
       /*Todo esto es lo que hizo facu
       * Habría que reemplazarlo por Qt*/
 
-    std::string port("7778");
+    std::string port("7777");
     std::string host("127.0.0.1");
 
     Socket s;
@@ -78,6 +78,8 @@ int main(int argc, char *argv[]) {
         ps.send(start_game);
     } else {
         std::cout << "Waiting for the game to START \n";
+        uint8_t car = 1;
+        ps.send(car);
     }
 
     bool continue_receiving = true;

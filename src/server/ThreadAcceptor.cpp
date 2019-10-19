@@ -24,7 +24,6 @@ void ThreadAcceptor::remove_confirmed_players() {
             (*new_player)->join();
             delete (*new_player);
             new_player = new_players.erase(new_player);
-            std::cout << "deleteado" << "\n";
         } else {
             new_player++;
         }

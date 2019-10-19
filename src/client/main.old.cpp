@@ -12,7 +12,7 @@ void get_matches(ProtocolSocket& ps) {
     std::string matches(reinterpret_cast<const char *>(buffer.data()), buffer.size());
 
     std::cout << "#-----------------PARTIDAS EXISTENTES---------------#\n";
-    std::cout << matches;
+    std::cout << matches << "\n";
     std::cout << "#---------------------------------------------------#\n";
 }
 

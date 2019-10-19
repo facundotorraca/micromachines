@@ -9,6 +9,7 @@
 Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name):
     p_socket(std::move(p_socket))
 {
+    this->car_model = 0; //Esto despues lo hacemos con un objeto!
     this->mode = mode;
     this->username = std::move(username);
     this->match_name = std::move(match_name);
@@ -54,6 +55,10 @@ void Player::kill() {
 
 bool Player::is_called(std::string &username) {
     return this->username == username;
+}
+
+void Player::set_car_model(uint8_t car_model) {
+    this->car_model = car_model;
 }
 
 
