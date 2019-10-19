@@ -3,19 +3,9 @@
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
 #include "GameMain.h"
+#include "../../qt_views/view_manager.h"
 
 #define SUCCESS 0
-
-void get_matches(ProtocolSocket& ps) {
-    std::vector<uint8_t> buffer(4096, 1);
-
-    ps.receive(buffer);
-    std::string matches(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-
-    std::cout << "#-----------------PARTIDAS EXISTENTES---------------#\n";
-    std::cout << matches;
-    std::cout << "#---------------------------------------------------#\n";
-}
 
 int main(int argc, char *argv[]) {
       /*Todo esto es lo que hizo facu
@@ -24,14 +14,10 @@ int main(int argc, char *argv[]) {
     std::string port("7777");
     std::string host("127.0.0.1");
 
-    Socket s;
-    //ViewManager view_manager(argc, argv, s);
-    //view_manager.run();
-    //std::cout << "SALI DE LAS VISTAS";
-    s.connect(host, port);
-    ProtocolSocket ps(std::move(s));
 
-    get_matches(ps);
+    ViewManager view_manager(argc, argv);
+
+    ProtocolSocket ps(view_manager.run());
 
     std::cout << "Press 1 to join match" << "\n";
     std::cout << "Press 2 to start match" << "\n";
@@ -95,8 +81,8 @@ int main(int argc, char *argv[]) {
      * se debería conectar en la ventana de qt
      */
 
-    GameMain game(ps);
-    game.start();
+    //GameMain game(ps);
+    //game.start();
 
     return SUCCESS;
 }

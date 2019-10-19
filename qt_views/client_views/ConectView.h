@@ -2,9 +2,9 @@
 #define CONECTVIEW_H
 
 #include <QDialog>
-#include <QDialogButtonBox>
-#include <common/Socket.h>
-#include <client/qt_views/client_views/ConectView.h>
+#include <common/socket.h>
+#include <common/ProtocolSocket.h>
+#include <client/qt_views/ui_conectview.h>
 
 class ConectView : public QDialog {
  Q_OBJECT

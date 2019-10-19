@@ -36,7 +36,7 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QPlainTextEdit" name="ServiceTextIn">
+      <widget class="QPlainTextEdit" name="ServiceTxtIn">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
          <horstretch>0</horstretch>

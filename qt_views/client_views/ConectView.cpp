@@ -4,7 +4,7 @@
 #include <QtWidgets/QPlainTextEdit>
 
 ConectView::ConectView(Socket &sck, QWidget *parent)
-                      : QDialog(parent), ui(), socket(sck) {
+                      : QDialog(parent), ui(), socket(sck){
   ui.setupUi(this);
 }
 
