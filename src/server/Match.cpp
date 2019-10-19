@@ -87,8 +87,9 @@ void Match::run() {
 
     for (auto & player : players) {
         this->updates_for_clients.emplace(player.get_ID(), 100);
-        this->thread_players.emplace_back(updates_race,
-                updates_for_clients.at(player.get_ID()), player);
+        this->thread_players.emplace_back(
+                updates_for_clients.at(player.get_ID()),
+                updates_race, player);
         thread_players.back().start();
     }
 

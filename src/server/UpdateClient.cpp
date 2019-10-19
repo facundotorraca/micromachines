@@ -3,3 +3,7 @@
 //
 
 #include "UpdateClient.h"
+
+void UpdateClient::send(ProtocolSocket &socket) {
+
+}
