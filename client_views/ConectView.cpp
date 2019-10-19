@@ -1,7 +1,7 @@
 #include "ConectView.h"
-#include "ui_conectview.h"
 #include <iostream>
 #include <string>
+#include <QtWidgets/QPlainTextEdit>
 
 ConectView::ConectView(Socket &sck, QWidget *parent)
                       : QDialog(parent), ui(), socket(sck) {

@@ -2,8 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <common/socket.h>
-#include <client/qt_views/ui_mainwindow.h>
+#include <common/Socket.h>
 
 class MainWindow : public QMainWindow {
  Q_OBJECT

@@ -3,8 +3,8 @@
 
 #include <QDialog>
 #include <QDialogButtonBox>
-#include <common/socket.h>
-#include <client/qt_views/ui_conectview.h>
+#include <common/Socket.h>
+#include <client/qt_views/client_views/ConectView.h>
 
 class ConectView : public QDialog {
  Q_OBJECT
