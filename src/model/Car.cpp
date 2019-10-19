@@ -115,18 +115,10 @@ std::vector<float> Car::get_wheels_angle() {
 float Car::get_desire_angle(uint8_t key) {
     float desire_angle = 0;
     if (key == KEY_LEFT) {
-        if ((int(abs(this->get_angle())) % 360) <= 180) {
-            desire_angle = MAX_ROTATION_ANGLE * DEGTORAD;
-        } else {
-            desire_angle = -MAX_ROTATION_ANGLE * DEGTORAD;
-        }
+        desire_angle = MAX_ROTATION_ANGLE * DEGTORAD;
     }
     if (key == KEY_RIGHT) {
-        if ((int(abs(this->get_angle())) % 360) <= 180) {
-            desire_angle = -MAX_ROTATION_ANGLE * DEGTORAD;
-        } else {
-            desire_angle = MAX_ROTATION_ANGLE * DEGTORAD;
-        }
+        desire_angle = -MAX_ROTATION_ANGLE * DEGTORAD;
     }
     return desire_angle;
 }
