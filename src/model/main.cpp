@@ -27,8 +27,8 @@ int main() {
 
     SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &win, &renderer);
 
-    bitmapTex_1 = IMG_LoadTexture(renderer,"/home/facundotorraca/Documents/Taller de Programacion/TallerDeProgramacion-TP4/src/model/sprites/autocopado.png");
-    bitmapTex_2 = IMG_LoadTexture(renderer,"/home/facundotorraca/Documents/Taller de Programacion/TallerDeProgramacion-TP4/src/model/sprites/tire.jpg");
+    bitmapTex_1 = IMG_LoadTexture(renderer,"assets/sprites/autocopado.png");
+    bitmapTex_2 = IMG_LoadTexture(renderer,"assets/sprites/wheel.png");
     bool running = true;
 
     float center_car_x = 0;
