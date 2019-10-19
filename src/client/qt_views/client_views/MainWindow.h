@@ -3,15 +3,20 @@
 
 #include <QMainWindow>
 #include <common/socket.h>
+#include <common/ProtocolSocket.h>
 #include <client/qt_views/ui_mainwindow.h>
+#include "CreateView.h"
 
 class MainWindow : public QMainWindow {
  Q_OBJECT
   Ui::MainWindow ui;
-  Socket &socket;
+  ProtocolSocket &ps;
+  std::vector<std::string> matches;
+  CreateView create_view;
  public:
-  explicit MainWindow(Socket &sck, QWidget *parent = nullptr);
+  explicit MainWindow(ProtocolSocket &ps, QWidget *parent = nullptr);
   virtual ~MainWindow();
+ private:
  private slots:
   void on_createMatchBtn_clicked();
 };
