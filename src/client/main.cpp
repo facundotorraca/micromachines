@@ -2,14 +2,13 @@
 #include <iostream>
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-#include <client/qt_views/view_manager.h>
 #include "GameMain.h"
 
 #define SUCCESS 0
 
 int main(int argc, char *argv[]) {
       /*Todo esto es lo que hizo facu
-     * Habría que reemplazarlo por Qt*/
+      * Habría que reemplazarlo por Qt*/
 
     std::string port("7778");
     std::string host("127.0.0.1");

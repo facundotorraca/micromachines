@@ -14,5 +14,5 @@ void Car::draw(SDL_Point camera) {
 }
 
 Car::Car(SDL_Renderer* r) : Entity(r) {
-    this->tex = IMG_LoadTexture(rend, "/home/javier/Facultad/Taller/Micromachines/src/client/Entities/sprites/pitstop_car_1.png");
+    this->tex = IMG_LoadTexture(rend, "assets/sprites/pitstop_car_1.png");
 }

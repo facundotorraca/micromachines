@@ -14,5 +14,5 @@ void Track::draw(SDL_Point camera) {
 }
 
 Track::Track(SDL_Renderer *rend, uint8_t map_id) : Entity(rend) {
-    this->tex = IMG_LoadTexture(rend, "/home/javier/Facultad/Taller/Micromachines/src/client/Entities/sprites/track.png");
+    this->tex = IMG_LoadTexture(rend, "assets/sprites/track.png");
 }

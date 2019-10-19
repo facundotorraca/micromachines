@@ -13,7 +13,9 @@ class RacingTrack {
     public:
         explicit RacingTrack(b2Vec2& gravity);
 
-        b2Body* add_car(b2BodyDef& car);
+        b2Body* add_body(b2BodyDef& body);
+
+        b2World& get_world();
 
         void update();
 };

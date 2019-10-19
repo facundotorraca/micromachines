@@ -1,6 +1,4 @@
 #include "MainWindow.h"
-#include "ui_mainwindow.h"
-
 #include <iostream>
 
 std::string get_matches(ProtocolSocket &ps) {
