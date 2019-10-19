@@ -10,7 +10,6 @@ CreateView::CreateView(ProtocolSocket &ps, QWidget *parent) :
 }
 
 void CreateView::on_btnBoxCreate_accepted() {
-  std::cout << "VOY A CREAR UNA PARTIDA \n";
   std::vector<uint8_t> buffer(4096);
   std::string server_match_answer("ERROR");
   while (server_match_answer.substr(0,5) == "ERROR") {
