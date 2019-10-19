@@ -24,6 +24,8 @@ add_library(Box2D STATIC ${BOX2D_SOURCES})
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
+find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+
 add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)

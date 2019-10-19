@@ -20,17 +20,16 @@ void get_matches(ProtocolSocket& ps) {
 
 int main(int argc, char *argv[]) {
       /*Todo esto es lo que hizo facu
-     * Habría que reemplazarlo por Qt*/
+      * Habría que reemplazarlo por Qt*/
 
     std::string port("7778");
     std::string host("127.0.0.1");
 
     Socket s;
-    ViewManager view_manager(argc, argv, s);
-    view_manager.run();
-
-    std::cout << "SALI DE LAS VISTAS";
-    //s.connect(host, port);
+    //ViewManager view_manager(argc, argv, s);
+    //view_manager.run();
+    //std::cout << "SALI DE LAS VISTAS";
+    s.connect(host, port);
     ProtocolSocket ps(std::move(s));
 
     get_matches(ps);
