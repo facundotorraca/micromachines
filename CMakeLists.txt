@@ -31,6 +31,9 @@ add_subdirectory(src/server)
 add_subdirectory(src/client)
 add_subdirectory(src/model)
 
+# add sprites directory
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)
 target_link_libraries(micromachines-server server common)
