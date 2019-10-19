@@ -114,10 +114,10 @@ std::vector<float> Car::get_wheels_angle() {
 
 float Car::get_desire_angle(uint8_t key) {
     float desire_angle = 0;
-    if (key == KEY_LEFT) {
+    if (key == KEY_RIGHT) {
         desire_angle = MAX_ROTATION_ANGLE * DEGTORAD;
     }
-    if (key == KEY_RIGHT) {
+    if (key == KEY_LEFT) {
         desire_angle = -MAX_ROTATION_ANGLE * DEGTORAD;
     }
     return desire_angle;
