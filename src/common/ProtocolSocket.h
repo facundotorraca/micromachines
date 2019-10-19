@@ -26,7 +26,7 @@ class ProtocolSocket {
         void receive(std::vector<int32_t>& buffer);
         void receive(std::vector<uint8_t>& buffer);
 
-    void close();
+        void close();
 };
 
 #endif //MICROMACHINES_PROTOCOLSOCKET_H

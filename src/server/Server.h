@@ -3,7 +3,6 @@
 
 #include <list>
 #include <memory>
-#include "ThreadMatch.h"
 #include "MatchTable.h"
 #include "common/ProtectedQueue.h"
 #include "ThreadAcceptor.h"
@@ -19,7 +18,7 @@ class Server {
     ThreadPlayerLocator* player_locator;
     ThreadMatchStarter* match_starter;
 
-    std::list<ThreadMatch*> running_matches;
+    std::list<std::shared_ptr<Match>> running_matches;
 
     private:
         static void wait_quit();

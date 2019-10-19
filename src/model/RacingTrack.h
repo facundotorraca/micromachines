@@ -11,7 +11,7 @@ class RacingTrack {
     int32 position_iterations;
 
     public:
-        explicit RacingTrack(b2Vec2& gravity);
+        explicit RacingTrack();
 
         b2Body* add_body(b2BodyDef& body);
 

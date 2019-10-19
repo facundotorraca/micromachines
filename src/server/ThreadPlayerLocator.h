@@ -6,7 +6,6 @@
 #include <atomic>
 #include "common/Thread.h"
 #include "server/Player.h"
-#include "ThreadMatch.h"
 #include "server/MatchTable.h"
 #include "ThreadMatchOptions.h"
 #include "common/ProtectedQueue.h"

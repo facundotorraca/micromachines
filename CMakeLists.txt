@@ -28,9 +28,9 @@ include_directories(${SDL2_INCLUDE_DIRS})
 
 add_subdirectory(src/common)
 add_subdirectory(src/server)
-#add_subdirectory(src/client)
+add_subdirectory(src/client)
 add_subdirectory(src/model)
-add_subdirectory(qt_views)
+#add_subdirectory(qt_views)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
@@ -41,7 +41,7 @@ target_link_libraries(micromachines-server server common)
 
 # Generar el cliente
 add_executable(micromachines-client src/client/main.cpp)
-target_link_libraries(micromachines-client common viewManager)
+target_link_libraries(micromachines-client client )#viewManager)
 
 # Genero un ejecutable de prueba del model
 add_executable(prueba_sdl src/model/main.cpp)

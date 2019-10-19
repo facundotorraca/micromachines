@@ -1,8 +1,8 @@
 #include "RacingTrack.h"
 #include "Box2D/Box2D.h"
 
-RacingTrack::RacingTrack(b2Vec2& gravity):
-    racing_track(gravity)
+RacingTrack::RacingTrack():
+    racing_track(b2Vec2(0,0))
 {
     this->velocity_iterations = 6;
     this->position_iterations = 2;

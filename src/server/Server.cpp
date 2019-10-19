@@ -19,9 +19,8 @@ void Server::wait_quit() {
 
 void Server::stop_matches() {
     for (auto running_match = this->running_matches.begin(); running_match != this->running_matches.end();) {
-        (*running_match)->stop() ;
+        (*running_match)->stop();
         (*running_match)->join();
-        delete (*running_match);
         running_match = running_matches.erase(running_match);
     }
 }

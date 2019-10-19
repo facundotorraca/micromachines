@@ -9,6 +9,7 @@ class Player {
     ProtocolSocket p_socket;
     uint8_t mode;
 
+    uint8_t ID;
     uint8_t car_model; /* esto despues se puede cambiar*/
     std::string username;
     std::string match_name;
@@ -19,6 +20,8 @@ class Player {
         bool is_called(std::string& username);
 
         Player(Player&& other) noexcept;
+
+        void set_car_model(uint8_t car_model);
 
         std::string get_match_name();
 
@@ -32,7 +35,9 @@ class Player {
 
         bool is_on_join_mode();
 
-        void set_car_model(uint8_t car_model);
+        void set_ID(uint8_t ID);
+
+        uint8_t get_ID();
 
         void kill();
 };

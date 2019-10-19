@@ -2,13 +2,15 @@
 #include <utility>
 #include "Match.h"
 #include "Player.h"
+#include <common/EntityType.h>
+#include <common/MsgTypes.h>
 
 #define WELCOME_MATCH_MESSAGE "Welcome to the HELLO game \n"
 #define MATCH_JOIN_ERROR "ERROR: Cant JOIN a running match \n"
 
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),
-    running(false)
+    updates_race(10000)
 {
     this->match_name = std::move(match_name);
     this->match_creator = std::move(match_creator);
@@ -32,7 +34,7 @@ void Match::send_to_all(std::vector<int32_t>& message) {
     }
 }
 
-bool Match::ended() {
+bool Match::was_stopped() {
     return this->stopped;
 }
 
@@ -58,10 +60,6 @@ std::string Match::get_match_name_to_send(int match_index) {
     return match_name_to_send;
 }
 
-void Match::run() {
-    this->running = true;
-}
-
 bool Match::has_username(std::string& username) {
     for (auto& player : this->players) {
         if (player.is_called(username)) {
@@ -70,4 +68,41 @@ bool Match::has_username(std::string& username) {
     }
     /* Match creator is added at the end*/
     return this->match_creator == username;
+}
+
+void Match::run() {
+    for (size_t i = 0; i < this->players.size(); i++) {
+        players[i].set_ID(i);
+    }
+
+    for (auto & player : players) {
+        CarSpecs specs(250, -40, 300, 500, 40, 40);
+        this->cars.emplace(player.get_ID(), this->racing_track, specs);
+    }
+
+    for (auto & player : players) {
+        //this->thread_players();
+    }
+
+    /*
+    bool a = true;
+    int32_t i = 0;
+
+    std::vector<int32_t> hola{MSG_CAR_ID, 1};
+    std::vector<int32_t> track{MSG_MAP, 1};
+    this->send_to_all(hola);
+    this->send_to_all(track);
+    while (this->running)  {
+        i+=3;
+        std::vector<int32_t> chau{MSG_UPDATE_ENTITY, 2, TYPE_CAR, 30, 10, 30};
+        std::vector<int32_t> hola2{MSG_UPDATE_ENTITY, 1, TYPE_CAR, i, 100, 0};
+        this->send_to_all(hola2);
+        this->send_to_all(chau);
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));
+    }
+    */
+}
+
+bool Match::is_runnig() {
+    return this->running;
 }

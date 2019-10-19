@@ -9,9 +9,10 @@ class Thread {
     protected:
         std::atomic<bool> running;
     public:
-        Thread() : thread(), running(true){}
+        Thread() : thread(), running(false){}
 
         void start() {
+            this->running = true;
             thread = std::thread(&Thread::run, this);
         }
 

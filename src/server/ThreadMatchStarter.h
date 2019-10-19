@@ -3,7 +3,6 @@
 
 #include <atomic>
 #include "common/Thread.h"
-#include "ThreadMatch.h"
 #include "server/MatchTable.h"
 #include "common/ProtectedQueue.h"
 
@@ -11,7 +10,7 @@ class ThreadMatchStarter : public Thread {
     MatchTable& matches;
     ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches;
 
-    std::list<ThreadMatch*>& running_matches;
+    std::list<std::shared_ptr<Match>>& running_matches;
     std::atomic<bool> server_running{};
 
     private:
@@ -20,7 +19,7 @@ class ThreadMatchStarter : public Thread {
         void close_ended_matches();
 
     public:
-        ThreadMatchStarter(MatchTable& matches, std::list<ThreadMatch*>& running_matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches);
+        ThreadMatchStarter(MatchTable& matches, std::list<std::shared_ptr<Match>>& running_matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches);
 
         void stop();
 

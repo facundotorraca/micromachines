@@ -61,4 +61,12 @@ void Player::set_car_model(uint8_t car_model) {
     this->car_model = car_model;
 }
 
+void Player::set_ID(uint8_t ID) {
+    this->ID = ID;
+}
+
+uint8_t Player::get_ID() {
+    return this->ID;
+}
+
 
