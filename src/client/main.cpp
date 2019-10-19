@@ -3,6 +3,7 @@
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
 #include "GameMain.h"
+#include "../../qt_views/view_manager.h"
 
 #define SUCCESS 0
 
@@ -12,6 +13,7 @@ int main(int argc, char *argv[]) {
 
     std::string port("7778");
     std::string host("127.0.0.1");
+
 
     ViewManager view_manager(argc, argv);
 

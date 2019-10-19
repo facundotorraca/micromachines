@@ -30,7 +30,7 @@ add_subdirectory(src/common)
 add_subdirectory(src/server)
 #add_subdirectory(src/client)
 add_subdirectory(src/model)
-add_subdirectory(src/client/qt_views)
+add_subdirectory(qt_views)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})

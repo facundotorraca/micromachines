@@ -7,8 +7,6 @@
 
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-#include "client/qt_views/client_views/ConectView.h"
-#include "client/qt_views/client_views/MainWindow.h"
 #include <QApplication>
 
 

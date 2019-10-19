@@ -11,7 +11,7 @@ class MainWindow : public QMainWindow {
  Q_OBJECT
   Ui::MainWindow ui;
   ProtocolSocket &ps;
-  std::vector<std::string> matches;
+  std::string matches;
   CreateView create_view;
  public:
   explicit MainWindow(ProtocolSocket &ps, QWidget *parent = nullptr);

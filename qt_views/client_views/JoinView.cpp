@@ -21,10 +21,6 @@ JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) 
   ui.setupUi(this);
   splitMatchs(line_match, this->matches);
   QListWidget *matchList = findChild<QListWidget*>("matchList");
-  QStringList item_list =QStringList::fromVector(QVector<QString>::fromStdVector(this->matches));
-  for(size_t ind = 0;  ind < this->matches.size(); ind++){
-    matchList->addItem(this->matches.at(ind))
-  }
 }
 
 JoinView::~JoinView() {
