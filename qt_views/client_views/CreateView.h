@@ -2,7 +2,7 @@
 #define CREATEVIEW_H
 
 #include <QDialog>
-#include <client/qt_views/ui_createView.h>
+#include <../qt_views/ui_createView.h>
 #include <common/ProtocolSocket.h>
 
 class CreateView : public QDialog {
