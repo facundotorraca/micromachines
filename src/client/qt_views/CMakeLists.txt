@@ -10,13 +10,15 @@ find_package(Qt5Widgets)
 qt5_wrap_ui(UIS_HEADERS
         client_views/mainwindow.ui
         client_views/conectView.ui
-        client_views/createWindow.ui
+        client_views/createView.ui
+        client_views/joinView.ui
         )
 
 qt5_wrap_cpp(CPP_MOCK
         client_views/ConectView.h
         client_views/MainWindow.h
-        client_views/CreateWindow.h)
+        client_views/CreateView.h
+        client_views/JoinView.h)
 
 
 message("Headers generados: ${UIS_HEADERS}")
@@ -32,20 +34,27 @@ add_library (mainView
         )
 
 add_library(createView
-        client_views/CreateWindow.cpp
+        client_views/CreateView.cpp
         ${CPP_MOCK}
-        ${UIS_HEADERS}
-        )
+        ${UIS_HEADERS})
+
+add_library(joinView
+        client_views/JoinView.cpp
+        ${CPP_MOCK}
+        ${UIS_HEADERS})
 
 add_library(conectView
         client_views/ConectView.cpp
         ${CPP_MOCK}
         ${UIS_HEADERS})
 
+
+
 add_library(viewManager
         view_manager.cpp)
 
+target_link_libraries(joinView common Qt5::Widgets)
 target_link_libraries(createView common Qt5::Widgets)
-target_link_libraries(mainView common Qt5::Widgets)
+target_link_libraries(mainView createView joinView common Qt5::Widgets)
 target_link_libraries(conectView common Qt5::Widgets)
 target_link_libraries(viewManager common mainView conectView Qt5::Widgets)
