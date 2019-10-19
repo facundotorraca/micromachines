@@ -2,7 +2,7 @@
 #define CREATEWINDOW_H
 
 #include <QMainWindow>
-#include <client/qt_views/ui_createWindow.h>
+#include <../qt_views/ui_createWindow.h>
 
 class CreateWindow : public QMainWindow {
     Q_OBJECT
