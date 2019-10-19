@@ -12,4 +12,4 @@ public:
     void send(ProtocolSocket &socket);
 };
 
-#endif MICROMACHINES_UPDATECLIENT_H
+#endif //MICROMACHINES_UPDATECLIENT_H
