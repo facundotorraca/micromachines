@@ -9,10 +9,14 @@ RacingTrack::RacingTrack(b2Vec2& gravity):
     this->time_step = 1.0f / 60.0f;
 }
 
-b2Body* RacingTrack::add_car(b2BodyDef& car) {
-    return this->racing_track.CreateBody(&car);
+b2Body* RacingTrack::add_body(b2BodyDef& body) {
+    return this->racing_track.CreateBody(&body);
 }
 
 void RacingTrack::update() {
     this->racing_track.Step(this->time_step, this->velocity_iterations, this->position_iterations);
+}
+
+b2World& RacingTrack::get_world() {
+    return this->racing_track;
 }
