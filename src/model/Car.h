@@ -14,7 +14,8 @@ class Car {
     std::vector<Wheel*> wheels;
     b2RevoluteJoint* front_left_joint{};
     b2RevoluteJoint* front_right_joint{};
-
+    uint8_t key_v;
+    uint8_t key_h;
     private:
         void create_wheels(RacingTrack& racing_track);
 
@@ -23,7 +24,7 @@ class Car {
     public:
         explicit Car(RacingTrack& racing_track, CarSpecs specs);
 
-        void update(uint8_t key_v, uint8_t key_h);
+        void update();
 
         std::vector<b2Vec2> get_wheels_position();
 
@@ -32,6 +33,9 @@ class Car {
         const b2Vec2& getPosition();
 
         float get_angle();
+
+        void press_key(uint8_t key);
+        void release_key(uint8_t key);
 
         ~Car();
 };

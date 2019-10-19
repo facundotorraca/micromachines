@@ -69,4 +69,14 @@ uint8_t Player::get_ID() {
     return this->ID;
 }
 
+UpdateRace Player::receive_update() {
+    std::vector<int32_t> buf;
+    this->p_socket.receive(buf);
+    return {this->ID, static_cast<uint8_t>(buf.at(0)), static_cast<uint8_t>(buf.at(1))};
+}
+
+void Player::send(UpdateClient update) {
+    update.send(p_socket);
+}
+
 

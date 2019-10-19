@@ -7,12 +7,12 @@
 #define CAR_WIDTH 4.0f
 #define MAX_ROTATION_ANGLE 35.0f
 #define ROTATION_PER_SECOND 140.0f
-
+#define NOT_PRESSED 0
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 
 Car::Car(RacingTrack& racing_track, CarSpecs specs):
-    specs(specs)
+    specs(specs), key_h(NOT_PRESSED), key_v(NOT_PRESSED)
 {
     //create car body
     b2BodyDef bodyDef;
@@ -75,7 +75,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
     this->wheels.push_back(front_right_wheel);
 }
 
-void Car::update(uint8_t key_v, uint8_t key_h) {
+void Car::update() {
     for (auto & wheel : wheels) {
         wheel->update(key_v);
     }
@@ -135,4 +135,18 @@ Car::~Car() {
     for (auto & m_tire : wheels) {
         delete m_tire;
     }
+}
+
+void Car::press_key(uint8_t key) {
+    if (key == KEY_DOWN || key == KEY_UP)
+        key_v = key;
+    else
+        key_h = key;
+}
+
+void Car::release_key(uint8_t key) {
+    if (key == KEY_DOWN || key == KEY_UP)
+        key_v = NOT_PRESSED;
+    else
+        key_h = NOT_PRESSED;
 }
