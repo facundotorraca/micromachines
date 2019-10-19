@@ -5,10 +5,11 @@
 #ifndef MICROMACHINES_UPDATECLIENT_H
 #define MICROMACHINES_UPDATECLIENT_H
 
+#include <common/ProtocolSocket.h>
 
 class UpdateClient {
-
+public:
+    void send(ProtocolSocket &socket);
 };
 
-
-#endif //MICROMACHINES_UPDATECLIENT_H
+#endif MICROMACHINES_UPDATECLIENT_H

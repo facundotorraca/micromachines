@@ -2,9 +2,11 @@
 #include <utility>
 #include "Match.h"
 #include "Player.h"
+#include "ThreadClientEventMonitor.h"
 #include <common/EntityType.h>
 #include <common/MsgTypes.h>
 
+#define FRAMES_PER_SECOND 30
 #define WELCOME_MATCH_MESSAGE "Welcome to the HELLO game \n"
 #define MATCH_JOIN_ERROR "ERROR: Cant JOIN a running match \n"
 
@@ -80,9 +82,21 @@ void Match::run() {
         this->cars.emplace(player.get_ID(), this->racing_track, specs);
     }
 
+    ThreadClientEventMonitor client_monitor(this, updates_race);
+    client_monitor.start();
+
     for (auto & player : players) {
-        //this->thread_players();
+        this->updates_for_clients.emplace(player.get_ID(), 100);
+        this->thread_players.emplace_back(updates_race,
+                updates_for_clients.at(player.get_ID()), player);
+        thread_players.back().start();
     }
+
+    while (running) {
+        this->step();
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
+    }
+
 
     /*
     bool a = true;
@@ -105,4 +119,15 @@ void Match::run() {
 
 bool Match::is_runnig() {
     return this->running;
+}
+
+void Match::apply_update(UpdateRace update) {
+    update.update_cars(this->cars);
+}
+
+void Match::step() {
+    for (auto& car : cars){
+        car.second.update();
+    }
+    racing_track.update();
 }

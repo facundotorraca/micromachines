@@ -25,7 +25,7 @@ class Match : public Thread {
 
     std::vector<ThreadPlayer> thread_players;
     ProtectedQueue<UpdateRace> updates_race;
-    std::vector<ProtectedQueue<UpdateClient>> updates_for_clients;
+    std::map<uint8_t, ProtectedQueue<UpdateClient>> updates_for_clients;
 
     std::map<uint8_t ,Car> cars;
     RacingTrack racing_track;
@@ -54,6 +54,10 @@ class Match : public Thread {
         bool is_runnig();
 
         void stop();
+
+        void apply_update(UpdateRace update);
+
+        void step();
 };
 
 

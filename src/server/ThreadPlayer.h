@@ -6,8 +6,21 @@
 #define MICROMACHINES_THREADPLAYER_H
 
 
-class ThreadPlayer {
+#include <common/Thread.h>
+#include <common/ProtectedQueue.h>
+#include "UpdateClient.h"
+#include "UpdateRace.h"
+#include "Player.h"
 
+class ThreadPlayer : public Thread {
+    ProtectedQueue<UpdateClient>& updates_send;
+    ProtectedQueue<UpdateRace>& updates_recv;
+    Player& player;
+    void run() override;
+public:
+    ThreadPlayer(ProtectedQueue<UpdateClient>& updates_send,
+        ProtectedQueue<UpdateRace>& updates_recv,
+        Player& player);
 };
 
 

@@ -3,6 +3,8 @@
 
 #include <string>
 #include "common/Socket.h"
+#include "UpdateRace.h"
+#include "UpdateClient.h"
 #include <common/ProtocolSocket.h>
 
 class Player {
@@ -29,9 +31,13 @@ class Player {
 
         void send(std::string& msg);
 
+        void send(UpdateClient update);
+
         std::string get_username();
 
         uint8_t receive_option();
+
+        UpdateRace receive_update();
 
         bool is_on_join_mode();
 
