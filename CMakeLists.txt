@@ -15,6 +15,10 @@ set (CMAKE_CXX_EXTENSIONS OFF) # -std=c++11 en lugar de -std=gnu++11
 # Todos los #include son relativos a src
 include_directories(src)
 include_directories(libs)
+#-------------------SOLO MAC--------------------------
+include_directories(include)
+include_directories(lib)
+#------------------------------------------------------
 # Archivos generados por CMake
 include_directories(${PROJECT_BINARY_DIR}/src)
 
