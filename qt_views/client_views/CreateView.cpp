@@ -1,4 +1,5 @@
 #include <iostream>
+#include <QLineEdit>
 #include "CreateView.h"
 #include "ui_createView.h"
 
@@ -14,8 +15,8 @@ void CreateView::on_btnBoxCreate_accepted() {
   std::string server_match_answer("ERROR");
   while (server_match_answer.substr(0,5) == "ERROR") {
     std::cout << "Write match name..." << "\n";
-    QPlainTextEdit *matchTxtIn = findChild<QPlainTextEdit*>("matchTxtIn");
-    std::string match_name = matchTxtIn->toPlainText().toStdString();
+    QLineEdit *matchTxtIn = findChild<QLineEdit*>("matchTxtIn");
+    std::string match_name = matchTxtIn->text().toStdString();
     std::cout << "EL Match " << match_name << "\n";
     ps.send(match_name);
     ps.receive(buffer);
@@ -27,8 +28,8 @@ void CreateView::on_btnBoxCreate_accepted() {
   std::string server_username_answer("ERROR");
   while (server_username_answer.substr(0,5) == "ERROR") {
     std::cout << "Write your username..." << "\n";
-    QPlainTextEdit *usrTxtIn = findChild<QPlainTextEdit*>("usrTxtIn");
-    std::string username = usrTxtIn->toPlainText().toStdString();
+    QLineEdit *usrTxtIn = findChild<QLineEdit*>("usrTxtIn");
+    std::string username = usrTxtIn->text().toStdString();
     std::cout << "EL usuario " << username << "\n";
     ps.send(username);
     ps.receive(buffer);
