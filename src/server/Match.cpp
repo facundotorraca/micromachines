@@ -84,9 +84,7 @@ void Match::run() {
 
     while (this->running) {
         this->step();
-        for (auto & player : players) {
-            this->create_update_for_player(player.get_ID());
-        }
+        this->create_update_for_players();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
     }
     this->clients_monitor.join();
@@ -103,7 +101,7 @@ void Match::apply_update(UpdateRace update) {
 
 void Match::step() {
     std::unique_lock<std::mutex> lock(mtx);
-    for (auto &car : cars) {
+    for (auto & car : cars) {
         car.second.update();
     }
     this->racing_track.update();
@@ -119,13 +117,18 @@ void Match::initialize_players() {
     }
 }
 
-void Match::create_update_for_player(int32_t player_ID) {
-    int32_t pos_x = int(this->cars.at(player_ID).get_position_x());
-    int32_t pos_y = int(this->cars.at(player_ID).get_position_y());
-    int32_t angle = int(this->cars.at(player_ID).get_angle());
+void Match::create_update_for_players() {
+    for (auto & player : players) {
+        int32_t pos_x = int(this->cars.at(player.get_ID()).get_position_x());
+        int32_t pos_y = int(this->cars.at(player.get_ID()).get_position_y());
+        int32_t angle = int(this->cars.at(player.get_ID()).get_angle());
+        std::vector<int32_t> update_info{MSG_UPDATE_ENTITY, player.get_ID(), TYPE_CAR, pos_x, pos_y, angle};
+        UpdateClient update(MSG_UPDATE_ENTITY, std::move(update_info));
 
-    std::vector<int32_t> update{MSG_UPDATE_ENTITY, player_ID, TYPE_CAR, pos_x, pos_y, angle};
-    this->updates_for_clients.at(player_ID).push(std::move(UpdateClient(MSG_UPDATE_ENTITY, std::move(update))));
+        for (auto & update_queue : updates_for_clients) {
+            update_queue.second.push(update);
+        }
+    }
 }
 
 void Match::create_info_player_updates(int32_t player_ID) {

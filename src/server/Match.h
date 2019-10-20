@@ -39,7 +39,7 @@ class Match : public Thread {
 
         void initialize_players();
 
-        void create_update_for_player(int32_t player_ID);
+        void create_update_for_players();
 
         void create_info_player_updates(int32_t player_ID);
 
