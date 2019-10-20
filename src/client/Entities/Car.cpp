@@ -30,12 +30,12 @@ Car::Car(SDL_Renderer* r) : Entity(r),
     this->car_tex = IMG_LoadTexture(rend, "assets/sprites/autocopado.png");
 }
 
-void Car::update(std::vector<int32_t> &update_info) {
-    this->posX = update_info[2];
-    this->posY = update_info[3];
-    this->rot = update_info[4];
-    wheel1.update(update_info[5], update_info[6], update_info[7]);
-    wheel2.update(update_info[8], update_info[9], update_info[10]);
-    wheel3.update(update_info[11], update_info[12], update_info[13]);
-    wheel4.update(update_info[14], update_info[15], update_info[16]);
+void Car::update_all(std::vector<int32_t> &update_info) {
+    this->posX = update_info[3];
+    this->posY = update_info[4];
+    this->rot = update_info[5];
+    wheel1.update_position(update_info[6], update_info[7], update_info[8]);
+    wheel2.update_position(update_info[9], update_info[10], update_info[11]);
+    wheel3.update_position(update_info[12], update_info[13], update_info[14]);
+    wheel4.update_position(update_info[15], update_info[16], update_info[17]);
 }

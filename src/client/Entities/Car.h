@@ -17,7 +17,7 @@ public:
 
     void draw(SDL_Point camera) override;
 
-    void update(std::vector<int32_t>& update_info) override;
+    void update_all(std::vector<int32_t>& update_info) override;
 };
 
 

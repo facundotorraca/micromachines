@@ -189,7 +189,7 @@ Car::~Car() {
 }
 
 UpdateClient Car::get_update(const uint8_t id) {
-    std::vector<int32_t> params{id,
+    std::vector<int32_t> params{MSG_UPDATE_ENTITY, id,
                                 TYPE_CAR,
                                 (int32_t)this->get_position_x(),
                                 (int32_t)this->get_position_y(),
@@ -199,6 +199,5 @@ UpdateClient Car::get_update(const uint8_t id) {
         params.emplace_back(wheel->get_position().y);
         params.emplace_back(wheel->get_angle());
     }
-    int32_t msgtype = MSG_UPDATE_ENTITY;
-    return {msgtype, std::move(params)};
+    return {MSG_UPDATE_ENTITY, std::move(params)};
 }

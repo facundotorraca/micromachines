@@ -84,7 +84,7 @@ void Scene::updateEntity(std::vector<int32_t>& update_info){
                 break;
         }
     }
-    entities[entity_ID]->update(update_info);
+    entities[entity_ID]->update_all(update_info);
 }
 
 void Scene::setMap(std::vector<int32_t> &vector) {
