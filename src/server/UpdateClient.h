@@ -8,8 +8,14 @@
 #include <common/ProtocolSocket.h>
 
 class UpdateClient {
-public:
-    void send(ProtocolSocket &socket);
+    uint8_t msg_type;
+    std::vector<int32_t> message;
+
+
+    public:
+        UpdateClient(uint8_t msg_type, std::vector<int32_t>&& message);
+
+        void send(ProtocolSocket &socket);
 };
 
 #endif //MICROMACHINES_UPDATECLIENT_H

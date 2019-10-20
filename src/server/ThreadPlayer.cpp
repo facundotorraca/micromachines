@@ -14,6 +14,7 @@ ThreadPlayer::ThreadPlayer(ProtectedQueue<UpdateClient> &updates_send,
 
 void ThreadPlayer::run() {
     ThreadUpdateSender sender(player, updates_send);
+    sender.start();
     while (running) {
         auto data = player.receive_update();
         updates_recv.push(data);

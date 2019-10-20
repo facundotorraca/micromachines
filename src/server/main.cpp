@@ -5,7 +5,7 @@
 #define SUCCESS 0
 
 int main() {
-    std::string port("7778");
+    std::string port("7777");
 
     Server server(port);
     server.start();

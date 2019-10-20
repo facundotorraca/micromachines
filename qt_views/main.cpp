@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
   ViewManager view_manager(argc, argv);
-  ProtocolSocket ps(view_manager.run());
+  ProtocolSocket ps = view_manager.run();
 
   std::vector<uint8_t> buffer(4096);
   std::string mode = "2";

@@ -33,7 +33,9 @@ class Car {
 
         std::vector<float> get_wheels_angle();
 
-        const b2Vec2& getPosition();
+        float getPositionX();
+
+        float getPositionY();
 
         float get_angle();
 

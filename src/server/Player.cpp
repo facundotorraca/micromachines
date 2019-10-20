@@ -76,6 +76,7 @@ UpdateRace Player::receive_update() {
 }
 
 void Player::send(UpdateClient update) {
+    std::cout << "entre" << "\n";
     update.send(p_socket);
 }
 

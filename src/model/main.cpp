@@ -52,41 +52,40 @@ int main() {
             if (keyEvent.type == SDL_KEYDOWN) {
                 switch (keyEvent.keysym.sym) {
                     case SDLK_DOWN:
-                        key_v = KEY_DOWN;
+                        car.press_key(KEY_DOWN);
                         break;
                     case SDLK_LEFT:
-                        key_h = KEY_LEFT;
+                        car.press_key(KEY_LEFT);
                         break;
                     case SDLK_RIGHT:
-                        key_h = KEY_RIGHT;
+                        car.press_key(KEY_RIGHT);
                         break;
                     case SDLK_UP:
-                        key_v = KEY_UP;
+                        car.press_key(KEY_UP);
                         break;
                 }
             }
             if (keyEvent.type == SDL_KEYUP) {
                 switch (keyEvent.keysym.sym) {
                     case SDLK_DOWN:
-                        key_v = 0;
+                        car.release_key(KEY_DOWN);
                         break;
                     case SDLK_LEFT:
-                        key_h = 0;
+                        car.release_key(KEY_LEFT);
                         break;
                     case SDLK_RIGHT:
-                        key_h = 0;
+                        car.release_key(KEY_RIGHT);
                         break;
                     case SDLK_UP:
-                        key_v = 0;
+                        car.release_key(KEY_UP);
                         break;
                 }
             }
         }
 
         b2Vec2 position;
-        //car.update(key_v,key_h);
+        car.update();
         racing_track.update();
-        position = car.getPosition();
         angle_car = car.get_angle();
 
         std::vector<float> w_angles = car.get_wheels_angle();

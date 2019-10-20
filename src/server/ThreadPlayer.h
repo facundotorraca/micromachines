@@ -21,9 +21,7 @@ class ThreadPlayer : public Thread {
         void run() override;
 
     public:
-    ThreadPlayer(ProtectedQueue<UpdateClient>& updates_send,
-        ProtectedQueue<UpdateRace>& updates_recv,
-        Player& player);
+        ThreadPlayer(ProtectedQueue<UpdateClient>& updates_send, ProtectedQueue<UpdateRace>& updates_recv, Player& player);
 };
 
 

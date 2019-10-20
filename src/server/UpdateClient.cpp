@@ -4,7 +4,13 @@
 
 #include "UpdateClient.h"
 
+UpdateClient::UpdateClient(uint8_t msg_type, std::vector<int32_t>&& message):
+    message(std::move(message))
+{
+    this->msg_type = msg_type;
+}
+
 void UpdateClient::send(ProtocolSocket &p_socket) {
-    std::vector<int32_t> hola{MSG_CAR_ID, 1};
-    std::vector<int32_t> track{MSG_MAP, 1};
+    //p_socket.send(msg_type);
+    p_socket.send(message);
 }

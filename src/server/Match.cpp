@@ -7,6 +7,7 @@
 #include "ThreadClientEventMonitor.h"
 #include <common/EntityType.h>
 #include <common/MsgTypes.h>
+#include <iostream>
 
 #define FRAMES_PER_SECOND 30
 #define WELCOME_MATCH_MESSAGE "Welcome to the HELLO game \n"
@@ -79,22 +80,34 @@ void Match::run() {
         players[i].set_ID(i);
     }
 
-    for (auto & player : players) {
-        CarSpecs specs(250, -40, 300, 500, 40, 40);
-        this->cars.insert(std::pair<uint8_t ,Car>(player.get_ID(),std::move(Car(this->racing_track, specs))));
-    }
+   for (auto & player : players) {
+       CarSpecs specs(250, -40, 300, 500, 40, 40);
+       Car car(this->racing_track, specs);
+       this->cars.insert(std::pair<uint8_t, Car&&>(players[0].get_ID(), std::move(car)));
+   }
 
     ThreadClientEventMonitor client_monitor(this, updates_race);
     client_monitor.start();
 
     for (auto & player : players) {
-        this->updates_for_clients.emplace(player.get_ID(), 100);
+        this->updates_for_clients.emplace(player.get_ID(), 10000);
         this->thread_players.emplace_back(updates_for_clients.at(player.get_ID()),updates_race, player);
+        std::vector<int32_t> car_ID{MSG_CAR_ID, player.get_ID()};
+        std::vector<int32_t> track_ID{MSG_MAP, 1};
+        this->updates_for_clients.at(player.get_ID()).push(std::move(UpdateClient(MSG_CAR_ID, std::move(car_ID))));
+        this->updates_for_clients.at(player.get_ID()).push(std::move(UpdateClient(MSG_MAP, std::move(track_ID))));
         thread_players.back().start();
     }
 
     while (this->running) {
         this->step();
+        for (auto & player : players) {
+            std::vector<int32_t> update{MSG_UPDATE_ENTITY, player.get_ID(), TYPE_CAR,
+                                                         int(this->cars.at(player.get_ID()).getPositionX()),
+                                                         int(this->cars.at(player.get_ID()).getPositionY()),
+                                                         int(this->cars.at(player.get_ID()).get_angle())};
+            this->updates_for_clients.at(player.get_ID()).push(std::move(UpdateClient(MSG_UPDATE_ENTITY, std::move(update))));
+        }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
     }
 
@@ -102,8 +115,8 @@ void Match::run() {
     bool a = true;
     int32_t i = 0;
 
-    std::vector<int32_t> hola{MSG_CAR_ID, 1};
-    std::vector<int32_t> track{MSG_MAP, 1};
+
+
     this->send_to_all(hola);
     this->send_to_all(track);
     while (this->running)  {
@@ -130,7 +143,7 @@ void Match::apply_update(UpdateRace update) {
 
 void Match::step() {
     std::unique_lock<std::mutex> lock(mtx);
-    for (auto& car : cars){
+    for (auto &car : cars) {
         car.second.update();
     }
     this->racing_track.update();

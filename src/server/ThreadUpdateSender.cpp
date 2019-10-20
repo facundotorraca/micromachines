@@ -2,6 +2,7 @@
 // Created by javier on 19/10/19.
 //
 
+#include <iostream>
 #include "ThreadUpdateSender.h"
 #include "UpdateClient.h"
 

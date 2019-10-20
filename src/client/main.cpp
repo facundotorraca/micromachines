@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
       /*Todo esto es lo que hizo facu
       * Habría que reemplazarlo por Qt*/
 
-    std::string port("7778");
+    std::string port("7777");
     std::string host("127.0.0.1");
 
     Socket s;
@@ -85,6 +85,7 @@ int main(int argc, char *argv[]) {
     bool continue_receiving = true;
     ps.receive(buffer);
     std::string welcome_message(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+
     std::cout << welcome_message;
     if (welcome_message.substr(0,5) == "ERROR") {
         continue_receiving = false;
@@ -94,7 +95,6 @@ int main(int argc, char *argv[]) {
      * "ps" es el ProtocolSocket ya conectado al servidor
      * se debería conectar en la ventana de qt
      */
-
     GameMain game(ps);
     game.start();
 

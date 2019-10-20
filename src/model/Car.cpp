@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Car.h"
 #include "Wheel.h"
 #include "CarSpecs.h"
@@ -23,10 +24,11 @@ Car::Car(RacingTrack& racing_track, CarSpecs specs):
     this->create_wheels(racing_track);
 }
 
+
 Car::Car(Car&& other_car) noexcept:
     specs(other_car.specs),
     car_body(other_car.car_body),
-    wheels(other_car.wheels),
+    wheels(std::move(other_car.wheels)),
     front_left_joint(other_car.front_left_joint),
     front_right_joint(other_car.front_right_joint)
 {
@@ -141,9 +143,14 @@ float Car::get_desire_angle(uint8_t key) {
     return desire_angle;
 }
 
-const b2Vec2 &Car::getPosition() {
-    return this->car_body->GetPosition();
+float Car::getPositionX() {
+    return 50.0f * this->car_body->GetPosition().x;
 }
+
+float Car::getPositionY() {
+    return 50.0f * this->car_body->GetPosition().y;
+}
+
 
 float Car::get_angle() {
     return RADTODEG * this->car_body->GetAngle();
