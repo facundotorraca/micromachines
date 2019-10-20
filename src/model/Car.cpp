@@ -195,8 +195,8 @@ UpdateClient Car::get_update(const uint8_t id) {
                                 (int32_t)(this->get_position_y()),
                                 (int32_t)(this->get_angle())};
     for (auto& wheel : wheels){
-        params.emplace_back(wheel->get_position().x);
-        params.emplace_back(wheel->get_position().y);
+        params.emplace_back(METER_TO_PIXEL*wheel->get_position().x);
+        params.emplace_back(METER_TO_PIXEL*wheel->get_position().y);
         params.emplace_back(wheel->get_angle());
     }
     return {MSG_UPDATE_ENTITY, std::move(params)};
