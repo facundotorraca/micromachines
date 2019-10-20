@@ -6,10 +6,15 @@
 #include <SDL2/SDL.h>
 
 class Car : public Entity {
-    public:
-        explicit Car(SDL_Renderer* r);
+    SDL_Texture* car_tex;
+    SDL_Texture* wheel_tex;
+    std::vector<int32_t> wheel_data{};
+public:
+    explicit Car(SDL_Renderer* r);
 
-        void draw(SDL_Point camera) override;
+    void draw(SDL_Point camera) override;
+
+    void update(std::vector<int32_t>& update_info) override;
 };
 
 
