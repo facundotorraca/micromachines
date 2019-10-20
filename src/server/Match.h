@@ -2,6 +2,7 @@
 #define MICROMACHINES_MATCH_H
 
 #include <map>
+#include <list>
 #include <mutex>
 #include <vector>
 #include <atomic>
@@ -23,7 +24,7 @@ class Match : public Thread {
 
     std::atomic<bool> stopped;
 
-    std::vector<ThreadPlayer> thread_players;
+    std::list<ThreadPlayer> thread_players;
     ProtectedQueue<UpdateRace> updates_race;
     std::map<uint8_t, ProtectedQueue<UpdateClient>> updates_for_clients;
 
