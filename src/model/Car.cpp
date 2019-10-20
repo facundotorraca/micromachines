@@ -6,13 +6,13 @@
 #include "CarSpecs.h"
 #include "common/Key.h"
 
-#define CAR_HEIGHT 8.0f
-#define CAR_WIDTH 4.0f
+#define CAR_HEIGHT 4.0f
+#define CAR_WIDTH 1.8f
 #define MAX_ROTATION_ANGLE 35.0f
 #define ROTATION_PER_SECOND 140.0f
 #define NOT_PRESSED 0
 
-#define METER_TO_PIXEL 20.0f
+#define METER_TO_PIXEL 50.0f
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 

@@ -11,16 +11,16 @@
 #define WIDTH 1280
 
 void Car::draw(SDL_Point camera) {
-    int x = (WIDTH/2) + (posX-camera.x) - int(200/DRAW_SCALE/2);
+    int x = (WIDTH/2) + (posX-camera.x) - int(180/DRAW_SCALE/2);
     int y = (HEIGHT/2) + (posY-camera.y) - int(400/DRAW_SCALE/2);
 
+
+    SDL_Rect dst{x, y, 180/DRAW_SCALE, 400/DRAW_SCALE};
+    SDL_RenderCopyEx(rend, car_tex, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
     wheel1.draw(camera);
     wheel2.draw(camera);
     wheel3.draw(camera);
     wheel4.draw(camera);
-
-    SDL_Rect dst{x, y, 200/DRAW_SCALE, 400/DRAW_SCALE};
-    SDL_RenderCopyEx(rend, car_tex, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
 }
 
 Car::Car(SDL_Renderer* r) : Entity(r),

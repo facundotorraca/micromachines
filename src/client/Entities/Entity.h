@@ -8,7 +8,7 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
-#define DRAW_SCALE 5
+#define DRAW_SCALE 7
 
 class Entity {
 protected:
