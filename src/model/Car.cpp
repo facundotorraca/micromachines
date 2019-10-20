@@ -6,13 +6,13 @@
 #include "CarSpecs.h"
 #include "common/Key.h"
 
-#define CAR_HEIGHT 6.0f
+#define CAR_HEIGHT 8.0f
 #define CAR_WIDTH 4.0f
 #define MAX_ROTATION_ANGLE 35.0f
 #define ROTATION_PER_SECOND 140.0f
 #define NOT_PRESSED 0
 
-#define METER_TO_PIXEL 50.0f
+#define METER_TO_PIXEL 20.0f
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 
@@ -191,9 +191,9 @@ Car::~Car() {
 UpdateClient Car::get_update(const uint8_t id) {
     std::vector<int32_t> params{MSG_UPDATE_ENTITY, id,
                                 TYPE_CAR,
-                                (int32_t)this->get_position_x(),
-                                (int32_t)this->get_position_y(),
-                                (int32_t)this->get_angle()};
+                                (int32_t)(this->get_position_x()),
+                                (int32_t)(this->get_position_y()),
+                                (int32_t)(this->get_angle())};
     for (auto& wheel : wheels){
         params.emplace_back(wheel->get_position().x);
         params.emplace_back(wheel->get_position().y);

@@ -68,8 +68,8 @@ void Scene::updateEntity(std::vector<int32_t>& update_info){
 
     // If this is my car, update camera
     if (entity_ID == my_car_ID){
-        camera.x = pos_x;
-        camera.y = pos_y;
+        camera.x = pos_x/DRAW_SCALE;
+        camera.y = pos_y/DRAW_SCALE;
     }
 
     std::unique_lock<std::mutex> lock(this->mtx);
