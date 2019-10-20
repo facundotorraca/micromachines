@@ -37,11 +37,11 @@ file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)
-target_link_libraries(micromachines-server server common)
+target_link_libraries(micromachines-server model server common)
 
 # Generar el cliente
 add_executable(micromachines-client src/client/main.cpp)
-target_link_libraries(micromachines-client client )#viewManager)
+target_link_libraries(micromachines-client client viewManager)
 
 # Genero un ejecutable de prueba del model
 add_executable(prueba_sdl src/model/main.cpp)

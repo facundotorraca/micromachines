@@ -5,9 +5,10 @@
 #include "ThreadClientEventMonitor.h"
 #include "Match.h"
 
-ThreadClientEventMonitor::ThreadClientEventMonitor(Match *match,
-                                                   ProtectedQueue<UpdateRace> &updates)
-        : match(match), updates(updates){}
+ThreadClientEventMonitor::ThreadClientEventMonitor(Match* match, ProtectedQueue<UpdateRace>& updates):
+    match(match),
+    updates(updates)
+{}
 
 void ThreadClientEventMonitor::run() {
     while (this->running){

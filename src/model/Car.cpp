@@ -23,6 +23,24 @@ Car::Car(RacingTrack& racing_track, CarSpecs specs):
     this->create_wheels(racing_track);
 }
 
+Car::Car(Car&& other_car) noexcept:
+    specs(other_car.specs),
+    car_body(other_car.car_body),
+    wheels(other_car.wheels),
+    front_left_joint(other_car.front_left_joint),
+    front_right_joint(other_car.front_right_joint)
+{
+    this->key_h = other_car.key_h;
+    this->key_v = other_car.key_v;
+
+    other_car.key_h = NOT_PRESSED;
+    other_car.key_v = NOT_PRESSED;
+
+    other_car.car_body = nullptr;
+    other_car.front_right_joint = nullptr;
+    other_car.front_left_joint = nullptr;
+}
+
 void Car::create_wheels(RacingTrack& racing_track) {
     b2PolygonShape polygon_shape;
     polygon_shape.SetAsBox(CAR_WIDTH, CAR_HEIGHT);

@@ -2,7 +2,6 @@
 #include <iostream>
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-
 #include "view_manager.h"
 
 #define SUCCESS 0
@@ -10,7 +9,6 @@
 int main(int argc, char *argv[]) {
   ViewManager view_manager(argc, argv);
   ProtocolSocket ps(view_manager.run());
-
 
   std::vector<uint8_t> buffer(4096);
   std::string mode = "2";

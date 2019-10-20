@@ -1,7 +1,9 @@
+#include <map>
 #include <string>
 #include <utility>
 #include "Match.h"
 #include "Player.h"
+#include <model/RacingTrack.h>
 #include "ThreadClientEventMonitor.h"
 #include <common/EntityType.h>
 #include <common/MsgTypes.h>
@@ -79,7 +81,7 @@ void Match::run() {
 
     for (auto & player : players) {
         CarSpecs specs(250, -40, 300, 500, 40, 40);
-        this->cars.emplace(player.get_ID(), this->racing_track, specs);
+        this->cars.insert(std::pair<uint8_t ,Car>(player.get_ID(),std::move(Car(this->racing_track, specs))));
     }
 
     ThreadClientEventMonitor client_monitor(this, updates_race);
@@ -87,17 +89,14 @@ void Match::run() {
 
     for (auto & player : players) {
         this->updates_for_clients.emplace(player.get_ID(), 100);
-        this->thread_players.emplace_back(
-                updates_for_clients.at(player.get_ID()),
-                updates_race, player);
+        this->thread_players.emplace_back(updates_for_clients.at(player.get_ID()),updates_race, player);
         thread_players.back().start();
     }
 
-    while (running) {
+    while (this->running) {
         this->step();
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
     }
-
 
     /*
     bool a = true;
@@ -116,6 +115,8 @@ void Match::run() {
         std::this_thread::sleep_for(std::chrono::milliseconds(16));
     }
     */
+
+    client_monitor.join();
 }
 
 bool Match::is_runnig() {
@@ -132,5 +133,5 @@ void Match::step() {
     for (auto& car : cars){
         car.second.update();
     }
-    racing_track.update();
+    this->racing_track.update();
 }

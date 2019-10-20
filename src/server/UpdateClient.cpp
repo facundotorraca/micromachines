@@ -4,6 +4,7 @@
 
 #include "UpdateClient.h"
 
-void UpdateClient::send(ProtocolSocket &socket) {
-
+void UpdateClient::send(ProtocolSocket &p_socket) {
+    std::vector<int32_t> hola{MSG_CAR_ID, 1};
+    std::vector<int32_t> track{MSG_MAP, 1};
 }

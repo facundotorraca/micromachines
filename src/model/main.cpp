@@ -35,8 +35,7 @@ int main() {
     float center_car_y = 0;
     float angle_car = 0;
 
-    b2Vec2 gravitiy(0, 0);
-    RacingTrack racing_track(gravitiy);
+    RacingTrack racing_track;
     CarSpecs specs(250, -40, 300, 500, 40, 40);
     Car car(racing_track, specs);
 
@@ -85,7 +84,7 @@ int main() {
         }
 
         b2Vec2 position;
-        car.update(key_v,key_h);
+        //car.update(key_v,key_h);
         racing_track.update();
         position = car.getPosition();
         angle_car = car.get_angle();

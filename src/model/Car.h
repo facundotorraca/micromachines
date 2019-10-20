@@ -16,13 +16,16 @@ class Car {
     b2RevoluteJoint* front_right_joint{};
     uint8_t key_v;
     uint8_t key_h;
+
     private:
         void create_wheels(RacingTrack& racing_track);
 
         float get_desire_angle(uint8_t key);
 
     public:
-        explicit Car(RacingTrack& racing_track, CarSpecs specs);
+        Car(RacingTrack& racing_track, CarSpecs specs);
+
+        Car(Car&& other_car) noexcept;
 
         void update();
 

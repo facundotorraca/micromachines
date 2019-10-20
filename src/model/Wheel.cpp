@@ -110,3 +110,17 @@ Wheel::~Wheel() {
     /* Capay os deberia destruir el sever*/
     this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
+
+Wheel::Wheel(Wheel &&other_wheel) noexcept {
+    this->wheel_body = other_wheel.wheel_body;
+    this->max_lateral_impulse = other_wheel.max_lateral_impulse;
+    this->max_backward_speed = other_wheel.max_backward_speed;
+    this->max_forward_speed = other_wheel.max_forward_speed;
+    this->max_driver_force = other_wheel.max_driver_force;
+
+    other_wheel.wheel_body = nullptr;
+    other_wheel.max_lateral_impulse = 0;
+    other_wheel.max_backward_speed = 0;
+    other_wheel.max_forward_speed = 0;
+    other_wheel.max_driver_force = 0;
+}

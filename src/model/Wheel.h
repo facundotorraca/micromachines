@@ -25,6 +25,8 @@ class Wheel {
     public:
         explicit Wheel(RacingTrack& racing_track, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse);
 
+        Wheel(Wheel&& other_wheel) noexcept;
+
         const b2Vec2& get_position();
 
         void update(uint8_t key);
