@@ -65,7 +65,7 @@ void Player::set_ID(uint8_t ID) {
     this->ID = ID;
 }
 
-uint8_t Player::get_ID() {
+int32_t Player::get_ID() {
     return this->ID;
 }
 

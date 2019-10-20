@@ -11,8 +11,8 @@ class Player {
     ProtocolSocket p_socket;
     uint8_t mode;
 
-    uint8_t ID;
-    uint8_t car_model; /* esto despues se puede cambiar*/
+    int32_t ID;
+    int32_t car_model; /* esto despues se puede cambiar*/
     std::string username;
     std::string match_name;
 
@@ -43,7 +43,7 @@ class Player {
 
         void set_ID(uint8_t ID);
 
-        uint8_t get_ID();
+        uint32_t get_ID();
 
         void kill();
 };

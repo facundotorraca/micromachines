@@ -96,7 +96,7 @@ void Scene::handleServerEvent(std::vector<int32_t>& vector) {
         case MSG_UPDATE_ENTITY:
             updateEntity(vector);
             break;
-        case MSG_MAP:
+        case MSG_TRACK_ID:
             setMap(vector);
             break;
         case MSG_CAR_ID:

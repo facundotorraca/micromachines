@@ -143,11 +143,11 @@ float Car::get_desire_angle(uint8_t key) {
     return desire_angle;
 }
 
-float Car::getPositionX() {
+float Car::get_position_x() {
     return 50.0f * this->car_body->GetPosition().x;
 }
 
-float Car::getPositionY() {
+float Car::get_position_y() {
     return 50.0f * this->car_body->GetPosition().y;
 }
 
