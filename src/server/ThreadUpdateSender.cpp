@@ -6,10 +6,10 @@
 #include "ThreadUpdateSender.h"
 #include "UpdateClient.h"
 
-ThreadUpdateSender::ThreadUpdateSender(Player &player,
-                                       ProtectedQueue<UpdateClient> &updates) :
-                                       player(player),
-                                       updates(updates){}
+ThreadUpdateSender::ThreadUpdateSender(Player &player, ProtectedQueue<UpdateClient>& updates):
+    player(player),
+    updates(updates)
+{}
 
 void ThreadUpdateSender::run() {
     while (this->running) {

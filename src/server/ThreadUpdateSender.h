@@ -1,7 +1,3 @@
-//
-// Created by javier on 19/10/19.
-//
-
 #ifndef MICROMACHINES_THREADUPDATESENDER_H
 #define MICROMACHINES_THREADUPDATESENDER_H
 
@@ -11,12 +7,14 @@
 #include <common/Thread.h>
 
 class ThreadUpdateSender : public Thread{
-    Player& player;
     ProtectedQueue<UpdateClient>& updates;
-    void run() override;
+    Player& player;
 
-public:
-    ThreadUpdateSender(Player& player, ProtectedQueue<UpdateClient>& updates);
+    private:
+        void run() override;
+
+    public:
+        ThreadUpdateSender(Player& player, ProtectedQueue<UpdateClient>& updates);
 };
 
 

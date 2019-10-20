@@ -43,7 +43,7 @@ class Player {
 
         void set_ID(uint8_t ID);
 
-        uint32_t get_ID();
+        int32_t get_ID();
 
         void kill();
 };

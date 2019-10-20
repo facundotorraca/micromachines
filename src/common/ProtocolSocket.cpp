@@ -21,7 +21,7 @@ void ProtocolSocket::send(std::string& message) {
     this->socket.send((uint8_t*)message.data(), len_message);
 }
 
-void ProtocolSocket::send(uin8_t byte) {
+void ProtocolSocket::send(uint8_t byte) {
     this->socket.send(&byte, 1);
 }
 
