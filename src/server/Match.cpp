@@ -125,11 +125,29 @@ void Match::create_update_for_players() {
         int32_t pos_x = int(this->cars.at(player.get_ID()).get_position_x());
         int32_t pos_y = int(this->cars.at(player.get_ID()).get_position_y());
         int32_t angle = int(this->cars.at(player.get_ID()).get_angle());
-        std::vector<int32_t> update_info{MSG_UPDATE_ENTITY, player.get_ID(), TYPE_CAR, pos_x, pos_y, angle};
-        UpdateClient update(MSG_UPDATE_ENTITY, std::move(update_info));
+
+        std::vector<float> pos_wheels_x = this->cars.at(player.get_ID()).get_wheels_position_x();
+        std::vector<float> pos_wheels_y = this->cars.at(player.get_ID()).get_wheels_position_y();
+        std::vector<float> angle_wheels = this->cars.at(player.get_ID()).get_wheels_angle();
+
+        std::vector<int32_t> update_car_info{MSG_UPDATE_ENTITY, player.get_ID(), TYPE_CAR, pos_x, pos_y, angle};
+        std::vector<int32_t> update_wheel_1_info{MSG_UPDATE_ENTITY, 10/*HARDCODEADO*/, TYPE_WHEEL, int(pos_wheels_x[0]), int(pos_wheels_y[0]), int(angle_wheels[0])};
+        std::vector<int32_t> update_wheel_2_info{MSG_UPDATE_ENTITY, 11/*HARDCODEADO*/, TYPE_WHEEL, int(pos_wheels_x[1]), int(pos_wheels_y[1]), int(angle_wheels[1])};
+        std::vector<int32_t> update_wheel_3_info{MSG_UPDATE_ENTITY, 12/*HARDCODEADO*/, TYPE_WHEEL, int(pos_wheels_x[2]), int(pos_wheels_y[2]), int(angle_wheels[2])};
+        std::vector<int32_t> update_wheel_4_info{MSG_UPDATE_ENTITY, 13/*HARDCODEADO*/, TYPE_WHEEL, int(pos_wheels_x[3]), int(pos_wheels_y[3]), int(angle_wheels[3])};
+
+        UpdateClient update_car(MSG_UPDATE_ENTITY, std::move(update_car_info));
+        UpdateClient update_wheel_1(MSG_UPDATE_ENTITY, std::move(update_wheel_1_info));
+        UpdateClient update_wheel_2(MSG_UPDATE_ENTITY, std::move(update_wheel_2_info));
+        UpdateClient update_wheel_3(MSG_UPDATE_ENTITY, std::move(update_wheel_3_info));
+        UpdateClient update_wheel_4(MSG_UPDATE_ENTITY, std::move(update_wheel_4_info));
 
         for (auto & update_queue : updates_players) {
-            update_queue.second.push(update);
+            update_queue.second.push(update_car);
+            update_queue.second.push(update_wheel_1);
+            update_queue.second.push(update_wheel_2);
+            update_queue.second.push(update_wheel_3);
+            update_queue.second.push(update_wheel_4);
         }
     }
 }

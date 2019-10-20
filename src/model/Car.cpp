@@ -121,7 +121,7 @@ void Car::update() {
 std::vector<float> Car::get_wheels_position_x() {
     std::vector<float> positions_x;
     for (auto & m_tire : wheels) {
-        positions_x.push_back(m_tire->get_position().x);
+        positions_x.push_back(METER_TO_PIXEL * m_tire->get_position().x);
     }
     return positions_x;
 }
@@ -129,7 +129,7 @@ std::vector<float> Car::get_wheels_position_x() {
 std::vector<float> Car::get_wheels_position_y() {
     std::vector<float> positions_y;
     for (auto & m_tire : wheels) {
-        positions_y.push_back(m_tire->get_position().y);
+        positions_y.push_back(METER_TO_PIXEL * m_tire->get_position().y);
     }
     return positions_y;
 }

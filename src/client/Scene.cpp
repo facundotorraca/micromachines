@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <common/Key.h>
 #include "Entities/Car.h"
+#include "Entities/Wheel.h"
 #include "Entities/Track.h"
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
@@ -83,6 +84,9 @@ void Scene::updateEntity(std::vector<int32_t>& update_info){
         switch (type) {
             case TYPE_CAR:
                 entities.emplace(entity_ID, new Car(rend));
+                break;
+            case TYPE_WHEEL:
+                entities.emplace(entity_ID, new Wheel(rend));
                 break;
             default:
                 break;

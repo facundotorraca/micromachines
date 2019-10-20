@@ -3,5 +3,6 @@
 
 #define TYPE_CAR 1
 #define TYPE_TRACK 2
+#define TYPE_WHEEL 3
 
 #endif //MICROMACHINES_ENTITYTYPE_H
