@@ -61,20 +61,15 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
 }
 
 void Scene::updateEntity(std::vector<int32_t>& update_info){
-    int32_t entity_ID = update_info[ENTITY_ID_POS];
-    int32_t type = update_info[TYPE_UPDATE_POS];
-    int32_t pos_x = update_info[X_POS];
-    int32_t pos_y = update_info[Y_POS];
-    int32_t angle = update_info[ANGLE_POS];
-
-    // My car should be the first entity I receive
-    if (entities.empty())
-        this->my_car_ID = entity_ID;
+    int32_t entity_ID = update_info[1];
+    int32_t type = update_info[2];
+    int32_t pos_x = update_info[3];
+    int32_t pos_y = update_info[4];
 
     // If this is my car, update camera
     if (entity_ID == my_car_ID){
-        camera.x = pos_x;
-        camera.y = pos_y;
+        camera.x = pos_x/DRAW_SCALE;
+        camera.y = pos_y/DRAW_SCALE;
     }
 
     std::unique_lock<std::mutex> lock(this->mtx);
@@ -85,14 +80,11 @@ void Scene::updateEntity(std::vector<int32_t>& update_info){
             case TYPE_CAR:
                 entities.emplace(entity_ID, new Car(rend));
                 break;
-            case TYPE_WHEEL:
-                entities.emplace(entity_ID, new Wheel(rend));
-                break;
             default:
                 break;
         }
     }
-    entities[entity_ID]->update(pos_x, pos_y, angle);
+    entities[entity_ID]->update_all(update_info);
 }
 
 void Scene::setMap(std::vector<int32_t> &vector) {

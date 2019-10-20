@@ -7,11 +7,11 @@
 #include <thread>
 #include <chrono>
 
-ThreadDrawer::ThreadDrawer(Scene &scene) : Thread(), scene(&scene) {}
+ThreadDrawer::ThreadDrawer(Scene &scene) : Thread(), scene(scene) {}
 
 void ThreadDrawer::run() {
     while (running) {
-        SDL_Delay(16);
-        this->scene->draw();
+        SDL_Delay(33);
+        this->scene.draw();
     }
 }

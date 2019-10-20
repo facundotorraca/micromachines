@@ -5,7 +5,7 @@
 #include <common/Thread.h>
 
 class ThreadDrawer : public Thread {
-    Scene* scene;
+    Scene& scene;
 public:
     explicit ThreadDrawer(Scene& scene);
     void run() override;

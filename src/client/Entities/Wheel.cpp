@@ -12,8 +12,8 @@ Wheel::Wheel(SDL_Renderer* r) : Entity(r) {
 }
 
 void Wheel::draw(SDL_Point camera) {
-    int x = (WIDTH/2) + (posX-camera.x) - int(3/2);
-    int y = (HEIGHT/2) + (posY-camera.y) - int(17/2);
-    SDL_Rect dst{x, y, 3, 17};
+    int x = (WIDTH/2) + (posX-camera.x) - int(17/DRAW_SCALE/2);
+    int y = (HEIGHT/2) + (posY-camera.y) - int(50/DRAW_SCALE/2);
+    SDL_Rect dst{x, y, 17/DRAW_SCALE, 50/DRAW_SCALE};
     SDL_RenderCopyEx(rend, tex, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
 }

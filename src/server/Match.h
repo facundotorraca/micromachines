@@ -65,6 +65,8 @@ class Match : public Thread {
         void stop();
 
         void step();
+
+    void send_to_all(UpdateClient update);
 };
 
 

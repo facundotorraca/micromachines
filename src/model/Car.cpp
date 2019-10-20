@@ -1,11 +1,13 @@
 #include <iostream>
+#include <common/MsgTypes.h>
+#include <common/EntityType.h>
 #include "Car.h"
 #include "Wheel.h"
 #include "CarSpecs.h"
 #include "common/Key.h"
 
-#define CAR_HEIGHT 6.0f
-#define CAR_WIDTH 4.0f
+#define CAR_HEIGHT 4.0f
+#define CAR_WIDTH 1.8f
 #define MAX_ROTATION_ANGLE 35.0f
 #define ROTATION_PER_SECOND 140.0f
 #define NOT_PRESSED 0
@@ -184,4 +186,18 @@ Car::~Car() {
     for (auto & m_tire : wheels) {
         delete m_tire;
     }
+}
+
+UpdateClient Car::get_update(const uint8_t id) {
+    std::vector<int32_t> params{MSG_UPDATE_ENTITY, id,
+                                TYPE_CAR,
+                                (int32_t)(this->get_position_x()),
+                                (int32_t)(this->get_position_y()),
+                                (int32_t)(this->get_angle())};
+    for (auto& wheel : wheels){
+        params.emplace_back(METER_TO_PIXEL*wheel->get_position().x);
+        params.emplace_back(METER_TO_PIXEL*wheel->get_position().y);
+        params.emplace_back(wheel->get_angle());
+    }
+    return {MSG_UPDATE_ENTITY, std::move(params)};
 }

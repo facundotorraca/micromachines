@@ -7,6 +7,7 @@
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
 #include "RacingTrack.h"
+#include <server/UpdateClient.h>
 
 class Car {
     CarSpecs specs;
@@ -45,6 +46,8 @@ class Car {
         void release_key(uint8_t key);
 
         ~Car();
+
+        UpdateClient get_update(const uint8_t id);
 };
 
 #endif //MICROMACHINES_CAR_H
