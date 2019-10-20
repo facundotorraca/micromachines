@@ -56,8 +56,9 @@ int main(int argc, char *argv[]) {
         ps.receive(buffer);
         server_match_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
         buffer.clear(); buffer.resize(4096);
-        std::cout << server_match_answer;
+        std::cout << "Resp: " << server_match_answer.substr(0,5) << "\n";
     }
+
 
     std::string server_username_answer("ERROR");
     while (server_username_answer.substr(0,5) == "ERROR") {

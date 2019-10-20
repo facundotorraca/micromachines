@@ -5,8 +5,6 @@
 #include "Socket.h"
 #include "ProtocolSocket.h"
 
-#define END_BYTE '\n'
-
 ProtocolSocket::ProtocolSocket(Socket &&socket):
     socket(std::move(socket))
 {}
@@ -37,12 +35,9 @@ void ProtocolSocket::receive(std::vector<int32_t>& buffer) {
 
 void ProtocolSocket::receive(std::vector<uint8_t>& buffer) {
     uint8_t len_next_message = 0;
-    uint8_t buf;
     this->socket.receive(&len_next_message, 1);
-    for (int i = 0; i < len_next_message; i++) {
-        this->socket.receive(&buf, 1);
-        buffer.emplace_back(buf);
-    }
+    size_t bytes_recv = this->socket.receive(buffer.data(), len_next_message);
+    buffer.resize(bytes_recv);
 }
 
 void ProtocolSocket::receive(uint8_t& byte) {

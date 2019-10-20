@@ -57,6 +57,7 @@ std::string Match::get_match_name_to_send(int match_index) {
     match_name_to_send.append("Created by: " + this->match_creator);
     if (this->running) match_name_to_send.append(" c||");
     match_name_to_send.append("\n");
+    std::cout << match_name_to_send;
     return match_name_to_send;
 }
 

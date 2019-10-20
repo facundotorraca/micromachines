@@ -59,6 +59,7 @@ void ThreadIncomingPlayer::receive_username(std::string& username, std::string& 
         this->p_socket.send(username_error);
         this->p_socket.receive(buffer);
         username.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+        std::cout<< "sigo" << "\n";
     }
     this->p_socket.send(username_accepted);
 }
