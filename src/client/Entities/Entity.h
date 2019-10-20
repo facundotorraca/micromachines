@@ -18,7 +18,12 @@ protected:
 public:
     explicit Entity(SDL_Renderer* rend) : rend(rend){};
     virtual void draw(SDL_Point camera) = 0;
-    virtual void update(std::vector<int32_t>& update_info) = 0;
+    virtual void update(int32_t px, int32_t py, int32_t r) {
+        this->posX = px;
+        this->posY = py;
+        this->rot = r;
+    }
+    virtual void update(std::vector<int32_t>& update_info) {}
     ~Entity(){
         SDL_DestroyTexture(this->tex);
     }
