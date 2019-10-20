@@ -28,7 +28,7 @@ class Match : public Thread {
     ProtectedQueue<UpdateRace> updates_race;
     std::map<uint8_t, ProtectedQueue<UpdateClient>> updates_for_clients;
 
-    std::map<uint8_t ,Car> cars;
+    std::map<uint8_t, Car> cars;
     RacingTrack racing_track;
     std::mutex mtx;
 

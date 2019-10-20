@@ -123,10 +123,12 @@ bool Match::is_runnig() {
 }
 
 void Match::apply_update(UpdateRace update) {
+    std::unique_lock<std::mutex> lock(mtx);
     update.update_cars(this->cars);
 }
 
 void Match::step() {
+    std::unique_lock<std::mutex> lock(mtx);
     for (auto& car : cars){
         car.second.update();
     }
