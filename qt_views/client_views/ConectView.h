@@ -2,7 +2,7 @@
 #define CONECTVIEW_H
 
 #include <QDialog>
-#include <common/socket.h>
+#include <common/Socket.h>
 #include <common/ProtocolSocket.h>
 #include <../qt_views/ui_conectview.h>
 

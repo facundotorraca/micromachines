@@ -9,7 +9,7 @@ find_package(Qt5Widgets)
 
 qt5_wrap_ui(UIS_HEADERS
         client_views/mainwindow.ui
-        client_views/conectView.ui
+        client_views/conectview.ui
         client_views/createView.ui
         client_views/joinView.ui
         )
