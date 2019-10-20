@@ -11,8 +11,8 @@
 #define WIDTH 1280
 
 void Car::draw(SDL_Point camera) {
-    int x = (WIDTH/2) + (posX-camera.x) - 50/2;
-    int y = (HEIGHT/2) + (posY-camera.y) - 100/2;
+    int x = (WIDTH/2) + (posX-camera.x) - int(50/2);
+    int y = (HEIGHT/2) + (posY-camera.y) - int(100/2);
 
 
     SDL_Rect dst{x, y, 50, 100};
