@@ -1,4 +1,6 @@
 #include <iostream>
+#include <common/MsgTypes.h>
+#include <common/EntityType.h>
 #include "Car.h"
 #include "Wheel.h"
 #include "CarSpecs.h"
@@ -184,4 +186,19 @@ Car::~Car() {
     for (auto & m_tire : wheels) {
         delete m_tire;
     }
+}
+
+UpdateClient Car::get_update(const uint8_t id) {
+    std::vector<int32_t> params{id,
+                                TYPE_CAR,
+                                (int32_t)this->get_position_x(),
+                                (int32_t)this->get_position_y(),
+                                (int32_t)this->get_angle()};
+    for (auto& wheel : wheels){
+        params.emplace_back(wheel->get_position().x);
+        params.emplace_back(wheel->get_position().y);
+        params.emplace_back(wheel->get_angle());
+    }
+    int32_t msgtype = MSG_UPDATE_ENTITY;
+    return {msgtype, std::move(params)};
 }

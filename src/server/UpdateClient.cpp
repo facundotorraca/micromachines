@@ -11,6 +11,6 @@ UpdateClient::UpdateClient(int32_t msg_type, std::vector<int32_t>&& message):
 }
 
 void UpdateClient::send(ProtocolSocket &p_socket) {
-    //p_socket.send(msg_type);
+    p_socket.send(msg_type);
     p_socket.send(message);
 }
