@@ -27,8 +27,8 @@ class Match : public Thread {
 
     std::list<ThreadPlayer> thread_players;
     ProtectedQueue<UpdateRace> updates_race;
-    std::map<uint8_t, ProtectedQueue<UpdateClient>> updates_for_clients;
     ThreadClientEventMonitor clients_monitor;
+    std::map<uint8_t, ProtectedQueue<UpdateClient>> updates_players;
 
     std::map<uint8_t, Car> cars;
     RacingTrack racing_track;
@@ -50,9 +50,9 @@ class Match : public Thread {
 
         bool has_username(std::string& username);
 
-        void add_player(Player&& player);
-
         void apply_update(UpdateRace update);
+
+        void add_player(Player&& player);
 
         std::string get_match_creator();
 

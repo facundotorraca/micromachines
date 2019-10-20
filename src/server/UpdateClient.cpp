@@ -4,7 +4,7 @@
 
 #include "UpdateClient.h"
 
-UpdateClient::UpdateClient(uint8_t msg_type, std::vector<int32_t>&& message):
+UpdateClient::UpdateClient(int32_t msg_type, std::vector<int32_t>&& message):
     message(std::move(message))
 {
     this->msg_type = msg_type;

@@ -82,6 +82,7 @@ int main() {
                 }
             }
         }
+        /*
 
         b2Vec2 position;
         car.update();
@@ -89,30 +90,32 @@ int main() {
         angle_car = car.get_angle();
 
         std::vector<float> w_angles = car.get_wheels_angle();
-        std::vector<b2Vec2> w_pos = car.get_wheels_position();
+        //std::vector<b2Vec2> w_pos = car.get_wheels_position();
 
-        center_car_x = 50 * (w_pos[0].x + w_pos[1].x + w_pos[2].x + w_pos[3].x)/4;
-        center_car_y = 50 * (w_pos[0].y + w_pos[1].y + w_pos[2].y + w_pos[3].y)/4;
+        //center_car_x = 50 * (w_pos[0].x + w_pos[1].x + w_pos[2].x + w_pos[3].x)/4;
+        //center_car_y = 50 * (w_pos[0].y + w_pos[1].y + w_pos[2].y + w_pos[3].y)/4;
 
         float with_car = 50 * 4; float with_wheel = 50 * 0.3;
         float height_car = 50*6; float height_wheel = 50 * 1;
 
         SDL_Rect dst{int(center_car_x - (with_car / 2)), int(center_car_y - (height_car / 2)), int(with_car), int(height_car)};
-        SDL_Rect wbl{int((50.0f * w_pos[0].x) - (with_wheel/2)), int((50.0f * w_pos[0].y) - (height_wheel/2)),int(with_wheel),int(height_wheel)};
-        SDL_Rect wbr{int((50.0f * w_pos[1].x) - (with_wheel/2)), int((50.0f * w_pos[1].y) - (height_wheel/2)),int(with_wheel),int(height_wheel)};
-        SDL_Rect wfl{int((50.0f * w_pos[2].x) - (with_wheel/2)), int((50.0f * w_pos[2].y) - (height_wheel/2)),int(with_wheel),int(height_wheel)};
-        SDL_Rect wfr{int((50.0f * w_pos[3].x) - (with_wheel/2)), int((50.0f * w_pos[3].y) - (height_wheel/2)),int(with_wheel),int(height_wheel)};
+        //SDL_Rect wbl{int((50.0f * w_pos[0].x) - (with_wheel/2)), int((50.0f * w_pos[0].y) - (height_wheel/2)),int(with_wheel),int(height_wheel)};
+        //SDL_Rect wbr{int((50.0f * w_pos[1].x) - (with_wheel/2)), int((50.0f * w_pos[1].y) - (height_wheel/2)),int(with_wheel),int(height_wheel)};
+        //SDL_Rect wfl{int((50.0f * w_pos[2].x) - (with_wheel/2)), int((50.0f * w_pos[2].y) - (height_wheel/2)),int(with_wheel),int(height_wheel)};
+        //SDL_Rect wfr{int((50.0f * w_pos[3].x) - (with_wheel/2)), int((50.0f * w_pos[3].y) - (height_wheel/2)),int(with_wheel),int(height_wheel)};
 
         SDL_RenderClear(renderer);
-        SDL_RenderCopyEx(renderer, bitmapTex_2, nullptr, &wbl, w_angles[0],nullptr, SDL_FLIP_NONE);
-        SDL_RenderCopyEx(renderer, bitmapTex_2, nullptr, &wbr, w_angles[1],nullptr, SDL_FLIP_NONE);
-        SDL_RenderCopyEx(renderer, bitmapTex_2, nullptr, &wfl, w_angles[2],nullptr, SDL_FLIP_NONE);
-        SDL_RenderCopyEx(renderer, bitmapTex_2, nullptr, &wfr, w_angles[3],nullptr, SDL_FLIP_NONE);
+        //SDL_RenderCopyEx(renderer, bitmapTex_2, nullptr, &wbl, w_angles[0],nullptr, SDL_FLIP_NONE);
+        //SDL_RenderCopyEx(renderer, bitmapTex_2, nullptr, &wbr, w_angles[1],nullptr, SDL_FLIP_NONE);
+        //SDL_RenderCopyEx(renderer, bitmapTex_2, nullptr, &wfl, w_angles[2],nullptr, SDL_FLIP_NONE);
+        //SDL_RenderCopyEx(renderer, bitmapTex_2, nullptr, &wfr, w_angles[3],nullptr, SDL_FLIP_NONE);
         SDL_RenderCopyEx(renderer, bitmapTex_1, nullptr, &dst, angle_car,nullptr, SDL_FLIP_NONE);
 
         SDL_RenderPresent(renderer);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(33));
+
+         */
 
     } while (running);
 

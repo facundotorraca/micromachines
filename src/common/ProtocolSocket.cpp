@@ -23,6 +23,10 @@ void ProtocolSocket::send(uint8_t byte) {
     this->socket.send(&byte, 1);
 }
 
+void ProtocolSocket::send(int32_t word) {
+    this->socket.send((uint8_t*)&word, 4);
+}
+
 void ProtocolSocket::receive(std::vector<int32_t>& buffer) {
     uint8_t len_next_message = 0;
     int32_t buf;

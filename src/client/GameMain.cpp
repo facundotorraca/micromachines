@@ -1,23 +1,21 @@
-//
-// Created by javier on 16/10/19.
-//
-
-#include <common/ProtocolSocket.h>
-#include <common/ProtectedQueue.h>
-#include <SDL2/SDL.h>
-#include "GameMain.h"
 #include "Scene.h"
+#include "GameMain.h"
+#include <SDL2/SDL.h>
 #include "ThreadDrawer.h"
-#include "ThreadKeyMonitor.h"
 #include "ThreadSender.h"
 #include "ThreadReceiver.h"
+#include "ThreadKeyMonitor.h"
+#include <common/ProtectedQueue.h>
+#include <common/ProtocolSocket.h>
 
-GameMain::GameMain(ProtocolSocket &socket) : socket(std::move(socket)) {}
+GameMain::GameMain(ProtocolSocket &socket):
+    socket(std::move(socket))
+{}
 
 void GameMain::start() {
     SDL_Init(SDL_INIT_VIDEO);
 
-    ProtectedQueue<std::vector<int32_t>> sender_queue(10);
+    ProtectedQueue<std::vector<int32_t>> sender_queue(10000);
     Scene scene(sender_queue);
 
     ThreadDrawer drawer(scene);

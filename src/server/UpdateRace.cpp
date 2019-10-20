@@ -3,7 +3,7 @@
 #include "model/Car.h"
 #include "UpdateRace.h"
 
-UpdateRace::UpdateRace(int32_t client_ID, uint8_t key, uint8_t key_state) {
+UpdateRace::UpdateRace(int32_t client_ID, int32_t key, int32_t key_state) {
     this->key = key;
     this->client_ID = client_ID;
     this->key_state = key_state;

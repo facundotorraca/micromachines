@@ -1,7 +1,3 @@
-//
-// Created by javif on 17/10/2019.
-//
-
 #ifndef MICROMACHINES_ENTITYTYPE_H
 #define MICROMACHINES_ENTITYTYPE_H
 

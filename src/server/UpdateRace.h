@@ -1,24 +1,19 @@
-//
-// Created by facundotorraca on 19/10/19.
-//
-
 #ifndef MICROMACHINES_UPDATERACE_H
 #define MICROMACHINES_UPDATERACE_H
 
-#include <vector>
 #include <map>
+#include <vector>
 #include "model/Car.h"
 
 class UpdateRace {
+    int32_t key;
+    int32_t key_state;
     int32_t client_ID;
-    uint8_t key_state;
-    uint8_t key;
 
 public:
-    UpdateRace( int32_t client_ID, uint8_t key, uint8_t key_state);
+    UpdateRace(int32_t client_ID, int32_t key, int32_t key_state);
 
     void update_cars(std::map<uint8_t, Car>& cars);
-
 };
 
 

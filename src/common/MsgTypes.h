@@ -1,7 +1,3 @@
-//
-// Created by javier on 18/10/19.
-//
-
 #ifndef MICROMACHINES_MSGTYPES_H
 #define MICROMACHINES_MSGTYPES_H
 

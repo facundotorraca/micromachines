@@ -15,6 +15,7 @@ class ProtocolSocket {
         ProtocolSocket(ProtocolSocket &&other) noexcept;
 
         void send(uint8_t byte);
+        void send(int32_t word);
 
         void send(std::string& message);
 

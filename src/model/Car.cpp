@@ -9,6 +9,8 @@
 #define MAX_ROTATION_ANGLE 35.0f
 #define ROTATION_PER_SECOND 140.0f
 #define NOT_PRESSED 0
+
+#define METER_TO_PIXEL 50.0f
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 
@@ -101,7 +103,7 @@ void Car::update() {
     }
 
     /*axis direction*/
-    float desire_angle = this->get_desire_angle(key_h);
+    float desire_angle = get_desire_angle(key_h);
     /*0.5 seconds a complete rotation*/
     float rotation_per_step = (ROTATION_PER_SECOND * DEGTORAD) / 60.0f;
 
@@ -116,12 +118,20 @@ void Car::update() {
     front_right_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
 }
 
-std::vector<b2Vec2> Car::get_wheels_position() {
-    std::vector<b2Vec2> positions;
+std::vector<float> Car::get_wheels_position_x() {
+    std::vector<float> positions_x;
     for (auto & m_tire : wheels) {
-        positions.push_back(m_tire->get_position());
+        positions_x.push_back(m_tire->get_position().x);
     }
-    return positions;
+    return positions_x;
+}
+
+std::vector<float> Car::get_wheels_position_y() {
+    std::vector<float> positions_y;
+    for (auto & m_tire : wheels) {
+        positions_y.push_back(m_tire->get_position().y);
+    }
+    return positions_y;
 }
 
 std::vector<float> Car::get_wheels_angle() {
@@ -144,22 +154,16 @@ float Car::get_desire_angle(uint8_t key) {
 }
 
 float Car::get_position_x() {
-    return 50.0f * this->car_body->GetPosition().x;
+    return METER_TO_PIXEL * this->car_body->GetPosition().x;
 }
 
 float Car::get_position_y() {
-    return 50.0f * this->car_body->GetPosition().y;
+    return METER_TO_PIXEL * this->car_body->GetPosition().y;
 }
 
 
 float Car::get_angle() {
     return RADTODEG * this->car_body->GetAngle();
-}
-
-Car::~Car() {
-    for (auto & m_tire : wheels) {
-        delete m_tire;
-    }
 }
 
 void Car::press_key(uint8_t key) {
@@ -174,4 +178,10 @@ void Car::release_key(uint8_t key) {
         key_v = NOT_PRESSED;
     else
         key_h = NOT_PRESSED;
+}
+
+Car::~Car() {
+    for (auto & m_tire : wheels) {
+        delete m_tire;
+    }
 }

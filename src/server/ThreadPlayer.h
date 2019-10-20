@@ -1,20 +1,17 @@
-//
-// Created by facundotorraca on 19/10/19.
-//
-
 #ifndef MICROMACHINES_THREADPLAYER_H
 #define MICROMACHINES_THREADPLAYER_H
 
-
-#include <common/Thread.h>
-#include <common/ProtectedQueue.h>
-#include "UpdateClient.h"
-#include "UpdateRace.h"
 #include "Player.h"
+#include "UpdateRace.h"
+#include "UpdateClient.h"
+#include <common/Thread.h>
+#include "ThreadUpdateSender.h"
+#include <common/ProtectedQueue.h>
 
 class ThreadPlayer : public Thread {
     ProtectedQueue<UpdateClient>& updates_send;
     ProtectedQueue<UpdateRace>& updates_recv;
+    ThreadUpdateSender sender;
     Player& player;
 
     private:

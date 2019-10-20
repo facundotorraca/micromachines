@@ -20,7 +20,7 @@ class Car {
     private:
         void create_wheels(RacingTrack& racing_track);
 
-        float get_desire_angle(uint8_t key);
+        static float get_desire_angle(uint8_t key);
 
     public:
         Car(RacingTrack& racing_track, CarSpecs specs);
@@ -29,7 +29,9 @@ class Car {
 
         void update();
 
-        std::vector<b2Vec2> get_wheels_position();
+        std::vector<float> get_wheels_position_x();
+
+        std::vector<float> get_wheels_position_y();
 
         std::vector<float> get_wheels_angle();
 

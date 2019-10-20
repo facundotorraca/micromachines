@@ -14,28 +14,36 @@
 #include <client/Entities/Entity.h>
 
 class Scene {
-    ProtectedQueue<std::vector<int32_t>>* queue;
+    ProtectedQueue<std::vector<int32_t>>& queue;
+
     SDL_Window* win;
     SDL_Renderer* rend;
+
     std::list<std::unique_ptr<Entity>> background;
     std::map<uint8_t, std::unique_ptr<Entity>> entities;
     std::mutex mtx;
-    uint8_t my_car_id;
+
+    int32_t my_car_ID;
     SDL_Point camera{};
-    void updateEntity(std::vector<int32_t> &vector);
-    void setMyCarID(std::vector<int32_t>& vector);
-    void setMap(std::vector<int32_t>& vector);
-public:
 
-    explicit Scene(ProtectedQueue<std::vector<int32_t>> &queue);
+    private:
+        void updateEntity(std::vector<int32_t> &update_info);
 
-    void handleKeyEvent(int key, SDL_EventType type);
+        void setMyCarID(std::vector<int32_t>& vector);
 
-    void handleServerEvent(std::vector<int32_t>& vector);
+        void setMap(std::vector<int32_t>& vector);
 
-    void draw();
+    public:
 
-    ~Scene();
+        explicit Scene(ProtectedQueue<std::vector<int32_t>> &queue);
+
+        void handleServerEvent(std::vector<int32_t>& vector);
+
+        void handleKeyEvent(int key, SDL_EventType type);
+
+        void draw();
+
+        ~Scene();
 };
 
 

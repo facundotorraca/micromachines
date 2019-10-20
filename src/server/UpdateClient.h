@@ -8,12 +8,11 @@
 #include <common/ProtocolSocket.h>
 
 class UpdateClient {
-    uint8_t msg_type;
+    int32_t msg_type;
     std::vector<int32_t> message;
 
-
     public:
-        UpdateClient(uint8_t msg_type, std::vector<int32_t>&& message);
+        UpdateClient(int32_t msg_type, std::vector<int32_t>&& message);
 
         void send(ProtocolSocket &socket);
 };

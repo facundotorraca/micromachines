@@ -16,11 +16,10 @@
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),
     updates_race(10000),
+    match_name(std::move(match_name)),
+    match_creator(std::move(match_creator)),
     clients_monitor(this, this->updates_race)
-{
-    this->match_name = std::move(match_name);
-    this->match_creator = std::move(match_creator);
-}
+{}
 
 void Match::add_player(Player&& player) {
     if (this->running) {
@@ -55,9 +54,13 @@ std::string Match::get_match_name_to_send(int match_index) {
     match_name_to_send.append("Match (" +  std::to_string(match_index) + ")");
     match_name_to_send.append(" " + this->match_name + " ");
     match_name_to_send.append("Created by: " + this->match_creator);
-    if (this->running) match_name_to_send.append(" c||");
+
+    if (this->running) {
+        match_name_to_send.append(" c||");
+    }
+
     match_name_to_send.append("\n");
-    std::cout << match_name_to_send;
+
     return match_name_to_send;
 }
 
@@ -76,10 +79,9 @@ void Match::run() {
     this->clients_monitor.start();
 
     for (auto & player : players) {
-        this->updates_for_clients.emplace(player.get_ID(), 10000/*queue len*/);
-        this->thread_players.emplace_back(updates_for_clients.at(player.get_ID()),updates_race, player);
+        this->updates_players.emplace(player.get_ID(), 10000/*queue len*/);
+        this->thread_players.emplace_back(updates_players.at(player.get_ID()), updates_race, player);
         this->create_info_player_updates(player.get_ID());
-
         thread_players.back().start();
     }
 
@@ -126,7 +128,7 @@ void Match::create_update_for_players() {
         std::vector<int32_t> update_info{MSG_UPDATE_ENTITY, player.get_ID(), TYPE_CAR, pos_x, pos_y, angle};
         UpdateClient update(MSG_UPDATE_ENTITY, std::move(update_info));
 
-        for (auto & update_queue : updates_for_clients) {
+        for (auto & update_queue : updates_players) {
             update_queue.second.push(update);
         }
     }
@@ -135,6 +137,6 @@ void Match::create_update_for_players() {
 void Match::create_info_player_updates(int32_t player_ID) {
     std::vector<int32_t> car_ID{MSG_CAR_ID, player_ID};
     std::vector<int32_t> track_ID{MSG_TRACK_ID, 1/*esto puede variar despues*/};
-    this->updates_for_clients.at(player_ID).push(std::move(UpdateClient(MSG_CAR_ID, std::move(car_ID))));
-    this->updates_for_clients.at(player_ID).push(std::move(UpdateClient(MSG_TRACK_ID, std::move(track_ID))));
+    this->updates_players.at(player_ID).push(std::move(UpdateClient(MSG_CAR_ID, std::move(car_ID))));
+    this->updates_players.at(player_ID).push(std::move(UpdateClient(MSG_TRACK_ID, std::move(track_ID))));
 }
