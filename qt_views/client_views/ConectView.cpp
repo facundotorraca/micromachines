@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <QtWidgets/QLineEdit>
+#include <common/SocketError.h>
 
 ConectView::ConectView(Socket &sck, QWidget *parent)
                       : QDialog(parent), ui(), socket(sck){
@@ -14,7 +15,14 @@ void ConectView::on_btnBox_accepted() {
     std::string ipTxt = ipTextEdit->text().toStdString();
     std::string serviceTxt = serviceTextEdit->text().toStdString();
     std::cout<<ipTxt<<" ; "<<serviceTxt<<"\n";
-    this->socket.connect(ipTxt,serviceTxt);
+    try {
+      this->socket.connect(ipTxt,serviceTxt);
+    } catch (SocketError &e) {
+      QLabel *errorLabel = findChild<QLabel*>("errorLabel");
+      errorLabel->setText("Algo fallo en la conexion intentelo de nuevo");
+      return;
+    }
+    this->close();
 }
 
 ConectView::~ConectView() {}
