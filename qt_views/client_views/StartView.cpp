@@ -23,6 +23,7 @@ void StartView::on_startBtn_clicked() {
   if (welcome_message.substr(0,5) == "ERROR") {
     continue_receiving = false;
   }
+  this->close();
 }
 
 StartView::~StartView() {

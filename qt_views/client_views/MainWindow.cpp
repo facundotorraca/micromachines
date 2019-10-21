@@ -20,7 +20,7 @@ MainWindow::MainWindow(ProtocolSocket &ps,
                                           matches(get_matches(this->ps)),
                                           create_view(this->ps),
                                           join_view(this->ps, this->matches),
-                                          start_view(),
+                                          start_view(this->ps),
                                           wait_view(this->ps) {
     ui.setupUi(this);
 }
@@ -31,6 +31,8 @@ void MainWindow::on_createMatchBtn_clicked(){
     this->create_view.show();
     this->create_view.exec();
     this->close();
+    this->start_view.show();
+    this->start_view.exec();
 }
 
 void MainWindow::on_joinMatchBtn_clicked() {
