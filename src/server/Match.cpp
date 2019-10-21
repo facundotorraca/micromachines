@@ -1,13 +1,9 @@
-#include <map>
 #include <string>
 #include <utility>
 #include "Match.h"
 #include "Player.h"
-#include <model/RacingTrack.h>
-#include "ThreadClientEventMonitor.h"
-#include <common/EntityType.h>
 #include <common/MsgTypes.h>
-#include <iostream>
+#include "ThreadClientEventMonitor.h"
 
 #define FRAMES_PER_SECOND 30
 #define WELCOME_MATCH_MESSAGE "Welcome to the HELLO game \n"

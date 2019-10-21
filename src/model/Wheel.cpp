@@ -1,11 +1,9 @@
-#include <iostream>
 #include "Wheel.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
 #include "RacingTrack.h"
+#include <common/Sizes.h>
 
-#define WIDTH_WHEEL 0.3f
-#define HEIGHT_WHEEL 1.0f
 #define RADTODEG 57.295779513082320876f
 
 Wheel::Wheel(RacingTrack& racing_track, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse) {

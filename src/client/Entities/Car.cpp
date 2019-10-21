@@ -1,32 +1,25 @@
-//
-// Created by javif on 17/10/2019.
-//
-
 #include "Car.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <iostream>
-
-#define HEIGHT 720
-#define WIDTH 1280
+#include <SDL2/SDL.h>
+#include "common/Sizes.h"
+#include <SDL2/SDL_image.h>
 
 void Car::draw(SDL_Point camera) {
-    int x = (WIDTH/2) + (posX-camera.x) - int(180/DRAW_SCALE/2);
-    int y = (HEIGHT/2) + (posY-camera.y) - int(400/DRAW_SCALE/2);
+    int x = (WIDTH_SCREEN/2) + (posX-camera.x) - int((CAR_WIDTH * METER_TO_PIXEL)/2);
+    int y = (HEIGHT_SCREEN/2) + (posY-camera.y) - int((CAR_HEIGHT * METER_TO_PIXEL)/2);
 
-
-    SDL_Rect dst{x, y, 180/DRAW_SCALE, 400/DRAW_SCALE};
-    SDL_RenderCopyEx(rend, car_tex, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
     wheel1.draw(camera);
     wheel2.draw(camera);
     wheel3.draw(camera);
     wheel4.draw(camera);
+
+    SDL_Rect dst{x, y, int(CAR_WIDTH * METER_TO_PIXEL), int(CAR_HEIGHT * METER_TO_PIXEL)};
+    SDL_RenderCopyEx(rend, car_tex, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
 }
 
 Car::Car(SDL_Renderer* r) : Entity(r),
     wheel1(r), wheel2(r), wheel3(r), wheel4(r)
 {
-    std::cout << "Aca si Entre" << "\n";
     this->car_tex = IMG_LoadTexture(rend, "assets/sprites/autocopado.png");
 }
 

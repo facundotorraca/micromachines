@@ -1,7 +1,3 @@
-//
-// Created by javier on 18/10/19.
-//
-
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Track.h"
