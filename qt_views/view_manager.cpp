@@ -16,8 +16,12 @@ ProtocolSocket ViewManager::run() {
     conect_view.show();
     this->mainApp.exec();
     ProtocolSocket ps(std::move(this->sck));
-    MainWindow main_window(ps);
-    main_window.show();
-    this->mainApp.exec();
+    if(ps.is_connected()) {
+        MainWindow main_window(ps);
+        main_window.show();
+        this->mainApp.exec();
+        if(!main_window.is_fixed())
+            return std::move(ProtocolSocket(std::move(Socket())));
+    }
     return std::move(ps);
 }
