@@ -47,12 +47,13 @@ std::string Match::get_match_creator() {
 
 std::string Match::get_match_name_to_send(int match_index) {
     std::string match_name_to_send;
-    match_name_to_send.append("Match (" +  std::to_string(match_index) + ")");
-    match_name_to_send.append(" " + this->match_name + " ");
+    match_name_to_send.append(this->match_name + " ");
     match_name_to_send.append("Created by: " + this->match_creator);
 
     if (this->running) {
-        match_name_to_send.append(" c||");
+        match_name_to_send.append("1");
+    } else {
+        match_name_to_send.append("0");
     }
 
     match_name_to_send.append("\n");

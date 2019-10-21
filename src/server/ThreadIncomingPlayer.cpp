@@ -7,10 +7,8 @@
 
 #define JOIN_MODE 1
 #define CREATE_MODE 2
-#define ERROR_MATCH_NAME "ERROR: Match name is already used \n"
-#define ACCEPTED_MATCH_NAME "OK: Match name is available \n"
-#define ERROR_USERNAME "ERROR: Username is already used in match: "
-#define ACCEPTED_USERNAME "OK: Username is available \n"
+#define BIT_ERROR 1
+#define BIT_SUCCESS 0
 
 ThreadIncomingPlayer::ThreadIncomingPlayer(ProtocolSocket&& p_socket, ProtectedQueue<Player>& incoming_players, MatchTable& matches):
     incoming_players(incoming_players),
@@ -32,36 +30,35 @@ void ThreadIncomingPlayer::stop() {
 void ThreadIncomingPlayer::receive_match_name(std::string& match_name, uint8_t mode) {
     std::vector<uint8_t> buffer(4096);
 
-    std::string match_name_error(ERROR_MATCH_NAME);
-    std::string match_name_accepted(ACCEPTED_MATCH_NAME);
+    uint8_t bit_error = BIT_ERROR;
+    uint8_t bit_success = BIT_SUCCESS;
 
     this->p_socket.receive(buffer);
     match_name.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
     while (mode == CREATE_MODE && !this->matches.match_name_available(match_name)){
         buffer.clear(); buffer.resize(4096);
-        this->p_socket.send(match_name_error);
+        this->p_socket.send(bit_error);
         this->p_socket.receive(buffer);
         match_name.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
     }
-    this->p_socket.send(match_name_accepted);
+    this->p_socket.send(bit_success);
 }
 
 void ThreadIncomingPlayer::receive_username(std::string& username, std::string& match_name, uint8_t mode) {
     std::vector<uint8_t> buffer(4096);
 
-    std::string username_error(ERROR_USERNAME + match_name + "\n");
-    std::string username_accepted(ACCEPTED_USERNAME);
+    uint8_t bit_error = BIT_ERROR;
+    uint8_t bit_success = BIT_SUCCESS;
 
     this->p_socket.receive(buffer);
     username.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
     while (mode == JOIN_MODE && !this->matches.username_available(username, match_name)){
         buffer.clear(); buffer.resize(4096);
-        this->p_socket.send(username_error);
+        this->p_socket.send(bit_error);
         this->p_socket.receive(buffer);
         username.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        std::cout<< "sigo" << "\n";
     }
-    this->p_socket.send(username_accepted);
+    this->p_socket.send(bit_success);
 }
 
 void ThreadIncomingPlayer::run() {

@@ -24,6 +24,9 @@ Scene::Scene(ProtectedQueue<std::vector<int32_t>>& queue):
 {
     this->my_car_ID = INVALIDAD_CAD_ID;
     SDL_CreateWindowAndRenderer(1280, 720, 0, &win, &rend);
+
+    /*Para el fullscreen hay que manejar errores me parece*/
+    SDL_SetWindowFullscreen(this->win, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
 void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
