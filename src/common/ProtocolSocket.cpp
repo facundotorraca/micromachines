@@ -69,4 +69,8 @@ void ProtocolSocket::send(std::vector<uint8_t> &bytes) {
     }
 }
 
+bool ProtocolSocket::is_connected() {
+    return this->socket.get_connect();
+}
+
 

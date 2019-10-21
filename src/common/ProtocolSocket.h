@@ -26,6 +26,8 @@ class ProtocolSocket {
 
         void receive(std::vector<int32_t>& buffer);
         void receive(std::vector<uint8_t>& buffer);
+        
+        bool is_connected();
 
         void close();
 };
