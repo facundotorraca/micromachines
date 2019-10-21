@@ -29,6 +29,7 @@ JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) 
         QString match = this->matches.at(ind);
         size_t last_char_pos = match.size() - 1;
         QChar last_char = match.at(last_char_pos);
+        match.chop(1);
         matchList->addItem(match);
         if (last_char == '1') {
             matchList->item(ind)->setTextColor(QColor(255,0,0));
