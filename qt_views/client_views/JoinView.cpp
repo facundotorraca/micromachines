@@ -49,7 +49,8 @@ void JoinView::on_matchList_itemSelectionChanged() {
     }
 }
 void JoinView::on_btnBoxJoin_accepted() {
-    QListWidget *matchList = findChild<QListWidget*>("matchList");
+  QLabel *errorLabel = findChild<QLabel*>("errorLabel");
+  QListWidget *matchList = findChild<QListWidget*>("matchList");
     std::vector<uint8_t> buffer(4096);
     std::string server_match_answer("ERROR");
     while (server_match_answer.substr(0,5) == "ERROR") {
@@ -72,6 +73,10 @@ void JoinView::on_btnBoxJoin_accepted() {
         ps.send(username);
         ps.receive(buffer);
         server_username_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+        if(server_username_answer != "0") {
+          errorLabel->setText("El nombre de usuario ya esta en uso");
+          return;
+        }
         buffer.clear(); buffer.resize(4096);
         std::cout << server_username_answer;
     }

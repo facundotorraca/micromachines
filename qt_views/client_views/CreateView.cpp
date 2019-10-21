@@ -22,8 +22,8 @@ void CreateView::on_btnBoxCreate_accepted() {
         ps.send(match_name);
         ps.receive(buffer);
         server_match_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        if(server_match_answer!="1") {
-          errorLabel->setText("Cambie el nombre de la partida");
+        if(server_match_answer!="0") {
+          errorLabel->setText("El nombre de la partida ya esta en uso");
           return;
         }
         buffer.clear(); buffer.resize(4096);
@@ -39,10 +39,6 @@ void CreateView::on_btnBoxCreate_accepted() {
         ps.send(username);
         ps.receive(buffer);
         server_username_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        if(server_match_answer!="1") {
-          errorLabel->setText("Cambie el nombre de usuario");
-          return;
-        }
         buffer.clear(); buffer.resize(4096);
         std::cout << server_username_answer;
     }
