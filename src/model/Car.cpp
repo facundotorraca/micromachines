@@ -9,8 +9,8 @@
 
 #define NOT_PRESSED 0
 
-#define MAX_ROTATION_ANGLE 35.0f
-#define ROTATION_PER_SECOND 100.0
+#define MAX_ROTATION_ANGLE 25.0f
+#define ROTATION_PER_SECOND 1070.0
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
@@ -49,7 +49,7 @@ Car::Car(Car&& other_car) noexcept:
 
 void Car::create_wheels(RacingTrack& racing_track) {
     b2PolygonShape polygon_shape;
-    polygon_shape.SetAsBox(CAR_WIDTH, CAR_HEIGHT);
+    polygon_shape.SetAsBox(CAR_WIDTH/2, CAR_HEIGHT/2);
     this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.1f);
 
     //common joint parameters
@@ -64,7 +64,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
                                       this->specs.get_back_wheel_max_force(),
                                       this->specs.get_back_max_lateral_impulse());
     joint_params.bodyB = back_left_wheel->get_body();
-    joint_params.localAnchorA.Set(CAR_WIDTH/2.20, -(CAR_HEIGHT/2)*0.62);
+    joint_params.localAnchorA.Set(CAR_WIDTH/2.60, -(CAR_HEIGHT/2)*0.62);
     racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(back_left_wheel);
 
@@ -74,7 +74,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
                                        this->specs.get_back_wheel_max_force(),
                                        this->specs.get_back_max_lateral_impulse());
     joint_params.bodyB = back_right_wheel->get_body();
-    joint_params.localAnchorA.Set(-CAR_WIDTH/2.20, -(CAR_HEIGHT/2)*0.62);
+    joint_params.localAnchorA.Set(-CAR_WIDTH/2.60, -(CAR_HEIGHT/2)*0.62);
     racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(back_right_wheel);
 
@@ -84,7 +84,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
                                        this->specs.get_front_wheel_max_force(),
                                        this->specs.get_front_max_lateral_impulse());
     joint_params.bodyB = front_left_wheel->get_body();
-    joint_params.localAnchorA.Set( CAR_WIDTH/2.20, (CAR_HEIGHT/2)*0.62);
+    joint_params.localAnchorA.Set( CAR_WIDTH/2.60, (CAR_HEIGHT/2)*0.62);
     front_left_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(front_left_wheel);
 
@@ -94,7 +94,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
                                         this->specs.get_front_wheel_max_force(),
                                         this->specs.get_front_max_lateral_impulse());
     joint_params.bodyB = front_right_wheel->get_body();
-    joint_params.localAnchorA.Set( -CAR_WIDTH/2.20, (CAR_HEIGHT/2)*0.62);
+    joint_params.localAnchorA.Set( -CAR_WIDTH/2.60, (CAR_HEIGHT/2)*0.62);
     front_right_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(front_right_wheel);
 }
@@ -156,11 +156,11 @@ float Car::get_desire_angle(uint8_t key) {
 }
 
 float Car::get_position_x() {
-    return METER_TO_PIXEL * this->car_body->GetPosition().x;
+    return this->car_body->GetPosition().x;
 }
 
 float Car::get_position_y() {
-    return METER_TO_PIXEL * this->car_body->GetPosition().y;
+    return this->car_body->GetPosition().y;
 }
 
 
@@ -190,13 +190,13 @@ Car::~Car() {
 
 UpdateClient Car::get_update(const uint8_t id) {
     std::vector<int32_t> params{MSG_UPDATE_ENTITY, id, TYPE_CAR,
-                                (int32_t)(this->get_position_x()),
-                                (int32_t)(this->get_position_y()),
+                                (int32_t)(METER_TO_PIXEL * (this->get_position_x() - (CAR_WIDTH*0.5))),
+                                (int32_t)(METER_TO_PIXEL * (this->get_position_y() - (CAR_HEIGHT*0.5))),
                                 (int32_t)(this->get_angle())};
 
     for (auto& wheel : wheels){
-        params.emplace_back(METER_TO_PIXEL * wheel->get_position().x);
-        params.emplace_back(METER_TO_PIXEL * wheel->get_position().y);
+        params.emplace_back(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5)));
+        params.emplace_back(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5)));
         params.emplace_back(wheel->get_angle());
     }
     return UpdateClient((int32_t)MSG_UPDATE_ENTITY, std::move(params));

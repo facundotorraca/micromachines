@@ -1,7 +1,7 @@
 #ifndef MICROMACHINES_SIZES_H
 #define MICROMACHINES_SIZES_H
 
-#define METER_TO_PIXEL 35.0f
+#define METER_TO_PIXEL 20.0f
 
 #define CAR_WIDTH 2.0f
 #define CAR_HEIGHT 4.0f

@@ -5,7 +5,7 @@
 void Track::draw(SDL_Point camera) {
     int x = (1280/2) + (posX-camera.x);
     int y = (720/2) + (posY-camera.y);
-    SDL_Rect dst{x, y, 1690*3 , 960*3};
+    SDL_Rect dst{x, y, 4000 , 4000};
     SDL_RenderCopyEx(rend, tex, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
 }
 

@@ -5,8 +5,8 @@
 #include <SDL2/SDL_image.h>
 
 void Car::draw(SDL_Point camera) {
-    int x = (WIDTH_SCREEN/2) + (posX-camera.x) - int((CAR_WIDTH * METER_TO_PIXEL)/2);
-    int y = (HEIGHT_SCREEN/2) + (posY-camera.y) - int((CAR_HEIGHT * METER_TO_PIXEL)/2);
+    int x = (WIDTH_SCREEN/2) + (posX-camera.x);
+    int y = (HEIGHT_SCREEN/2) + (posY-camera.y);
 
     wheel1.draw(camera);
     wheel2.draw(camera);
