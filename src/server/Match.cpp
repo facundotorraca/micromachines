@@ -110,7 +110,7 @@ void Match::initialize_players() {
     int32_t ID = 0;
     for (auto & player : players) {
         player.set_ID(ID);
-        CarSpecs specs(250, -40, 300, 500, 40, 40);
+        CarSpecs specs(50, -10, 50, 100, 40, 40);
         this->cars.insert(std::pair<uint8_t, Car&&>(player.get_ID(), std::move(Car(this->racing_track, specs))));
         ID++;
     }
