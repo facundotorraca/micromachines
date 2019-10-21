@@ -27,15 +27,12 @@ void MainWindow::on_createMatchBtn_clicked(){
   uint8_t start = 2;
   this->ps.send(start);
   this->create_view.show();
-  this->close();
 }
 
 void MainWindow::on_joinMatchBtn_clicked() {
   uint8_t start = 1;
   this->ps.send(start);
   this->join_view.show();
-  this->close();
-
 }
 
 MainWindow::~MainWindow() {}

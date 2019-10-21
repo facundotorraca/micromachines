@@ -43,7 +43,7 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QPlainTextEdit" name="usrTxtIn">
+      <widget class="QLineEdit" name="usrTxtIn">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
          <horstretch>0</horstretch>
@@ -128,9 +128,9 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QPlainTextEdit" name="matchTxtIn">
+      <widget class="QLineEdit" name="lineEdit_2">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -152,38 +152,5 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>btnBox</sender>
-   <signal>accepted()</signal>
-   <receiver>CreateView</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnBox</sender>
-   <signal>rejected()</signal>
-   <receiver>CreateView</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

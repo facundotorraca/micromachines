@@ -12,3 +12,5 @@ CMakeCache.txt
 *.cmake
 .DS_Store
 /src/model/car
+include/
+lib/
