@@ -10,8 +10,10 @@ class JoinView : public QDialog {
     Ui::JoinView ui;
     ProtocolSocket &ps;
     QStringList matches;
+    bool joined;
 public:
     explicit JoinView(ProtocolSocket &ps, std::string matches, QWidget *parent = nullptr);
+    bool is_joined();
     ~JoinView();
  private slots:
     void on_btnBoxJoin_accepted();

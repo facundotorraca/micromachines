@@ -21,7 +21,8 @@ JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) 
                     QDialog(parent),
                     ps(ps),
                     matches(),
-                    ui() {
+                    ui(),
+                    joined(false) {
     ui.setupUi(this);
     splitMatchs(line_match, this->matches);
     QListWidget *matchList = findChild<QListWidget*>("matchList");
@@ -35,6 +36,10 @@ JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) 
             matchList->item(ind)->setTextColor(QColor(255,0,0));
         }
     }
+}
+
+bool JoinView::is_joined() {
+    return this->joined;
 }
 
 void JoinView::on_matchList_itemSelectionChanged() {
@@ -51,35 +56,25 @@ void JoinView::on_matchList_itemSelectionChanged() {
 void JoinView::on_btnBoxJoin_accepted() {
   QLabel *errorLabel = findChild<QLabel*>("errorLabel");
   QListWidget *matchList = findChild<QListWidget*>("matchList");
-    std::vector<uint8_t> buffer(4096);
-    std::string server_match_answer("ERROR");
-    while (server_match_answer.substr(0,5) == "ERROR") {
-        std::cout << "Write match name..." << "\n";
+    uint8_t flag_error_matchname = 1;
+    while (flag_error_matchname==1) {
         std::string selectedMatch = matchList->selectedItems()[0]->text().toStdString();
         std::string match_name = selectedMatch.substr(0, selectedMatch.find(" "));
-        std::cout << "Me uno a " << match_name << "\n";
         ps.send(match_name);
-        ps.receive(buffer);
-        server_match_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        buffer.clear(); buffer.resize(4096);
-        std::cout << server_match_answer;
+        ps.receive(flag_error_matchname);
     }
-    std::string server_username_answer("ERROR");
-    while (server_username_answer.substr(0,5) == "ERROR") {
-        std::cout << "Write your username..." << "\n";
+    uint8_t flag_error_username = 1;
+    while (flag_error_username == 1) {
         QLineEdit *usrTxtIn = findChild<QLineEdit*>("usrTxtIn");
         std::string username = usrTxtIn->text().toStdString();
-        std::cout << "EL usuario " << username << "\n";
         ps.send(username);
-        ps.receive(buffer);
-        server_username_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        if(server_username_answer != "0") {
+        ps.receive(flag_error_username);
+        if(flag_error_username != 0) {
           errorLabel->setText("El nombre de usuario ya esta en uso");
           return;
         }
-        buffer.clear(); buffer.resize(4096);
-        std::cout << server_username_answer;
     }
+    this->joined = true;
     this->close();
 }
 
