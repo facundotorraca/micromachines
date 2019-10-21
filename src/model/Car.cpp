@@ -10,7 +10,7 @@
 #define NOT_PRESSED 0
 
 #define MAX_ROTATION_ANGLE 25.0f
-#define ROTATION_PER_SECOND 1070.0
+#define ROTATION_PER_SECOND 90.0
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
@@ -50,7 +50,7 @@ Car::Car(Car&& other_car) noexcept:
 void Car::create_wheels(RacingTrack& racing_track) {
     b2PolygonShape polygon_shape;
     polygon_shape.SetAsBox(CAR_WIDTH/2, CAR_HEIGHT/2);
-    this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.1f);
+    this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
 
     //common joint parameters
     b2RevoluteJointDef joint_params;
