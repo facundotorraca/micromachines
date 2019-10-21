@@ -9,7 +9,7 @@
 
 #define NOT_PRESSED 0
 
-#define MAX_ROTATION_ANGLE 25.0f
+#define MAX_ROTATION_ANGLE 35.0f
 #define ROTATION_PER_SECOND 90.0
 
 #define DEGTORAD 0.0174532925199432957f
@@ -111,7 +111,8 @@ void Car::update() {
 
     /*front_left_joint & front_right_joint has the same angle*/
     float current_angle = front_left_joint->GetJointAngle();
-    float angle_to_turn = desire_angle - current_angle;
+    auto r = this->car_body->GetLinearVelocity().Length();
+    float angle_to_turn = desire_angle*(exp(-r/32)) - current_angle;
 
     angle_to_turn = b2Clamp(angle_to_turn, -rotation_per_step, rotation_per_step);
 
