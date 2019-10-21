@@ -1,19 +1,20 @@
-#include "StartView.h"
-#include <ui_startView.h>
+#include "WaitView.h"
 #include <iostream>
+#include <ui_waitView.h>
+#include <common/ProtocolSocket.h>
 
-StartView::StartView(ProtocolSocket &ps, QWidget *parent) :
+WaitView::WaitView(ProtocolSocket &ps, QWidget *parent) :
     QDialog(parent),
     ps(ps),
     ui() {
     ui.setupUi(this);
 }
 
-void StartView::on_startBtn_clicked() {
+void WaitView::wait_start() {
   std::vector<uint8_t> buffer(4096);
-  std::cout << "Press any key to START" << "\n";
-  uint8_t start_game = 1;
-  ps.send(start_game);
+  std::cout << "Waiting for the game to START \n";
+  uint8_t car = 1;
+  ps.send(car);
 
   bool continue_receiving = true;
   ps.receive(buffer);
@@ -23,7 +24,7 @@ void StartView::on_startBtn_clicked() {
   if (welcome_message.substr(0,5) == "ERROR") {
     continue_receiving = false;
   }
+  this->close();
 }
 
-StartView::~StartView() {
-}
+WaitView::~WaitView() {}

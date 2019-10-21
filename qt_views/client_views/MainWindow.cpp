@@ -19,7 +19,9 @@ MainWindow::MainWindow(ProtocolSocket &ps,
                                           ps(ps),
                                           matches(get_matches(this->ps)),
                                           create_view(this->ps),
-                                          join_view(this->ps, this->matches) {
+                                          join_view(this->ps, this->matches),
+                                          start_view(),
+                                          wait_view(this->ps) {
     ui.setupUi(this);
 }
 
@@ -37,6 +39,8 @@ void MainWindow::on_joinMatchBtn_clicked() {
     this->join_view.show();
     this->join_view.exec();
     this->close();
+    this->wait_view.show();
+    this->wait_view.wait_start();
 }
 
 MainWindow::~MainWindow() {}

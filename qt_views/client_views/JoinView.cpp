@@ -62,7 +62,6 @@ void JoinView::on_btnBoxJoin_accepted() {
         buffer.clear(); buffer.resize(4096);
         std::cout << server_match_answer;
     }
-
     std::string server_username_answer("ERROR");
     while (server_username_answer.substr(0,5) == "ERROR") {
         std::cout << "Write your username..." << "\n";

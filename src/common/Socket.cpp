@@ -11,7 +11,7 @@
 #define ERROR -1
 #define SUCCESS 0
 #define INVALID_FD -1
-
+#define MSG_NOSIGNAL 0
 /*--------------------------PUBLIC------------------------------*/
 Socket::Socket() : is_connect(false),
                    fd(INVALID_FD) {}

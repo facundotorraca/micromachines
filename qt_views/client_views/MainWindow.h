@@ -7,6 +7,8 @@
 #include <../qt_views/ui_mainwindow.h>
 #include "CreateView.h"
 #include "JoinView.h"
+#include "StartView.h"
+#include "WaitView.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -15,6 +17,8 @@ class MainWindow : public QMainWindow {
     std::string matches;
     CreateView create_view;
     JoinView join_view;
+    StartView start_view;
+    WaitView wait_view;
  public:
     explicit MainWindow(ProtocolSocket &ps, QWidget *parent = nullptr);
     virtual ~MainWindow();
