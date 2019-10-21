@@ -19,8 +19,10 @@ class MainWindow : public QMainWindow {
     JoinView join_view;
     StartView start_view;
     WaitView wait_view;
+    bool fixed;
  public:
     explicit MainWindow(ProtocolSocket &ps, QWidget *parent = nullptr);
+    bool is_fixed();
     virtual ~MainWindow();
  private:
  private slots:

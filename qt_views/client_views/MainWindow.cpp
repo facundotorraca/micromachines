@@ -21,8 +21,13 @@ MainWindow::MainWindow(ProtocolSocket &ps,
                                           create_view(this->ps),
                                           join_view(this->ps, this->matches),
                                           start_view(this->ps),
-                                          wait_view(this->ps) {
+                                          wait_view(this->ps),
+                                          fixed(false) {
     ui.setupUi(this);
+}
+
+bool MainWindow::is_fixed() {
+    return this->fixed;
 }
 
 void MainWindow::on_createMatchBtn_clicked(){
@@ -30,9 +35,12 @@ void MainWindow::on_createMatchBtn_clicked(){
     this->ps.send(start);
     this->create_view.show();
     this->create_view.exec();
-    this->close();
-    this->start_view.show();
-    this->start_view.exec();
+    if(this->create_view.is_created()) {
+        this->close();
+        this->start_view.show();
+        this->start_view.exec();
+        fixed = true;
+    }
 }
 
 void MainWindow::on_joinMatchBtn_clicked() {
@@ -40,9 +48,12 @@ void MainWindow::on_joinMatchBtn_clicked() {
     this->ps.send(start);
     this->join_view.show();
     this->join_view.exec();
-    this->close();
-    this->wait_view.show();
-    this->wait_view.wait_start();
+    if(this->join_view.is_joined()){
+        this->close();
+        this->wait_view.show();
+        this->wait_view.wait_start();
+        fixed = true;
+    }
 }
 
 MainWindow::~MainWindow() {}
