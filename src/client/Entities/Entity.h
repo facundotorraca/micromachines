@@ -12,7 +12,10 @@ class Entity {
         SDL_Texture* tex = nullptr;
         SDL_Renderer* rend;
     public:
-        explicit Entity(SDL_Renderer* rend) : rend(rend){};
+        explicit Entity(SDL_Renderer* rend):
+            rend(rend)
+        {};
+
         virtual void draw(SDL_Point camera) = 0;
         virtual void update_position(int32_t px, int32_t py, int32_t r) {
             this->posX = px;

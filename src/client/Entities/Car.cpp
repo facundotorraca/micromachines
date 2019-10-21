@@ -20,7 +20,7 @@ void Car::draw(SDL_Point camera) {
 Car::Car(SDL_Renderer* r) : Entity(r),
     wheel1(r), wheel2(r), wheel3(r), wheel4(r)
 {
-    this->car_tex = IMG_LoadTexture(rend, "assets/sprites/autocopado.png");
+    this->car_tex = IMG_LoadTexture(rend, "assets/sprites/Cars/Car red striped/Car red striped front.png");
 }
 
 void Car::update_all(std::vector<int32_t> &update_info) {
