@@ -48,27 +48,23 @@ int main(int argc, char *argv[]) {
 
     std::vector<uint8_t> buffer(4096);
 
-    std::string server_match_answer("ERROR");
-    while (server_match_answer.substr(0,5) == "ERROR") {
+    uint8_t flag_error_match = 1;
+    while (flag_error_match == 1) {
         std::cout << "Write match name..." << "\n";
         std::string match_name; std::cin >> match_name;
         ps.send(match_name);
-        ps.receive(buffer);
-        server_match_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        buffer.clear(); buffer.resize(4096);
-        std::cout << "Resp: " << server_match_answer.substr(0,5) << "\n";
+        ps.receive(flag_error_match);
+        std::cout << "Answer: " << unsigned(flag_error_match) << "\n";
     }
 
 
-    std::string server_username_answer("ERROR");
-    while (server_username_answer.substr(0,5) == "ERROR") {
+    uint8_t flag_error_username = 1;
+    while (flag_error_username == 1) {
         std::cout << "Write your username..." << "\n";
         std::string username; std::cin >> username;
         ps.send(username);
-        ps.receive(buffer);
-        server_username_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        buffer.clear(); buffer.resize(4096);
-        std::cout << server_username_answer;
+        ps.receive(flag_error_username);
+        std::cout << "Answer: " << unsigned(flag_error_username) << "\n";
     }
 
     if (mode == "2") {
