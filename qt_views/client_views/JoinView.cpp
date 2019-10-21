@@ -10,9 +10,8 @@ void splitMatchs(std::string input, QStringList &match) {
   int last = 0;
   int next = input.find(delimiter);
   while (next != std::string::npos) {
-      QString match = QString::fromStdString(input.substr(last, next - last));
-    match.push_back(match);
-    
+      QString match_name = QString::fromStdString(input.substr(last, next - last));
+    match.push_back(match_name);
     last = next +1;
     next = input.find_first_of(delimiter, last);
   }
@@ -23,15 +22,11 @@ JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) 
                     ps(ps),
                     matches(),
                     ui() {
-    std::cout<<"----------------------------------JOINWVIEW---------------------------------------\n";
   ui.setupUi(this);
   splitMatchs(line_match, this->matches);
-  std::cout << this->matches.size() << "\n";
   QListWidget *matchList = findChild<QListWidget*>("matchList");
-  std::cout << this->matches.length() << "\n";
   for(size_t ind = 0; ind < this->matches.length(); ind++) {
       QString match = this->matches.at(ind);
-      std::cout << match.toStdString() << "\n";
       size_t last_char_pos = match.size() - 1;
       QChar last_char = match.at(last_char_pos);
       matchList->addItem(match);
@@ -41,6 +36,17 @@ JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) 
   }
 }
 
+void JoinView::on_matchList_itemSelectionChanged() {
+    std::cout<<"CAMBIO LA SELECIONN\n";
+    QDialogButtonBox *box = findChild<QDialogButtonBox *>("btnBoxJoin");
+    QListWidget *matchList = findChild<QListWidget*>("matchList");
+    QColor color = matchList->selectedItems()[0]->textColor();
+    if(color == QColor(255,0,0)) {
+        box->setDisabled(true);
+    } else {
+        box->setDisabled(false);
+    }
+}
 void JoinView::on_btnBoxJoin_accepted() {
     QListWidget *matchList = findChild<QListWidget*>("matchList");
     std::vector<uint8_t> buffer(4096);

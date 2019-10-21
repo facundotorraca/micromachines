@@ -15,6 +15,7 @@ public:
   ~JoinView();
  private slots:
   void on_btnBoxJoin_accepted();
+  void on_matchList_itemSelectionChanged();
 };
 
 #endif // JOINVIEW_H
