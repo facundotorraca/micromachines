@@ -8,8 +8,10 @@
 class CreateView : public QDialog {
     Q_OBJECT
     ProtocolSocket &ps;
+    bool created;
  public:
     explicit CreateView(ProtocolSocket &ps, QWidget *parent = nullptr);
+    bool is_created();
     virtual ~CreateView();
  private:
     Ui::CreateView ui;

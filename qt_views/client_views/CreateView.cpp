@@ -6,42 +6,36 @@
 CreateView::CreateView(ProtocolSocket &ps, QWidget *parent) :
                         QDialog(parent),
                         ps(ps),
-                        ui() {
+                        ui(),
+                        created(false){
     ui.setupUi(this);
+}
+
+bool CreateView::is_created() {
+    return this->created;
 }
 
 void CreateView::on_btnBoxCreate_accepted() {
     QLabel *errorLabel = findChild<QLabel*>("errorLabel");
-    std::vector<uint8_t> buffer(4096);
-    std::string server_match_answer("ERROR");
-    while (server_match_answer.substr(0,5) == "ERROR") {
-        std::cout << "Write match name..." << "\n";
+    uint8_t flag_error_matchname = 1;
+    while (flag_error_matchname == 1) {
         QLineEdit *matchTxtIn = findChild<QLineEdit*>("matchTxtIn");
         std::string match_name = matchTxtIn->text().toStdString();
-        std::cout << "EL Match " << match_name << "\n";
         ps.send(match_name);
-        ps.receive(buffer);
-        server_match_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        if(server_match_answer!="0") {
+        ps.receive(flag_error_matchname);
+        if(flag_error_matchname != 0) {
           errorLabel->setText("El nombre de la partida ya esta en uso");
           return;
         }
-        buffer.clear(); buffer.resize(4096);
-        std::cout << server_match_answer;
-  }
-
-    std::string server_username_answer("ERROR");
-    while (server_username_answer.substr(0,5) == "ERROR") {
-        std::cout << "Write your username..." << "\n";
+    }
+    uint8_t flag_error_username = 1;
+    while (flag_error_username == 1) {
         QLineEdit *usrTxtIn = findChild<QLineEdit*>("usrTxtIn");
         std::string username = usrTxtIn->text().toStdString();
-        std::cout << "EL usuario " << username << "\n";
         ps.send(username);
-        ps.receive(buffer);
-        server_username_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-        buffer.clear(); buffer.resize(4096);
-        std::cout << server_username_answer;
+        ps.receive(flag_error_username);
     }
+    this->created = true;
     this->close();
 }
 
