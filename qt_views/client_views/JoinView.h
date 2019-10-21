@@ -6,16 +6,16 @@
 #include <common/ProtocolSocket.h>
 
 class JoinView : public QDialog {
-  Q_OBJECT
-  Ui::JoinView ui;
-  ProtocolSocket &ps;
-  QStringList matches;
+    Q_OBJECT
+    Ui::JoinView ui;
+    ProtocolSocket &ps;
+    QStringList matches;
 public:
-  explicit JoinView(ProtocolSocket &ps, std::string matches, QWidget *parent = nullptr);
-  ~JoinView();
+    explicit JoinView(ProtocolSocket &ps, std::string matches, QWidget *parent = nullptr);
+    ~JoinView();
  private slots:
-  void on_btnBoxJoin_accepted();
-  void on_matchList_itemSelectionChanged();
+    void on_btnBoxJoin_accepted();
+    void on_matchList_itemSelectionChanged();
 };
 
 #endif // JOINVIEW_H

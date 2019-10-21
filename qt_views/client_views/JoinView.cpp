@@ -6,15 +6,15 @@
 #include "ui_joinView.h"
 
 void splitMatchs(std::string input, QStringList &match) {
-  std::string delimiter = "\n";
-  int last = 0;
-  int next = input.find(delimiter);
-  while (next != std::string::npos) {
-      QString match_name = QString::fromStdString(input.substr(last, next - last));
-    match.push_back(match_name);
-    last = next +1;
-    next = input.find_first_of(delimiter, last);
-  }
+    std::string delimiter = "\n";
+    int last = 0;
+    int next = input.find(delimiter);
+    while (next != std::string::npos) {
+        QString match_name = QString::fromStdString(input.substr(last, next - last));
+      match.push_back(match_name);
+      last = next +1;
+      next = input.find_first_of(delimiter, last);
+    }
 }
 
 JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) :
@@ -22,18 +22,18 @@ JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) 
                     ps(ps),
                     matches(),
                     ui() {
-  ui.setupUi(this);
-  splitMatchs(line_match, this->matches);
-  QListWidget *matchList = findChild<QListWidget*>("matchList");
-  for(size_t ind = 0; ind < this->matches.length(); ind++) {
-      QString match = this->matches.at(ind);
-      size_t last_char_pos = match.size() - 1;
-      QChar last_char = match.at(last_char_pos);
-      matchList->addItem(match);
-      if (last_char == '1') {
-          matchList->item(ind)->setTextColor(QColor(255,0,0));
-      }
-  }
+    ui.setupUi(this);
+    splitMatchs(line_match, this->matches);
+    QListWidget *matchList = findChild<QListWidget*>("matchList");
+    for(size_t ind = 0; ind < this->matches.length(); ind++) {
+        QString match = this->matches.at(ind);
+        size_t last_char_pos = match.size() - 1;
+        QChar last_char = match.at(last_char_pos);
+        matchList->addItem(match);
+        if (last_char == '1') {
+            matchList->item(ind)->setTextColor(QColor(255,0,0));
+        }
+    }
 }
 
 void JoinView::on_matchList_itemSelectionChanged() {

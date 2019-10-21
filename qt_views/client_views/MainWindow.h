@@ -9,19 +9,19 @@
 #include "JoinView.h"
 
 class MainWindow : public QMainWindow {
- Q_OBJECT
-  Ui::MainWindow ui;
-  ProtocolSocket &ps;
-  std::string matches;
-  CreateView create_view;
-  JoinView join_view;
+    Q_OBJECT
+    Ui::MainWindow ui;
+    ProtocolSocket &ps;
+    std::string matches;
+    CreateView create_view;
+    JoinView join_view;
  public:
-  explicit MainWindow(ProtocolSocket &ps, QWidget *parent = nullptr);
-  virtual ~MainWindow();
+    explicit MainWindow(ProtocolSocket &ps, QWidget *parent = nullptr);
+    virtual ~MainWindow();
  private:
  private slots:
-  void on_createMatchBtn_clicked();
-  void on_joinMatchBtn_clicked();
+    void on_createMatchBtn_clicked();
+    void on_joinMatchBtn_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -11,12 +11,12 @@
 
 
 class ViewManager {
-  QApplication mainApp;
-  Socket sck;
+    QApplication mainApp;
+    Socket sck;
  public:
-  ViewManager(int argc, char *argv[]);
-  ProtocolSocket run();
-  ~ViewManager() {}
+    ViewManager(int argc, char *argv[]);
+    ProtocolSocket run();
+    ~ViewManager() {}
 };
 
 #endif //MICROMACHINES_SRC_CLIENT_QT_VIEWS_CLIENT_VIEWS_VIEW_MANAGER_H_
