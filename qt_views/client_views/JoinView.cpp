@@ -11,8 +11,8 @@ void splitMatchs(std::string input, QStringList &match) {
   int next = input.find(delimiter);
   while (next != std::string::npos) {
       QString match = QString::fromStdString(input.substr(last, next - last));
-      match
     match.push_back(match);
+    
     last = next +1;
     next = input.find_first_of(delimiter, last);
   }
@@ -23,15 +23,26 @@ JoinView::JoinView(ProtocolSocket &ps, std::string line_match, QWidget *parent) 
                     ps(ps),
                     matches(),
                     ui() {
+    std::cout<<"----------------------------------JOINWVIEW---------------------------------------\n";
   ui.setupUi(this);
   splitMatchs(line_match, this->matches);
+  std::cout << this->matches.size() << "\n";
   QListWidget *matchList = findChild<QListWidget*>("matchList");
-  matchList->addItems(this->matches);
+  std::cout << this->matches.length() << "\n";
+  for(size_t ind = 0; ind < this->matches.length(); ind++) {
+      QString match = this->matches.at(ind);
+      std::cout << match.toStdString() << "\n";
+      size_t last_char_pos = match.size() - 1;
+      QChar last_char = match.at(last_char_pos);
+      matchList->addItem(match);
+      if (last_char == '1') {
+          matchList->item(ind)->setTextColor(QColor(255,0,0));
+      }
+  }
 }
 
 void JoinView::on_btnBoxJoin_accepted() {
     QListWidget *matchList = findChild<QListWidget*>("matchList");
-
     std::vector<uint8_t> buffer(4096);
     std::string server_match_answer("ERROR");
     while (server_match_answer.substr(0,5) == "ERROR") {
