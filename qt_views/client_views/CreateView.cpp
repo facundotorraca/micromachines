@@ -11,6 +11,7 @@ CreateView::CreateView(ProtocolSocket &ps, QWidget *parent) :
 }
 
 void CreateView::on_btnBoxCreate_accepted() {
+    QLabel *errorLabel = findChild<QLabel*>("errorLabel");
     std::vector<uint8_t> buffer(4096);
     std::string server_match_answer("ERROR");
     while (server_match_answer.substr(0,5) == "ERROR") {
@@ -21,6 +22,10 @@ void CreateView::on_btnBoxCreate_accepted() {
         ps.send(match_name);
         ps.receive(buffer);
         server_match_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+        if(server_match_answer!="1") {
+          errorLabel->setText("Cambie el nombre de la partida");
+          return;
+        }
         buffer.clear(); buffer.resize(4096);
         std::cout << server_match_answer;
   }
@@ -34,6 +39,10 @@ void CreateView::on_btnBoxCreate_accepted() {
         ps.send(username);
         ps.receive(buffer);
         server_username_answer.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+        if(server_match_answer!="1") {
+          errorLabel->setText("Cambie el nombre de usuario");
+          return;
+        }
         buffer.clear(); buffer.resize(4096);
         std::cout << server_username_answer;
     }
