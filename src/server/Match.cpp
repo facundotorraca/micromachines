@@ -90,7 +90,7 @@ void Match::run() {
         this->create_update_for_players();
         for (auto &thread : thread_players) {
             if (thread.second.dead()) {
-                cars.erase(thread.first)
+                cars.erase(thread.first);
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
