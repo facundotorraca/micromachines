@@ -3,6 +3,7 @@
 #include "Match.h"
 #include "Player.h"
 #include <common/MsgTypes.h>
+#include <iostream>
 #include "ThreadClientEventMonitor.h"
 
 #define FRAMES_PER_SECOND 30
@@ -25,6 +26,8 @@ void Match::add_player(Player&& player) {
     } else {
         std::string welcome_message(WELCOME_MATCH_MESSAGE);
         player.send(welcome_message);
+        std::cout << "Match: setting player id " << players.size() << "\n";
+        player.set_ID((uint8_t)players.size());
         this->players.emplace(players.size(),std::move(player));
     }
 }
@@ -75,8 +78,9 @@ void Match::run() {
     this->initialize_players();
     this->clients_monitor.start();
 
-    for (auto & player : players) {
+    for (auto& player : players) {
         uint8_t id = player.first;
+        std::cout << "Creating player " << std::to_string(id) << "\n";
         this->updates_players.emplace(id, 10000/*queue len*/);
         this->thread_players.emplace(std::piecewise_construct,
                 std::forward_as_tuple(id),
@@ -119,10 +123,11 @@ void Match::step() {
 }
 
 void Match::initialize_players() {
-    int32_t ID = 0;
-    for (auto & player : players) {
+    for (auto& player : players) {
         CarSpecs specs(50, -10, 50, 100, 40, 40);
-        this->cars.insert(std::pair<uint8_t, Car&&>(player.first, std::move(Car(this->racing_track, specs))));
+        this->cars.emplace(std::piecewise_construct,
+                std::forward_as_tuple(player.first),
+                std::forward_as_tuple(racing_track, specs));
     }
 }
 

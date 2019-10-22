@@ -7,6 +7,7 @@
 #include "Entities/Track.h"
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include <common/Sizes.h>
 
 #define INVALIDAD_CAD_ID -1
 
@@ -23,7 +24,7 @@ Scene::Scene(ProtectedQueue<std::vector<int32_t>>& queue):
         rend(nullptr)
 {
     this->my_car_ID = INVALIDAD_CAD_ID;
-    SDL_CreateWindowAndRenderer(1280, 720, 0, &win, &rend);
+    SDL_CreateWindowAndRenderer(WIDTH_SCREEN, HEIGHT_SCREEN, 0, &win, &rend);
 
     /*Para el fullscreen hay que manejar errores me parece*/
     //SDL_SetWindowFullscreen(this->win, SDL_WINDOW_FULLSCREEN_DESKTOP);

@@ -64,12 +64,18 @@ void Player::set_car_model(uint8_t car_model) {
 UpdateRace Player::receive_update() {
     std::vector<int32_t> buf;
     this->p_socket.receive(buf);
+    std::cout << this->ID << "\n";
     return {this->ID, static_cast<uint8_t>(buf.at(0)), static_cast<uint8_t>(buf.at(1))};
 }
 
 void Player::send(UpdateClient update) {
-    std::cout << "entre" << "\n";
     update.send(p_socket);
+}
+
+void Player::set_ID(uint8_t id) {
+    std::cout << "Player: setting id " << (int)id << "\n";
+    this->ID = id;
+    std::cout << "Player: now the player id is " << this->ID << "\n";
 }
 
 

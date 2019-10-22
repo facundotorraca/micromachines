@@ -39,6 +39,8 @@ class Player {
 
         UpdateRace receive_update();
 
+        void set_ID(uint8_t id);
+
         bool is_on_join_mode();
 
     void kill();
