@@ -7,8 +7,11 @@
 
 #define JOIN_MODE 1
 #define CREATE_MODE 2
+
 #define BIT_ERROR 1
 #define BIT_SUCCESS 0
+
+#define MAX_LEN_NAME 20
 
 ThreadIncomingPlayer::ThreadIncomingPlayer(ProtocolSocket&& p_socket, ProtectedQueue<Player>& incoming_players, MatchTable& matches):
     incoming_players(incoming_players),
@@ -28,35 +31,27 @@ void ThreadIncomingPlayer::stop() {
 
 
 void ThreadIncomingPlayer::receive_match_name(std::string& match_name, uint8_t mode) {
-    std::vector<uint8_t> buffer(4096);
-
     uint8_t bit_error = BIT_ERROR;
     uint8_t bit_success = BIT_SUCCESS;
 
-    this->p_socket.receive(buffer);
-    match_name.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+    this->p_socket.receive(match_name);
     while (mode == CREATE_MODE && !this->matches.match_name_available(match_name)){
-        buffer.clear(); buffer.resize(4096);
+        match_name.clear(); match_name.resize(MAX_LEN_NAME);
         this->p_socket.send(bit_error);
-        this->p_socket.receive(buffer);
-        match_name.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+        this->p_socket.receive(match_name);
     }
     this->p_socket.send(bit_success);
 }
 
 void ThreadIncomingPlayer::receive_username(std::string& username, std::string& match_name, uint8_t mode) {
-    std::vector<uint8_t> buffer(4096);
-
     uint8_t bit_error = BIT_ERROR;
     uint8_t bit_success = BIT_SUCCESS;
 
-    this->p_socket.receive(buffer);
-    username.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+    this->p_socket.receive(username);
     while (mode == JOIN_MODE && !this->matches.username_available(username, match_name)){
-        buffer.clear(); buffer.resize(4096);
+        username.clear(); username.resize(MAX_LEN_NAME);
         this->p_socket.send(bit_error);
-        this->p_socket.receive(buffer);
-        username.assign(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+        this->p_socket.receive(username);
     }
     this->p_socket.send(bit_success);
 }
@@ -68,12 +63,10 @@ void ThreadIncomingPlayer::run() {
         uint8_t mode;
         this->p_socket.receive(mode);
 
-        std::vector<uint8_t> buffer(4096);
-
-        std::string match_name;
+        std::string match_name(MAX_LEN_NAME, '\0');
         this->receive_match_name(match_name, mode);
 
-        std::string username;
+        std::string username(MAX_LEN_NAME, '\0');
         this->receive_username(username, match_name, mode);
 
         Player new_player(std::move(this->p_socket), mode, username, match_name);

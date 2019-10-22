@@ -3,9 +3,9 @@
 
 #include <thread>
 #include <memory>
-#include "common/Thread.h"
-#include "server/Match.h"
 #include <atomic>
+#include "server/Match.h"
+#include "common/Thread.h"
 #include "server/Player.h"
 #include "common/ProtectedQueue.h"
 
@@ -14,7 +14,7 @@ class ThreadMatchOptions {
     std::thread thread;
     Player player;
 
-    std::atomic<bool> dead{};
+    std::atomic<bool> dead;
 
     private:
         void run_match_options(ProtectedQueue<std::shared_ptr<Match>>* not_ready_matches);
@@ -24,15 +24,15 @@ class ThreadMatchOptions {
     public:
         ThreadMatchOptions(Player &&player, std::shared_ptr<Match>&& match);
 
+        void start_match_options(ProtectedQueue<std::shared_ptr<Match>>* not_ready_matches);
+
+        void start_player_options();
+
         bool options_set();
 
         void stop();
 
         void join();
-
-        void start_match_options(ProtectedQueue<std::shared_ptr<Match>>* not_ready_matches);
-
-        void start_player_options();
 };
 
 

@@ -4,8 +4,8 @@
 #include <atomic>
 #include "common/Thread.h"
 #include "server/Player.h"
-#include "server/MatchTable.h"
 #include "common/Socket.h"
+#include "server/MatchTable.h"
 #include "common/ProtectedQueue.h"
 #include <common/ProtocolSocket.h>
 
@@ -23,6 +23,7 @@ class ThreadIncomingPlayer : public Thread {
         void receive_match_name(std::string& match_name, uint8_t mode);
 
         void receive_username(std::string& username, std::string& match_name, uint8_t mode);
+
     public:
 
         ThreadIncomingPlayer(ProtocolSocket&& p_socket, ProtectedQueue<Player>& incoming_players, MatchTable& matches);

@@ -12,38 +12,38 @@ class Player {
     uint8_t mode;
 
     int32_t ID;
-    int32_t car_model; /* esto despues se puede cambiar*/
+    int32_t car_model;                                                  /* esto despues se puede cambiar*/
     std::string username;
     std::string match_name;
 
     public:
         Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name);
 
-        bool is_called(std::string& username);
-
         Player(Player&& other) noexcept;
 
-        void set_car_model(uint8_t car_model);
+        bool is_called(std::string& username);
 
-        std::string get_match_name();
+        void set_car_model(int32_t car_model);
 
         void send(std::vector<int32_t>& msg);
 
+        void send(UpdateClient update);
+
         void send(std::string& msg);
 
-        void send(UpdateClient update);
+        std::string get_match_name();
+
+        UpdateRace receive_update();
 
         std::string get_username();
 
         uint8_t receive_option();
 
-        UpdateRace receive_update();
-
-        void set_ID(uint8_t id);
+        void set_ID(int32_t id);
 
         bool is_on_join_mode();
 
-    void kill();
+        void kill();
 };
 
 #endif //MICROMACHINES_PLAYER_H

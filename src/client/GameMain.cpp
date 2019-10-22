@@ -8,6 +8,8 @@
 #include <common/ProtectedQueue.h>
 #include <common/ProtocolSocket.h>
 
+#include <iostream>
+
 GameMain::GameMain(ProtocolSocket &socket):
     socket(std::move(socket))
 {}

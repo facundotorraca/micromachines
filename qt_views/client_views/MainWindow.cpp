@@ -2,10 +2,8 @@
 #include <iostream>
 
 std::string get_matches(ProtocolSocket &ps) {
-    std::vector<uint8_t> buffer(4096, 1);
-    ps.receive(buffer);
-    std::string matches(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-    //std::string matches = "PARTIDA 1\nPARTIDA 2\nPARTIDA 3\n";
+    std::string matches(1024, '\0');
+    ps.receive(matches);
     std::cout << "#-----------------PARTIDAS EXISTENTES---------------#\n";
     std::cout << matches;
     std::cout << "#---------------------------------------------------#\n";

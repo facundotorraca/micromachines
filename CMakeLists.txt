@@ -51,10 +51,6 @@ target_link_libraries(micromachines-client client viewManager)
 add_executable(prueba_sdl src/model/main.cpp)
 target_link_libraries(prueba_sdl model common Box2D SDL2 SDL2_image)
 
-# Genero un ejecutable con el cliente viejo
-add_executable(old-client src/client/main.old.cpp)
-target_link_libraries(old-client common)
-
 # Genero un ejecutable que prueba qt
 add_executable(qt-client qt_views/main.cpp)
 target_link_libraries(qt-client common viewManager)

@@ -15,8 +15,8 @@ class Server {
     ProtectedQueue<std::shared_ptr<Match>> not_ready_matches;
 
     ThreadAcceptor* acceptor;
-    ThreadPlayerLocator* player_locator;
     ThreadMatchStarter* match_starter;
+    ThreadPlayerLocator* player_locator;
 
     std::list<std::shared_ptr<Match>> running_matches;
 

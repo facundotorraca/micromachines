@@ -15,7 +15,7 @@ ThreadPlayerLocator::ThreadPlayerLocator(ProtectedQueue<Player>& incoming_player
     matches(matches)
 {}
 
-void ThreadPlayerLocator::remove_running_matches() {
+void ThreadPlayerLocator::remove_dead_setters() {
     for (auto setter = this->options_setters.begin(); setter != this->options_setters.end();) {
         if ((*setter)->options_set()) {
             (*setter)->join();
@@ -45,8 +45,9 @@ void ThreadPlayerLocator::run() {
             if (new_player.is_on_join_mode()) {
                 std::shared_ptr<Match> match = this->matches.get(new_player.get_match_name());
                 auto* setter = new ThreadMatchOptions(std::move(new_player), std::move(match));
+                this->options_setters.push_back(setter);
                 setter->start_player_options();
-                /*agregarlo a algun lado*/
+
             } else {
                 std::shared_ptr<Match> new_match(new Match(new_player.get_username(), new_player.get_match_name()));
                 this->matches.add(new_player.get_match_name(), new_match);
@@ -55,10 +56,10 @@ void ThreadPlayerLocator::run() {
                 this->options_setters.push_back(setter);
                 setter->start_match_options(&this->not_ready_matches);
             }
-            this->remove_running_matches();
+            this->remove_dead_setters();
         } catch (const ProtectedQueueError &exception) {
             this->kill_all_setter();
-            this->remove_running_matches();
+            this->remove_dead_setters();
             this->server_running = false;
         }
     }

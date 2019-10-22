@@ -12,8 +12,8 @@
 #include <common/ProtocolSocket.h>
 
 class MatchTable {
-    std::mutex mtx;
     std::map<std::string, std::shared_ptr<Match>> map;
+    std::mutex mtx;
 
     public:
         bool username_available(std::string& username, std::string& match_name);

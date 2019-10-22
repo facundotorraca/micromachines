@@ -15,18 +15,21 @@ class ProtocolSocket {
         ProtocolSocket(ProtocolSocket &&other) noexcept;
 
         void send(uint8_t byte);
+
         void send(int32_t word);
 
         void send(std::string& message);
 
-        void send(std::vector<int32_t>& bytes);
-        void send(std::vector<uint8_t>& bytes);
+        void send(std::vector<int32_t>& buffer);
 
         void receive(uint8_t& byte);
 
+        void receive(int32_t& word);
+
+        void receive(std::string& message);
+
         void receive(std::vector<int32_t>& buffer);
-        void receive(std::vector<uint8_t>& buffer);
-        
+
         bool is_connected();
 
         void close();
