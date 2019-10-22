@@ -54,28 +54,24 @@ void JoinView::on_matchList_itemSelectionChanged() {
     }
 }
 void JoinView::on_btnBoxJoin_accepted() {
-  QLabel *errorLabel = findChild<QLabel*>("errorLabel");
-  QListWidget *matchList = findChild<QListWidget*>("matchList");
+    QLabel *errorLabel = findChild<QLabel*>("errorLabel");
+    QListWidget *matchList = findChild<QListWidget*>("matchList");
     uint8_t flag_error_matchname = 1;
-    while (flag_error_matchname==1) {
-        std::string selectedMatch = matchList->selectedItems()[0]->text().toStdString();
-        std::string match_name = selectedMatch.substr(0, selectedMatch.find(" "));
-        ps.send(match_name);
-        ps.receive(flag_error_matchname);
-    }
+    std::string selectedMatch = matchList->selectedItems()[0]->text().toStdString();
+    std::string match_name = selectedMatch.substr(0, selectedMatch.find(" "));
+    ps.send(match_name);
+    ps.receive(flag_error_matchname);
     uint8_t flag_error_username = 1;
-    while (flag_error_username == 1) {
-        QLineEdit *usrTxtIn = findChild<QLineEdit*>("usrTxtIn");
-        std::string username = usrTxtIn->text().toStdString();
-        ps.send(username);
-        ps.receive(flag_error_username);
-        if(flag_error_username != 0) {
-          errorLabel->setText("El nombre de usuario ya esta en uso");
-          return;
-        }
+    QLineEdit *usrTxtIn = findChild<QLineEdit*>("usrTxtIn");
+    std::string username = usrTxtIn->text().toStdString();
+    ps.send(username);
+    ps.receive(flag_error_username);
+    if(flag_error_username == 1) {
+        errorLabel->setText("El nombre de usuario ya esta en uso");
+    } else {
+        this->joined = true;
+        this->close();
     }
-    this->joined = true;
-    this->close();
 }
 
 JoinView::~JoinView() {

@@ -18,23 +18,19 @@ bool CreateView::is_created() {
 void CreateView::on_btnBoxCreate_accepted() {
     QLabel *errorLabel = findChild<QLabel*>("errorLabel");
     uint8_t flag_error_matchname = 1;
-    while (flag_error_matchname == 1) {
-        QLineEdit *matchTxtIn = findChild<QLineEdit*>("matchTxtIn");
-        std::string match_name = matchTxtIn->text().toStdString();
-        ps.send(match_name);
-        ps.receive(flag_error_matchname);
-        if(flag_error_matchname != 0) {
-          errorLabel->setText("El nombre de la partida ya esta en uso");
-          return;
-        }
+    QLineEdit *matchTxtIn = findChild<QLineEdit*>("matchTxtIn");
+    std::string match_name = matchTxtIn->text().toStdString();
+    ps.send(match_name);
+    ps.receive(flag_error_matchname);
+    if(flag_error_matchname != 0) {
+      errorLabel->setText("El nombre de la partida ya esta en uso");
+      return;
     }
     uint8_t flag_error_username = 1;
-    while (flag_error_username == 1) {
-        QLineEdit *usrTxtIn = findChild<QLineEdit*>("usrTxtIn");
-        std::string username = usrTxtIn->text().toStdString();
-        ps.send(username);
-        ps.receive(flag_error_username);
-    }
+    QLineEdit *usrTxtIn = findChild<QLineEdit*>("usrTxtIn");
+    std::string username = usrTxtIn->text().toStdString();
+    ps.send(username);
+    ps.receive(flag_error_username);
     this->created = true;
     this->close();
 }

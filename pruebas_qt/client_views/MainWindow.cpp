@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include <iostream>
+#include <unistd.h>
 
 std::string get_matches(ProtocolSocket &ps) {
     std::string matches(1024, '\0');
@@ -48,8 +49,8 @@ void MainWindow::on_joinMatchBtn_clicked() {
     this->join_view.exec();
     if(this->join_view.is_joined()){
         this->close();
-        this->wait_view.show();
-        this->wait_view.wait_start();
+        this->wait_view.open();
+        this->wait_view.exec();
         fixed = true;
     }
 }

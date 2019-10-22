@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WaitWindow</class>
- <widget class="QDialog" name="WaitWindow">
+ <class>StartView</class>
+ <widget class="QDialog" name="StartView">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>446</width>
-    <height>136</height>
+    <width>402</width>
+    <height>134</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <item row="0" column="1">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>ESPERANDO QUE EL CREADOR DE LA PARTIDA INICIE</string>
+      <string>Presione el boton para empezar</string>
      </property>
     </widget>
    </item>
@@ -46,6 +46,13 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="startBtn">
+     <property name="text">
+      <string>Empezar</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
