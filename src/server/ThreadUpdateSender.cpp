@@ -16,7 +16,7 @@ void ThreadUpdateSender::run() {
         try {
             auto update = updates.pop();
             player.send(update);
-        } catch (ProtectedQueueError& e) {
+        } catch (ProtectedQueueError& exception) {
             this->running = false;
         }
     }

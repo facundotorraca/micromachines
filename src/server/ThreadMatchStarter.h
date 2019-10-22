@@ -11,10 +11,10 @@ class ThreadMatchStarter : public Thread {
     ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches;
 
     std::list<std::shared_ptr<Match>>& running_matches;
-    std::atomic<bool> server_running{};
+    std::atomic<bool> server_running;
 
     private:
-        void run();
+        void run() override;
 
         void close_ended_matches();
 

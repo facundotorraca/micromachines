@@ -18,7 +18,6 @@ class ProtocolSocket {
         void send(int32_t word);
 
         void send(std::string& message);
-
         void send(std::vector<int32_t>& bytes);
         void send(std::vector<uint8_t>& bytes);
 

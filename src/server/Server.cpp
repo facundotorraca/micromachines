@@ -1,9 +1,12 @@
 #include "Server.h"
 #include <iostream>
 
+#define MAX_PLAYERS_WAITLIST 30
+#define MAX_MATCHES_WAITLIST 10
+
 Server::Server(const std::string &port):
-    incoming_players(50),
-    not_ready_matches(50)
+    incoming_players(MAX_PLAYERS_WAITLIST),
+    not_ready_matches(MAX_MATCHES_WAITLIST)
 {
     this->acceptor = new ThreadAcceptor(port, this->incoming_players, this->matches);
     this->player_locator = new ThreadPlayerLocator(this->incoming_players,this->matches,this->not_ready_matches);

@@ -28,14 +28,15 @@ class Match : public Thread {
 
     ProtectedQueue<UpdateRace> updates_race;
 
-    std::unordered_map<uint8_t, Player> players;
-    std::unordered_map<uint8_t, ThreadPlayer> thread_players;
-    std::unordered_map<uint8_t, ProtectedQueue<UpdateClient>> updates_players;
-    std::unordered_map<uint8_t, Car> cars;
+    std::unordered_map<int32_t, Player> players;
+    std::unordered_map<int32_t, ThreadPlayer> thread_players;
+    std::unordered_map<int32_t, ProtectedQueue<UpdateClient>> updates_players;
+    std::unordered_map<int32_t, Car> cars;
 
     RacingTrack racing_track;
 
     std::mutex mtx;
+
     private:
         void run() override;
 
@@ -50,11 +51,11 @@ class Match : public Thread {
     public:
         explicit Match(std::string match_creator, std::string match_name);
 
-        std::string get_match_name_to_send(int match_index);
-
         bool has_username(std::string& username);
 
         void apply_update(UpdateRace update);
+
+        std::string get_match_name_to_send();
 
         void add_player(Player&& player);
 

@@ -19,7 +19,7 @@ void ThreadPlayer::run() {
         try {
             auto data = player.receive_update();
             updates_recv.push(data);
-        } catch (SocketError& e) {
+        } catch (SocketError& exception) {
             updates_send.close();
             this->running = false;
         }

@@ -7,9 +7,9 @@
 #include "common/Thread.h"
 #include "server/Player.h"
 #include "server/MatchTable.h"
+#include "ThreadIncomingPlayer.h"
 #include "server/SocketAcceptor.h"
 #include "common/ProtectedQueue.h"
-#include "ThreadIncomingPlayer.h"
 
 class ThreadAcceptor : public Thread {
     SocketAcceptor acceptor;
@@ -31,7 +31,6 @@ class ThreadAcceptor : public Thread {
         ThreadAcceptor(const std::string& port, ProtectedQueue<Player>& incoming_players, MatchTable& matches);
 
         void stop();
-
 };
 
 

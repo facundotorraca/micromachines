@@ -105,7 +105,6 @@ b2Body* Wheel::get_body() {
 }
 
 Wheel::~Wheel() {
-    /* Capay os deberia destruir el sever*/
     this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 

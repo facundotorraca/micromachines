@@ -73,10 +73,8 @@ void Player::send(UpdateClient update) {
     update.send(p_socket);
 }
 
-void Player::set_ID(uint8_t id) {
-    std::cout << "Player: setting id " << (int)id << "\n";
+void Player::set_ID(int32_t id) {
     this->ID = id;
-    std::cout << "Player: now the player id is " << this->ID << "\n";
 }
 
 

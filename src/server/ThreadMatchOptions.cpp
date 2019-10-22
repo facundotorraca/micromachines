@@ -48,13 +48,18 @@ void ThreadMatchOptions::run_match_options(ProtectedQueue<std::shared_ptr<Match>
 }
 
 void ThreadMatchOptions::run_player_options() {
-    uint8_t car_model = 0;
-    car_model = this->player.receive_option();
-    this->player.set_car_model(car_model);
-    std::cout << "Listo de config para el player\n";
-    /*Put the creator on the match*/
-    this->match->add_player(std::move(player));
-    this->dead = true;
+    try {
+        uint8_t car_model = 0;
+
+        car_model = this->player.receive_option();
+
+        this->player.set_car_model(car_model);
+
+        this->match->add_player(std::move(player));
+        this->dead = true;
+    } catch (const SocketError& exception) {
+        this->dead = true;
+    }
 }
 
 void ThreadMatchOptions::join() {
