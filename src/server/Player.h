@@ -41,11 +41,7 @@ class Player {
 
         bool is_on_join_mode();
 
-        void set_ID(uint8_t ID);
-
-        int32_t get_ID();
-
-        void kill();
+    void kill();
 };
 
 #endif //MICROMACHINES_PLAYER_H

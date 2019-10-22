@@ -22,19 +22,20 @@
 class Match : public Thread {
     std::string match_name;
     std::string match_creator;
-    std::vector<Player> players;
-
     std::atomic<bool> stopped;
 
-    std::unordered_map<uint8_t, ThreadPlayer> thread_players;
-    ProtectedQueue<UpdateRace> updates_race;
     ThreadClientEventMonitor clients_monitor;
-    std::map<uint8_t, ProtectedQueue<UpdateClient>> updates_players;
 
-    std::map<uint8_t, Car> cars;
+    ProtectedQueue<UpdateRace> updates_race;
+
+    std::unordered_map<uint8_t, Player> players;
+    std::unordered_map<uint8_t, ThreadPlayer> thread_players;
+    std::unordered_map<uint8_t, ProtectedQueue<UpdateClient>> updates_players;
+    std::unordered_map<uint8_t, Car> cars;
+
     RacingTrack racing_track;
-    std::mutex mtx;
 
+    std::mutex mtx;
     private:
         void run() override;
 

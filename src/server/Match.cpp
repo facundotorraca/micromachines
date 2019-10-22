@@ -25,7 +25,7 @@ void Match::add_player(Player&& player) {
     } else {
         std::string welcome_message(WELCOME_MATCH_MESSAGE);
         player.send(welcome_message);
-        this->players.push_back(std::move(player));
+        this->players.emplace(players.size(),std::move(player));
     }
 }
 
@@ -63,7 +63,7 @@ std::string Match::get_match_name_to_send(int match_index) {
 
 bool Match::has_username(std::string& username) {
     for (auto& player : this->players) {
-        if (player.is_called(username)) {
+        if (player.second.is_called(username)) {
             return true;
         }
     }
@@ -76,11 +76,11 @@ void Match::run() {
     this->clients_monitor.start();
 
     for (auto & player : players) {
-        uint8_t id = player.get_ID();
+        uint8_t id = player.first;
         this->updates_players.emplace(id, 10000/*queue len*/);
         this->thread_players.emplace(std::piecewise_construct,
                 std::forward_as_tuple(id),
-                std::forward_as_tuple(updates_players.at(id), updates_race, player));
+                std::forward_as_tuple(updates_players.at(id), updates_race, player.second));
         this->create_info_player_updates(id);
         thread_players.at(id).start();
     }
@@ -91,6 +91,8 @@ void Match::run() {
         for (auto &thread : thread_players) {
             if (thread.second.dead()) {
                 cars.erase(thread.first);
+                players.erase(thread.first);
+                updates_players.erase(thread.first);
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
@@ -119,10 +121,8 @@ void Match::step() {
 void Match::initialize_players() {
     int32_t ID = 0;
     for (auto & player : players) {
-        player.set_ID(ID);
         CarSpecs specs(50, -10, 50, 100, 40, 40);
-        this->cars.insert(std::pair<uint8_t, Car&&>(player.get_ID(), std::move(Car(this->racing_track, specs))));
-        ID++;
+        this->cars.insert(std::pair<uint8_t, Car&&>(player.first, std::move(Car(this->racing_track, specs))));
     }
 }
 

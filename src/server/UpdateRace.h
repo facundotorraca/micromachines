@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include <unordered_map>
 #include "model/Car.h"
 
 class UpdateRace {
@@ -13,7 +14,7 @@ class UpdateRace {
 public:
     UpdateRace(int32_t client_ID, int32_t key, int32_t key_state);
 
-    void update_cars(std::map<uint8_t, Car>& cars);
+    void update_cars(std::unordered_map<uint8_t, Car>& cars);
 };
 
 

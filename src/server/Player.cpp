@@ -61,14 +61,6 @@ void Player::set_car_model(uint8_t car_model) {
     this->car_model = car_model;
 }
 
-void Player::set_ID(uint8_t ID) {
-    this->ID = ID;
-}
-
-int32_t Player::get_ID() {
-    return this->ID;
-}
-
 UpdateRace Player::receive_update() {
     std::vector<int32_t> buf;
     this->p_socket.receive(buf);
