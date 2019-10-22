@@ -23,7 +23,7 @@ class Player {
 
         bool is_called(std::string& username);
 
-        void set_car_model(uint8_t car_model);
+        void set_car_model(int32_t car_model);
 
         void send(std::vector<int32_t>& msg);
 

@@ -121,31 +121,7 @@ void Car::update() {
     front_right_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
 }
 
-std::vector<float> Car::get_wheels_position_x() {
-    std::vector<float> positions_x;
-    for (auto & m_tire : wheels) {
-        positions_x.push_back(METER_TO_PIXEL * m_tire->get_position().x);
-    }
-    return positions_x;
-}
-
-std::vector<float> Car::get_wheels_position_y() {
-    std::vector<float> positions_y;
-    for (auto & m_tire : wheels) {
-        positions_y.push_back(METER_TO_PIXEL * m_tire->get_position().y);
-    }
-    return positions_y;
-}
-
-std::vector<float> Car::get_wheels_angle() {
-    std::vector<float> angles;
-    for (auto & m_tire : wheels) {
-        angles.push_back(m_tire->get_angle());
-    }
-    return angles;
-}
-
-float Car::get_desire_angle(uint8_t key) {
+float Car::get_desire_angle(int32_t key) {
     float desire_angle = 0;
     if (key == KEY_RIGHT) {
         desire_angle = MAX_ROTATION_ANGLE * DEGTORAD;
@@ -156,27 +132,14 @@ float Car::get_desire_angle(uint8_t key) {
     return desire_angle;
 }
 
-float Car::get_position_x() {
-    return this->car_body->GetPosition().x;
-}
-
-float Car::get_position_y() {
-    return this->car_body->GetPosition().y;
-}
-
-
-float Car::get_angle() {
-    return RADTODEG * this->car_body->GetAngle();
-}
-
-void Car::press_key(uint8_t key) {
+void Car::press_key(int32_t key) {
     if (key == KEY_DOWN || key == KEY_UP)
         key_v = key;
     else
         key_h = key;
 }
 
-void Car::release_key(uint8_t key) {
+void Car::release_key(int32_t key) {
     if (key == KEY_DOWN || key == KEY_UP)
         key_v = NOT_PRESSED;
     else
@@ -189,11 +152,11 @@ Car::~Car() {
     }
 }
 
-UpdateClient Car::get_update(const uint8_t id) {
+UpdateClient Car::get_update(const int32_t id) {
     std::vector<int32_t> params{MSG_UPDATE_ENTITY, id, TYPE_CAR,
-                                (int32_t)(METER_TO_PIXEL * (this->get_position_x() - (CAR_WIDTH*0.5))),
-                                (int32_t)(METER_TO_PIXEL * (this->get_position_y() - (CAR_HEIGHT*0.5))),
-                                (int32_t)(this->get_angle())};
+                                (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().x - (CAR_WIDTH*0.5))),
+                                (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
+                                (int32_t)(RADTODEG * this->car_body->GetAngle())};
 
     for (auto& wheel : wheels){
         params.emplace_back(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5)));

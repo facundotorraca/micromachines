@@ -5,7 +5,6 @@
 #ifndef MICROMACHINES_SCENE_H
 #define MICROMACHINES_SCENE_H
 
-
 #include <SDL2/SDL.h>
 #include <string>
 #include <common/ProtectedQueue.h>

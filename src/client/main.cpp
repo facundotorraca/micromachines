@@ -1,16 +1,16 @@
 #include <string>
 #include <iostream>
+#include "GameMain.h"
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-#include "GameMain.h"
 
 #define SUCCESS 0
 
 void get_matches(ProtocolSocket& ps) {
-    std::vector<uint8_t> buffer(4096, 1);
+    std::string matches(1024, '\0');
 
-    ps.receive(buffer);
-    std::string matches(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+    ps.receive(matches);
+    //std::string matches(reinterpret_cast<const char *>(buffer.data()), buffer.size());
 
     std::cout << "#-----------------PARTIDAS EXISTENTES---------------#\n";
     std::cout << matches;
@@ -18,10 +18,10 @@ void get_matches(ProtocolSocket& ps) {
 }
 
 int main(int argc, char *argv[]) {
-      /*Todo esto es lo que hizo facu
-      * Habría que reemplazarlo por Qt*/
+    /*Todo esto es lo que hizo facu
+    * Habría que reemplazarlo por Qt*/
 
-    std::string port("7777");
+    std::string port("7778");
     std::string host("127.0.0.1");
 
     Socket s;
@@ -45,8 +45,6 @@ int main(int argc, char *argv[]) {
         uint8_t start = 2;
         ps.send(start);
     }
-
-    std::vector<uint8_t> buffer(4096);
 
     uint8_t flag_error_match = 1;
     while (flag_error_match == 1) {
@@ -75,23 +73,19 @@ int main(int argc, char *argv[]) {
         ps.send(start_game);
     } else {
         std::cout << "Waiting for the game to START \n";
-        uint8_t car = 1;
+        int32_t car = 1;
         ps.send(car);
     }
 
+    std::string welcome_message(100, '\0');
     bool continue_receiving = true;
-    ps.receive(buffer);
-    std::string welcome_message(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-
-    std::cout << welcome_message;
-    if (welcome_message.substr(0,5) == "ERROR") {
-        continue_receiving = false;
-    }
+    ps.receive(welcome_message);
 
     /* Aca empieza SDL
      * "ps" es el ProtocolSocket ya conectado al servidor
      * se debería conectar en la ventana de qt
      */
+
     GameMain game(ps);
     game.start();
 

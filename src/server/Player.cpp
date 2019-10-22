@@ -4,6 +4,9 @@
 #include <utility>
 #include "Player.h"
 
+#define KEY_POS 0
+#define KEY_STATE_POS 1
+
 #define JOIN_MODE 1
 
 Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name):
@@ -58,15 +61,14 @@ bool Player::is_called(std::string &username) {
     return this->username == username;
 }
 
-void Player::set_car_model(uint8_t car_model) {
+void Player::set_car_model(int32_t car_model) {
     this->car_model = car_model;
 }
 
 UpdateRace Player::receive_update() {
     std::vector<int32_t> buf;
     this->p_socket.receive(buf);
-    std::cout << this->ID << "\n";
-    return {this->ID, static_cast<uint8_t>(buf.at(0)), static_cast<uint8_t>(buf.at(1))};
+    return {this->ID, buf.at(KEY_POS), buf.at(KEY_STATE_POS)};
 }
 
 void Player::send(UpdateClient update) {

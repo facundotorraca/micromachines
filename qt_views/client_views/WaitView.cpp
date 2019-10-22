@@ -11,14 +11,13 @@ WaitView::WaitView(ProtocolSocket &ps, QWidget *parent) :
 }
 
 void WaitView::wait_start() {
-  std::vector<uint8_t> buffer(4096);
+  std::string welcome_message(100, '\0');
   std::cout << "Waiting for the game to START \n";
   uint8_t car = 1;
   ps.send(car);
 
   bool continue_receiving = true;
-  ps.receive(buffer);
-  std::string welcome_message(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+  ps.receive(welcome_message);
 
   std::cout << welcome_message;
   if (welcome_message.substr(0,5) == "ERROR") {

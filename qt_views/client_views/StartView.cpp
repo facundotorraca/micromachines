@@ -10,14 +10,13 @@ StartView::StartView(ProtocolSocket &ps, QWidget *parent) :
 }
 
 void StartView::on_startBtn_clicked() {
-  std::vector<uint8_t> buffer(4096);
+  std::string welcome_message(100, '\0');
   std::cout << "Press any key to START" << "\n";
   uint8_t start_game = 1;
   ps.send(start_game);
 
   bool continue_receiving = true;
-  ps.receive(buffer);
-  std::string welcome_message(reinterpret_cast<const char *>(buffer.data()), buffer.size());
+  ps.receive(welcome_message);
 
   std::cout << welcome_message;
   if (welcome_message.substr(0,5) == "ERROR") {
