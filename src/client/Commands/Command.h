@@ -7,11 +7,13 @@
 
 
 #include <memory>
+#include <client/Camera.h>
+#include <common/MsgTypes.h>
 
 class Command {
-
 public:
     static std::unique_ptr<Command> create(std::vector<int32_t>& command);
+    virtual void apply(Camera& camera) = 0;
 };
 
 

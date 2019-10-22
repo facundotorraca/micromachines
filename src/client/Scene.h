@@ -12,6 +12,7 @@
 #include <map>
 #include <list>
 #include <client/Entities/Entity.h>
+#include <client/Commands/Command.h>
 
 class Scene {
     ProtectedQueue<std::vector<int32_t>>& queue;
@@ -24,7 +25,7 @@ class Scene {
     std::mutex mtx;
 
     int32_t my_car_ID;
-    SDL_Point camera{};
+    Camera camera{};
 
     private:
         void updateEntity(std::vector<int32_t> &update_info);
@@ -37,7 +38,7 @@ class Scene {
 
         explicit Scene(ProtectedQueue<std::vector<int32_t>> &queue);
 
-        void handleServerEvent(std::vector<int32_t>& vector);
+        void handleServerEvent(std::unique_ptr<Command> command);
 
         void handleKeyEvent(int key, SDL_EventType type);
 

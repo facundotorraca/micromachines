@@ -99,33 +99,23 @@ void Scene::setMyCarID(std::vector<int32_t> &vector) {
     my_car_ID = vector[ENTITY_ID_POS];
 }
 
-void Scene::handleServerEvent(std::vector<int32_t>& message) {
-    int32_t msg_type = message[MESSAGE_TYPE_POS];
-
-    switch (msg_type) {
-        case MSG_UPDATE_ENTITY:
-            updateEntity(message);
-            break;
-        case MSG_TRACK_ID:
-            setMap(message);
-            break;
-        case MSG_CAR_ID:
-            setMyCarID(message);
-            break;
-        default:
-            break;
-    }
+void Scene::handleServerEvent(std::unique_ptr<Command> command) {
+    command->apply(camera);
 }
 
 void Scene::draw() {
+
     std::unique_lock<std::mutex> lock(mtx);
     SDL_RenderClear(rend);
+    camera.draw();
+    /*
     for (const auto& staticentity : background){
         staticentity->draw(camera);
     }
     for (const auto& entity : entities) {
         entity.second->draw(camera);
     }
+     */
     SDL_RenderPresent(rend);
 }
 

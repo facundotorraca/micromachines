@@ -8,6 +8,8 @@
 
 class Camera {
 
+public:
+    void draw();
 };
 
 
