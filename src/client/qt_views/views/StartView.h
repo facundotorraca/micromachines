@@ -2,8 +2,8 @@
 #define STARTVIEW_H
 
 #include <QDialog>
-#include <ui_startView.h>
 #include <common/ProtocolSocket.h>
+#include <client/qt_views/ui_startView.h>
 
 class StartView : public QDialog {
     Q_OBJECT

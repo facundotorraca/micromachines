@@ -28,13 +28,18 @@ add_library(Box2D STATIC ${BOX2D_SOURCES})
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-#find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+set(CMAKE_AUTOMOC ON)
+#set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+find_package(Qt5Widgets REQUIRED)
+
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
+
+add_subdirectory(src/client/qt_views)
 add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)
 add_subdirectory(src/model)
-add_subdirectory(src/client/qt_views)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
@@ -52,5 +57,5 @@ add_executable(prueba_sdl src/model/main.cpp)
 target_link_libraries(prueba_sdl model common Box2D SDL2 SDL2_image)
 
 # Genero un ejecutable que prueba qt
-add_executable(qt-client src/client/qt_views/main.cpp)
+add_executable(qt-client pruebas_qt/main.cpp)
 target_link_libraries(qt-client common viewManager)

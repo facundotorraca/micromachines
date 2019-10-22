@@ -3,7 +3,7 @@
 #include <iostream>
 #include <QLineEdit>
 #include "JoinView.h"
-#include "ui_joinView.h"
+#include <client/qt_views/ui_joinView.h>
 
 void splitMatchs(std::string input, QStringList &match) {
     std::string delimiter = "\n";

@@ -2,8 +2,8 @@
 #define WAITWINDOW_H
 
 #include <QDialog>
-#include <ui_waitView.h>
 #include <common/ProtocolSocket.h>
+#include <client/qt_views/ui_waitView.h>
 
 class WaitView : public QDialog
 {

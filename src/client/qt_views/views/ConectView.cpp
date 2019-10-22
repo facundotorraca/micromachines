@@ -3,6 +3,8 @@
 #include <string>
 #include <QtWidgets/QLineEdit>
 #include <common/SocketError.h>
+#include <client/qt_views/ui_conectview.h>
+
 
 ConectView::ConectView(Socket &sck, QWidget *parent)
                       : QDialog(parent), ui(), socket(sck){

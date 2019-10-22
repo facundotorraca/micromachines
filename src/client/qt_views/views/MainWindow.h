@@ -4,7 +4,8 @@
 #include <QMainWindow>
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-#include <../qt_views/ui_mainwindow.h>
+#include <client/qt_views/ui_mainwindow.h>
+
 #include "CreateView.h"
 #include "JoinView.h"
 #include "StartView.h"

@@ -2,8 +2,8 @@
 #define JOINVIEW_H
 
 #include <QDialog>
-#include <../qt_views/ui_joinView.h>
 #include <common/ProtocolSocket.h>
+#include <client/qt_views/ui_joinView.h>
 
 class JoinView : public QDialog {
     Q_OBJECT

@@ -1,6 +1,6 @@
 #include "WaitView.h"
 #include <iostream>
-#include <ui_waitView.h>
+#include <client/qt_views/ui_waitView.h>
 #include <common/ProtocolSocket.h>
 
 WaitView::WaitView(ProtocolSocket &ps, QWidget *parent) :
