@@ -28,8 +28,11 @@ add_library(Box2D STATIC ${BOX2D_SOURCES})
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-set(CMAKE_AUTOMOC ON)
-#set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}
+    ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+
+set(CMAKE_CXX_FLAGS "-fPIC")
+
 
 find_package(Qt5Widgets REQUIRED)
 
@@ -59,3 +62,6 @@ target_link_libraries(prueba_sdl model common Box2D SDL2 SDL2_image)
 # Genero un ejecutable que prueba qt
 add_executable(qt-client pruebas_qt/main.cpp)
 target_link_libraries(qt-client common viewManager)
+
+add_executable(client-old src/client/main.old.cpp)
+target_link_libraries(client-old client)

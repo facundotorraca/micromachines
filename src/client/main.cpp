@@ -12,11 +12,15 @@
 
 int main(int argc, char *argv[]) {
     ViewManager view_manager(argc, argv);
-    ProtocolSocket ps = view_manager.run();
+    ProtocolSocket ps(view_manager.run());
     if(!ps.is_connected()) return SUCCESS; // Deberia ser success?
-    std::cout << "INFINITY LOOP\n";
+
+    bool continue_receiving = true;
+
     GameMain game(ps);
-    game.start();    /* Aca empieza SDL
+    game.start();
+
+    /* Aca empieza SDL
      * "ps" es el ProtocolSocket ya conectado al servidor
      * se debería conectar en la ventana de qt
      */

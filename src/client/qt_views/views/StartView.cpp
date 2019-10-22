@@ -19,13 +19,6 @@ void StartView::on_startBtn_clicked() {
     ps.receive(welcome_message);
 
     std::cout << welcome_message;
-    if (welcome_message.substr(0,5) == "ERROR") {
-        continue_receiving = false;
-    }
-    std::cout << "ESPERANDO \n";
-    uint8_t flag = 0;
-    ps.receive(flag);
-    std::cout << flag << "\n";
     this->close();
 }
 

@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpic -std=c++11")
+
+set(CMAKE_AUTOMOC ON)
+
 qt5_wrap_ui(UIS_HEADERS
         views/mainwindow.ui
         views/conectview.ui
