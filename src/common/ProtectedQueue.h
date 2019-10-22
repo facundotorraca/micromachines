@@ -5,6 +5,7 @@
 #include <mutex>
 #include <cstdbool>
 #include <condition_variable>
+#include <iostream>
 #include "ProtectedQueueError.h"
 
 template <class T>

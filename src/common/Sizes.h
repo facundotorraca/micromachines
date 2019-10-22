@@ -6,8 +6,8 @@
 #define CAR_WIDTH 2.0f
 #define CAR_HEIGHT 4.0f
 
-#define WIDTH_WHEEL 0.2f
-#define HEIGHT_WHEEL 0.65f
+#define WIDTH_WHEEL 0.3f
+#define HEIGHT_WHEEL 0.75f
 
 #define HEIGHT_SCREEN 600
 #define WIDTH_SCREEN 800

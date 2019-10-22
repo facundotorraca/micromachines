@@ -3,8 +3,10 @@
 #include "common/Sizes.h"
 #include <SDL2/SDL_image.h>
 
+#include <iostream>
+
 Wheel::Wheel(SDL_Renderer* r) : Entity(r) {
-    this->tex = IMG_LoadTexture(rend, "assets/sprites/wheel.png");
+    this->tex = IMG_LoadTexture(rend, "assets/sprites/wheel_3.png");
 }
 
 void Wheel::draw(SDL_Point camera) {
