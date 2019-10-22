@@ -6,8 +6,7 @@
 class Wheel : public Entity {
 public:
     explicit Wheel(SDL_Renderer* r);
-    void draw(SDL_Point camera) override;
-    void update_all(std::vector<int32_t>& update_info) override {};
+    void draw(SDL_Point camera, int32_t width, int32_t height) const override;
 };
 
 

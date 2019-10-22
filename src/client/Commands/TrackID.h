@@ -8,9 +8,12 @@
 #include "Command.h"
 
 class TrackID : public Command {
+    int32_t id;
 public:
-    void apply(Camera& camera) override {
+    explicit TrackID(int32_t id) : id(id){}
 
+    void apply(Camera& camera) override {
+        camera.setTrack(id);
     }
 };
 

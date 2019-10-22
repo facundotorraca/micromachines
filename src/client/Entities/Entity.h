@@ -16,13 +16,12 @@ class Entity {
             rend(rend)
         {};
 
-        virtual void draw(SDL_Point camera) = 0;
+        virtual void draw(SDL_Point camera, int32_t width, int32_t height) const = 0;
         virtual void update_position(int32_t px, int32_t py, int32_t r) {
             this->posX = px;
             this->posY = py;
             this->rot = r;
         }
-        virtual void update_all(std::vector<int32_t>& update_info) = 0;
         ~Entity(){
             SDL_DestroyTexture(this->tex);
         }

@@ -2,9 +2,9 @@
 #include <SDL_image.h>
 #include "Track.h"
 
-void Track::draw(SDL_Point camera) {
-    int x = (1280/2) + (posX-camera.x);
-    int y = (720/2) + (posY-camera.y);
+void Track::draw(SDL_Point camera, int32_t width, int32_t height) const {
+    int x = (width/2) + (posX-camera.x);
+    int y = (height/2) + (posY-camera.y);
     SDL_Rect dst{x, y, 4000 , 4000};
     SDL_RenderCopyEx(rend, tex, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
 }

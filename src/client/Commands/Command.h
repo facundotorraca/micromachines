@@ -9,6 +9,7 @@
 #include <memory>
 #include <client/Camera.h>
 #include <common/MsgTypes.h>
+#include <vector>
 
 class Command {
 public:
