@@ -4,6 +4,7 @@
 
 #include <common/ProtocolSocket.h>
 #include <common/SocketError.h>
+#include <client/Commands/Command.h>
 #include "ThreadReceiver.h"
 #include "Scene.h"
 
