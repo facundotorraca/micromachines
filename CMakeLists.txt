@@ -34,7 +34,7 @@ add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)
 add_subdirectory(src/model)
-add_subdirectory(qt_views)
+add_subdirectory(src/client/qt_views)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
@@ -52,5 +52,5 @@ add_executable(prueba_sdl src/model/main.cpp)
 target_link_libraries(prueba_sdl model common Box2D SDL2 SDL2_image)
 
 # Genero un ejecutable que prueba qt
-add_executable(qt-client qt_views/main.cpp)
+add_executable(qt-client src/client/qt_views/main.cpp)
 target_link_libraries(qt-client common viewManager)

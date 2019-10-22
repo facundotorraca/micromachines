@@ -3,8 +3,8 @@
 //
 
 #include "view_manager.h"
-#include "client_views/ConectView.h"
-#include "client_views/MainWindow.h"
+#include "views/ConectView.h"
+#include "views/MainWindow.h"
 #include <iostream>
 
 ViewManager::ViewManager(int argc, char *argv[])

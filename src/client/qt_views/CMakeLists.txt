@@ -8,21 +8,21 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 find_package(Qt5Widgets)
 
 qt5_wrap_ui(UIS_HEADERS
-        client_views/mainwindow.ui
-        client_views/conectview.ui
-        client_views/createView.ui
-        client_views/joinView.ui
-        client_views/startView.ui
-        client_views/waitView.ui
+        views/mainwindow.ui
+        views/conectview.ui
+        views/createView.ui
+        views/joinView.ui
+        views/startView.ui
+        views/waitView.ui
         )
 
 qt5_wrap_cpp(CPP_MOCK
-        client_views/ConectView.h
-        client_views/MainWindow.h
-        client_views/CreateView.h
-        client_views/JoinView.h
-        client_views/StartView.h
-        client_views/WaitView.h
+        views/ConectView.h
+        views/MainWindow.h
+        views/CreateView.h
+        views/JoinView.h
+        views/StartView.h
+        views/WaitView.h
         )
 
 
@@ -33,33 +33,33 @@ include_directories(${PROJECT_BINARY_DIR})
 
 
 add_library (mainView
-        client_views/MainWindow.cpp
+        views/MainWindow.cpp
         ${CPP_MOCK}
         ${UIS_HEADERS}
         )
 
 add_library(createView
-        client_views/CreateView.cpp
+        views/CreateView.cpp
         ${CPP_MOCK}
         ${UIS_HEADERS})
 
 add_library(joinView
-        client_views/JoinView.cpp
+        views/JoinView.cpp
         ${CPP_MOCK}
         ${UIS_HEADERS})
 
 add_library(conectView
-        client_views/ConectView.cpp
+        views/ConectView.cpp
         ${CPP_MOCK}
         ${UIS_HEADERS})
 
 add_library(waitView
-        client_views/WaitView.cpp
+        views/WaitView.cpp
         ${CPP_MOCK}
         ${UIS_HEADERS})
 
 add_library(startView
-        client_views/StartView.cpp
+        views/StartView.cpp
         ${CPP_MOCK}
         ${UIS_HEADERS})
 
