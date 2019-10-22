@@ -7,8 +7,8 @@
 class Thread {
         std::thread thread;
     protected:
-        std::atomic<bool> running;
-    public:
+    std::atomic<bool> running;
+public:
         Thread() : thread(), running(false){}
 
         void start() {
@@ -26,6 +26,10 @@ class Thread {
 
         void shutdown() {
             this->running = false;
+        }
+
+        bool dead() {
+            return !this->running;
         }
 };
 

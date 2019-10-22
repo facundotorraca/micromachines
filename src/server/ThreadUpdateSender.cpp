@@ -13,7 +13,11 @@ ThreadUpdateSender::ThreadUpdateSender(Player &player, ProtectedQueue<UpdateClie
 
 void ThreadUpdateSender::run() {
     while (this->running) {
-        auto update = updates.pop();
-        player.send(update);
+        try {
+            auto update = updates.pop();
+            player.send(update);
+        } catch (ProtectedQueueError& e) {
+            this->running = false;
+        }
     }
 }

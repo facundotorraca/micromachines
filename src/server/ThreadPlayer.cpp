@@ -2,6 +2,7 @@
 // Created by facundotorraca on 19/10/19.
 //
 
+#include <common/SocketError.h>
 #include "ThreadPlayer.h"
 #include "ThreadUpdateSender.h"
 
@@ -15,8 +16,13 @@ ThreadPlayer::ThreadPlayer(ProtectedQueue<UpdateClient> &updates_send, Protected
 void ThreadPlayer::run() {
     this->sender.start();
     while (this->running) {
-        auto data = player.receive_update();
-        updates_recv.push(data);
+        try {
+            auto data = player.receive_update();
+            updates_recv.push(data);
+        } catch (SocketError& e) {
+            updates_send.close();
+            this->running = false;
+        }
     }
     this->sender.shutdown();
     this->sender.join();

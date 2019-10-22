@@ -16,6 +16,7 @@
 #include <common/Thread.h>
 #include <model/RacingTrack.h>
 #include <common/ProtectedQueue.h>
+#include <unordered_map>
 #include "ThreadClientEventMonitor.h"
 
 class Match : public Thread {
@@ -25,7 +26,7 @@ class Match : public Thread {
 
     std::atomic<bool> stopped;
 
-    std::list<ThreadPlayer> thread_players;
+    std::unordered_map<uint8_t, ThreadPlayer> thread_players;
     ProtectedQueue<UpdateRace> updates_race;
     ThreadClientEventMonitor clients_monitor;
     std::map<uint8_t, ProtectedQueue<UpdateClient>> updates_players;
@@ -42,6 +43,8 @@ class Match : public Thread {
         void create_update_for_players();
 
         void create_info_player_updates(int32_t player_ID);
+
+        void send_to_all(UpdateClient update);
 
     public:
         explicit Match(std::string match_creator, std::string match_name);
@@ -66,7 +69,6 @@ class Match : public Thread {
 
         void step();
 
-    void send_to_all(UpdateClient update);
 };
 
 

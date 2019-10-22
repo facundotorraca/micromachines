@@ -76,17 +76,26 @@ void Match::run() {
     this->clients_monitor.start();
 
     for (auto & player : players) {
-        this->updates_players.emplace(player.get_ID(), 10000/*queue len*/);
-        this->thread_players.emplace_back(updates_players.at(player.get_ID()), updates_race, player);
-        this->create_info_player_updates(player.get_ID());
-        thread_players.back().start();
+        uint8_t id = player.get_ID();
+        this->updates_players.emplace(id, 10000/*queue len*/);
+        this->thread_players.emplace(std::piecewise_construct,
+                std::forward_as_tuple(id),
+                std::forward_as_tuple(updates_players.at(id), updates_race, player));
+        this->create_info_player_updates(id);
+        thread_players.at(id).start();
     }
 
     while (this->running) {
         this->step();
         this->create_update_for_players();
+        for (auto &thread : thread_players) {
+            if (thread.second.dead()) {
+                cars.erase(thread.first)
+            }
+        }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
     }
+
     this->clients_monitor.join();
 }
 
@@ -101,7 +110,7 @@ void Match::apply_update(UpdateRace update) {
 
 void Match::step() {
     std::unique_lock<std::mutex> lock(mtx);
-    for (auto & car : cars) {
+    for (auto &car : cars) {
         car.second.update();
     }
     this->racing_track.update();
