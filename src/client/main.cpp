@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
         ps.send(start_game);
     } else {
         std::cout << "Waiting for the game to START \n";
-        int32_t car = 1;
+        uint8_t car = 1;
         ps.send(car);
     }
 

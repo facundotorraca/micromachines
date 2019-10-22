@@ -10,7 +10,7 @@
 ThreadDrawer::ThreadDrawer(Scene &scene) : Thread(), scene(scene) {}
 
 void ThreadDrawer::run() {
-    while (running) {
+    while (this->running) {
         SDL_Delay(33);
         this->scene.draw();
     }

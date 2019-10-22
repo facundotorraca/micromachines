@@ -88,6 +88,8 @@ void Match::run() {
         this->thread_players.at(id).start();
     }
 
+
+
     while (this->running) {
         this->step();
         this->create_update_for_players();
