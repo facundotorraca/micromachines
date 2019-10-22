@@ -21,6 +21,7 @@ Player::Player(Player&& other) noexcept:
     match_name(std::move(other.match_name))
 {
     this->mode = other.mode;
+    this->ID = other.ID;
 }
 
 bool Player::is_on_join_mode() {
