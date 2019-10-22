@@ -10,6 +10,9 @@
 #define WELCOME_MATCH_MESSAGE "Welcome to the HELLO game \n"
 #define MATCH_JOIN_ERROR "ERROR: Cant JOIN a running match \n"
 
+#define OPEN_MATCH_FLAG "0"
+#define CLOSE_MATCH_FLAG "1"
+
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),
     updates_race(10000),
@@ -38,9 +41,9 @@ std::string Match::get_match_name_to_send() {
     match_name_to_send.append("Created by: " + this->match_creator);
 
     if (this->running) {
-        match_name_to_send.append("1");
+        match_name_to_send.append(CLOSE_MATCH_FLAG);
     } else {
-        match_name_to_send.append("0");
+        match_name_to_send.append(OPEN_MATCH_FLAG);
     }
 
     match_name_to_send.append("\n");
@@ -63,7 +66,9 @@ bool Match::was_stopped() {
 }
 
 void Match::stop() {
+    this->running = false;
     this->stopped = true;
+    this->updates_race.close();
 }
 
 std::string Match::get_match_name() {
@@ -84,24 +89,25 @@ void Match::run() {
         this->thread_players.emplace(std::piecewise_construct,
                                      std::forward_as_tuple(id),
                                      std::forward_as_tuple(updates_players.at(id), updates_race, player.second));
-        this->create_info_player_updates(id);
+        this->create_info_player_updates(id); /* Send own car ID and race track ID*/
         this->thread_players.at(id).start();
     }
-
-
 
     while (this->running) {
         this->step();
         this->create_update_for_players();
-        for (auto &thread : thread_players) {
-            if (thread.second.dead()) {
-                this->cars.erase(thread.first);
-                this->players.erase(thread.first);
-                this->updates_players.erase(thread.first);
+        for (auto &th_player : thread_players) {
+            if (th_player.second.dead()) {
+                th_player.second.join();
+                this->cars.erase(th_player.first);
+                this->players.erase(th_player.first);
+                this->updates_players.erase(th_player.first);
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
     }
+
+    //this->updates_race.close();
     this->clients_monitor.join();
 }
 
@@ -139,10 +145,11 @@ void Match::create_update_for_players() {
 }
 
 void Match::create_info_player_updates(int32_t player_ID) {
-    std::vector<int32_t> car_ID{MSG_CAR_ID, player_ID};
-    std::vector<int32_t> track_ID{MSG_TRACK_ID, 1/*esto puede variar despues*/};
-    this->updates_players.at(player_ID).push(std::move(UpdateClient(MSG_CAR_ID, std::move(car_ID))));
-    this->updates_players.at(player_ID).push(std::move(UpdateClient(MSG_TRACK_ID, std::move(track_ID))));
+    std::vector<int32_t> car_ID_update_info{MSG_CAR_ID, player_ID};
+    std::vector<int32_t> track_ID_update_info{MSG_TRACK_ID, 1/*esto puede variar despues*/};
+
+    this->updates_players.at(player_ID).push(std::move(UpdateClient(std::move(car_ID_update_info))));
+    this->updates_players.at(player_ID).push(std::move(UpdateClient(std::move(track_ID_update_info))));
 }
 
 void Match::send_to_all(UpdateClient update) {

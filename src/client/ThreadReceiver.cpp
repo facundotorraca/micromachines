@@ -8,17 +8,17 @@
 #include "ThreadReceiver.h"
 #include "Scene.h"
 
-ThreadReceiver::ThreadReceiver(ProtocolSocket& socket, Scene& scene) : scene(&scene), socket(&socket){}
+ThreadReceiver::ThreadReceiver(ProtocolSocket& socket, Scene& scene) : scene(scene), socket(socket){}
 
 void ThreadReceiver::run() {
-    while (running) {
+    while (this->running) {
         std::vector<int32_t> buffer;
         try {
-            this->socket->receive(buffer);
+            this->socket.receive(buffer);
             auto command = Command::create(buffer);
-            this->scene->handleServerEvent(std::move(command));
+            this->scene.handleServerEvent(std::move(command));
         } catch (SocketError& e) {
-            running = false;
+            this->running = false;
         }
     }
 }

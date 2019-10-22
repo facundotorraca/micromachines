@@ -147,13 +147,13 @@ void Car::release_key(int32_t key) {
 }
 
 Car::~Car() {
-    for (auto & m_tire : wheels) {
-        delete m_tire;
+    for (auto & wheel : this->wheels) {
+        delete wheel;
     }
 }
 
 UpdateClient Car::get_update(const int32_t id) {
-    std::vector<int32_t> params{MSG_UPDATE_ENTITY, id, TYPE_CAR,
+    std::vector<int32_t> params {MSG_UPDATE_ENTITY, id, TYPE_CAR,
                                 (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().x - (CAR_WIDTH*0.5))),
                                 (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
                                 (int32_t)(RADTODEG * this->car_body->GetAngle())};
@@ -163,5 +163,5 @@ UpdateClient Car::get_update(const int32_t id) {
         params.emplace_back(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5)));
         params.emplace_back(wheel->get_angle());
     }
-    return UpdateClient((int32_t)MSG_UPDATE_ENTITY, std::move(params));
+    return UpdateClient(std::move(params));
 }

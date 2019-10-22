@@ -105,7 +105,7 @@ b2Body* Wheel::get_body() {
 }
 
 Wheel::~Wheel() {
-    this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
+    //this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
 Wheel::Wheel(Wheel &&other_wheel) noexcept {

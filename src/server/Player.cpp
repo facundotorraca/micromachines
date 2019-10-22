@@ -4,11 +4,16 @@
 #include <utility>
 #include "Player.h"
 
+#define INVALID_ID -1
 #define JOIN_MODE 1
+
+#define KEY_VALUE_POS 0
+#define KEY_STATE_POS 1
 
 Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name):
         p_socket(std::move(p_socket))
 {
+    this->ID = INVALID_ID;
     this->car_model = 0; //Esto despues lo hacemos con un objeto!
     this->mode = mode;
     this->username = std::move(username);
@@ -20,8 +25,10 @@ Player::Player(Player&& other) noexcept:
         username(std::move(other.username)),
         match_name(std::move(other.match_name))
 {
-    this->mode = other.mode;
     this->ID = other.ID;
+    this->mode = other.mode;
+    this->car_model = other.car_model;
+    other.ID = INVALID_ID;
 }
 
 bool Player::is_on_join_mode() {
@@ -54,18 +61,14 @@ void Player::kill() {
     this->p_socket.close();
 }
 
-bool Player::is_called(std::string &username) {
-    return this->username == username;
-}
-
-void Player::set_car_model(int32_t car_model) {
-    this->car_model = car_model;
+void Player::set_car_model(int32_t _car_model) {
+    this->car_model = _car_model;
 }
 
 UpdateRace Player::receive_update() {
-    std::vector<int32_t> buf;
-    this->p_socket.receive(buf);
-    return {this->ID, static_cast<uint8_t>(buf.at(0)), static_cast<uint8_t>(buf.at(1))};
+    std::vector<int32_t> buffer;
+    this->p_socket.receive(buffer);
+    return {this->ID, buffer.at(KEY_VALUE_POS), buffer.at(KEY_STATE_POS)};
 }
 
 void Player::send(UpdateClient update) {
@@ -74,4 +77,8 @@ void Player::send(UpdateClient update) {
 
 void Player::set_ID(int32_t id) {
     this->ID = id;
+}
+
+bool Player::is_called(std::string &_username) {
+    return this->username == _username;
 }

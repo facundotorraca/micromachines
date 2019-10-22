@@ -56,6 +56,7 @@ void ThreadPlayerLocator::run() {
                 this->options_setters.push_back(setter);
                 setter->start_match_options(&this->not_ready_matches);
             }
+
             this->remove_dead_setters();
         } catch (const ProtectedQueueError &exception) {
             this->kill_all_setter();
