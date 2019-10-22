@@ -10,8 +10,7 @@
 class Track : public Entity{
 public:
     explicit Track(SDL_Renderer *rend, unsigned char i);
-    void draw(SDL_Point camera) override;
-    void update_all(std::vector<int32_t>& update_info) override {};
+    void draw(SDL_Point camera, int32_t width, int32_t height) const override;
 };
 
 #endif //MICROMACHINES_TRACK_H
