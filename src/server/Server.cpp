@@ -4,6 +4,8 @@
 #define MAX_PLAYERS_WAITLIST 30
 #define MAX_MATCHES_WAITLIST 10
 
+#define EXIT_INPUT_FLAG 'q'
+
 Server::Server(const std::string &port):
     incoming_players(MAX_PLAYERS_WAITLIST),
     not_ready_matches(MAX_MATCHES_WAITLIST)
@@ -17,7 +19,7 @@ void Server::wait_quit() {
     char input;
     do {
         input = std::cin.get();
-    } while (input != 'q');
+    } while (input != EXIT_INPUT_FLAG);
 }
 
 void Server::stop_matches() {

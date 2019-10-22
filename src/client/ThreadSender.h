@@ -11,11 +11,11 @@
 #include "Scene.h"
 
 class ThreadSender : public Thread{
-    ProtocolSocket* socket;
-    ProtectedQueue<std::vector<int32_t>>* queue;
-public:
-    explicit ThreadSender(ProtocolSocket& socket, ProtectedQueue<std::vector<int32_t>>& queue);
-    void run() override;
+        ProtocolSocket& socket;
+        ProtectedQueue<std::vector<int32_t>>& queue;
+    public:
+        explicit ThreadSender(ProtocolSocket& socket, ProtectedQueue<std::vector<int32_t>>& queue);
+        void run() override;
 };
 
 

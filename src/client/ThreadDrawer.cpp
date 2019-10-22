@@ -1,7 +1,3 @@
-//
-// Created by javier on 16/10/19.
-//
-
 #include "ThreadDrawer.h"
 #include "Scene.h"
 #include <thread>

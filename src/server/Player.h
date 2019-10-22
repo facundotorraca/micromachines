@@ -9,10 +9,12 @@
 
 class Player {
     ProtocolSocket p_socket;
+
+    /*-----Options-----*/
     uint8_t mode;
+    uint8_t car_model;
 
     int32_t ID;
-    int32_t car_model;                                                  /* esto despues se puede cambiar*/
     std::string username;
     std::string match_name;
 

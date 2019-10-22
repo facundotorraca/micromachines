@@ -10,11 +10,11 @@
 #include "common/ProtocolSocket.h"
 
 class ThreadReceiver : public Thread {
-    Scene* scene;
-    ProtocolSocket* socket;
-public:
-    ThreadReceiver(ProtocolSocket& socket, Scene& scene);
-    void run() override;
+        Scene& scene;
+        ProtocolSocket& socket;
+    public:
+        ThreadReceiver(ProtocolSocket& socket, Scene& scene);
+        void run() override;
 };
 
 

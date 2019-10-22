@@ -64,7 +64,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
                                       this->specs.get_back_wheel_max_force(),
                                       this->specs.get_back_max_lateral_impulse());
     joint_params.bodyB = back_left_wheel->get_body();
-    joint_params.localAnchorA.Set(CAR_WIDTH/2.35, -(CAR_HEIGHT/2)*0.62);
+    joint_params.localAnchorA.Set(CAR_WIDTH/2.15, -(CAR_HEIGHT/2)*0.62);
     racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(back_left_wheel);
 
@@ -74,7 +74,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
                                        this->specs.get_back_wheel_max_force(),
                                        this->specs.get_back_max_lateral_impulse());
     joint_params.bodyB = back_right_wheel->get_body();
-    joint_params.localAnchorA.Set(-CAR_WIDTH/2.35, -(CAR_HEIGHT/2)*0.62);
+    joint_params.localAnchorA.Set(-CAR_WIDTH/2.15, -(CAR_HEIGHT/2)*0.62);
     racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(back_right_wheel);
 
@@ -84,7 +84,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
                                        this->specs.get_front_wheel_max_force(),
                                        this->specs.get_front_max_lateral_impulse());
     joint_params.bodyB = front_left_wheel->get_body();
-    joint_params.localAnchorA.Set( CAR_WIDTH/2.35, (CAR_HEIGHT/2)*0.62);
+    joint_params.localAnchorA.Set( CAR_WIDTH/2.15, (CAR_HEIGHT/2)*0.62);
     front_left_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(front_left_wheel);
 
@@ -94,7 +94,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
                                         this->specs.get_front_wheel_max_force(),
                                         this->specs.get_front_max_lateral_impulse());
     joint_params.bodyB = front_right_wheel->get_body();
-    joint_params.localAnchorA.Set( -CAR_WIDTH/2.35, (CAR_HEIGHT/2)*0.62);
+    joint_params.localAnchorA.Set( -CAR_WIDTH/2.15, (CAR_HEIGHT/2)*0.62);
     front_right_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(front_right_wheel);
 }
@@ -147,13 +147,13 @@ void Car::release_key(int32_t key) {
 }
 
 Car::~Car() {
-    for (auto & m_tire : wheels) {
-        delete m_tire;
+    for (auto & wheel : this->wheels) {
+        delete wheel;
     }
 }
 
 UpdateClient Car::get_update(const int32_t id) {
-    std::vector<int32_t> params{MSG_UPDATE_ENTITY, id, TYPE_CAR,
+    std::vector<int32_t> params {MSG_UPDATE_ENTITY, id, TYPE_CAR,
                                 (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().x - (CAR_WIDTH*0.5))),
                                 (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
                                 (int32_t)(RADTODEG * this->car_body->GetAngle())};
@@ -163,5 +163,5 @@ UpdateClient Car::get_update(const int32_t id) {
         params.emplace_back(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5)));
         params.emplace_back(wheel->get_angle());
     }
-    return UpdateClient((int32_t)MSG_UPDATE_ENTITY, std::move(params));
+    return UpdateClient(std::move(params));
 }

@@ -10,10 +10,10 @@
 #include "Scene.h"
 
 class ThreadKeyMonitor : public Thread {
-    Scene* scene;
-public:
-    explicit ThreadKeyMonitor(Scene& scene);
-    void run() override;
+        Scene& scene;
+    public:
+        explicit ThreadKeyMonitor(Scene& scene);
+        void run() override;
 };
 
 

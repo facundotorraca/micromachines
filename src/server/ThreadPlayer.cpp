@@ -1,7 +1,3 @@
-//
-// Created by facundotorraca on 19/10/19.
-//
-
 #include <common/SocketError.h>
 #include "ThreadPlayer.h"
 #include "ThreadUpdateSender.h"

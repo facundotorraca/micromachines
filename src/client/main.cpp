@@ -10,10 +10,12 @@
 
 #define SUCCESS 0
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     ViewManager view_manager(argc, argv);
     ProtocolSocket ps(view_manager.run());
-    if(!ps.is_connected()) return SUCCESS; // Deberia ser success?
+    if (!ps.is_connected())
+        return SUCCESS; // Deberia ser success?
 
     bool continue_receiving = true;
 

@@ -2,6 +2,8 @@
 #include <common/Key.h>
 #include <common/Sizes.h>
 
+#define KEY_VALUE_POS 0
+
 Scene::Scene(ProtectedQueue<std::vector<int32_t>>& queue):
         queue(queue),
         win(nullptr),
@@ -31,6 +33,7 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
             key_event.push_back(KEY_UP);
             break;
         default:
+            key_event.push_back(UNKNOWN_KEY);
             break;
     }
 
@@ -45,7 +48,8 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
             break;
     }
 
-    queue.push(key_event);
+    if (key_event[KEY_VALUE_POS] != UNKNOWN_KEY)
+        queue.push(key_event);
 }
 
 void Scene::handleServerEvent(std::unique_ptr<Command> command) {
@@ -54,7 +58,7 @@ void Scene::handleServerEvent(std::unique_ptr<Command> command) {
 
 void Scene::draw() {
     SDL_RenderClear(rend);
-    camera.draw();
+    this->camera.draw();
     SDL_RenderPresent(rend);
 }
 
