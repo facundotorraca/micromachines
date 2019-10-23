@@ -11,6 +11,7 @@ class WaitView : public QDialog
 
 public:
     explicit WaitView(ProtocolSocket &ps, QWidget *parent = nullptr);
+    void show();
     virtual ~WaitView();
 
 private:
@@ -19,6 +20,8 @@ private:
 
 private slots:
     void on_waitBtn_clicked();
+
+
 };
 
 #endif // WAITWINDOW_H

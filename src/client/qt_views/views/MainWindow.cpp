@@ -39,8 +39,7 @@ void MainWindow::on_createMatchBtn_clicked(){
     if(this->create_view.is_created()) {
         this->close();
         this->start_view.show();
-        this->start_view.exec();
-        fixed = true;
+        fixed = this->start_view.exec() == 0;
     }
 }
 
@@ -51,9 +50,8 @@ void MainWindow::on_joinMatchBtn_clicked() {
     this->join_view.exec();
     if(this->join_view.is_joined()){
         this->close();
-        this->wait_view.open();
-        this->wait_view.exec();
-        fixed = true;
+        this->wait_view.show();
+        fixed = this->wait_view.exec() == 0;
     }
 }
 

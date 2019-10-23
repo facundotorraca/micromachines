@@ -10,26 +10,26 @@ WaitView::WaitView(ProtocolSocket &ps, QWidget *parent) :
     ui.setupUi(this);
 }
 
-void WaitView::on_waitBtn_clicked() {
+void WaitView::show(){
+    QDialog::show();
+    QApplication::processEvents();
+}
+
+void WaitView::on_waitBtn_clicked(){
     QPushButton *waitBtn = findChild<QPushButton*>("waitBtn");
     waitBtn->setDisabled(true);
-    std::string welcome_message(100, '\0');
+    waitBtn->setEnabled(false);
     std::cout << "Waiting for the game to START \n";
     uint8_t car = 1;
     ps.send(car);
 
-    bool continue_receiving = true;
-    ps.receive(welcome_message);
+    uint8_t flag_join_match;
+    ps.receive(flag_join_match);
+    std::cout << "Flag JOIN: " << unsigned(flag_join_match) << "\n";
 
-    std::cout << welcome_message;
-    if (welcome_message.substr(0,5) == "ERROR") {
-         continue_receiving = false;
-    }
-    std::cout << "ESPERANDO \n";
-    uint8_t flag = 0;
-    ps.receive(flag);
-    std::cout << flag << "\n";
-    this->close();
+    uint8_t flag_start_match = 1;
+    ps.receive(flag_start_match);
+    this->done(flag_start_match);
 }
 
 WaitView::~WaitView() {}

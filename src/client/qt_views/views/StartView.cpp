@@ -13,13 +13,15 @@ void StartView::on_startBtn_clicked() {
     std::string welcome_message(100, '\0');
     std::cout << "Press any key to START" << "\n";
     uint8_t start_game = 1;
-      ps.send(start_game);
+    ps.send(start_game);
 
-    bool continue_receiving = true;
-    ps.receive(welcome_message);
+    uint8_t flag_join_match;
+    ps.receive(flag_join_match);
+    std::cout << "Flag JOIN: " << unsigned(flag_join_match) << "\n";
 
-    std::cout << welcome_message;
-    this->close();
+    uint8_t flag_start_match = 1;
+    ps.receive(flag_start_match);
+    this->done(flag_start_match);
 }
 
 StartView::~StartView() {
