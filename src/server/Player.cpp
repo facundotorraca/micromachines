@@ -82,3 +82,7 @@ void Player::set_ID(int32_t id) {
 bool Player::is_called(std::string &_username) {
     return this->username == _username;
 }
+
+void Player::send(uint8_t flag) {
+    this->p_socket.send(flag);
+}

@@ -7,11 +7,14 @@
 #include "ThreadClientEventMonitor.h"
 
 #define FRAMES_PER_SECOND 30
-#define WELCOME_MATCH_MESSAGE "Welcome to the HELLO game \n"
-#define MATCH_JOIN_ERROR "ERROR: Cant JOIN a running match \n"
+
+#define ERROR_MATCH_JOIN_FLAG 1
+#define SUCCESS_MATCH_JOIN_FLAG 0
 
 #define OPEN_MATCH_FLAG "0"
 #define CLOSE_MATCH_FLAG "1"
+
+#define START_MATCH_FLAG 0
 
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),
@@ -22,14 +25,13 @@ Match::Match(std::string match_creator, std::string match_name):
 {}
 
 void Match::add_player(Player&& player) {
+    uint8_t flag;
     if (this->running) {
-        /*averiguar sobre la excepcion aca*/
-        std::string match_error(MATCH_JOIN_ERROR);
-        player.send(match_error);
+        flag = ERROR_MATCH_JOIN_FLAG;
+        player.send(flag);
     } else {
-        std::string welcome_message(WELCOME_MATCH_MESSAGE);
-        player.send(welcome_message);
-
+        flag = SUCCESS_MATCH_JOIN_FLAG;
+        player.send(flag);
         player.set_ID((int32_t)players.size());
         this->players.emplace(players.size(),std::move(player));
     }
@@ -134,6 +136,9 @@ void Match::initialize_players() {
         this->cars.emplace(std::piecewise_construct,
                            std::forward_as_tuple(player.first),
                            std::forward_as_tuple(racing_track, specs));
+
+        uint8_t flag_match_start = START_MATCH_FLAG;
+        player.second.send(flag_match_start);
     }
 }
 

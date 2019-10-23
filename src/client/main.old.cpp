@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     /*Todo esto es lo que hizo facu
     * Habría que reemplazarlo por Qt*/
 
-    std::string port("7778");
+    std::string port("7777");
     std::string host("127.0.0.1");
 
     Socket s;
@@ -77,17 +77,25 @@ int main(int argc, char *argv[]) {
         ps.send(car);
     }
 
-    std::string welcome_message(100, '\0');
     bool continue_receiving = true;
-    ps.receive(welcome_message);
+    uint8_t flag_join_match;
+    ps.receive(flag_join_match);
+    std::cout << "Flag JOIN: " << unsigned(flag_join_match) << "\n";
 
     /* Aca empieza SDL
      * "ps" es el ProtocolSocket ya conectado al servidor
      * se debería conectar en la ventana de qt
      */
 
-    GameMain game(ps);
-    game.start();
+    uint8_t flag_start_match = 1;
+    ps.receive(flag_start_match);
+
+    if (flag_start_match == 0) {
+        GameMain game(ps);
+        game.start();
+    } else {
+        std::cout << "Flag MATCH: " << unsigned(flag_start_match) << " ERROR\n";
+    }
 
     return SUCCESS;
 }

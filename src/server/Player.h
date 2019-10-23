@@ -23,15 +23,17 @@ class Player {
 
         Player(Player&& other) noexcept;
 
-        bool is_called(std::string& username);
-
-        void set_car_model(int32_t car_model);
-
         void send(std::vector<int32_t>& msg);
 
         void send(UpdateClient update);
 
         void send(std::string& msg);
+
+        void send(uint8_t flag);
+
+        bool is_called(std::string& username);
+
+        void set_car_model(int32_t car_model);
 
         std::string get_match_name();
 
