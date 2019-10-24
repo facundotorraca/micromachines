@@ -153,7 +153,7 @@ Car::~Car() {
 }
 
 UpdateClient Car::get_update(const int32_t id) {
-    std::vector<int32_t> params {MSG_UPDATE_ENTITY, id, TYPE_CAR,
+    std::vector<int32_t> params {MSG_UPDATE_ENTITY, TYPE_CAR, id,
                                 (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().x - (CAR_WIDTH*0.5))),
                                 (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
                                 (int32_t)(RADTODEG * this->car_body->GetAngle())};
