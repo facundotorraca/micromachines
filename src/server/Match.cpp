@@ -138,8 +138,9 @@ void Match::initialize_players() {
                            std::forward_as_tuple(racing_track, specs));
 
         uint8_t flag_match_start = START_MATCH_FLAG;
-        player.second.send_track(this->racing_track);
         player.second.send(flag_match_start);
+
+        player.second.send_track(this->racing_track);
     }
 }
 
