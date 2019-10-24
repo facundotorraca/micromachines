@@ -12,14 +12,12 @@
 #include <client/Entities/Entity.h>
 #include <client/Commands/Command.h>
 #include "Camera.h"
+#include "Map.h"
 
 class Scene {
     ProtectedQueue<std::vector<int32_t>>& queue;
 
-    SDL_Window* win;
-    SDL_Renderer* rend;
-
-    Camera camera;
+    Map map;
 
     public:
 
@@ -30,8 +28,6 @@ class Scene {
         void handleKeyEvent(int key, SDL_EventType type);
 
         void draw();
-
-        ~Scene();
 };
 
 

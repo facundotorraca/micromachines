@@ -5,16 +5,8 @@
 #define KEY_VALUE_POS 0
 
 Scene::Scene(ProtectedQueue<std::vector<int32_t>>& queue):
-        queue(queue),
-        win(nullptr),
-        rend(nullptr),
-        camera(nullptr, WIDTH_SCREEN, HEIGHT_SCREEN)
-{
-    SDL_CreateWindowAndRenderer(WIDTH_SCREEN, HEIGHT_SCREEN, 0, &win, &rend);
-    this->camera.setRenderer(rend);
-    /*Para el fullscreen hay que manejar errores me parece*/
-    //SDL_SetWindowFullscreen(this->win, SDL_WINDOW_FULLSCREEN_DESKTOP);
-}
+        queue(queue)
+{}
 
 void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
     auto key_event = std::vector<int32_t>();
@@ -53,17 +45,10 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
 }
 
 void Scene::handleServerEvent(std::vector<int32_t>& data) {
-    auto command = Command::create(data, camera);
-    command->apply(camera);
+    auto command = Command::create(data, map);
+    command->apply();
 }
 
 void Scene::draw() {
-    SDL_RenderClear(rend);
-    this->camera.draw();
-    SDL_RenderPresent(rend);
-}
-
-Scene::~Scene() {
-    SDL_DestroyRenderer(rend);
-    SDL_DestroyWindow(win);
+    this->map.draw();
 }

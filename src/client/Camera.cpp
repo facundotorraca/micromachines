@@ -1,52 +1,69 @@
-#include "Camera.h"
-#include <client/Entities/Track.h>
 
-Camera::Camera(SDL_Renderer* rend, int32_t x, int32_t y) :
-    rend(rend),
-    my_car_ID(-1),
-    camera({0,0}),
-    width(x), height(y)
-{}
+#include <iostream>
+#include "Camera.h"
+
+Camera::Camera() :
+    posx(0),
+    posy(0),
+    width(WIDTH_SCREEN),
+    height(HEIGHT_SCREEN),
+    t_factory(nullptr),
+    renderer(nullptr),
+    window(nullptr)
+{
+    SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer);
+    t_factory = TextureFactory(renderer);
+}
+
+void Camera::update(int32_t posx, int32_t posy) {
+    this->posx = posx;
+    this->posy = posy;
+}
 
 void Camera::draw() {
-    for (auto& static_entity : background){
-        std::unique_lock<std::mutex> lock(mtx);
-        static_entity.draw(camera, width, height);
+    SDL_RenderPresent(renderer);
+}
+
+void Camera::clear() {
+    SDL_RenderClear(renderer);
+}
+
+void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
+    int32_t px = (width / 2) + x - this->posx;
+    int32_t py = (height / 2) + y - this->posy;
+    SDL_Rect dst{px, py, (int) (CAR_WIDTH * METER_TO_PIXEL),
+                     (int) (CAR_HEIGHT * METER_TO_PIXEL)};
+    if (isInCamera(px, py, dst.w, dst.h)) {
+        SDL_RenderCopyEx(renderer, t_factory.getCarTexture(), nullptr, &dst,
+                         rot,
+                         nullptr, SDL_FLIP_NONE);
     }
-    for (auto& entity : cars) {
-        std::unique_lock<std::mutex> lock(mtx);
-        entity.second.draw(camera, width, height);
+}
+
+void Camera::drawTile(int32_t x, int32_t y, int32_t rot) {
+    int32_t px = (width/2) + x - this->posx;
+    int32_t py = (height/2) + y - this->posy;
+    SDL_Rect dst{px, py, (int) (WIDTH_TILE * METER_TO_PIXEL),
+                     (int) (HEIGHT_TILE * METER_TO_PIXEL)};
+    if (isInCamera(px, py, dst.w, dst.h)) {
+        SDL_RenderCopyEx(renderer, t_factory.getTileTexture(), nullptr, &dst,
+                         rot,
+                         nullptr, SDL_FLIP_NONE);
     }
 }
 
-void Camera::setOwnID(int32_t id) {
-    this->my_car_ID = id;
-}
-
-void Camera::setTrack(int32_t id) {
-    //this->background.emplace_back(new Track(rend, id));
-}
-
-void
-Camera::updateCar(CarInfo& info) {
-    try {
-        this->cars.at(info.car_id);
-    } catch (std::out_of_range& e) {
-        cars.emplace(info.car_id, rend);
+void Camera::drawWheel(int32_t x, int32_t y, int32_t rot) {
+    int32_t px = (width/2) + x - this->posx;
+    int32_t py = (height/2) + y - this->posy;
+    SDL_Rect dst{px, py, (int) (WIDTH_WHEEL * METER_TO_PIXEL),
+                     (int) (HEIGHT_WHEEL * METER_TO_PIXEL)};
+    if (isInCamera(px, py, dst.w, dst.h)) {
+        SDL_RenderCopyEx(renderer, t_factory.getWheelTexture(), nullptr, &dst,
+                         rot,
+                         nullptr, SDL_FLIP_NONE);
     }
-
-    if (info.car_id == this->my_car_ID)
-        {camera.x = info.carx; camera.y = info.cary;}
-
-    std::unique_lock<std::mutex> lock(mtx);
-    cars.at(info.car_id).update_all(info);
 }
 
-void Camera::setRenderer(SDL_Renderer *pRenderer) {
-    rend = pRenderer;
-}
-
-void Camera::addTile(TileInfo info) {
-    std::unique_lock<std::mutex> lock(mtx);
-    background.emplace_back(rend, info);
+bool Camera::isInCamera(int x,int y, int w, int h){
+    return true;//(((x+w)>=0) && (x<width) && ((y+h)>=0) && (y<height));
 }

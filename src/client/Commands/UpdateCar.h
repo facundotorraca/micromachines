@@ -12,10 +12,10 @@
 class UpdateCar : public Command{
     CarInfo info;
     public:
-        explicit UpdateCar(CarInfo info): info(info){}
+        explicit UpdateCar(CarInfo info, Map& map): Command(map), info(info){}
 
-    void apply(Camera& camera) override {
-        camera.updateCar(info);
+    void apply() override {
+        map.updateCar(info);
     }
 };
 

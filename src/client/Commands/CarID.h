@@ -9,12 +9,11 @@
 
 class CarID : public Command {
     int32_t id;
-
     public:
-        explicit CarID(int32_t id) : id(id){}
+        explicit CarID(int32_t id, Map& map) : Command(map), id(id){}
 
-        void apply(Camera& camera) override {
-            camera.setOwnID(id);
+        void apply() override {
+            map.setOwnID(id);
         }
 };
 

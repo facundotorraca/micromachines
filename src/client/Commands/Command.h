@@ -5,12 +5,17 @@
 #include <vector>
 #include <client/Camera.h>
 #include <common/MsgTypes.h>
+#include <client/Map.h>
 
 class Command {
+protected:
+    Map& map;
     public:
-        static std::unique_ptr<Command> create(std::vector<int32_t>& command, Camera& camera);
+        explicit Command(Map& map) : map(map){}
 
-        virtual void apply(Camera& camera) = 0;
+        static std::unique_ptr<Command> create(std::vector<int32_t>& command, Map& map);
+
+        virtual void apply() = 0;
 };
 
 #endif //MICROMACHINES_COMMAND_H

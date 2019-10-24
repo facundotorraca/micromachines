@@ -11,10 +11,10 @@ class TrackID : public Command {
     int32_t id;
 
     public:
-        explicit TrackID(int32_t id) : id(id){}
+        explicit TrackID(int32_t id, Map& map) : Command(map), id(id){}
 
-        void apply(Camera& camera) override {
-            camera.setTrack(id);
+        void apply() override {
+            map.setTrack(id);
         }
 };
 

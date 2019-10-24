@@ -6,15 +6,15 @@
 #define MICROMACHINES_ADDTILE_H
 
 #include "Command.h"
-#include "TileInfo.h"
+#include "client/Entities/TileInfo.h"
 #include <client/Camera.h>
 
 class AddTile : public Command {
     TileInfo info;
 public:
-    explicit AddTile(TileInfo info) : info(info){};
-    void apply(Camera& camera) override{
-        camera.addTile(info);
+    explicit AddTile(TileInfo info, Map& map) : Command(map), info(info){};
+    void apply() override{
+        map.addTile(info);
     }
 };
 #endif //MICROMACHINES_ADDTILE_H
