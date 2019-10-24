@@ -1,0 +1,10 @@
+#ifndef MICROMACHINES_GRASS_H
+#define MICROMACHINES_GRASS_H
+
+
+class Grass {
+
+};
+
+
+#endif //MICROMACHINES_GRASS_H
