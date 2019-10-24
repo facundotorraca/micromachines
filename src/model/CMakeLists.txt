@@ -6,4 +6,4 @@ file(GLOB model_lib *.cpp)
 list(REMOVE_ITEM model_lib "main.cpp")
 
 add_library(model ${model_lib})
-target_link_libraries(model server Box2D) #yaml-cpp)
+target_link_libraries(model server Box2D) #'yaml-cpp')

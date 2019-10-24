@@ -55,10 +55,6 @@ target_link_libraries(micromachines-server model server common)
 add_executable(micromachines-client src/client/main.cpp)
 target_link_libraries(micromachines-client client viewManager)
 
-# Genero un ejecutable de prueba del model
-add_executable(prueba_sdl src/model/main.cpp)
-target_link_libraries(prueba_sdl model common Box2D SDL2 SDL2_image)
-
 # Genero un ejecutable que prueba qt
 add_executable(qt-client pruebas_qt/main.cpp)
 target_link_libraries(qt-client common viewManager)

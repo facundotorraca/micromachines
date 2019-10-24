@@ -79,10 +79,14 @@ void Player::set_ID(int32_t id) {
     this->ID = id;
 }
 
-bool Player::is_called(std::string &_username) {
+bool Player::is_called(std::string& _username) {
     return this->username == _username;
 }
 
 void Player::send(uint8_t flag) {
     this->p_socket.send(flag);
+}
+
+void Player::send_track(RacingTrack& racing_track) {
+    RacingTrack::send(this->p_socket);
 }

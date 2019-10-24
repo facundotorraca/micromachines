@@ -2,6 +2,7 @@
 #define MICROMACHINES_RACINGTRACK_H
 
 #include "Box2D/Box2D.h"
+#include <common/ProtocolSocket.h>
 
 class RacingTrack {
     b2World racing_track;
@@ -12,6 +13,8 @@ class RacingTrack {
 
     public:
         explicit RacingTrack();
+
+        static void send(ProtocolSocket& p_socket);
 
         b2Body* add_body(b2BodyDef& body);
 

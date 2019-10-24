@@ -18,10 +18,12 @@ class Player {
     std::string username;
     std::string match_name;
 
-    public:
+public:
         Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name);
 
         Player(Player&& other) noexcept;
+
+        void send_track(RacingTrack& racing_track);
 
         void send(std::vector<int32_t>& msg);
 

@@ -5,4 +5,8 @@
 #define TYPE_TRACK 2
 #define TYPE_WHEEL 3
 
+/*---------TERRAINS---------*/
+#define TYPE_GRASS 4
+
+
 #endif //MICROMACHINES_ENTITYTYPE_H
