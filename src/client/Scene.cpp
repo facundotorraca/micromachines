@@ -52,7 +52,8 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
         queue.push(key_event);
 }
 
-void Scene::handleServerEvent(std::unique_ptr<Command> command) {
+void Scene::handleServerEvent(std::vector<int32_t>& data) {
+    auto command = Command::create(data, camera);
     command->apply(camera);
 }
 

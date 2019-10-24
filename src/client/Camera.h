@@ -12,6 +12,7 @@
 #include <SDL2/SDL.h>
 #include <memory>
 #include <client/Entities/Car.h>
+#include <client/Entities/CarInfo.h>
 
 class Camera {
     SDL_Renderer* rend;
@@ -35,12 +36,7 @@ class Camera {
 
         void setTrack(int32_t id);
 
-        void updateCar(int32_t car_id,
-                       int32_t carx, int32_t cary, int32_t carrot,
-                       int32_t w1x, int32_t w1y, int32_t w1rot,
-                       int32_t w2x, int32_t w2y, int32_t w2rot,
-                       int32_t w3x, int32_t w3y, int32_t w3rot,
-                       int32_t w4x, int32_t w4y, int32_t w4rot);
+        void updateCar(CarInfo info);
 
         void setRenderer(SDL_Renderer *pRenderer);
 };

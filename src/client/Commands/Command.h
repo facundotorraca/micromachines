@@ -8,7 +8,7 @@
 
 class Command {
     public:
-        static std::unique_ptr<Command> create(std::vector<int32_t>& command);
+        static std::unique_ptr<Command> create(std::vector<int32_t>& command, Camera& camera);
 
         virtual void apply(Camera& camera) = 0;
 };
