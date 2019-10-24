@@ -15,7 +15,6 @@ void ThreadReceiver::run() {
         std::vector<int32_t> buffer;
         try {
             this->socket.receive(buffer);
-            auto command = Command::create(buffer);
             this->scene.handleServerEvent(buffer);
         } catch (SocketError& e) {
             this->running = false;
