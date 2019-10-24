@@ -46,5 +46,6 @@ void Camera::setRenderer(SDL_Renderer *pRenderer) {
 }
 
 void Camera::addTile(TileInfo info) {
+    std::unique_lock<std::mutex> lock(mtx);
     background.emplace_back(rend, info);
 }

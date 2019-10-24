@@ -26,6 +26,5 @@ public:
         SDL_Rect dst{x, y, int(WIDTH_TILE * METER_TO_PIXEL), int(HEIGHT_TILE * METER_TO_PIXEL)};
         SDL_RenderCopyEx(rend, tex, nullptr, &dst, rot, nullptr, SDL_FLIP_NONE);
     }
-
 };
 #endif //MICROMACHINES_TILE_H
