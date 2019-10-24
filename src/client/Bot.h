@@ -14,12 +14,10 @@ extern "C" {
 #include <lualib.h>
 }
 
-#define
-
-
 class Bot {
     lua_State *state;
     std::string lua_path;
+    std::string lua_init;
     std::string lua_fun;
     ProtectedQueue<std::vector<int32_t>>& queue;
 
@@ -30,8 +28,8 @@ public:
 
 private:
     void check_error_lua(int error);
-
-
+    void push_table_int(const char *key, int value);
+    void load_tables();
 };
 
 
