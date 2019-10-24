@@ -5,8 +5,6 @@
 #ifndef MICROMACHINES_CARINFO_H
 #define MICROMACHINES_CARINFO_H
 
-#include <cstdint>
-
 typedef struct {
     int32_t car_id;
     int32_t carx;

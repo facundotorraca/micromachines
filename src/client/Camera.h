@@ -8,16 +8,16 @@
 #include <list>
 #include <map>
 #include <mutex>
-#include <client/Entities/Entity.h>
 #include <SDL2/SDL.h>
-#include <memory>
 #include <client/Entities/Car.h>
 #include <client/Entities/CarInfo.h>
+#include <client/Commands/TileInfo.h>
+#include <client/Entities/Tile.h>
 
 class Camera {
     SDL_Renderer* rend;
 
-    std::list<std::unique_ptr<Entity>> background;
+    std::list<Tile> background;
     std::map<uint8_t, Car> cars;
     std::mutex mtx;
 
@@ -37,6 +37,8 @@ class Camera {
         void setTrack(int32_t id);
 
         void updateCar(CarInfo info);
+
+        void addTile(TileInfo info);
 
         void setRenderer(SDL_Renderer *pRenderer);
 };

@@ -6,6 +6,9 @@
 #define CAR_WIDTH 2.0f
 #define CAR_HEIGHT 4.0f
 
+#define WIDTH_TILE 2.0f
+#define HEIGHT_TILE 2.0f
+
 #define WIDTH_WHEEL 0.3f
 #define HEIGHT_WHEEL 0.75f
 

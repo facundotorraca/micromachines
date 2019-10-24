@@ -6,6 +6,7 @@
 #include "Command.h"
 #include "TrackID.h"
 #include "UpdateCar.h"
+#include "AddTile.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
@@ -35,6 +36,10 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Camera& 
             return std::unique_ptr<Command>(new TrackID(command[1]));
         case MSG_CAR_ID:
             return std::unique_ptr<Command>(new CarID(command[1]));
+        case MSG_SEND_TILE: {
+            TileInfo info{command[1], command[2], command[3], command[4]};
+            return std::unique_ptr<Command>(new AddTile(info));
+        }
         default:
             break; //aca hacer un unknown commnad
     }
