@@ -3,7 +3,7 @@
 
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-#include <client/qt_views/ui_conectview.h>
+#include <client/QT_views/ui_conectview.h>
 
 class ConectView : public QDialog {
     Q_OBJECT

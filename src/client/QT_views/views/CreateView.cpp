@@ -1,7 +1,7 @@
 #include <iostream>
 #include <QLineEdit>
 #include "CreateView.h"
-#include <client/qt_views/ui_createView.h>
+#include <client/QT_views/ui_createView.h>
 
 CreateView::CreateView(ProtocolSocket &ps, QWidget *parent) :
                         QDialog(parent),
