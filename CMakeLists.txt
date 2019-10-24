@@ -38,7 +38,7 @@ find_package(Qt5Widgets REQUIRED)
 
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 
-add_subdirectory(src/client/qt_views)
+add_subdirectory(src/client/QT_views)
 add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)
@@ -46,6 +46,7 @@ add_subdirectory(src/model)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY lua DESTINATION ${CMAKE_BINARY_DIR})
 
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)
