@@ -36,7 +36,7 @@ class Camera {
 
         void setTrack(int32_t id);
 
-        void updateCar(CarInfo info);
+        void updateCar(CarInfo& info);
 
         void addTile(TileInfo info);
 

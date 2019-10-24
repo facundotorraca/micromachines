@@ -6,6 +6,7 @@
 
 class Entity {
     protected:
+        SDL_Rect rect;
         int posX = 0;
         int posY = 0;
         int rot = 0;
@@ -16,7 +17,7 @@ class Entity {
             rend(rend)
         {};
 
-        virtual void draw(SDL_Point camera, int32_t width, int32_t height)const = 0;
+        virtual void draw(SDL_Point camera, int32_t width, int32_t height) = 0;
         virtual void update_position(int32_t px, int32_t py, int32_t r) {
             this->posX = px;
             this->posY = py;

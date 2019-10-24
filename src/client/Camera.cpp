@@ -9,11 +9,12 @@ Camera::Camera(SDL_Renderer* rend, int32_t x, int32_t y) :
 {}
 
 void Camera::draw() {
-    std::unique_lock<std::mutex> lock(mtx);
     for (auto& static_entity : background){
+        std::unique_lock<std::mutex> lock(mtx);
         static_entity.draw(camera, width, height);
     }
     for (auto& entity : cars) {
+        std::unique_lock<std::mutex> lock(mtx);
         entity.second.draw(camera, width, height);
     }
 }
@@ -27,7 +28,7 @@ void Camera::setTrack(int32_t id) {
 }
 
 void
-Camera::updateCar(CarInfo info) {
+Camera::updateCar(CarInfo& info) {
     try {
         this->cars.at(info.car_id);
     } catch (std::out_of_range& e) {
