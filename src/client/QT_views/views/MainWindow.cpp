@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include <iostream>
 #include <unistd.h>
-#include <client/qt_views/ui_mainwindow.h>
+#include <client/QT_views/ui_mainwindow.h>
 
 
 std::string get_matches(ProtocolSocket &ps) {

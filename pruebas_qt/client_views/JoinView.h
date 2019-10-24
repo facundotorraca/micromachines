@@ -2,7 +2,7 @@
 #define JOINVIEW_H
 
 #include <QDialog>
-#include <../qt_views/ui_joinView.h>
+#include <../QT_views/ui_joinView.h>
 #include <common/ProtocolSocket.h>
 
 class JoinView : public QDialog {

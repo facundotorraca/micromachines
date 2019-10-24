@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <common/ProtocolSocket.h>
-#include <client/qt_views/ui_createView.h>
+#include <client/QT_views/ui_createView.h>
 
 class CreateView : public QDialog {
     Q_OBJECT

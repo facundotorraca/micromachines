@@ -3,7 +3,7 @@
 #include <string>
 #include <QtWidgets/QLineEdit>
 #include <common/SocketError.h>
-#include <client/qt_views/ui_conectview.h>
+#include <client/QT_views/ui_conectview.h>
 
 
 ConectView::ConectView(Socket &sck, QWidget *parent)

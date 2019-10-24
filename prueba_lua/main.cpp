@@ -20,15 +20,16 @@ int main() {
     L = luaL_newstate();
     luaL_openlibs(L);
     int err = luaL_loadfile(L, "plugins/luatest.lua");
-	lua_pcall(L, 0, 0, 0);
+	  lua_pcall(L, 0, 0, 0);
     err = lua_getglobal(L, "foo");
     lua_pushnumber(L, (int)5);
-    
     lua_pushnumber(L, (int)6);
-    
-    lua_pcall(L, 2, 1, 0);
+    lua_pcall(L, 2, 2, 0);
+    auto y = lua_tonumber(L, -1);
+    std::cout << "Y: " << y << std::endl;
+    lua_pop(L, 1);
     auto x = lua_tonumber(L, -1);
-    std::cout << "Lua function returned: " << x << std::endl;
-	
-	lua_close(L);
+    std::cout << "X: " << x << std::endl;
+    lua_pop(L, 1);
+    lua_close(L);
 }

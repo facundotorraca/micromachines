@@ -1,4 +1,6 @@
 function foo(x, y)
 	print("Hola from Lua")
-    return x + y
+	print("X: ", x)
+	print("Y: ", y)
+    return x,y
 end
