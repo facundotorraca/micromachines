@@ -17,6 +17,8 @@ class Tile : public Entity{
 public:
     Tile(SDL_Renderer* rend, TileInfo info) : Entity(rend), info(info){
         this->tex = IMG_LoadTexture(rend, "assets/sprites/Track/Grass/land_grass04.png");
+        this->posX = info.posx;
+        this->posY = info.posy;
     }
     void draw(SDL_Point camera, int32_t width, int32_t height) const override {
         int x = (width/2) + (posX-camera.x);
