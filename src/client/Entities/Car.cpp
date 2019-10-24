@@ -22,14 +22,11 @@ Car::Car(SDL_Renderer* r) : Entity(r),
     this->tex = IMG_LoadTexture(rend, "assets/sprites/Cars/Car red striped/Car red striped front.png");
 }
 
-void Car::update_all(int32_t carx, int32_t cary, int32_t carrot,
-                     int32_t w1x, int32_t w1y, int32_t w1rot, int32_t w2x,
-                     int32_t w2y, int32_t w2rot, int32_t w3x, int32_t w3y,
-                     int32_t w3rot, int32_t w4x, int32_t w4y, int32_t w4rot) {
+void Car::update_all(CarInfo info) {
 
-    posX = carx; posY = cary; rot = carrot;
-    wheel1.update_position(w1x, w1y, w1rot);
-    wheel2.update_position(w2x, w2y, w2rot);
-    wheel3.update_position(w3x, w3y, w3rot);
-    wheel4.update_position(w4x, w4y, w4rot);
+    posX = info.carx; posY = info.cary; rot = info.carrot;
+    wheel1.update_position(info.w1x, info.w1y, info.w1rot);
+    wheel2.update_position(info.w2x, info.w2y, info.w2rot);
+    wheel3.update_position(info.w3x, info.w3y, info.w3rot);
+    wheel4.update_position(info.w4x, info.w4y, info.w4rot);
 }

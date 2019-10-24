@@ -25,7 +25,7 @@ class Scene {
 
         explicit Scene(ProtectedQueue<std::vector<int32_t>> &queue);
 
-        void handleServerEvent(std::unique_ptr<Command> command);
+        void handleServerEvent(std::vector<int32_t>& data);
 
         void handleKeyEvent(int key, SDL_EventType type);
 
