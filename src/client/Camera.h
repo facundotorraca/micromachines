@@ -15,8 +15,8 @@
 class Camera {
     int32_t posx;
     int32_t posy;
-    size_t width;
-    size_t height;
+    int32_t width;
+    int32_t height;
     TextureFactory t_factory;
     SDL_Renderer* renderer;
     SDL_Window* window;

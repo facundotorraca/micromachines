@@ -45,6 +45,8 @@ void Camera::drawTile(int32_t x, int32_t y, int32_t rot) {
     int32_t py = (height/2) + y - this->posy;
     SDL_Rect dst{px, py, (int) (WIDTH_TILE * METER_TO_PIXEL),
                      (int) (HEIGHT_TILE * METER_TO_PIXEL)};
+    //if (px < 0)
+    //    std::cout << px << std::endl;
     if (isInCamera(px, py, dst.w, dst.h)) {
         SDL_RenderCopyEx(renderer, t_factory.getTileTexture(), nullptr, &dst,
                          rot,
@@ -65,5 +67,5 @@ void Camera::drawWheel(int32_t x, int32_t y, int32_t rot) {
 }
 
 bool Camera::isInCamera(int x,int y, int w, int h){
-    return true;//(((x+w)>=0) && (x<width) && ((y+h)>=0) && (y<height));
+    return (((x+w)>=0) && (x<width) && ((y+h)>=0) && (y<height));
 }

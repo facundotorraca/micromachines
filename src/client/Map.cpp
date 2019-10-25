@@ -8,15 +8,17 @@ Map::Map() : my_car_id(-1){}
 
 void Map::draw() {
     camera.clear();
-    std::lock_guard<std::mutex> add_lock(add_mtx);
+    add_mtx.lock();
     for (auto& tile : tiles){
-        std::unique_lock<std::mutex> draw_lock(draw_mtx);
         tile.draw(camera);
     }
+    add_mtx.unlock();
+    add_mtx.lock();
     for (auto& car : cars){
         std::unique_lock<std::mutex> draw_lock(draw_mtx);
         car.second.draw(camera);
     }
+    add_mtx.unlock();
     camera.draw();
 }
 
