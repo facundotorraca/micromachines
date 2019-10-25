@@ -21,6 +21,10 @@ void Camera::update(int32_t posx, int32_t posy) {
 }
 
 void Camera::draw() {
+    int32_t w, h;
+    SDL_GetWindowSize(window, &w, &h);
+    width = w;
+    height = h;
     SDL_RenderPresent(renderer);
 }
 
