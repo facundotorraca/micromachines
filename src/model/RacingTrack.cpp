@@ -26,12 +26,12 @@ b2World& RacingTrack::get_world() {
 }
 
 void RacingTrack::send(ProtocolSocket& p_socket) {
-    for (int32_t i = 0; i < 50; i++) {
-        for (int32_t j = 0; j < 50; j++) {
-            std::vector<int32_t> tile {MSG_SEND_TILE, TYPE_GRASS, int(2 * METER_TO_PIXEL * i), int(2* METER_TO_PIXEL* j), 0};
-            p_socket.send(tile);
-
-        }
+    for (auto& terrain : this->terrains) {
+        UpdateClient update_map = terrain->get_to_send();
+        update_map.send(p_socket);
     }
+}
 
+void RacingTrack::add_map_part(std::unique_ptr<Terrain>&& terrain) {
+    this->terrains.push_back(std::move(terrain));
 }

@@ -39,10 +39,12 @@ find_package(Qt5Widgets REQUIRED)
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 
 add_subdirectory(src/client/qt_views)
+add_subdirectory(libs/yaml-cpp)
 add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)
 add_subdirectory(src/model)
+add_subdirectory(libs/json)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})

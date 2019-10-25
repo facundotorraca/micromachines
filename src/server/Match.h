@@ -40,13 +40,15 @@ class Match : public Thread {
     private:
         void run() override;
 
+        void initialize_map();
+
         void initialize_players();
 
         void create_update_for_players();
 
-        void create_info_player_updates(int32_t player_ID);
-
         void send_to_all(UpdateClient update);
+
+        void create_info_player_updates(int32_t player_ID);
 
     public:
         explicit Match(std::string match_creator, std::string match_name);

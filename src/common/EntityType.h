@@ -1,12 +1,14 @@
 #ifndef MICROMACHINES_ENTITYTYPE_H
 #define MICROMACHINES_ENTITYTYPE_H
 
-#define TYPE_CAR 1
-#define TYPE_TRACK 2
-#define TYPE_WHEEL 3
+#define TYPE_CAR 0
+#define TYPE_TRACK 10
+#define TYPE_WHEEL 15
 
 /*---------TERRAINS---------*/
-#define TYPE_GRASS 4
-
+#define TYPE_GRASS 1
+#define TYPE_ASPHALT 2
+#define TYPE_SAND 3
+#define TYPE_DIRT 4
 
 #endif //MICROMACHINES_ENTITYTYPE_H

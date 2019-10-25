@@ -1,6 +1,7 @@
 #ifndef MICROMACHINES_SIZES_H
 #define MICROMACHINES_SIZES_H
 
+#define TILE_TERRAIN_SIZE 4.0f
 #define METER_TO_PIXEL 40.0f
 
 #define CAR_WIDTH 2.0f
@@ -14,5 +15,7 @@
 
 #define HEIGHT_SCREEN 600
 #define WIDTH_SCREEN 800
+
+
 
 #endif //MICROMACHINES_SIZES_H
