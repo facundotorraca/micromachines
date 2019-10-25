@@ -9,10 +9,6 @@
 #include <SDL2/SDL.h>
 #include <common/EntityType.h>
 
-#define CAR 70
-#define TILE 71
-#define WHEEL 72
-
 class TextureFactory {
     SDL_Texture* car_texture;
     SDL_Texture* wheel_texture;
@@ -37,6 +33,14 @@ public:
 
     SDL_Texture *getWheelTexture() {
         return wheel_texture;
+    }
+
+    ~TextureFactory(){
+        for (auto& texture : tile_textures){
+            SDL_DestroyTexture(texture.second);
+        }
+        SDL_DestroyTexture(wheel_texture);
+        SDL_DestroyTexture(car_texture);
     }
 };
 
