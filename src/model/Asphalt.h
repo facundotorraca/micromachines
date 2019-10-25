@@ -12,5 +12,4 @@ class Asphalt : public Terrain {
 
 };
 
-
 #endif //MICROMACHINES_ASPHALT_H

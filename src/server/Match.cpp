@@ -2,7 +2,6 @@
 #include <utility>
 #include "Match.h"
 #include "Player.h"
-#include <iostream>
 #include "MapLoader.h"
 #include <common/MsgTypes.h>
 #include "ThreadClientEventMonitor.h"
