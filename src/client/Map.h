@@ -19,8 +19,7 @@ class Map {
     int32_t my_car_id;
     std::map<int32_t, Car> cars;
     std::list<Tile> tiles;
-    std::mutex add_mtx;
-    std::mutex draw_mtx;
+    std::mutex mtx;
 public:
     Map();
     void draw();

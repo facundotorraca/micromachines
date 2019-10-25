@@ -2,8 +2,8 @@
 #include <utility>
 #include "Match.h"
 #include "Player.h"
+#include "MapLoader.h"
 #include <common/MsgTypes.h>
-#include <iostream>
 #include "ThreadClientEventMonitor.h"
 
 #define FRAMES_PER_SECOND 30
@@ -15,6 +15,8 @@
 #define CLOSE_MATCH_FLAG "1"
 
 #define START_MATCH_FLAG 0
+
+#define MAP_PATH "maps/"
 
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),
@@ -82,6 +84,7 @@ std::string Match::get_match_creator() {
 }
 
 void Match::run() {
+    this->initialize_map();
     this->initialize_players();
     this->clients_monitor.start();
 
@@ -139,7 +142,6 @@ void Match::initialize_players() {
 
         uint8_t flag_match_start = START_MATCH_FLAG;
         player.second.send(flag_match_start);
-
         player.second.send_track(this->racing_track);
     }
 }
@@ -163,4 +165,9 @@ void Match::send_to_all(UpdateClient update) {
     for (auto& queue : updates_players){
         queue.second.push(update);
     }
+}
+
+void Match::initialize_map() {
+    MapLoader loader(MAP_PATH);
+    loader.load_map(this->racing_track, "racing_track_1.json", "tiles.json");
 }

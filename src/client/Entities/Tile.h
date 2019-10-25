@@ -18,7 +18,7 @@ public:
         this->posY = info.posy;
     }
     void draw(Camera& camera) override {
-        camera.drawTile(posX, posY, rot);
+        camera.drawTile(posX, posY, rot, info.type);
     }
 };
 #endif //MICROMACHINES_TILE_H

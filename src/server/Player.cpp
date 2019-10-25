@@ -88,5 +88,5 @@ void Player::send(uint8_t flag) {
 }
 
 void Player::send_track(RacingTrack& racing_track) {
-    RacingTrack::send(this->p_socket);
+    racing_track.send(this->p_socket);
 }

@@ -40,13 +40,13 @@ void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
     }
 }
 
-void Camera::drawTile(int32_t x, int32_t y, int32_t rot) {
+void Camera::drawTile(int32_t x, int32_t y, int32_t rot, int32_t type) {
     int32_t px = (width/2) + x - this->posx;
     int32_t py = (height/2) + y - this->posy;
     SDL_Rect dst{px, py, (int) (WIDTH_TILE * METER_TO_PIXEL),
                      (int) (HEIGHT_TILE * METER_TO_PIXEL)};
     if (isInCamera(px, py, dst.w, dst.h)) {
-        SDL_RenderCopyEx(renderer, t_factory.getTileTexture(), nullptr, &dst,
+        SDL_RenderCopyEx(renderer, t_factory.getTileTexture(type), nullptr, &dst,
                          rot,
                          nullptr, SDL_FLIP_NONE);
     }
@@ -65,5 +65,5 @@ void Camera::drawWheel(int32_t x, int32_t y, int32_t rot) {
 }
 
 bool Camera::isInCamera(int x,int y, int w, int h){
-    return true;//(((x+w)>=0) && (x<width) && ((y+h)>=0) && (y<height));
+    return (((x+w)>=0) && (x<width) && ((y+h)>=0) && (y<height));
 }

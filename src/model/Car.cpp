@@ -159,9 +159,9 @@ UpdateClient Car::get_update(const int32_t id) {
                                 (int32_t)(RADTODEG * this->car_body->GetAngle())};
 
     for (auto& wheel : wheels){
-        params.emplace_back(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5)));
-        params.emplace_back(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5)));
-        params.emplace_back(wheel->get_angle());
+        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5))));
+        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5))));
+        params.emplace_back(int32_t(wheel->get_angle()));
     }
     return UpdateClient(std::move(params));
 }

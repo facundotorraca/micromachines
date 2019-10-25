@@ -15,8 +15,8 @@
 class Camera {
     int32_t posx;
     int32_t posy;
-    size_t width;
-    size_t height;
+    int32_t width;
+    int32_t height;
     TextureFactory t_factory;
     SDL_Renderer* renderer;
     SDL_Window* window;
@@ -27,7 +27,7 @@ public:
     void draw();
     void clear();
     void drawCar(int32_t posx, int32_t posy, int32_t rot);
-    void drawTile(int32_t posx, int32_t posy, int32_t rot);
+    void drawTile(int32_t posx, int32_t posy, int32_t rot, int32_t type);
     void drawWheel(int32_t posx, int32_t posy, int32_t rot);
 };
 
