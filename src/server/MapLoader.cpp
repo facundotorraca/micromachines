@@ -30,7 +30,7 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
 
     for (int i = 0; i < json_map_data["height"]; i++) {
         for (int j = 0; j < json_map_data["width"]; j++) {
-            unsigned id_pos = unsigned(json_map_data["layers"][0]["data"][j * 100 + i]) - 1;
+            unsigned id_pos = unsigned(json_map_data["layers"][0]["data"][j * (int)json_map_data["height"] + i]) - 1;
             int32_t type_ID = json_tiles_data["tiles"][id_pos]["properties"][0]["value"];
             racing_track.add_map_part(std::move(TerrainFactory::create_terrain(type_ID, i, j, 0)));
         }
