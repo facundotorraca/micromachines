@@ -16,7 +16,7 @@
 
 #define START_MATCH_FLAG 0
 
-#define MAP_PATH "/home/facundotorraca/Documents/Taller de Programacion/TallerDeProgramacion-TP4/maps/"
+#define MAP_PATH "maps/"
 
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),

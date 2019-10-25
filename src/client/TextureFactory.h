@@ -22,6 +22,9 @@ public:
         car_texture = IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png");
         wheel_texture =  IMG_LoadTexture(renderer, "assets/sprites/wheel_3.png");
         tile_textures.emplace(TYPE_GRASS, IMG_LoadTexture(renderer, "assets/sprites/Track/Grass/land_grass04.png"));
+        tile_textures.emplace(TYPE_SAND, IMG_LoadTexture(renderer, "assets/sprites/Track/Sand/land_sand05.png"));
+        tile_textures.emplace(TYPE_ASPHALT, IMG_LoadTexture(renderer, "assets/sprites/Track/Asphalt road/road_asphalt22.png"));
+        tile_textures.emplace(TYPE_DIRT, IMG_LoadTexture(renderer, "assets/sprites/Track/Dirt/land_dirt05.png"));
     }
 
     SDL_Texture *getCarTexture() {

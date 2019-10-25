@@ -48,7 +48,7 @@ add_subdirectory(libs/json)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
-
+file(COPY maps DESTINATION ${CMAKE_BINARY_DIR})
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)
 target_link_libraries(micromachines-server model server common)

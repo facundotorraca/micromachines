@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include <common/Key.h>
-#include <common/Sizes.h>
 
 #define KEY_VALUE_POS 0
 
