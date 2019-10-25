@@ -9,10 +9,6 @@
 #include <SDL2/SDL.h>
 #include <common/EntityType.h>
 
-#define CAR 70
-#define TILE 71
-#define WHEEL 72
-
 class TextureFactory {
     SDL_Texture* car_texture;
     SDL_Texture* wheel_texture;

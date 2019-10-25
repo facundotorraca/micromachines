@@ -17,10 +17,13 @@ class Camera {
     int32_t posy;
     int32_t width;
     int32_t height;
+    double scale;
     TextureFactory t_factory;
     SDL_Renderer* renderer;
     SDL_Window* window;
     bool isInCamera(int x, int y, int w, int h);
+    void copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t w,
+            int32_t rot, int32_t h);
 public:
     Camera();
     void update(int32_t posx, int32_t posy);
@@ -29,6 +32,7 @@ public:
     void drawCar(int32_t posx, int32_t posy, int32_t rot);
     void drawTile(int32_t posx, int32_t posy, int32_t rot, int32_t type);
     void drawWheel(int32_t posx, int32_t posy, int32_t rot);
+    ~Camera();
 };
 
 
