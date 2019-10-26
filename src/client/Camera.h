@@ -15,10 +15,7 @@
 class Camera {
     double posx;
     double posy;
-    double carx_1;
-    double cary_1;
-    double carx_2;
-    double cary_2;
+    std::list<SDL_Point> car_pos;
     int32_t width;
     int32_t height;
     double scale;

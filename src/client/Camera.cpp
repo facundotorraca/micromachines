@@ -12,9 +12,13 @@ Camera::Camera() :
     renderer(nullptr),
     window(nullptr)
 {
-    window = SDL_CreateWindow("Micromachines", 0, 0, width, height, SDL_WINDOW_RESIZABLE);
+    SDL_Init(SDL_INIT_VIDEO);
+    window = SDL_CreateWindow("Micromachines", 0, 0, width, height, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
-    t_factory = TextureFactory(renderer);
+    t_factory = std::move(TextureFactory(renderer));
+    for (int i = 1; i < 5; i++) {
+        car_pos.emplace_back(SDL_Point{0, 0});
+    }
     //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
@@ -25,17 +29,15 @@ double f(double x){
 }
 
 void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
+    car_pos.emplace_back(SDL_Point{posx, posy});
     double rad = 0.01745329252*rot;
-    double dx = this->carx_2 - posx;
-    double dy = this->cary_2 - posy;
+    double dx = car_pos.back().x - car_pos.front().x;
+    double dy = car_pos.back().y - car_pos.front().y;
     double vel = hypot(dx, dy);
-    double factor = f(vel)*7;
-    this->carx_2 = this->carx_1;
-    this->cary_2 = this->cary_1;
-    this->carx_1 = posx;
-    this->cary_1 = posy;
+    double factor = f(vel)*2;
     this->posx = (double)posx - (scale*sin(rad)*factor);
     this->posy = (double)posy + (scale*cos(rad)*factor);
+    car_pos.erase(car_pos.begin());
 }
 
 void Camera::draw() {
@@ -80,4 +82,5 @@ bool Camera::isInCamera(int x,int y, int w, int h){
 Camera::~Camera() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    SDL_Quit();
 }
