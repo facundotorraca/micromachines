@@ -5,6 +5,8 @@
 #include "TerrainFactory.h"
 #include "Asphalt.h"
 #include <common/EntityType.h>
+#include <model/Roads/AsphaltTurn.h>
+#include <iostream>
 
 std::unique_ptr<Terrain> TerrainFactory::create_terrain(int32_t entity_id, int32_t x, int32_t y, int32_t rotation) {
     switch (entity_id) {
@@ -16,5 +18,7 @@ std::unique_ptr<Terrain> TerrainFactory::create_terrain(int32_t entity_id, int32
             return std::unique_ptr<Terrain> (new Sand(x, y, rotation));
         case TYPE_DIRT:
             return std::unique_ptr<Terrain> (new Dirt(x, y, rotation));
+        case TYPE_ASPHALT_TURN:
+            return std::unique_ptr<Terrain> (new AsphaltTurn(x, y, rotation));
     }
 }

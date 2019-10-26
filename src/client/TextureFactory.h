@@ -21,6 +21,7 @@ public:
         tile_textures.emplace(TYPE_SAND, IMG_LoadTexture(renderer, "assets/sprites/Track/Sand/land_sand05.png"));
         tile_textures.emplace(TYPE_ASPHALT, IMG_LoadTexture(renderer, "assets/sprites/Track/Asphalt road/road_asphalt22.png"));
         tile_textures.emplace(TYPE_DIRT, IMG_LoadTexture(renderer, "assets/sprites/Track/Dirt/land_dirt05.png"));
+        tile_textures.emplace(TYPE_ASPHALT_TURN, IMG_LoadTexture(renderer, "assets/sprites/Track/Asphalt road/road_asphalt06.png"));
     }
 
     SDL_Texture *getCarTexture() {

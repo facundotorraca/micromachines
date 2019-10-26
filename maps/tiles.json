@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tiles",
  "spacing":0,
- "tilecount":4,
+ "tilecount":8,
  "tiledversion":"1.2.5",
  "tileheight":128,
  "tiles":[
@@ -22,6 +22,11 @@
                  "name":"ID",
                  "type":"int",
                  "value":3
+                }, 
+                {
+                 "name":"Rotation",
+                 "type":"int",
+                 "value":0
                 }]
         }, 
         {
@@ -34,6 +39,11 @@
                  "name":"ID",
                  "type":"int",
                  "value":1
+                }, 
+                {
+                 "name":"Rotation",
+                 "type":"int",
+                 "value":0
                 }]
         }, 
         {
@@ -46,6 +56,11 @@
                  "name":"ID",
                  "type":"int",
                  "value":2
+                }, 
+                {
+                 "name":"Rotation",
+                 "type":"int",
+                 "value":0
                 }]
         }, 
         {
@@ -58,6 +73,79 @@
                  "name":"ID",
                  "type":"int",
                  "value":4
+                }, 
+                {
+                 "name":"Rotation",
+                 "type":"int",
+                 "value":0
+                }]
+        }, 
+        {
+         "id":4,
+         "image":"..\/assets\/sprites\/Track\/Asphalt road\/road_asphalt24.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":5
+                }, 
+                {
+                 "name":"Rotation",
+                 "type":"int",
+                 "value":270
+                }]
+        }, 
+        {
+         "id":5,
+         "image":"..\/assets\/sprites\/Track\/Asphalt road\/road_asphalt25.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":5
+                }, 
+                {
+                 "name":"Rotation",
+                 "type":"int",
+                 "value":180
+                }]
+        }, 
+        {
+         "id":6,
+         "image":"..\/assets\/sprites\/Track\/Asphalt road\/road_asphalt06.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":5
+                }, 
+                {
+                 "name":"Rotation",
+                 "type":"int",
+                 "value":0
+                }]
+        }, 
+        {
+         "id":7,
+         "image":"..\/assets\/sprites\/Track\/Asphalt road\/road_asphalt07.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":5
+                }, 
+                {
+                 "name":"Rotation",
+                 "type":"int",
+                 "value":90
                 }]
         }],
  "tilewidth":128,
