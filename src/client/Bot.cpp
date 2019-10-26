@@ -4,7 +4,7 @@
 
 #include "Bot.h"
 #include <common/Key.h>
-Bot::Bot(ProtectedQueue<std::vector<int32_t>>& queue) : state(luaL_newstate()),
+Bot::Bot(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue) : state(luaL_newstate()),
                                                         lua_path("lua/bot.lua"),
                                                         lua_init("init"),
                                                         lua_add_tile("addTile"),
@@ -29,7 +29,9 @@ void Bot::execute() {
     auto action = lua_tonumber(this->state, -1);
     lua_pop(this->state, 1);
     key_event.push_back(action);
-    this->queue.push(key_event);
+    auto event = ServerCommand::create(key, action);
+    if (event)
+        queue.push(std::move(event));
 }
 
 void Bot::add_tile(TileInfo &tailInfo) {

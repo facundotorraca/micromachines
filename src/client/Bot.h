@@ -10,6 +10,7 @@
 
 #include "Entities/CarInfo.h"
 #include "Entities/TileInfo.h"
+#include "ServerCommands/ServerCommand.h"
 
 extern "C" {
 #include <lua.h>
@@ -25,10 +26,10 @@ class Bot {
     std::string lua_update_car;
     std::string lua_fun;
     int32_t my_id;
-    ProtectedQueue<std::vector<int32_t>>& queue;
+    ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
 
 public:
-    Bot(ProtectedQueue<std::vector<int32_t>>& queue);
+    Bot(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue);
     void execute();
     void add_tile(TileInfo &tailInfo);
     void update_car(CarInfo &carInfo);
