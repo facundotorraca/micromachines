@@ -14,6 +14,7 @@ Camera::Camera() :
 {
     SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer);
     t_factory = TextureFactory(renderer);
+    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
 void Camera::update(int32_t posx, int32_t posy) {
@@ -28,7 +29,7 @@ void Camera::draw() {
 void Camera::clear() {
     SDL_RenderClear(renderer);
     SDL_GetWindowSize(window, &width, &height);
-    scale = (((double)width/1024)+((double)height/720 ))/2;
+    scale = (((double)width/1920)+((double)height/1080))/2;
 }
 
 void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
@@ -51,8 +52,7 @@ void Camera::copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t rot, int
     int32_t py = (height*0.5) + scale*(y - this->posy);
     SDL_Rect dst{px, py, (int)((double)w*scale), (int)((double)h*scale)};
     if (isInCamera(dst.x, dst.y, dst.w, dst.h)) {
-        SDL_RenderCopyEx(renderer, tex, nullptr, &dst,
-                         rot,
+        SDL_RenderCopyEx(renderer, tex, nullptr, &dst, rot,
                          nullptr, SDL_FLIP_NONE);
     }
 }

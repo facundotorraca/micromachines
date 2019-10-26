@@ -6,7 +6,7 @@
 #include <common/MsgTypes.h>
 #include "ThreadClientEventMonitor.h"
 
-#define FRAMES_PER_SECOND 30
+#define FRAMES_PER_SECOND 60
 
 #define ERROR_MATCH_JOIN_FLAG 1
 #define SUCCESS_MATCH_JOIN_FLAG 0
@@ -135,7 +135,7 @@ void Match::step() {
 
 void Match::initialize_players() {
     for (auto& player : players) {
-        CarSpecs specs(100, -10, 50, 100, 40, 40);
+        CarSpecs specs(200, -10, 50, 100, 40, 40);
         this->cars.emplace(std::piecewise_construct,
                            std::forward_as_tuple(player.first),
                            std::forward_as_tuple(racing_track, specs));
