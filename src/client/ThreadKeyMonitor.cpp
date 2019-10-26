@@ -12,13 +12,23 @@ void ThreadKeyMonitor::run() {
     while (SDL_WaitEvent(&event) && this->running) {
         auto& keyEvent = (SDL_KeyboardEvent&) event;
 
-        switch (event.type) {
+        if (event.type == SDL_QUIT){
+            running = false;
+            return;
+        }
+
+        if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
+            scene.handleKeyEvent(keyEvent.keysym.sym,
+                                 (SDL_EventType)(event.type));
+
+
+        /*switch (event.type) {
             case SDL_QUIT: {
                 running = false;
                 break;
             }
 
-            case SDL_KEYDOWN: {
+            case (SDL_KEYDOWN & SDL_KEYUP): {
                 scene.handleKeyEvent(keyEvent.keysym.sym, SDL_KEYDOWN);
                 break;
             }
@@ -27,6 +37,6 @@ void ThreadKeyMonitor::run() {
                 scene.handleKeyEvent(keyEvent.keysym.sym, SDL_KEYUP);
                 break;
             }
-        }
+        }*/
     }
 }

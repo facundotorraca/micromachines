@@ -16,6 +16,7 @@ public:
     explicit Tile(TileInfo& info) : info(info){
         this->posX = info.posx;
         this->posY = info.posy;
+        this->rot = info.rotation;
     }
     void draw(Camera& camera) override {
         camera.drawTile(posX, posY, rot, info.type);

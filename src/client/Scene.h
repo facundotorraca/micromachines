@@ -11,21 +11,22 @@
 #include <list>
 #include <client/Entities/Entity.h>
 #include <client/Commands/Command.h>
+#include "ServerCommands/ServerCommand.h"
 #include "Camera.h"
 #include "Map.h"
 
 class Scene {
-    ProtectedQueue<std::vector<int32_t>>& queue;
+    ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
 
     Map map;
 
     public:
 
-        explicit Scene(ProtectedQueue<std::vector<int32_t>> &queue);
+        explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue);
 
         void handleServerEvent(std::vector<int32_t>& data);
 
-        void handleKeyEvent(int key, SDL_EventType type);
+        void handleKeyEvent(SDL_Keycode key, SDL_EventType type);
 
         void draw();
 };

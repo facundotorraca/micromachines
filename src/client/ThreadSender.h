@@ -12,9 +12,9 @@
 
 class ThreadSender : public Thread{
         ProtocolSocket& socket;
-        ProtectedQueue<std::vector<int32_t>>& queue;
+        ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
     public:
-        explicit ThreadSender(ProtocolSocket& socket, ProtectedQueue<std::vector<int32_t>>& queue);
+        explicit ThreadSender(ProtocolSocket& socket, ProtectedQueue<std::unique_ptr<ServerCommand>>& queue);
         void run() override;
 };
 

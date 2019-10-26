@@ -7,8 +7,8 @@
 #include "ThreadKeyMonitor.h"
 #include <common/ProtectedQueue.h>
 #include <common/ProtocolSocket.h>
-
-#include <iostream>
+#include <memory>
+#include "ServerCommands/ServerCommand.h"
 
 GameMain::GameMain(ProtocolSocket &socket):
     socket(std::move(socket))
@@ -17,7 +17,7 @@ GameMain::GameMain(ProtocolSocket &socket):
 void GameMain::start() {
     SDL_Init(SDL_INIT_VIDEO);
 
-    ProtectedQueue<std::vector<int32_t>> sender_queue(10000);
+    ProtectedQueue<std::unique_ptr<ServerCommand>> sender_queue(10000);
     Scene scene(sender_queue);
 
     ThreadDrawer drawer(scene);
