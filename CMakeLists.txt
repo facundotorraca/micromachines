@@ -38,6 +38,7 @@ find_package(Qt5Widgets REQUIRED)
 
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 
+add_subdirectory(src/client/QT_views)
 add_subdirectory(src/client/qt_views)
 add_subdirectory(src/model/Terrains)
 add_subdirectory(src/model/Vehicle)
@@ -50,6 +51,8 @@ add_subdirectory(libs/json)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY lua DESTINATION ${CMAKE_BINARY_DIR})
+
 file(COPY maps DESTINATION ${CMAKE_BINARY_DIR})
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)
@@ -65,3 +68,6 @@ target_link_libraries(qt-client common viewManager)
 
 add_executable(client-old src/client/main.old.cpp)
 target_link_libraries(client-old client)
+
+add_executable(main-bot src/client/main.lua.cpp)
+target_link_libraries(main-bot client common)
