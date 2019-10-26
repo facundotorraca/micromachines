@@ -22,8 +22,8 @@ class Camera {
     SDL_Renderer* renderer;
     SDL_Window* window;
     bool isInCamera(int x, int y, int w, int h);
-    void copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t w,
-            int32_t rot, int32_t h);
+    void copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t rot,
+            int32_t w, int32_t h);
 public:
     Camera();
     void update(int32_t posx, int32_t posy);

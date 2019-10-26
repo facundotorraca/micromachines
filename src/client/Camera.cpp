@@ -12,7 +12,8 @@ Camera::Camera() :
     renderer(nullptr),
     window(nullptr)
 {
-    SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer);
+    window = SDL_CreateWindow("Micromachines", 0, 0, width, height, SDL_WINDOW_RESIZABLE);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     t_factory = TextureFactory(renderer);
 }
 
