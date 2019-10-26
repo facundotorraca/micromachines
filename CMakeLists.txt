@@ -39,7 +39,7 @@ find_package(Qt5Widgets REQUIRED)
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 
 add_subdirectory(src/client/QT_views)
-add_subdirectory(src/client/qt_views)
+#add_subdirectory(src/client/qt_views)
 add_subdirectory(src/model/Terrains)
 add_subdirectory(src/model/Vehicle)
 add_subdirectory(libs/yaml-cpp)
