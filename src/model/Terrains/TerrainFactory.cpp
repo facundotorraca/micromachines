@@ -1,10 +1,10 @@
 #include <memory>
-#include "TerrainFactory.h"
-#include <common/EntityType.h>
 #include "Dirt.h"
-#include "Grass.h"
 #include "Sand.h"
+#include "Grass.h"
+#include "TerrainFactory.h"
 #include "Asphalt.h"
+#include <common/EntityType.h>
 
 std::unique_ptr<Terrain> TerrainFactory::create_terrain(int32_t entity_id, int32_t x, int32_t y, int32_t rotation) {
     switch (entity_id) {
