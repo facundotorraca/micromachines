@@ -39,7 +39,7 @@ void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
 }
 
 void Camera::drawTile(int32_t x, int32_t y, int32_t rot, int32_t type) {
-    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
+    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+1;
     copyRender(t_factory.getTileTexture(type), x, y, rot, wh, wh);
 }
 
