@@ -1,12 +1,9 @@
 #include <cstdint>
 #include "Asphalt.h"
 #include <common/Sizes.h>
-#include "model/FixtureUserData.h"
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
-#include <iostream>
-
-#define ASPHALT_TRACTION
+#include "model/FixtureUserData.h"
 
 Asphalt::Asphalt(int32_t x, int32_t y, int32_t rotation):
         Terrain(x, y, rotation)
@@ -25,5 +22,6 @@ void Asphalt::set_terrain_user_data() {
 }
 
 void Asphalt::apply_effect(Wheel* wheel) {
+    wheel->set_max_speed();
     wheel->set_max_traction();
 }

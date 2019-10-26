@@ -10,29 +10,9 @@
 
 class TerrainContactListener : public b2ContactListener {
 
-    void BeginContact(b2Contact *contact) override {
-        auto* fixtureUserData_a = (FixtureUserData *) contact->GetFixtureA()->GetUserData();
-        auto* fixtureUserData_b = (FixtureUserData *) contact->GetFixtureB()->GetUserData();
+    void BeginContact(b2Contact *contact) override;
 
-        if (!fixtureUserData_a || !fixtureUserData_b) return;
-
-        if (fixtureUserData_a->get_type_ID() == TYPE_WHEEL && fixtureUserData_b->get_type_ID() != TYPE_WHEEL) {
-            auto* wheel = (Wheel*)contact->GetFixtureA()->GetBody()->GetUserData();
-            auto* terrain = (Terrain*) contact->GetFixtureB()->GetBody()->GetUserData();
-
-            terrain->apply_effect(wheel);
-        }
-
-        if (fixtureUserData_b->get_type_ID() == TYPE_WHEEL && fixtureUserData_a->get_type_ID() != TYPE_WHEEL) {
-            auto* wheel = (Wheel*)contact->GetFixtureB()->GetBody()->GetUserData();
-            auto* terrain = (Terrain*) contact->GetFixtureA()->GetBody()->GetUserData();
-
-            terrain->apply_effect(wheel);
-        }
-    }
-
-    void EndContact(b2Contact* contact) override { /*Por ahora no hace nada*/ }
-
+    void EndContact(b2Contact* contact) override;
 };
 
 #endif //MICROMACHINES_TERRAINCONTACTLISTENER_H

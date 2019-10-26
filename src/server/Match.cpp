@@ -135,7 +135,7 @@ void Match::step() {
 
 void Match::initialize_players() {
     for (auto& player : players) {
-        CarSpecs specs(200, -10, 50, 100, 40, 40);
+        CarSpecs specs{120, -20, 130, 150, 8.5, 7.5};
         this->cars.emplace(std::piecewise_construct,
                            std::forward_as_tuple(player.first),
                            std::forward_as_tuple(racing_track, specs));
@@ -155,10 +155,7 @@ void Match::create_update_for_players() {
 
 void Match::create_info_player_updates(int32_t player_ID) {
     std::vector<int32_t> car_ID_update_info{MSG_CAR_ID, player_ID};
-    std::vector<int32_t> track_ID_update_info{MSG_TRACK_ID, 1/*esto puede variar despues*/};
-
     this->updates_players.at(player_ID).push(std::move(UpdateClient(std::move(car_ID_update_info))));
-    this->updates_players.at(player_ID).push(std::move(UpdateClient(std::move(track_ID_update_info))));
 }
 
 void Match::send_to_all(UpdateClient update) {

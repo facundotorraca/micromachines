@@ -5,7 +5,8 @@
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
 
-#define SAND_TRACTION 0.50f
+#define SAND_SPEED_PROPORTION 0.1f
+#define SAND_TRACTION_PROPORTION 0.3f
 
 Sand::Sand(int32_t x, int32_t y, int32_t rotation):
     Terrain(x, y, rotation)
@@ -24,5 +25,6 @@ void Sand::set_terrain_user_data() {
 }
 
 void Sand::apply_effect(Wheel* wheel) {
-    wheel->set_traction(SAND_TRACTION);
+    wheel->set_traction(SAND_TRACTION_PROPORTION);
+    wheel->reduce_max_speed(SAND_SPEED_PROPORTION);
 }

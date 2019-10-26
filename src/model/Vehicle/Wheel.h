@@ -14,7 +14,9 @@ class Wheel {
     float max_forward_speed;
     float max_backward_speed;
     float max_lateral_impulse;
-    float current_traction{};
+    float traction_proportion;
+
+    float speed_proportion;
 
     WheelUserData* wheel_user_data{};
 
@@ -32,17 +34,22 @@ class Wheel {
 
         Wheel(Wheel&& other_wheel) noexcept;
 
-        void set_traction(float traction);
-
         const b2Vec2& get_position();
 
         void update(uint8_t key);
 
-        void set_max_traction();
-
         b2Body* get_body();
 
         float get_angle();
+
+        /*--------------Terrain Modifiers------------*/
+        void set_traction(float proportion);
+
+        void reduce_max_speed(float proportion);
+
+        void set_max_traction();
+
+        void set_max_speed();
 
         ~Wheel();
 };
