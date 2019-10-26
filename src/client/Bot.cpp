@@ -7,6 +7,8 @@
 Bot::Bot(ProtectedQueue<std::vector<int32_t>>& queue) : state(luaL_newstate()),
                                                         lua_path("lua/bot.lua"),
                                                         lua_init("init"),
+                                                        lua_add_tile("addTile"),
+                                                        lua_update_car("updateCar"),
                                                         lua_fun("decide"),
                                                         queue(queue) {
     luaL_openlibs(this->state);
@@ -30,6 +32,22 @@ void Bot::execute() {
     this->queue.push(key_event);
 }
 
+void Bot::add_tile(TileInfo &tailInfo) {
+  this->check_error_lua(lua_getGlobal(this->state, this->lua_add_tile.c_str()));
+  lua_pushnumber(this->state, tailInfo.posx);
+  lua_pushnumber(this->state, tailInfo.posy);
+  lua_pushnumber(this->state, tailInfo.type);
+  this->check_error_lua(lua_pcall(this->state, 3, 0, 0));
+}
+
+void Bot::update_car(CarInfo &carInfo) {
+  this->check_error_lua(lua_getGlobal(this->state, this->lua_update_car.c_str()));
+  this->push_table_int("posX", carInfo.carx)
+  this->push_table_int("posY", carInfo.cary)
+  this->push_table_int("rot", carInfo.carrot)
+  this->check_error_lua(lua_pcall(this->state, 1, 0, 0));
+}
+
 Bot::~Bot() {
     lua_close(this->state);
 }
@@ -46,7 +64,7 @@ void Bot::push_table_int(const char *key, int value) {
     lua_settable(this->state, -3);
 }
 
-void Bot::load_tables() {
+void Bot::load_definitions() {
     lua_newtable(this->state);
     this->push_table_int("up", KEY_UP);
     this->push_table_int("left", KEY_LEFT);

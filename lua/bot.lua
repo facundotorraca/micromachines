@@ -1,8 +1,21 @@
 i=-2;
+map = {}
+car = {}
 
 function init(keysDef, actionsDef)
     keys = keysDef
     actions = actionsDef
+end
+
+function addTile(x, y, value) 
+  if map[x] == nil then map[x] = {} end
+  map[x][y] = value
+end
+
+function updateCar(newCar)
+  for key, value in pairs(newCar) do
+    car[key] = value
+  end
 end
 
 function decide()
