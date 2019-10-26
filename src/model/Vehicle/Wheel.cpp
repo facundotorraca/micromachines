@@ -4,7 +4,7 @@
 #include <common/Sizes.h>
 #include <iostream>
 
-#define MAX_TRACTION 1
+#define MAX_PROPORTION 1
 #define RADTODEG 57.295779513082320876f
 
 Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse) {
@@ -13,17 +13,19 @@ Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, 
     this->max_forward_speed = max_forward_speed;
     this->max_driver_force= max_driver_force; /*Capacity of changing speed*/
 
-    this->current_traction = MAX_TRACTION;
+    this->speed_proportion = MAX_PROPORTION;
+    this->traction_proportion = MAX_PROPORTION;
 
     b2BodyDef wheel_body_def;
     wheel_body_def.type = b2_dynamicBody;
+
     /*Allocates memory for the wheels's body*/
     this->wheel_body = world.CreateBody(&wheel_body_def);
     this->wheel_body->SetUserData(this);
 
     b2PolygonShape polygon;
     polygon.SetAsBox(WIDTH_WHEEL, HEIGHT_WHEEL);
-    this->wheel_fixture = this->wheel_body->CreateFixture(/*Shape*/&polygon, 1);
+    this->wheel_fixture = this->wheel_body->CreateFixture(/*Shape*/&polygon, 1.5);
 
     this->wheel_user_data = new WheelUserData();
     this->wheel_fixture->SetUserData(this->wheel_user_data);
@@ -45,9 +47,9 @@ void Wheel::update_speed(uint8_t key) {
     /*Find if whe want to go UP or DOWN*/
     float desire_speed = 0;
     if (key == KEY_UP) {
-        desire_speed = this->max_forward_speed;
+        desire_speed = this->speed_proportion * this->max_forward_speed;
     } else if (key == KEY_DOWN) {
-        desire_speed = this->max_backward_speed;
+        desire_speed = this->speed_proportion * this->max_backward_speed;
     } else {
         return;
     }
@@ -66,7 +68,7 @@ void Wheel::update_speed(uint8_t key) {
         return;
     }
     /*Apply a force on the wheels center*/
-    this->wheel_body->ApplyForce(this->current_traction * force * current_forward_velocity,this->wheel_body->GetWorldCenter(),true);
+    this->wheel_body->ApplyForce(this->traction_proportion * force * current_forward_velocity, this->wheel_body->GetWorldCenter(), true);
 }
 
 void Wheel::update_friction() {
@@ -82,16 +84,16 @@ void Wheel::update_friction() {
     if (impulse.Length()/*Absolute value*/ > this->max_lateral_impulse) {
         impulse *= this->max_lateral_impulse / impulse.Length();
     }
-    this->wheel_body->ApplyLinearImpulse(this->current_traction * impulse, this->wheel_body->GetWorldCenter(), true);
+    this->wheel_body->ApplyLinearImpulse(this->traction_proportion * impulse, this->wheel_body->GetWorldCenter(), true);
 
     //angular velocity
-    this->wheel_body->ApplyAngularImpulse(this->current_traction * 0.1f * this->wheel_body->GetInertia() * -this->wheel_body->GetAngularVelocity(), true);
+    this->wheel_body->ApplyAngularImpulse(this->traction_proportion * 0.1f * this->wheel_body->GetInertia() * -this->wheel_body->GetAngularVelocity(), true);
 
     //forward linear velocity
     b2Vec2 current_forward_velocity = this->get_forward_velocity();
     float current_forward_speed = current_forward_velocity.Normalize(); /*Normalize returns absolute value*/
     float drag_force_magnitude = -2 * current_forward_speed;
-    this->wheel_body->ApplyForce(this->current_traction * drag_force_magnitude * current_forward_velocity, this->wheel_body->GetWorldCenter(), true);
+    this->wheel_body->ApplyForce(this->traction_proportion * drag_force_magnitude * current_forward_velocity, this->wheel_body->GetWorldCenter(), true);
 }
 
 void Wheel::update(uint8_t key) {
@@ -118,22 +120,36 @@ Wheel::~Wheel() {
 
 Wheel::Wheel(Wheel &&other_wheel) noexcept {
     this->wheel_body = other_wheel.wheel_body;
-    this->max_lateral_impulse = other_wheel.max_lateral_impulse;
-    this->max_backward_speed = other_wheel.max_backward_speed;
-    this->max_forward_speed = other_wheel.max_forward_speed;
+    this->speed_proportion = other_wheel.speed_proportion;
     this->max_driver_force = other_wheel.max_driver_force;
+    this->max_forward_speed = other_wheel.max_forward_speed;
+    this->max_backward_speed = other_wheel.max_backward_speed;
+    this->max_lateral_impulse = other_wheel.max_lateral_impulse;
+    this->traction_proportion = other_wheel.traction_proportion;
 
-    other_wheel.wheel_body = nullptr;
+    other_wheel.traction_proportion = 0;
     other_wheel.max_lateral_impulse = 0;
     other_wheel.max_backward_speed = 0;
     other_wheel.max_forward_speed = 0;
+    other_wheel.speed_proportion = 0;
     other_wheel.max_driver_force = 0;
+    other_wheel.wheel_body = nullptr;
 }
 
 void Wheel::set_traction(float traction) {
-    this->current_traction = traction;
+    this->traction_proportion = traction;
 }
 
 void Wheel::set_max_traction() {
-    this->current_traction = MAX_TRACTION;
+    this->traction_proportion = MAX_PROPORTION;
 }
+
+void Wheel::reduce_max_speed(float proportion) {
+    this->speed_proportion = proportion;
+}
+
+void Wheel::set_max_speed() {
+    this->speed_proportion = MAX_PROPORTION;
+}
+
+

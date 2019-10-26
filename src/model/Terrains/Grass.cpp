@@ -5,7 +5,8 @@
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
 
-#define GRASS_TRACTION 0.65f
+#define GRASS_SPEED_PROPORTION 0.3f
+#define GRASS_TRACTION_PROPORTION 0.5f
 
 Grass::Grass(int32_t x, int32_t y, int32_t rotation):
     Terrain(x, y, rotation)
@@ -24,5 +25,6 @@ void Grass::set_terrain_user_data() {
 }
 
 void Grass::apply_effect(Wheel* wheel) {
-    wheel->set_traction(GRASS_TRACTION);
+    wheel->set_traction(GRASS_TRACTION_PROPORTION);
+    wheel->reduce_max_speed(GRASS_SPEED_PROPORTION);
 }

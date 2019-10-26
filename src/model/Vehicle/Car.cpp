@@ -9,7 +9,7 @@
 
 #define NOT_PRESSED 0
 
-#define MAX_ROTATION_ANGLE 35.0f
+#define MAX_ROTATION_ANGLE 45.0f
 #define ROTATION_PER_SECOND 90.0
 
 #define DEGTORAD 0.0174532925199432957f
@@ -24,11 +24,10 @@ Car::Car(RacingTrack& racing_track, CarSpecs specs):
     this->car_body = racing_track.add_body(bodyDef);
 
     /*reduce the world velocity of bodies*/
-    this->car_body->SetAngularDamping(0.2);
+    this->car_body->SetAngularDamping(0.1);
     this->create_wheels(racing_track);
 
 }
-
 
 Car::Car(Car&& other_car) noexcept:
     specs(other_car.specs),
@@ -60,40 +59,40 @@ void Car::create_wheels(RacingTrack& racing_track) {
     joint_params.localAnchorB.SetZero(); /*center of tire*/
 
     /*back left tire*/
-    auto* back_left_wheel = new Wheel(racing_track.get_world(), this->specs.get_max_forward_speed(),
-                                      this->specs.get_max_backward_speed(),
-                                      this->specs.get_back_wheel_max_force(),
-                                      this->specs.get_back_max_lateral_impulse());
+    auto* back_left_wheel = new Wheel(racing_track.get_world(), this->specs.max_forward_speed,
+                                      this->specs.max_backward_speed,
+                                      this->specs.back_wheel_max_force,
+                                      this->specs.back_max_lateral_impulse);
     joint_params.bodyB = back_left_wheel->get_body();
     joint_params.localAnchorA.Set(CAR_WIDTH/2.15, -(CAR_HEIGHT/2)*0.62);
     racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(back_left_wheel);
 
     //back right tire
-    auto* back_right_wheel = new Wheel(racing_track.get_world(), this->specs.get_max_forward_speed(),
-                                       this->specs.get_max_backward_speed(),
-                                       this->specs.get_back_wheel_max_force(),
-                                       this->specs.get_back_max_lateral_impulse());
+    auto* back_right_wheel = new Wheel(racing_track.get_world(), this->specs.max_forward_speed,
+                                       this->specs.max_backward_speed,
+                                       this->specs.back_wheel_max_force,
+                                       this->specs.back_max_lateral_impulse);
     joint_params.bodyB = back_right_wheel->get_body();
     joint_params.localAnchorA.Set(-CAR_WIDTH/2.15, -(CAR_HEIGHT/2)*0.62);
     racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(back_right_wheel);
 
     //front left tire
-    auto* front_left_wheel = new Wheel(racing_track.get_world(), this->specs.get_max_forward_speed(),
-                                       this->specs.get_max_backward_speed(),
-                                       this->specs.get_front_wheel_max_force(),
-                                       this->specs.get_front_max_lateral_impulse());
+    auto* front_left_wheel = new Wheel(racing_track.get_world(), this->specs.max_forward_speed,
+                                       this->specs.max_backward_speed,
+                                       this->specs.front_wheel_max_force,
+                                       this->specs.front_max_lateral_impulse);
     joint_params.bodyB = front_left_wheel->get_body();
     joint_params.localAnchorA.Set( CAR_WIDTH/2.15, (CAR_HEIGHT/2)*0.62);
     front_left_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(front_left_wheel);
 
     //front right tire
-    auto* front_right_wheel = new Wheel(racing_track.get_world(), this->specs.get_max_forward_speed(),
-                                        this->specs.get_max_backward_speed(),
-                                        this->specs.get_front_wheel_max_force(),
-                                        this->specs.get_front_max_lateral_impulse());
+    auto* front_right_wheel = new Wheel(racing_track.get_world(), this->specs.max_forward_speed,
+                                        this->specs.max_backward_speed,
+                                        this->specs.front_wheel_max_force,
+                                        this->specs.front_max_lateral_impulse);
     joint_params.bodyB = front_right_wheel->get_body();
     joint_params.localAnchorA.Set( -CAR_WIDTH/2.15, (CAR_HEIGHT/2)*0.62);
     front_right_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
