@@ -15,7 +15,7 @@ Bot::Bot(ProtectedQueue<std::vector<int32_t>>& queue) : state(luaL_newstate()),
     this->check_error_lua(luaL_loadfile(this->state, this->lua_path.c_str()));
     this->check_error_lua(lua_pcall(this->state, 0, 0, 0));
     this->check_error_lua(lua_getglobal(this->state, this->lua_init.c_str()));
-    this->load_tables();
+    this->load_definitions();
     this->check_error_lua(lua_pcall(this->state, 2, 0, 0));
 }
 
@@ -33,7 +33,7 @@ void Bot::execute() {
 }
 
 void Bot::add_tile(TileInfo &tailInfo) {
-  this->check_error_lua(lua_getGlobal(this->state, this->lua_add_tile.c_str()));
+  this->check_error_lua(lua_getglobal(this->state, this->lua_add_tile.c_str()));
   lua_pushnumber(this->state, tailInfo.posx);
   lua_pushnumber(this->state, tailInfo.posy);
   lua_pushnumber(this->state, tailInfo.type);
@@ -41,10 +41,10 @@ void Bot::add_tile(TileInfo &tailInfo) {
 }
 
 void Bot::update_car(CarInfo &carInfo) {
-  this->check_error_lua(lua_getGlobal(this->state, this->lua_update_car.c_str()));
-  this->push_table_int("posX", carInfo.carx)
-  this->push_table_int("posY", carInfo.cary)
-  this->push_table_int("rot", carInfo.carrot)
+  this->check_error_lua(lua_getglobal(this->state, this->lua_update_car.c_str()));
+  this->push_table_int("posX", carInfo.carx);
+  this->push_table_int("posY", carInfo.cary);
+  this->push_table_int("rot", carInfo.carrot);
   this->check_error_lua(lua_pcall(this->state, 1, 0, 0));
 }
 

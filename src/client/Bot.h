@@ -9,7 +9,7 @@
 #include <common/ProtectedQueue.h>
 
 #include "Entities/CarInfo.h"
-#include "Entities/Entity.h"
+#include "Entities/TileInfo.h"
 
 extern "C" {
 #include <lua.h>

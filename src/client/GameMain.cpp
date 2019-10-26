@@ -35,8 +35,8 @@ void GameMain::start() {
     receiver.start();
     sender.start();
 
-    //key_monitor.join();
-    threadBot.join();
+    key_monitor.join();
+    //threadBot.join();
     sender_queue.close();
     sender.shutdown();
     sender.join();
