@@ -3,7 +3,7 @@
 #include "MapLoader.h"
 #include "json/json.hpp"
 #include <common/EntityType.h>
-#include <model/TerrainFactory.h>
+#include <model/Terrains/TerrainFactory.h>
 
 #include <iomanip>
 

@@ -3,7 +3,7 @@
 
 #include <list>
 #include <string>
-#include <model/Grass.h>
+#include <model/Terrains/Grass.h>
 #include <model/RacingTrack.h>
 
 class MapLoader {

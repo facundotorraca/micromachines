@@ -26,6 +26,7 @@ Car::Car(RacingTrack& racing_track, CarSpecs specs):
     /*reduce the world velocity of bodies*/
     this->car_body->SetAngularDamping(0.2);
     this->create_wheels(racing_track);
+
 }
 
 
@@ -59,7 +60,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
     joint_params.localAnchorB.SetZero(); /*center of tire*/
 
     /*back left tire*/
-    auto* back_left_wheel = new Wheel(racing_track, this->specs.get_max_forward_speed(),
+    auto* back_left_wheel = new Wheel(racing_track.get_world(), this->specs.get_max_forward_speed(),
                                       this->specs.get_max_backward_speed(),
                                       this->specs.get_back_wheel_max_force(),
                                       this->specs.get_back_max_lateral_impulse());
@@ -69,7 +70,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
     this->wheels.push_back(back_left_wheel);
 
     //back right tire
-    auto* back_right_wheel = new Wheel(racing_track, this->specs.get_max_forward_speed(),
+    auto* back_right_wheel = new Wheel(racing_track.get_world(), this->specs.get_max_forward_speed(),
                                        this->specs.get_max_backward_speed(),
                                        this->specs.get_back_wheel_max_force(),
                                        this->specs.get_back_max_lateral_impulse());
@@ -79,7 +80,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
     this->wheels.push_back(back_right_wheel);
 
     //front left tire
-    auto* front_left_wheel = new Wheel(racing_track, this->specs.get_max_forward_speed(),
+    auto* front_left_wheel = new Wheel(racing_track.get_world(), this->specs.get_max_forward_speed(),
                                        this->specs.get_max_backward_speed(),
                                        this->specs.get_front_wheel_max_force(),
                                        this->specs.get_front_max_lateral_impulse());
@@ -89,7 +90,7 @@ void Car::create_wheels(RacingTrack& racing_track) {
     this->wheels.push_back(front_left_wheel);
 
     //front right tire
-    auto* front_right_wheel = new Wheel(racing_track, this->specs.get_max_forward_speed(),
+    auto* front_right_wheel = new Wheel(racing_track.get_world(), this->specs.get_max_forward_speed(),
                                         this->specs.get_max_backward_speed(),
                                         this->specs.get_front_wheel_max_force(),
                                         this->specs.get_front_max_lateral_impulse());

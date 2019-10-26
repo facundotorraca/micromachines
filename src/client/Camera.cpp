@@ -12,8 +12,10 @@ Camera::Camera() :
     renderer(nullptr),
     window(nullptr)
 {
-    SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer);
+    window = SDL_CreateWindow("Micromachines", 0, 0, width, height, SDL_WINDOW_RESIZABLE);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     t_factory = TextureFactory(renderer);
+    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
 void Camera::update(int32_t posx, int32_t posy) {
@@ -37,7 +39,7 @@ void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
 }
 
 void Camera::drawTile(int32_t x, int32_t y, int32_t rot, int32_t type) {
-    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
+    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+1;
     copyRender(t_factory.getTileTexture(type), x, y, rot, wh, wh);
 }
 
@@ -51,8 +53,7 @@ void Camera::copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t rot, int
     int32_t py = (height*0.5) + scale*(y - this->posy);
     SDL_Rect dst{px, py, (int)((double)w*scale), (int)((double)h*scale)};
     if (isInCamera(dst.x, dst.y, dst.w, dst.h)) {
-        SDL_RenderCopyEx(renderer, tex, nullptr, &dst,
-                         rot,
+        SDL_RenderCopyEx(renderer, tex, nullptr, &dst, rot,
                          nullptr, SDL_FLIP_NONE);
     }
 }

@@ -1,25 +1,32 @@
 #include "Wheel.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
-#include "RacingTrack.h"
 #include <common/Sizes.h>
+#include <iostream>
 
+#define MAX_TRACTION 1
 #define RADTODEG 57.295779513082320876f
 
-Wheel::Wheel(RacingTrack& racing_track, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse) {
+Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse) {
     this->max_lateral_impulse = max_lateral_impulse; /*Capacity of changing direction without skidding*/
     this->max_backward_speed = max_backward_speed;
     this->max_forward_speed = max_forward_speed;
     this->max_driver_force= max_driver_force; /*Capacity of changing speed*/
 
+    this->current_traction = MAX_TRACTION;
+
     b2BodyDef wheel_body_def;
     wheel_body_def.type = b2_dynamicBody;
     /*Allocates memory for the wheels's body*/
-    this->wheel_body = racing_track.get_world().CreateBody(&wheel_body_def);
+    this->wheel_body = world.CreateBody(&wheel_body_def);
+    this->wheel_body->SetUserData(this);
 
     b2PolygonShape polygon;
     polygon.SetAsBox(WIDTH_WHEEL, HEIGHT_WHEEL);
-    this->wheel_body->CreateFixture(/*Shape*/&polygon, 1);
+    this->wheel_fixture = this->wheel_body->CreateFixture(/*Shape*/&polygon, 1);
+
+    this->wheel_user_data = new WheelUserData();
+    this->wheel_fixture->SetUserData(this->wheel_user_data);
 }
 
 b2Vec2 Wheel::get_lateral_velocity() {
@@ -59,7 +66,7 @@ void Wheel::update_speed(uint8_t key) {
         return;
     }
     /*Apply a force on the wheels center*/
-    this->wheel_body->ApplyForce(force * current_forward_velocity,this->wheel_body->GetWorldCenter(),true);
+    this->wheel_body->ApplyForce(this->current_traction * force * current_forward_velocity,this->wheel_body->GetWorldCenter(),true);
 }
 
 void Wheel::update_friction() {
@@ -75,16 +82,16 @@ void Wheel::update_friction() {
     if (impulse.Length()/*Absolute value*/ > this->max_lateral_impulse) {
         impulse *= this->max_lateral_impulse / impulse.Length();
     }
-    this->wheel_body->ApplyLinearImpulse(impulse, this->wheel_body->GetWorldCenter(), true);
+    this->wheel_body->ApplyLinearImpulse(this->current_traction * impulse, this->wheel_body->GetWorldCenter(), true);
 
     //angular velocity
-    this->wheel_body->ApplyAngularImpulse(0.1f * this->wheel_body->GetInertia() * -this->wheel_body->GetAngularVelocity(), true);
+    this->wheel_body->ApplyAngularImpulse(this->current_traction * 0.1f * this->wheel_body->GetInertia() * -this->wheel_body->GetAngularVelocity(), true);
 
     //forward linear velocity
     b2Vec2 current_forward_velocity = this->get_forward_velocity();
     float current_forward_speed = current_forward_velocity.Normalize(); /*Normalize returns absolute value*/
     float drag_force_magnitude = -2 * current_forward_speed;
-    this->wheel_body->ApplyForce(drag_force_magnitude * current_forward_velocity, this->wheel_body->GetWorldCenter(), true);
+    this->wheel_body->ApplyForce(this->current_traction * drag_force_magnitude * current_forward_velocity, this->wheel_body->GetWorldCenter(), true);
 }
 
 void Wheel::update(uint8_t key) {
@@ -105,6 +112,7 @@ b2Body* Wheel::get_body() {
 }
 
 Wheel::~Wheel() {
+    delete this->wheel_user_data;
     //this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
@@ -120,4 +128,12 @@ Wheel::Wheel(Wheel &&other_wheel) noexcept {
     other_wheel.max_backward_speed = 0;
     other_wheel.max_forward_speed = 0;
     other_wheel.max_driver_force = 0;
+}
+
+void Wheel::set_traction(float traction) {
+    this->current_traction = traction;
+}
+
+void Wheel::set_max_traction() {
+    this->current_traction = MAX_TRACTION;
 }
