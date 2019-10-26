@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <common/ProtocolSocket.h>
-#include <client/qt_views/ui_startView.h>
+#include <client/QT_views/ui_startView.h>
 
 class StartView : public QDialog {
     Q_OBJECT

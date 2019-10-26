@@ -15,7 +15,7 @@ Camera::Camera() :
     window = SDL_CreateWindow("Micromachines", 0, 0, width, height, SDL_WINDOW_RESIZABLE);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     t_factory = TextureFactory(renderer);
-    SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
 void Camera::update(int32_t posx, int32_t posy) {

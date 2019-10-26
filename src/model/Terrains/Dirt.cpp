@@ -5,7 +5,8 @@
 #include "model/FixtureUserData.h"
 #include <common/EntityType.h>
 
-#define DIRT_TRACTION 0.75f
+#define DIRT_SPEED_PROPORTION 0.5f
+#define DIRT_TRACTION_PROPORTION 0.7f
 
 Dirt::Dirt(int32_t x, int32_t y, int32_t rotation):
         Terrain(x, y, rotation)
@@ -24,5 +25,6 @@ void Dirt::set_terrain_user_data() {
 }
 
 void Dirt::apply_effect(Wheel* wheel) {
-    wheel->set_traction(DIRT_TRACTION);
+    wheel->reduce_max_speed(DIRT_SPEED_PROPORTION);
+    wheel->set_traction(DIRT_TRACTION_PROPORTION);
 }
