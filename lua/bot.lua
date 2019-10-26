@@ -32,7 +32,7 @@ function decide()
     i = i + 1
     local aux = math.fmod(i, 4)
     if (aux == 0) or (aux == 1) then
-        key = keys.rigth
+        key = keys.right
     else
         key = keys.left
     end
