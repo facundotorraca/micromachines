@@ -7,7 +7,8 @@ Camera::Camera() :
     posy(0),
     width(WIDTH_SCREEN),
     height(HEIGHT_SCREEN),
-    scale(1),
+    window_scale(1),
+    draw_scale(1),
     t_factory(nullptr),
     renderer(nullptr),
     window(nullptr)
@@ -35,8 +36,9 @@ void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
     double dy = car_pos.back().y - car_pos.front().y;
     double vel = hypot(dx, dy);
     double factor = f(vel)*2;
-    this->posx = (double)posx - (scale*sin(rad)*factor);
-    this->posy = (double)posy + (scale*cos(rad)*factor);
+    draw_scale = 1/((factor/512)+1)*window_scale;
+    this->posx = (double)posx - (draw_scale*sin(rad)*factor);
+    this->posy = (double)posy + (draw_scale*cos(rad)*factor);
     car_pos.erase(car_pos.begin());
 }
 
@@ -46,8 +48,13 @@ void Camera::draw() {
 
 void Camera::clear() {
     SDL_RenderClear(renderer);
-    SDL_GetWindowSize(window, &width, &height);
-    scale = (((double)width/1920)+((double)height/1080))/2;
+    int32_t w, h;
+    SDL_GetWindowSize(window, &w, &h);
+    if (!(w==width && h==height)) {
+        width = w;
+        height = h;
+        window_scale = (((double) width / 1920) + ((double) height / 1080)) / 2;
+    }
 }
 
 void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
@@ -56,7 +63,7 @@ void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
 }
 
 void Camera::drawTile(int32_t x, int32_t y, int32_t rot, int32_t type) {
-    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+2;
+    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+3;
     copyRender(t_factory.getTileTexture(type), x, y, rot, wh, wh);
 }
 
@@ -66,9 +73,9 @@ void Camera::drawWheel(int32_t x, int32_t y, int32_t rot) {
 }
 
 void Camera::copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t rot, int32_t w, int32_t h){
-    int32_t px = (0.5f*width) - scale*(posx-x);
-    int32_t py = (0.5f*height) - scale*(posy-y);
-    SDL_Rect dst{px, py, (int)(scale*w), (int)(scale*h)};
+    int32_t px = (0.5f*width) - draw_scale*(posx-x);
+    int32_t py = (0.5f*height) - draw_scale*(posy-y);
+    SDL_Rect dst{px, py, (int)(draw_scale*w), (int)(draw_scale*h)};
     if (isInCamera(dst.x, dst.y, dst.w, dst.h)) {
         SDL_RenderCopyEx(renderer, tex, nullptr, &dst, rot,
                          nullptr, SDL_FLIP_NONE);

@@ -18,7 +18,8 @@ class Camera {
     std::list<SDL_Point> car_pos;
     int32_t width;
     int32_t height;
-    double scale;
+    double window_scale;
+    double draw_scale;
     TextureFactory t_factory;
     SDL_Renderer* renderer;
     SDL_Window* window;
