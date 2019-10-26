@@ -13,8 +13,12 @@
 #include "TextureFactory.h"
 
 class Camera {
-    int32_t posx;
-    int32_t posy;
+    double posx;
+    double posy;
+    double carx_1;
+    double cary_1;
+    double carx_2;
+    double cary_2;
     int32_t width;
     int32_t height;
     double scale;
@@ -26,7 +30,7 @@ class Camera {
             int32_t w, int32_t h);
 public:
     Camera();
-    void update(int32_t posx, int32_t posy);
+    void update(int32_t posx, int32_t posy, int32_t rot);
     void draw();
     void clear();
     void drawCar(int32_t posx, int32_t posy, int32_t rot);

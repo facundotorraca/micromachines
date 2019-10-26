@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include "Camera.h"
-
+#include <cmath>
 Camera::Camera() :
     posx(0),
     posy(0),
@@ -18,9 +18,24 @@ Camera::Camera() :
     //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
-void Camera::update(int32_t posx, int32_t posy) {
-    this->posx = posx;
-    this->posy = posy;
+double f(double x){
+    if (x<=15)
+        return exp(x-15);
+    return x-14;
+}
+
+void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
+    double rad = 0.01745329252*rot;
+    double dx = this->carx_2 - posx;
+    double dy = this->cary_2 - posy;
+    double vel = hypot(dx, dy);
+    double factor = f(vel)*7;
+    this->carx_2 = this->carx_1;
+    this->cary_2 = this->cary_1;
+    this->carx_1 = posx;
+    this->cary_1 = posy;
+    this->posx = (double)posx - (scale*sin(rad)*factor);
+    this->posy = (double)posy + (scale*cos(rad)*factor);
 }
 
 void Camera::draw() {
@@ -49,9 +64,9 @@ void Camera::drawWheel(int32_t x, int32_t y, int32_t rot) {
 }
 
 void Camera::copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t rot, int32_t w, int32_t h){
-    int32_t px = (width*0.5) + scale*(x - this->posx);
-    int32_t py = (height*0.5) + scale*(y - this->posy);
-    SDL_Rect dst{px, py, (int)((double)w*scale), (int)((double)h*scale)};
+    int32_t px = (0.5f*width) - scale*(posx-x);
+    int32_t py = (0.5f*height) - scale*(posy-y);
+    SDL_Rect dst{px, py, (int)(scale*w), (int)(scale*h)};
     if (isInCamera(dst.x, dst.y, dst.w, dst.h)) {
         SDL_RenderCopyEx(renderer, tex, nullptr, &dst, rot,
                          nullptr, SDL_FLIP_NONE);

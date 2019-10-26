@@ -37,7 +37,7 @@ void Map::updateCar(CarInfo &info) {
                 std::forward_as_tuple());
     }
     if (info.car_id == this->my_car_id)
-        camera.update(info.carx, info.cary);
+        camera.update(info.carx, info.cary, info.carrot);
 
     cars.at(info.car_id).update_all(info);
 }
