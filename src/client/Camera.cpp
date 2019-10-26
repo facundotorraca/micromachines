@@ -15,7 +15,7 @@ Camera::Camera() :
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow("Micromachines", 0, 0, width, height, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
-    t_factory = TextureFactory(renderer);
+    t_factory = std::move(TextureFactory(renderer));
     for (int i = 1; i < 5; i++) {
         car_pos.emplace_back(SDL_Point{0, 0});
     }
