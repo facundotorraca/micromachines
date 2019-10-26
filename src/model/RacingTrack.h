@@ -3,9 +3,10 @@
 
 #include <list>
 #include <memory>
-#include "Grass.h"
 #include "Box2D/Box2D.h"
 #include <common/ProtocolSocket.h>
+#include "model/Terrains/Terrain.h"
+#include "TerrainContactListener.h"
 
 class RacingTrack {
     b2World racing_track;
@@ -15,6 +16,8 @@ class RacingTrack {
     int32 position_iterations;
 
     std::list<std::unique_ptr<Terrain>> terrains;
+
+    TerrainContactListener contact_listener;
 
     public:
         explicit RacingTrack();

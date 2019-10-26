@@ -135,7 +135,7 @@ void Match::step() {
 
 void Match::initialize_players() {
     for (auto& player : players) {
-        CarSpecs specs(50, -10, 50, 100, 40, 40);
+        CarSpecs specs(100, -10, 50, 100, 40, 40);
         this->cars.emplace(std::piecewise_construct,
                            std::forward_as_tuple(player.first),
                            std::forward_as_tuple(racing_track, specs));

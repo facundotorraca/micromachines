@@ -28,7 +28,7 @@ void Camera::draw() {
 void Camera::clear() {
     SDL_RenderClear(renderer);
     SDL_GetWindowSize(window, &width, &height);
-    scale = (((double)width/1920)+((double)height/1080))/2;
+    scale = (((double)width/1024)+((double)height/720 ))/2;
 }
 
 void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {

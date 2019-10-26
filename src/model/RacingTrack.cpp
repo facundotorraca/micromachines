@@ -1,9 +1,6 @@
 #include <vector>
 #include "RacingTrack.h"
 #include "Box2D/Box2D.h"
-#include <common/Sizes.h>
-#include <common/MsgTypes.h>
-#include <common/EntityType.h>
 
 RacingTrack::RacingTrack():
     racing_track(b2Vec2(0,0))
@@ -11,6 +8,7 @@ RacingTrack::RacingTrack():
     this->velocity_iterations = 6;
     this->position_iterations = 2;
     this->time_step = 1.0f / 60.0f;
+    this->racing_track.SetContactListener(&this->contact_listener);
 }
 
 b2Body* RacingTrack::add_body(b2BodyDef& body) {
@@ -33,5 +31,6 @@ void RacingTrack::send(ProtocolSocket& p_socket) {
 }
 
 void RacingTrack::add_map_part(std::unique_ptr<Terrain>&& terrain) {
+    terrain->add_to_world(this->racing_track);
     this->terrains.push_back(std::move(terrain));
 }

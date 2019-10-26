@@ -6,7 +6,7 @@
 #include "CarSpecs.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
-#include "RacingTrack.h"
+#include "model/RacingTrack.h"
 #include <server/UpdateClient.h>
 
 class Car {
