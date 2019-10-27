@@ -3,8 +3,8 @@ map = {}
 car = {}
 
 function init(keysDef, actionsDef)
-    keys = keysDef
-    actions = actionsDef
+  keys = keysDef
+  actions = actionsDef
 end
 
 function addTile(x, y, value) 
@@ -18,30 +18,58 @@ function updateCar(newCar)
   end
 end
 
-function decide()
-    print("HOLA DESDE DECIDE")
-    local action
-    local key
-    if (i == 0) then
-        i = i + 1
-        return actions.press, keys.up
-    end
-    if (i == 40) then
-        return actions.release, keys.up
-    end
-    i = i + 1
-    local aux = math.fmod(i, 4)
-    if (aux == 0) or (aux == 1) then
-        key = keys.right
-    else
-        key = keys.left
-    end
-    aux = math.fmod(i,2)
-    if (aux == 0) then
-        action = actions.press
-    else
-        action = actions.release
-    end
+function getDirections(rot)
+  if 337 <= rot and rot < 22 then
+    return 0, 1
+  elseif 22 <= rot and rot < 67 then 
+    return 1, 1
+  elseif 67 <= rot and rot < 112 then
+    return 1, 0
+  elseif 112 <= rot and rot < 157 then
+    return 1, -1
+  elseif 157 <= rot and rot < 202 then
+    return 0, -1
+  elseif 202 <= rot and rot < 247 then
+    return -1, -1
+  elseif 247 <= rot and rot < 292 then
+    return -1, 0
+  elseif 292 <= rot and rot < 337 then
+    return -1, 1
+end
 
-    return action, key
+function canGo(futureX, futureY)
+  return ~(0 > futureX or futureX > 100 or 0 > futureY or futureY > 100)
+
+function canTurn(to)
+  local dirX, dirY = getDirections(car.rot + to)
+  local futureX = car.posX + (3 * dirX)
+  local futureY = car.posY + (3 * dirY)
+  return canGo(futureX, futureY)
+end
+
+function canTurnLeft()
+  return canTurn(45)
+end
+
+function canTurnRight()
+  return canTurn(-45)
+end
+
+
+
+function decide()
+  print("HOLA DESDE DECIDE")
+  local dirX, dirY = getDirections(car.rot)
+  local futureX = car.posX + (3 * dirX)
+  local futureY = car.posY + (3 * dirY)
+  if ~canGo(futureX, futureY) then
+    if canTurnLeft() then
+      return actions.press, keys.left
+    elseif canTurnRight() then
+      return actions.press, keys.right
+    else
+      return actions.release, keys.up
+    end
+  end
+  return actions.press, keys.up
 end
