@@ -13,15 +13,21 @@
 #include "TextureFactory.h"
 
 #define DEG2RAD 0.01745329252
-#define CAM_DEAD_ZONE 40
+#define CAM_DEAD_ZONE 5
 #define CAMERA_DISTANCE 256
-#define FORWARD_VIEW 8
+#define FORWARD_VIEW 20
+#define CAM_DELAY 60
 
+struct CarData{
+    int32_t x;
+    int32_t y;
+    int32_t rot;
+};
 
 class Camera {
     double posx;
     double posy;
-    std::list<SDL_Point> car_pos;
+    std::list<CarData> car_pos;
     int32_t width;
     int32_t height;
     double window_scale;
