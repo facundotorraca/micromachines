@@ -12,6 +12,12 @@
 #include <common/Sizes.h>
 #include "TextureFactory.h"
 
+#define DEG2RAD 0.01745329252
+#define CAM_DEAD_ZONE 20
+#define CAMERA_DISTANCE 256
+#define FORWARD_VIEW 4
+
+
 class Camera {
     double posx;
     double posy;
