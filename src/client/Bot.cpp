@@ -11,6 +11,7 @@ Bot::Bot(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue) : state(luaL_new
                                                         lua_update_car("updateCar"),
                                                         lua_fun("decide"),
                                                         queue(queue) {
+    std::unique_lock<std::mutex> lock(this->mutex);
     luaL_openlibs(this->state);
     this->check_error_lua(luaL_loadfile(this->state, this->lua_path.c_str()));
     this->check_error_lua(lua_pcall(this->state, 0, 0, 0));
@@ -20,6 +21,7 @@ Bot::Bot(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue) : state(luaL_new
 }
 
 void Bot::execute() {
+    std::unique_lock<std::mutex> lock(this->mutex);
     auto key_event = std::vector<int32_t>();
     this->check_error_lua(lua_getglobal(this->state, this->lua_fun.c_str()));
     this->check_error_lua(lua_pcall(this->state, 0, 2, 0));
@@ -34,7 +36,12 @@ void Bot::execute() {
         queue.push(std::move(event));
 }
 
+void Bot::set_id(int32_t id) {
+    this->my_id = id;
+}
+
 void Bot::add_tile(TileInfo &tailInfo) {
+    std::unique_lock<std::mutex> lock(this->mutex);
   this->check_error_lua(lua_getglobal(this->state, this->lua_add_tile.c_str()));
   lua_pushnumber(this->state, tailInfo.posx);
   lua_pushnumber(this->state, tailInfo.posy);
@@ -43,7 +50,9 @@ void Bot::add_tile(TileInfo &tailInfo) {
 }
 
 void Bot::update_car(CarInfo &carInfo) {
+    std::unique_lock<std::mutex> lock(this->mutex);
   this->check_error_lua(lua_getglobal(this->state, this->lua_update_car.c_str()));
+  lua_newtable(this->state);
   this->push_table_int("posX", carInfo.carx);
   this->push_table_int("posY", carInfo.cary);
   this->push_table_int("rot", carInfo.carrot);

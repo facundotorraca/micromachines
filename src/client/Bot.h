@@ -27,6 +27,7 @@ class Bot {
     std::string lua_fun;
     int32_t my_id;
     ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
+    std::mutex mutex;
 
 public:
     Bot(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue);
