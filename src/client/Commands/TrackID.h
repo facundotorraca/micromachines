@@ -11,7 +11,7 @@ class TrackID : public Command {
     int32_t id;
 
     public:
-        explicit TrackID(int32_t id, Map& map) : Command(map), id(id){}
+        explicit TrackID(int32_t id, Map& map, Bot& bot) : Command(map, bot), id(id){}
 
         void apply() override {
             map.setTrack(id);

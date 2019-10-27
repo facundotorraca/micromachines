@@ -11,7 +11,7 @@
 #include <client/Entities/CarInfo.h>
 
 
-std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Map& map){
+std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Map& map, Bot& bot){
     int32_t msg_type = command[0];
 
     switch (msg_type) {
@@ -25,7 +25,7 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Map& map
                                  command[9], command[10], command[11],
                                  command[12], command[13], command[14],
                                  command[15], command[16], command[17]};
-                    return std::unique_ptr<Command>(new UpdateCar(info, map));
+                    return std::unique_ptr<Command>(new UpdateCar(info, map, bot));
                 }
                 default:
                     break;
@@ -33,12 +33,12 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Map& map
             break;
         }
         case MSG_TRACK_ID:
-            return std::unique_ptr<Command>(new TrackID(command[1], map));
+            return std::unique_ptr<Command>(new TrackID(command[1], map, bot));
         case MSG_CAR_ID:
-            return std::unique_ptr<Command>(new CarID(command[1], map));
+            return std::unique_ptr<Command>(new CarID(command[1], map, bot));
         case MSG_SEND_TILE: {
             TileInfo info{command[1], command[2], command[3], command[4]};
-            return std::unique_ptr<Command>(new AddTile(info, map));
+            return std::unique_ptr<Command>(new AddTile(info, map, bot);
         }
         default:
             break; //aca hacer un unknown commnad

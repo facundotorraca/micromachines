@@ -12,9 +12,10 @@
 class AddTile : public Command {
     TileInfo info;
 public:
-    explicit AddTile(TileInfo info, Map& map) : Command(map), info(info){};
+    explicit AddTile(TileInfo info, Map& map, Bot& bot) : Command(map, bot), info(info){};
     void apply() override{
         map.addTile(info);
+        bot.add_tile(info);
     }
 };
 #endif //MICROMACHINES_ADDTILE_H
