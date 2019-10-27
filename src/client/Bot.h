@@ -41,6 +41,7 @@ private:
     void check_error_lua(int error);
     void push_table_int(const char *key, int value);
     void load_definitions();
+    void release_old_keys();
 };
 
 
