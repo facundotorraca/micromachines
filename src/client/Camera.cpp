@@ -52,8 +52,8 @@ std::tuple<double, double, double> mean(std::list<CarData>& points){
 }
 
 void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
-    car_pos.emplace_back(CarData{posx, posy, rot});
     double rad = DEG2RAD*rot;
+    car_pos.emplace_back(CarData{posx, posy, rad});
     auto means = mean(car_pos);
     double dx = std::get<0>(means);
     double dy = std::get<1>(means);
@@ -61,8 +61,8 @@ void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
     double vel = hypot(dx, dy);
     double factor = f(vel);
     draw_scale = 1/((factor/CAMERA_DISTANCE)+1)*window_scale;
-    this->posx = (double)posx - (draw_scale*sin(rad)*factor*FORWARD_VIEW);
-    this->posy = (double)posy + (draw_scale*cos(rad)*factor*FORWARD_VIEW*((double)height/width));
+    this->posx = (double)posx - (draw_scale*sin(prom_rot)*factor*FORWARD_VIEW);
+    this->posy = (double)posy + (draw_scale*cos(prom_rot)*factor*FORWARD_VIEW*((double)height/width));
     if (car_pos.size() >= CAM_DELAY)
         car_pos.erase(car_pos.begin());
 }

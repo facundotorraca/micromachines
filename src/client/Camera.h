@@ -16,12 +16,12 @@
 #define CAM_DEAD_ZONE 5
 #define CAMERA_DISTANCE 256
 #define FORWARD_VIEW 20
-#define CAM_DELAY 60
+#define CAM_DELAY 90
 
 struct CarData{
     int32_t x;
     int32_t y;
-    int32_t rot;
+    double rot;
 };
 
 class Camera {
