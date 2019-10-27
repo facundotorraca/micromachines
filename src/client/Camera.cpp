@@ -14,8 +14,10 @@ Camera::Camera() :
     window(nullptr)
 {
     SDL_Init(SDL_INIT_VIDEO);
-    window = SDL_CreateWindow("Micromachines", 0, 0, width, height, SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
+    window = SDL_CreateWindow("Micromachines", 0, 0, width, height,
+            SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
+    renderer = SDL_CreateRenderer(window, -1,
+            SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     t_factory = std::move(TextureFactory(renderer));
     for (int i = 1; i < 5; i++) {
         car_pos.emplace_back(SDL_Point{0, 0});
@@ -38,7 +40,7 @@ void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
     double factor = f(vel);
     draw_scale = 1/((factor/CAMERA_DISTANCE)+1)*window_scale;
     this->posx = (double)posx - (draw_scale*sin(rad)*factor*FORWARD_VIEW);
-    this->posy = (double)posy + (draw_scale*cos(rad)*factor*FORWARD_VIEW*(height/width));
+    this->posy = (double)posy + (draw_scale*cos(rad)*factor*FORWARD_VIEW*((double)height/width));
     car_pos.erase(car_pos.begin());
 }
 

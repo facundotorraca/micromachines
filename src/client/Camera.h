@@ -13,9 +13,9 @@
 #include "TextureFactory.h"
 
 #define DEG2RAD 0.01745329252
-#define CAM_DEAD_ZONE 20
+#define CAM_DEAD_ZONE 40
 #define CAMERA_DISTANCE 256
-#define FORWARD_VIEW 4
+#define FORWARD_VIEW 8
 
 
 class Camera {
