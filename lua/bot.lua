@@ -7,13 +7,19 @@ function init(keysDef, actionsDef)
   actions = actionsDef
 end
 
-function addTile(x, y, value) 
+function addTile(x, y, value)
+  print("ADD TILE")
+  print("X", x)
+  print("Y", y)
+  print("VALUE", value)
   if map[x] == nil then map[x] = {} end
   map[x][y] = value
 end
 
 function updateCar(newCar)
+  print("UPDATE CAR")
   for key, value in pairs(newCar) do
+    print(key, value)
     car[key] = value
   end
 end
@@ -35,10 +41,12 @@ function getDirections(rot)
     return -1, 0
   elseif 292 <= rot and rot < 337 then
     return -1, 1
+  end
 end
 
 function canGo(futureX, futureY)
-  return ~(0 > futureX or futureX > 100 or 0 > futureY or futureY > 100)
+  return not (0 > futureX or futureX > 100 or 0 > futureY or futureY > 100)
+end
 
 function canTurn(to)
   local dirX, dirY = getDirections(car.rot + to)
@@ -62,7 +70,7 @@ function decide()
   local dirX, dirY = getDirections(car.rot)
   local futureX = car.posX + (3 * dirX)
   local futureY = car.posY + (3 * dirY)
-  if ~canGo(futureX, futureY) then
+  if not canGo(futureX, futureY) then
     if canTurnLeft() then
       return actions.press, keys.left
     elseif canTurnRight() then
