@@ -2,8 +2,9 @@
 
 #define KEY_VALUE_POS 0
 
-Scene::Scene(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue):
-        queue(queue)
+Scene::Scene(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue, Bot &bot):
+        queue(queue),
+        bot(bot)
 {}
 
 void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
@@ -13,7 +14,7 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
 }
 
 void Scene::handleServerEvent(std::vector<int32_t>& data) {
-    auto command = Command::create(data, map);
+    auto command = Command::create(data, map, bot);
     command->apply();
 }
 

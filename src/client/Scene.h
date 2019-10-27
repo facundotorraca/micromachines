@@ -19,10 +19,11 @@ class Scene {
     ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
 
     Map map;
+    Bot &bot;
 
     public:
 
-        explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue);
+        explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue, Bot &bot);
 
         void handleServerEvent(std::vector<int32_t>& data);
 
