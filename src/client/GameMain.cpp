@@ -19,22 +19,23 @@ GameMain::GameMain(ProtocolSocket &socket):
 void GameMain::start() {
     ProtectedQueue<std::unique_ptr<ServerCommand>> sender_queue(10000);
     Scene scene(sender_queue);
-    //Bot bot(sender_queue);
+    Bot bot(sender_queue);
 
     ThreadDrawer drawer(scene);
-    //ThreadBot threadBot(bot);
+    ThreadBot threadBot(bot);
     ThreadKeyMonitor key_monitor(scene);
     ThreadReceiver receiver(socket, scene);
     ThreadSender sender(socket, sender_queue);
 
     drawer.start();
     key_monitor.start();
-    //threadBot.start();
+    threadBot.start();
     receiver.start();
     sender.start();
 
     key_monitor.join();
-    //threadBot.join();
+    threadBot.shutdown();
+    threadBot.join();
     sender_queue.close();
     sender.shutdown();
     sender.join();
