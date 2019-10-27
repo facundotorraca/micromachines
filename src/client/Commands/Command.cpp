@@ -38,7 +38,7 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Map& map
             return std::unique_ptr<Command>(new CarID(command[1], map, bot));
         case MSG_SEND_TILE: {
             TileInfo info{command[1], command[2], command[3], command[4]};
-            return std::unique_ptr<Command>(new AddTile(info, map, bot);
+            return std::unique_ptr<Command>(new AddTile(info, map, bot));
         }
         default:
             break; //aca hacer un unknown commnad

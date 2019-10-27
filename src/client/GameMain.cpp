@@ -18,8 +18,9 @@ GameMain::GameMain(ProtocolSocket &socket):
 
 void GameMain::start() {
     ProtectedQueue<std::unique_ptr<ServerCommand>> sender_queue(10000);
-    Scene scene(sender_queue);
     Bot bot(sender_queue);
+    Scene scene(sender_queue, bot);
+
 
     ThreadDrawer drawer(scene);
     ThreadBot threadBot(bot);
