@@ -19,9 +19,6 @@ Camera::Camera() :
     renderer = SDL_CreateRenderer(window, -1,
             SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     t_factory = std::move(TextureFactory(renderer));
-    for (int i = 1; i < 5; i++) {
-        car_pos.emplace_back(SDL_Point{0, 0});
-    }
     //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
@@ -31,17 +28,43 @@ double f(double x){
     return x-CAM_DEAD_ZONE+1;
 }
 
+std::tuple<double, double, double> mean(std::list<CarData>& points){
+
+    if (points.size() <= 1){
+        return {0, 0, 0};
+    }
+
+    double sum_x = 0;
+    double sum_y = 0;
+    double sum_rot = 0;
+    auto iter = points.begin();
+    int prev_x = iter->x;
+    int prev_y = iter->y;
+    iter++;
+    for (;iter != points.end(); iter++){
+        sum_x += (iter->x - prev_x);
+        sum_y += (iter->y - prev_y);
+        sum_rot += iter->rot;
+        prev_x = iter->x;
+        prev_y = iter->y;
+    }
+    return {sum_x/(points.size()-1.0), sum_y/(points.size()-1.0), sum_rot/(points.size()-1.0)};
+}
+
 void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
-    car_pos.emplace_back(SDL_Point{posx, posy});
+    car_pos.emplace_back(CarData{posx, posy, rot});
     double rad = DEG2RAD*rot;
-    double dx = car_pos.back().x - car_pos.front().x;
-    double dy = car_pos.back().y - car_pos.front().y;
+    auto means = mean(car_pos);
+    double dx = std::get<0>(means);
+    double dy = std::get<1>(means);
+    double prom_rot = std::get<2>(means);
     double vel = hypot(dx, dy);
     double factor = f(vel);
     draw_scale = 1/((factor/CAMERA_DISTANCE)+1)*window_scale;
     this->posx = (double)posx - (draw_scale*sin(rad)*factor*FORWARD_VIEW);
     this->posy = (double)posy + (draw_scale*cos(rad)*factor*FORWARD_VIEW*((double)height/width));
-    car_pos.erase(car_pos.begin());
+    if (car_pos.size() >= CAM_DELAY)
+        car_pos.erase(car_pos.begin());
 }
 
 void Camera::draw() {
