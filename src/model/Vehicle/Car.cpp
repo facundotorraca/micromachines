@@ -156,7 +156,8 @@ UpdateClient Car::get_update(const int32_t id) {
     std::vector<int32_t> params {MSG_UPDATE_ENTITY, TYPE_CAR, id,
                                 (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().x - (CAR_WIDTH*0.5))),
                                 (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
-                                (int32_t)(RADTODEG * this->car_body->GetAngle())};
+                                (int32_t)(RADTODEG * this->car_body->GetAngle()),
+                                (int32_t)(METER_TO_PIXEL * this->car_body->GetLinearVelocity().Length())};
 
     for (auto& wheel : wheels){
         params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5))));
@@ -166,6 +167,7 @@ UpdateClient Car::get_update(const int32_t id) {
     return UpdateClient(std::move(params));
 }
 
+// En vez de usar esto lo meto en el params de get_update
 int32_t Car::get_speed() {
     return int32_t(METER_TO_PIXEL * this->car_body->GetLinearVelocity().Length());
 }

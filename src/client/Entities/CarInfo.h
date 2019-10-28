@@ -12,6 +12,7 @@ typedef struct {
     int32_t carx;
     int32_t cary;
     int32_t carrot;
+    int32_t carvel;
     int32_t w1x;
     int32_t w1y;
     int32_t w1rot;
