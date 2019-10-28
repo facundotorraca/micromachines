@@ -58,12 +58,13 @@ void Bot::add_tile(TileInfo &tailInfo) {
 void Bot::update_car(CarInfo &carInfo) {
     std::lock_guard<std::mutex> lock(this->mutex);
     this->check_error_lua(lua_getglobal(this->state, this->lua_update_car.c_str()));
-    int32_t car_rot_mod = carInfo.carrot % 360;
-    int32_t car_rot = car_rot_mod < 0 ? car_rot_mod + 360 : car_rot_mod;
+    //int32_t car_rot_mod = carInfo.carrot % 360;
+    //int32_t car_rot = car_rot_mod < 0 ? car_rot_mod + 360 : car_rot_mod;
     lua_newtable(this->state);
     this->push_table_int("posX", carInfo.carx/METER_TO_PIXEL);
     this->push_table_int("posY", carInfo.cary/METER_TO_PIXEL);
-    this->push_table_int("rot", car_rot);
+    this->push_table_int("vel", carInfo.carvel/METER_TO_PIXEL);
+    this->push_table_int("rot", carInfo.carrot);
     this->check_error_lua(lua_pcall(this->state, 1, 0, 0));
 }
 
