@@ -12,12 +12,6 @@
 #include <common/Sizes.h>
 #include "TextureFactory.h"
 
-#define DEG2RAD 0.01745329252
-#define CAM_DEAD_ZONE 5
-#define CAMERA_DISTANCE 256
-#define FORWARD_VIEW 20
-#define CAM_DELAY 90
-
 struct CarData{
     int32_t x;
     int32_t y;

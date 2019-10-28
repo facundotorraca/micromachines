@@ -2,6 +2,13 @@
 #include <iostream>
 #include "Camera.h"
 #include <cmath>
+
+#define DEG2RAD 0.01745329252
+#define CAM_DEAD_ZONE 0
+#define CAMERA_DISTANCE 0.013
+#define FORWARD_VIEW 30
+#define CAM_DELAY 90
+
 Camera::Camera() :
     posx(0),
     posy(0),
@@ -29,7 +36,6 @@ double f(double x){
 }
 
 std::tuple<double, double, double> mean(std::list<CarData>& points){
-
     if (points.size() <= 1){
         return {0, 0, 0};
     }
@@ -60,7 +66,7 @@ void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
     double prom_rot = std::get<2>(means);
     double vel = hypot(dx, dy);
     double factor = f(vel);
-    draw_scale = 1/((factor/CAMERA_DISTANCE)+1)*window_scale;
+    draw_scale = 1/((factor*CAMERA_DISTANCE)+1)*window_scale;
     this->posx = (double)posx - (draw_scale*sin(prom_rot)*factor*FORWARD_VIEW);
     this->posy = (double)posy + (draw_scale*cos(prom_rot)*factor*FORWARD_VIEW*((double)height/width));
     if (car_pos.size() >= CAM_DELAY)
