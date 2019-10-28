@@ -46,7 +46,6 @@ void Bot::set_id(int32_t id) {
 
 void Bot::add_tile(TileInfo &tailInfo) {
     std::lock_guard<std::mutex> lock(this->mutex);
-    printf("ENTRO ADD TILE \n");
     this->check_error_lua(lua_getglobal(this->state, this->lua_add_tile.c_str()));
     lua_pushnumber(this->state, tailInfo.posx/METER_TO_PIXEL);
     lua_pushnumber(this->state, tailInfo.posx/METER_TO_PIXEL + TILE_TERRAIN_SIZE);
@@ -54,12 +53,10 @@ void Bot::add_tile(TileInfo &tailInfo) {
     lua_pushnumber(this->state, tailInfo.posy/METER_TO_PIXEL + TILE_TERRAIN_SIZE);
     lua_pushnumber(this->state, tailInfo.type);
     this->check_error_lua(lua_pcall(this->state, 5, 0, 0));
-    printf("SALGO ADD TILE \n");
 }
 
 void Bot::update_car(CarInfo &carInfo) {
     std::lock_guard<std::mutex> lock(this->mutex);
-    printf("ENTRO UPDATE CAR \n");
     this->check_error_lua(lua_getglobal(this->state, this->lua_update_car.c_str()));
     int32_t car_rot_mod = carInfo.carrot % 360;
     int32_t car_rot = car_rot_mod < 0 ? car_rot_mod + 360 : car_rot_mod;
@@ -68,7 +65,6 @@ void Bot::update_car(CarInfo &carInfo) {
     this->push_table_int("posY", carInfo.cary/METER_TO_PIXEL);
     this->push_table_int("rot", car_rot);
     this->check_error_lua(lua_pcall(this->state, 1, 0, 0));
-    printf("SALFO UPDATE CAR \n");
 }
 
 Bot::~Bot() {

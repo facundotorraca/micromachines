@@ -12,7 +12,7 @@ function addTile(xi, xf, yi, yf, value)
     for y=yi, yf do
       if map[x] == nil then map[x] = {} end
       map[x][y] = value
-      --print(x, y)
+      print(x, y)
     end
   end
 end
@@ -46,7 +46,13 @@ function getDirections(rot_ini)
 end
 
 function canGo(futureX, futureY)
-  return not (map[futureX][futureY] == nil)
+  print(futureX, futureY)
+  if map[futureX] == nil then
+    return false
+  elseif map[futureX][futureY] == nil then
+    return false
+  end
+  return true
 end
 
 function canTurn(to)
@@ -56,10 +62,12 @@ function canTurn(to)
 end
 
 function canTurnLeft()
+  print("LEFT")
   return canTurn(-45)
 end
 
 function canTurnRight()
+  print("RIGHT")
   return canTurn(45)
 end
 
@@ -71,6 +79,8 @@ end
 
 
 function decide()
+  print("DECIDE")
+  print(car.posX, car.posY, car.rot)
   local dirX, dirY = getDirections(car.rot)
   local futureX, futureY = calcFuture(dirX, dirY)
   if not canGo(futureX, futureY) then
