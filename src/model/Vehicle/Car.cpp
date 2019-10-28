@@ -165,3 +165,7 @@ UpdateClient Car::get_update(const int32_t id) {
     }
     return UpdateClient(std::move(params));
 }
+
+int32_t Car::get_speed() {
+    return int32_t(METER_TO_PIXEL * this->car_body->GetLinearVelocity().Length());
+}

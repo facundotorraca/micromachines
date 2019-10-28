@@ -23,20 +23,20 @@ void GameMain::start() {
 
 
     ThreadDrawer drawer(scene);
-    ThreadBot threadBot(bot);
+  //  ThreadBot threadBot(bot);
     ThreadKeyMonitor key_monitor(scene);
     ThreadReceiver receiver(socket, scene);
     ThreadSender sender(socket, sender_queue);
 
     drawer.start();
     key_monitor.start();
-    threadBot.start();
+   // threadBot.start();
     receiver.start();
     sender.start();
 
     key_monitor.join();
-    threadBot.shutdown();
-    threadBot.join();
+    //threadBot.shutdown();
+    //threadBot.join();
     sender_queue.close();
     sender.shutdown();
     sender.join();

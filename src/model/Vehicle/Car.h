@@ -34,6 +34,8 @@ class Car {
 
         void press_key(int32_t key);
 
+        int32_t get_speed();
+
         void update();
 
         ~Car();
