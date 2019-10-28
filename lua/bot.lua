@@ -24,7 +24,9 @@ function updateCar(newCar)
 end
 
 function getDirections(rot_ini)
-  local rot = math.fmod(rot_ini, 360)
+  local rot = math.rad(math.fmod(rot_ini, 360))
+  return math.sin(rot) * -1, math.cos(rot)
+  --[[
   if 337 <= rot or rot < 22 then
     return 0, 1
   elseif 22 <= rot and rot < 67 then 
@@ -43,10 +45,10 @@ function getDirections(rot_ini)
     return 0.5, 0.5
   end
   return 0, 0
+  ]]--
 end
 
 function canGo(futureX, futureY)
-  print(futureX, futureY)
   if map[futureX] == nil then
     return false
   elseif map[futureX][futureY] == nil then
@@ -72,8 +74,12 @@ function canTurnRight()
 end
 
 function calcFuture(dirX, dirY)
-  local futureX = car.posX + (100 * dirX)
-  local futureY = car.posY + (100 * dirY)
+  print(dirX, dirY)
+  local velX = car.vel * dirX
+  local velY = car.vel * dirY
+  local futureX = math.floor(car.posX + (velX * 0.1))
+  local futureY = math.floor(car.posY + (velY * 0.1))
+  print(futureX, futureY)
   return futureX, futureY
 end
 
