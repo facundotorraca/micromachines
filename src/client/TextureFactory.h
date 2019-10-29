@@ -8,6 +8,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 #include <common/EntityType.h>
+#include <iostream>
 
 class TextureFactory {
     SDL_Texture* car_texture;
@@ -119,7 +120,12 @@ public:
     }
 
     SDL_Texture *getTileTexture(int32_t type) {
-        return tile_textures.at(type);
+        try {
+            return tile_textures.at(type);
+        } catch (std::out_of_range& e){
+            std::cerr << "Texture not found" << std::endl;
+            return nullptr;
+        }
     }
 
     SDL_Texture *getWheelTexture() {
