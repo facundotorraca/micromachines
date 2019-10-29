@@ -9,7 +9,7 @@ ThreadKeyMonitor::ThreadKeyMonitor(Scene &scene) : Thread(), scene(scene) {}
 
 void ThreadKeyMonitor::run() {
     SDL_Event event;
-    while (SDL_WaitEvent(&event) && this->running) {
+    while (this->running && SDL_WaitEvent(&event)) {
         auto& keyEvent = (SDL_KeyboardEvent&) event;
 
         if (event.type == SDL_QUIT){

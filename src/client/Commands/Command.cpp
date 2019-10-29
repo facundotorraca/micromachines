@@ -19,12 +19,12 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Map& map
             int32_t entity_type = command[1];
             switch (entity_type) {
                 case TYPE_CAR: {
-                    CarInfo info{command[2],
-                                 command[3], command[4], command[5],
-                                 command[6], command[7], command[8],
-                                 command[9], command[10], command[11],
-                                 command[12], command[13], command[14],
-                                 command[15], command[16], command[17]};
+                    CarInfo info{command[2], command[3],
+                                 command[4], command[5], command[6],
+                                 command[7], command[8], command[9],
+                                 command[10], command[11], command[12],
+                                 command[13], command[14], command[15],
+                                 command[16], command[17], command[18]};
                     return std::unique_ptr<Command>(new UpdateCar(info, map, bot));
                 }
                 default:

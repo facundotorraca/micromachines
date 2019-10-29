@@ -14,7 +14,7 @@ Camera::Camera() :
     posy(0),
     width(WIDTH_SCREEN),
     height(HEIGHT_SCREEN),
-    window_scale(1),
+    window_scale(0.5f*(((double)height/1080)+((double)width/1920))),
     draw_scale(1),
     t_factory(nullptr),
     renderer(nullptr),
