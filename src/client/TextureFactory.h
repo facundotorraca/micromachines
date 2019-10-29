@@ -95,13 +95,13 @@ public:
             tile_textures.emplace(126, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/B_2a.png"));
 
             tile_textures.emplace(127, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_1a.png"));
-            tile_textures.emplace(129, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_2a.png"));
-            tile_textures.emplace(130, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_4a.png"));
-            tile_textures.emplace(131, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_5a.png"));
-            tile_textures.emplace(132, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_6a.png"));
-            tile_textures.emplace(133, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_7a.png"));
-            tile_textures.emplace(134, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/S_1.png"));
-            tile_textures.emplace(135, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/S_2.png"));
+            tile_textures.emplace(128, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_2a.png"));
+            tile_textures.emplace(129, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_4a.png"));
+            tile_textures.emplace(130, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_5a.png"));
+            tile_textures.emplace(131, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_6a.png"));
+            tile_textures.emplace(132, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/W_3a.png"));
+            tile_textures.emplace(133, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/S_1.png"));
+            tile_textures.emplace(134, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/S_2.png"));
         }
     }
 

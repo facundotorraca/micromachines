@@ -1,12 +1,4 @@
 { "columns":0,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"tiles.json"
-        }
-    },
  "grid":
     {
      "height":1,
@@ -17,12 +9,12 @@
  "name":"tiles",
  "spacing":0,
  "tilecount":363,
- "tiledversion":"2019.10.18",
+ "tiledversion":"1.2.5",
  "tileheight":129,
  "tiles":[
         {
          "id":0,
-         "image":"Track\/AR_1a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_1a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -39,7 +31,7 @@
         }, 
         {
          "id":1,
-         "image":"Track\/AR_1b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_1b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -56,7 +48,7 @@
         }, 
         {
          "id":2,
-         "image":"Track\/AR_2a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_2a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -73,7 +65,7 @@
         }, 
         {
          "id":3,
-         "image":"Track\/AR_2b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_2b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -90,7 +82,7 @@
         }, 
         {
          "id":4,
-         "image":"Track\/AR_2c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_2c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -107,7 +99,7 @@
         }, 
         {
          "id":5,
-         "image":"Track\/AR_2d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_2d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -124,7 +116,7 @@
         }, 
         {
          "id":6,
-         "image":"Track\/AR_3a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_3a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -141,7 +133,7 @@
         }, 
         {
          "id":7,
-         "image":"Track\/AR_3b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_3b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -158,7 +150,7 @@
         }, 
         {
          "id":8,
-         "image":"Track\/AR_3c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_3c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -175,7 +167,7 @@
         }, 
         {
          "id":9,
-         "image":"Track\/AR_3d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_3d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -192,7 +184,7 @@
         }, 
         {
          "id":10,
-         "image":"Track\/AR_4a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_4a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -209,7 +201,7 @@
         }, 
         {
          "id":11,
-         "image":"Track\/AR_4b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_4b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -226,7 +218,7 @@
         }, 
         {
          "id":12,
-         "image":"Track\/AR_4c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_4c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -243,7 +235,7 @@
         }, 
         {
          "id":13,
-         "image":"Track\/AR_4d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_4d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -260,7 +252,7 @@
         }, 
         {
          "id":14,
-         "image":"Track\/AR_5a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_5a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -277,7 +269,7 @@
         }, 
         {
          "id":15,
-         "image":"Track\/AR_5b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_5b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -294,7 +286,7 @@
         }, 
         {
          "id":16,
-         "image":"Track\/AR_5c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_5c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -311,7 +303,7 @@
         }, 
         {
          "id":17,
-         "image":"Track\/AR_5d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_5d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -328,7 +320,7 @@
         }, 
         {
          "id":18,
-         "image":"Track\/AR_6a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_6a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -345,7 +337,7 @@
         }, 
         {
          "id":19,
-         "image":"Track\/AR_6b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_6b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -362,7 +354,7 @@
         }, 
         {
          "id":20,
-         "image":"Track\/AR_6c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_6c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -379,7 +371,7 @@
         }, 
         {
          "id":21,
-         "image":"Track\/AR_6d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_6d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -396,7 +388,7 @@
         }, 
         {
          "id":22,
-         "image":"Track\/AR_7a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_7a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -413,7 +405,7 @@
         }, 
         {
          "id":23,
-         "image":"Track\/AR_7b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_7b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -430,7 +422,7 @@
         }, 
         {
          "id":24,
-         "image":"Track\/AR_7c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_7c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -447,7 +439,7 @@
         }, 
         {
          "id":25,
-         "image":"Track\/AR_7d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_7d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -464,7 +456,7 @@
         }, 
         {
          "id":26,
-         "image":"Track\/AR_8a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_8a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -481,7 +473,7 @@
         }, 
         {
          "id":27,
-         "image":"Track\/AR_8b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_8b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -498,7 +490,7 @@
         }, 
         {
          "id":28,
-         "image":"Track\/AR_8c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_8c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -515,7 +507,7 @@
         }, 
         {
          "id":29,
-         "image":"Track\/AR_8d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_8d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -532,7 +524,7 @@
         }, 
         {
          "id":30,
-         "image":"Track\/AR_9a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_9a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -549,7 +541,7 @@
         }, 
         {
          "id":31,
-         "image":"Track\/AR_9b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_9b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -566,7 +558,7 @@
         }, 
         {
          "id":32,
-         "image":"Track\/AR_9c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_9c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -583,7 +575,7 @@
         }, 
         {
          "id":33,
-         "image":"Track\/AR_9d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_9d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -600,7 +592,7 @@
         }, 
         {
          "id":34,
-         "image":"Track\/AR_10a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_10a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -617,7 +609,7 @@
         }, 
         {
          "id":35,
-         "image":"Track\/AR_10b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_10b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -634,7 +626,7 @@
         }, 
         {
          "id":36,
-         "image":"Track\/AR_11a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_11a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -651,7 +643,7 @@
         }, 
         {
          "id":37,
-         "image":"Track\/AR_11b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_11b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -668,7 +660,7 @@
         }, 
         {
          "id":38,
-         "image":"Track\/AR_12a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_12a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -685,7 +677,7 @@
         }, 
         {
          "id":39,
-         "image":"Track\/AR_12b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_12b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -702,7 +694,7 @@
         }, 
         {
          "id":40,
-         "image":"Track\/AR_12c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_12c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -719,7 +711,7 @@
         }, 
         {
          "id":41,
-         "image":"Track\/AR_12d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_12d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -736,7 +728,7 @@
         }, 
         {
          "id":42,
-         "image":"Track\/AR_13a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_13a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -753,7 +745,7 @@
         }, 
         {
          "id":43,
-         "image":"Track\/AR_13b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_13b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -770,7 +762,7 @@
         }, 
         {
          "id":44,
-         "image":"Track\/AR_13c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_13c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -787,7 +779,7 @@
         }, 
         {
          "id":45,
-         "image":"Track\/AR_13d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_13d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -804,7 +796,7 @@
         }, 
         {
          "id":46,
-         "image":"Track\/AR_14a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_14a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -821,7 +813,7 @@
         }, 
         {
          "id":47,
-         "image":"Track\/AR_14b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_14b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -838,7 +830,7 @@
         }, 
         {
          "id":48,
-         "image":"Track\/AR_14c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_14c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -855,7 +847,7 @@
         }, 
         {
          "id":49,
-         "image":"Track\/AR_14d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_14d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -872,7 +864,7 @@
         }, 
         {
          "id":50,
-         "image":"Track\/AR_15a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_15a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -889,7 +881,7 @@
         }, 
         {
          "id":51,
-         "image":"Track\/AR_15b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_15b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -906,7 +898,7 @@
         }, 
         {
          "id":52,
-         "image":"Track\/AR_15c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_15c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -923,7 +915,7 @@
         }, 
         {
          "id":53,
-         "image":"Track\/AR_15d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_15d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -940,7 +932,7 @@
         }, 
         {
          "id":54,
-         "image":"Track\/AR_16a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_16a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -957,7 +949,7 @@
         }, 
         {
          "id":55,
-         "image":"Track\/AR_16b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_16b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -974,7 +966,7 @@
         }, 
         {
          "id":56,
-         "image":"Track\/AR_16c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_16c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -991,7 +983,7 @@
         }, 
         {
          "id":57,
-         "image":"Track\/AR_16d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_16d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1008,7 +1000,7 @@
         }, 
         {
          "id":58,
-         "image":"Track\/AR_17a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_17a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1025,7 +1017,7 @@
         }, 
         {
          "id":59,
-         "image":"Track\/AR_17b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_17b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1042,7 +1034,7 @@
         }, 
         {
          "id":60,
-         "image":"Track\/AR_17c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_17c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1059,7 +1051,7 @@
         }, 
         {
          "id":61,
-         "image":"Track\/AR_17d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_17d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1076,7 +1068,7 @@
         }, 
         {
          "id":62,
-         "image":"Track\/AR_18a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_18a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1093,7 +1085,7 @@
         }, 
         {
          "id":63,
-         "image":"Track\/AR_18b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_18b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1110,7 +1102,7 @@
         }, 
         {
          "id":64,
-         "image":"Track\/AR_18c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_18c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1127,7 +1119,7 @@
         }, 
         {
          "id":65,
-         "image":"Track\/AR_18d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_18d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1144,7 +1136,7 @@
         }, 
         {
          "id":66,
-         "image":"Track\/AR_19a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_19a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1161,7 +1153,7 @@
         }, 
         {
          "id":67,
-         "image":"Track\/AR_19c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_19c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1178,7 +1170,7 @@
         }, 
         {
          "id":68,
-         "image":"Track\/AR_19d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_19d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1195,7 +1187,7 @@
         }, 
         {
          "id":69,
-         "image":"Track\/AR_20a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_20a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1212,7 +1204,7 @@
         }, 
         {
          "id":70,
-         "image":"Track\/AR_20b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_20b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1229,7 +1221,7 @@
         }, 
         {
          "id":71,
-         "image":"Track\/AR_20c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_20c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1246,7 +1238,7 @@
         }, 
         {
          "id":72,
-         "image":"Track\/AR_20d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_20d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1263,7 +1255,7 @@
         }, 
         {
          "id":73,
-         "image":"Track\/AR_21a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_21a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1280,7 +1272,7 @@
         }, 
         {
          "id":74,
-         "image":"Track\/AR_21b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_21b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1297,7 +1289,7 @@
         }, 
         {
          "id":75,
-         "image":"Track\/AR_21c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_21c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1314,7 +1306,7 @@
         }, 
         {
          "id":76,
-         "image":"Track\/AR_21d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_21d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1331,7 +1323,7 @@
         }, 
         {
          "id":77,
-         "image":"Track\/AR_22a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_22a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1348,7 +1340,7 @@
         }, 
         {
          "id":78,
-         "image":"Track\/AR_22b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_22b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1365,7 +1357,7 @@
         }, 
         {
          "id":79,
-         "image":"Track\/AR_22c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_22c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1382,7 +1374,7 @@
         }, 
         {
          "id":80,
-         "image":"Track\/AR_22d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_22d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1399,7 +1391,7 @@
         }, 
         {
          "id":81,
-         "image":"Track\/AR_23a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_23a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1416,7 +1408,7 @@
         }, 
         {
          "id":82,
-         "image":"Track\/AR_23b.png",
+         "image":"..\/assets\/sprites\/Track\/AR_23b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1433,7 +1425,7 @@
         }, 
         {
          "id":83,
-         "image":"Track\/AR_23c.png",
+         "image":"..\/assets\/sprites\/Track\/AR_23c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1450,7 +1442,7 @@
         }, 
         {
          "id":84,
-         "image":"Track\/AR_23d.png",
+         "image":"..\/assets\/sprites\/Track\/AR_23d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1467,7 +1459,7 @@
         }, 
         {
          "id":85,
-         "image":"Track\/AR_24a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_24a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1484,7 +1476,7 @@
         }, 
         {
          "id":86,
-         "image":"Track\/AR_25a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_25a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1501,7 +1493,7 @@
         }, 
         {
          "id":87,
-         "image":"Track\/AR_26a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_26a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1518,7 +1510,7 @@
         }, 
         {
          "id":88,
-         "image":"Track\/AR_27a.png",
+         "image":"..\/assets\/sprites\/Track\/AR_27a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1535,7 +1527,7 @@
         }, 
         {
          "id":89,
-         "image":"Track\/D_1a.png",
+         "image":"..\/assets\/sprites\/Track\/D_1a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1552,7 +1544,7 @@
         }, 
         {
          "id":90,
-         "image":"Track\/DR_1a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_1a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1569,7 +1561,7 @@
         }, 
         {
          "id":91,
-         "image":"Track\/DR_1b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_1b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1586,7 +1578,7 @@
         }, 
         {
          "id":92,
-         "image":"Track\/DR_2a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_2a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1603,7 +1595,7 @@
         }, 
         {
          "id":93,
-         "image":"Track\/DR_2b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_2b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1620,7 +1612,7 @@
         }, 
         {
          "id":94,
-         "image":"Track\/DR_2c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_2c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1637,7 +1629,7 @@
         }, 
         {
          "id":95,
-         "image":"Track\/DR_2d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_2d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1654,7 +1646,7 @@
         }, 
         {
          "id":96,
-         "image":"Track\/DR_3a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_3a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1671,7 +1663,7 @@
         }, 
         {
          "id":97,
-         "image":"Track\/DR_3b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_3b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1688,7 +1680,7 @@
         }, 
         {
          "id":98,
-         "image":"Track\/DR_3c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_3c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1705,7 +1697,7 @@
         }, 
         {
          "id":99,
-         "image":"Track\/DR_3d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_3d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1722,7 +1714,7 @@
         }, 
         {
          "id":100,
-         "image":"Track\/DR_4a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_4a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1739,7 +1731,7 @@
         }, 
         {
          "id":101,
-         "image":"Track\/DR_4b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_4b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1756,7 +1748,7 @@
         }, 
         {
          "id":102,
-         "image":"Track\/DR_4c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_4c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1773,7 +1765,7 @@
         }, 
         {
          "id":103,
-         "image":"Track\/DR_4d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_4d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1790,7 +1782,7 @@
         }, 
         {
          "id":104,
-         "image":"Track\/DR_5a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_5a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1807,7 +1799,7 @@
         }, 
         {
          "id":105,
-         "image":"Track\/DR_5b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_5b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1824,7 +1816,7 @@
         }, 
         {
          "id":106,
-         "image":"Track\/DR_5c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_5c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1841,7 +1833,7 @@
         }, 
         {
          "id":107,
-         "image":"Track\/DR_5d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_5d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1858,7 +1850,7 @@
         }, 
         {
          "id":108,
-         "image":"Track\/DR_6a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_6a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1875,7 +1867,7 @@
         }, 
         {
          "id":109,
-         "image":"Track\/DR_6b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_6b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1892,7 +1884,7 @@
         }, 
         {
          "id":110,
-         "image":"Track\/DR_6c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_6c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1909,7 +1901,7 @@
         }, 
         {
          "id":111,
-         "image":"Track\/DR_6d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_6d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1926,7 +1918,7 @@
         }, 
         {
          "id":112,
-         "image":"Track\/DR_7a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_7a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1943,7 +1935,7 @@
         }, 
         {
          "id":113,
-         "image":"Track\/DR_7b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_7b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1960,7 +1952,7 @@
         }, 
         {
          "id":114,
-         "image":"Track\/DR_7c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_7c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1977,7 +1969,7 @@
         }, 
         {
          "id":115,
-         "image":"Track\/DR_7d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_7d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -1994,7 +1986,7 @@
         }, 
         {
          "id":116,
-         "image":"Track\/DR_8a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_8a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2011,7 +2003,7 @@
         }, 
         {
          "id":117,
-         "image":"Track\/DR_8b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_8b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2028,7 +2020,7 @@
         }, 
         {
          "id":118,
-         "image":"Track\/DR_8c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_8c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2045,7 +2037,7 @@
         }, 
         {
          "id":119,
-         "image":"Track\/DR_8d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_8d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2062,7 +2054,7 @@
         }, 
         {
          "id":120,
-         "image":"Track\/DR_9a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_9a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2079,7 +2071,7 @@
         }, 
         {
          "id":121,
-         "image":"Track\/DR_9b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_9b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2096,7 +2088,7 @@
         }, 
         {
          "id":122,
-         "image":"Track\/DR_9c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_9c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2113,7 +2105,7 @@
         }, 
         {
          "id":123,
-         "image":"Track\/DR_9d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_9d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2130,7 +2122,7 @@
         }, 
         {
          "id":124,
-         "image":"Track\/DR_10a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_10a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2147,7 +2139,7 @@
         }, 
         {
          "id":125,
-         "image":"Track\/DR_10b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_10b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2164,7 +2156,7 @@
         }, 
         {
          "id":126,
-         "image":"Track\/DR_11a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_11a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2181,7 +2173,7 @@
         }, 
         {
          "id":127,
-         "image":"Track\/DR_11b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_11b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2198,7 +2190,7 @@
         }, 
         {
          "id":128,
-         "image":"Track\/DR_12a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_12a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2215,7 +2207,7 @@
         }, 
         {
          "id":129,
-         "image":"Track\/DR_12b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_12b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2232,7 +2224,7 @@
         }, 
         {
          "id":130,
-         "image":"Track\/DR_12c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_12c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2249,7 +2241,7 @@
         }, 
         {
          "id":131,
-         "image":"Track\/DR_12d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_12d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2266,7 +2258,7 @@
         }, 
         {
          "id":132,
-         "image":"Track\/DR_13a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_13a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2283,7 +2275,7 @@
         }, 
         {
          "id":133,
-         "image":"Track\/DR_13b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_13b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2300,7 +2292,7 @@
         }, 
         {
          "id":134,
-         "image":"Track\/DR_13c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_13c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2317,7 +2309,7 @@
         }, 
         {
          "id":135,
-         "image":"Track\/DR_13d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_13d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2334,7 +2326,7 @@
         }, 
         {
          "id":136,
-         "image":"Track\/DR_14a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_14a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2351,7 +2343,7 @@
         }, 
         {
          "id":137,
-         "image":"Track\/DR_14b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_14b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2368,7 +2360,7 @@
         }, 
         {
          "id":138,
-         "image":"Track\/DR_14c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_14c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2385,7 +2377,7 @@
         }, 
         {
          "id":139,
-         "image":"Track\/DR_14d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_14d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2402,7 +2394,7 @@
         }, 
         {
          "id":140,
-         "image":"Track\/DR_15a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_15a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2419,7 +2411,7 @@
         }, 
         {
          "id":141,
-         "image":"Track\/DR_15b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_15b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2436,7 +2428,7 @@
         }, 
         {
          "id":142,
-         "image":"Track\/DR_15c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_15c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2453,7 +2445,7 @@
         }, 
         {
          "id":143,
-         "image":"Track\/DR_15d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_15d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2470,7 +2462,7 @@
         }, 
         {
          "id":144,
-         "image":"Track\/DR_16a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_16a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2487,7 +2479,7 @@
         }, 
         {
          "id":145,
-         "image":"Track\/DR_16b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_16b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2504,7 +2496,7 @@
         }, 
         {
          "id":146,
-         "image":"Track\/DR_16c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_16c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2521,7 +2513,7 @@
         }, 
         {
          "id":147,
-         "image":"Track\/DR_16d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_16d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2538,7 +2530,7 @@
         }, 
         {
          "id":148,
-         "image":"Track\/DR_17a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_17a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2555,7 +2547,7 @@
         }, 
         {
          "id":149,
-         "image":"Track\/DR_17b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_17b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2572,7 +2564,7 @@
         }, 
         {
          "id":150,
-         "image":"Track\/DR_17c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_17c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2589,7 +2581,7 @@
         }, 
         {
          "id":151,
-         "image":"Track\/DR_17d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_17d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2606,7 +2598,7 @@
         }, 
         {
          "id":152,
-         "image":"Track\/DR_18a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_18a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2623,7 +2615,7 @@
         }, 
         {
          "id":153,
-         "image":"Track\/DR_18b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_18b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2640,7 +2632,7 @@
         }, 
         {
          "id":154,
-         "image":"Track\/DR_18c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_18c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2657,7 +2649,7 @@
         }, 
         {
          "id":155,
-         "image":"Track\/DR_18d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_18d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2674,7 +2666,7 @@
         }, 
         {
          "id":156,
-         "image":"Track\/DR_19a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_19a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2691,7 +2683,7 @@
         }, 
         {
          "id":157,
-         "image":"Track\/DR_19b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_19b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2708,7 +2700,7 @@
         }, 
         {
          "id":158,
-         "image":"Track\/DR_19c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_19c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2725,7 +2717,7 @@
         }, 
         {
          "id":159,
-         "image":"Track\/DR_19d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_19d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2742,7 +2734,7 @@
         }, 
         {
          "id":160,
-         "image":"Track\/DR_20a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_20a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2759,7 +2751,7 @@
         }, 
         {
          "id":161,
-         "image":"Track\/DR_20b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_20b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2776,7 +2768,7 @@
         }, 
         {
          "id":162,
-         "image":"Track\/DR_20c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_20c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2793,7 +2785,7 @@
         }, 
         {
          "id":163,
-         "image":"Track\/DR_20d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_20d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2810,7 +2802,7 @@
         }, 
         {
          "id":164,
-         "image":"Track\/DR_21a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_21a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2827,7 +2819,7 @@
         }, 
         {
          "id":165,
-         "image":"Track\/DR_21b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_21b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2844,7 +2836,7 @@
         }, 
         {
          "id":166,
-         "image":"Track\/DR_21c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_21c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2861,7 +2853,7 @@
         }, 
         {
          "id":167,
-         "image":"Track\/DR_21d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_21d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2878,7 +2870,7 @@
         }, 
         {
          "id":168,
-         "image":"Track\/DR_22a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_22a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2895,7 +2887,7 @@
         }, 
         {
          "id":169,
-         "image":"Track\/DR_22b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_22b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2912,7 +2904,7 @@
         }, 
         {
          "id":170,
-         "image":"Track\/DR_22c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_22c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2929,7 +2921,7 @@
         }, 
         {
          "id":171,
-         "image":"Track\/DR_22d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_22d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2946,7 +2938,7 @@
         }, 
         {
          "id":172,
-         "image":"Track\/DR_23a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_23a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2963,7 +2955,7 @@
         }, 
         {
          "id":173,
-         "image":"Track\/DR_23b.png",
+         "image":"..\/assets\/sprites\/Track\/DR_23b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2980,7 +2972,7 @@
         }, 
         {
          "id":174,
-         "image":"Track\/DR_23c.png",
+         "image":"..\/assets\/sprites\/Track\/DR_23c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -2997,7 +2989,7 @@
         }, 
         {
          "id":175,
-         "image":"Track\/DR_23d.png",
+         "image":"..\/assets\/sprites\/Track\/DR_23d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3014,7 +3006,7 @@
         }, 
         {
          "id":176,
-         "image":"Track\/DR_24a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_24a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3031,7 +3023,7 @@
         }, 
         {
          "id":177,
-         "image":"Track\/DR_25a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_25a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3048,7 +3040,7 @@
         }, 
         {
          "id":178,
-         "image":"Track\/DR_26a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_26a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3065,7 +3057,7 @@
         }, 
         {
          "id":179,
-         "image":"Track\/DR_27a.png",
+         "image":"..\/assets\/sprites\/Track\/DR_27a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3082,7 +3074,7 @@
         }, 
         {
          "id":180,
-         "image":"Track\/LG_1a.png",
+         "image":"..\/assets\/sprites\/Track\/LG_1a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3099,7 +3091,7 @@
         }, 
         {
          "id":181,
-         "image":"Track\/LG_1b.png",
+         "image":"..\/assets\/sprites\/Track\/LG_1b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3116,7 +3108,7 @@
         }, 
         {
          "id":182,
-         "image":"Track\/LG_1c.png",
+         "image":"..\/assets\/sprites\/Track\/LG_1c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3133,7 +3125,7 @@
         }, 
         {
          "id":183,
-         "image":"Track\/LG_1d.png",
+         "image":"..\/assets\/sprites\/Track\/LG_1d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3150,7 +3142,7 @@
         }, 
         {
          "id":184,
-         "image":"Track\/LG_2a.png",
+         "image":"..\/assets\/sprites\/Track\/LG_2a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3167,7 +3159,7 @@
         }, 
         {
          "id":185,
-         "image":"Track\/LG_2b.png",
+         "image":"..\/assets\/sprites\/Track\/LG_2b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3184,7 +3176,7 @@
         }, 
         {
          "id":186,
-         "image":"Track\/LG_2c.png",
+         "image":"..\/assets\/sprites\/Track\/LG_2c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3201,7 +3193,7 @@
         }, 
         {
          "id":187,
-         "image":"Track\/LG_2d.png",
+         "image":"..\/assets\/sprites\/Track\/LG_2d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3218,7 +3210,7 @@
         }, 
         {
          "id":188,
-         "image":"Track\/LG_3a.png",
+         "image":"..\/assets\/sprites\/Track\/LG_3a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3235,7 +3227,7 @@
         }, 
         {
          "id":189,
-         "image":"Track\/LG_3b.png",
+         "image":"..\/assets\/sprites\/Track\/LG_3b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3252,7 +3244,7 @@
         }, 
         {
          "id":190,
-         "image":"Track\/LG_3c.png",
+         "image":"..\/assets\/sprites\/Track\/LG_3c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3269,7 +3261,7 @@
         }, 
         {
          "id":191,
-         "image":"Track\/LG_3d.png",
+         "image":"..\/assets\/sprites\/Track\/LG_3d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3286,7 +3278,7 @@
         }, 
         {
          "id":192,
-         "image":"Track\/LG_4a.png",
+         "image":"..\/assets\/sprites\/Track\/LG_4a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3303,7 +3295,7 @@
         }, 
         {
          "id":193,
-         "image":"Track\/LS_1a.png",
+         "image":"..\/assets\/sprites\/Track\/LS_1a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3320,7 +3312,7 @@
         }, 
         {
          "id":194,
-         "image":"Track\/LS_1b.png",
+         "image":"..\/assets\/sprites\/Track\/LS_1b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3337,7 +3329,7 @@
         }, 
         {
          "id":195,
-         "image":"Track\/LS_1c.png",
+         "image":"..\/assets\/sprites\/Track\/LS_1c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3354,7 +3346,7 @@
         }, 
         {
          "id":196,
-         "image":"Track\/LS_1d.png",
+         "image":"..\/assets\/sprites\/Track\/LS_1d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3371,7 +3363,7 @@
         }, 
         {
          "id":197,
-         "image":"Track\/LS_2a.png",
+         "image":"..\/assets\/sprites\/Track\/LS_2a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3388,7 +3380,7 @@
         }, 
         {
          "id":198,
-         "image":"Track\/LS_2b.png",
+         "image":"..\/assets\/sprites\/Track\/LS_2b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3405,7 +3397,7 @@
         }, 
         {
          "id":199,
-         "image":"Track\/LS_2c.png",
+         "image":"..\/assets\/sprites\/Track\/LS_2c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3422,7 +3414,7 @@
         }, 
         {
          "id":200,
-         "image":"Track\/LS_2d.png",
+         "image":"..\/assets\/sprites\/Track\/LS_2d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3439,7 +3431,7 @@
         }, 
         {
          "id":201,
-         "image":"Track\/LS_3a.png",
+         "image":"..\/assets\/sprites\/Track\/LS_3a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3456,7 +3448,7 @@
         }, 
         {
          "id":202,
-         "image":"Track\/LS_3b.png",
+         "image":"..\/assets\/sprites\/Track\/LS_3b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3473,7 +3465,7 @@
         }, 
         {
          "id":203,
-         "image":"Track\/LS_3c.png",
+         "image":"..\/assets\/sprites\/Track\/LS_3c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3490,7 +3482,7 @@
         }, 
         {
          "id":204,
-         "image":"Track\/LS_3d.png",
+         "image":"..\/assets\/sprites\/Track\/LS_3d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3507,7 +3499,7 @@
         }, 
         {
          "id":205,
-         "image":"Track\/LS_4a.png",
+         "image":"..\/assets\/sprites\/Track\/LS_4a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3524,7 +3516,7 @@
         }, 
         {
          "id":206,
-         "image":"Track\/SR_1a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_1a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3541,7 +3533,7 @@
         }, 
         {
          "id":207,
-         "image":"Track\/SR_1b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_1b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3558,7 +3550,7 @@
         }, 
         {
          "id":208,
-         "image":"Track\/SR_2a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_2a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3575,7 +3567,7 @@
         }, 
         {
          "id":209,
-         "image":"Track\/SR_2b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_2b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3592,7 +3584,7 @@
         }, 
         {
          "id":210,
-         "image":"Track\/SR_2c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_2c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3609,7 +3601,7 @@
         }, 
         {
          "id":211,
-         "image":"Track\/SR_2d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_2d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3626,7 +3618,7 @@
         }, 
         {
          "id":212,
-         "image":"Track\/SR_3a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_3a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3643,7 +3635,7 @@
         }, 
         {
          "id":213,
-         "image":"Track\/SR_3b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_3b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3660,7 +3652,7 @@
         }, 
         {
          "id":214,
-         "image":"Track\/SR_3c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_3c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3677,7 +3669,7 @@
         }, 
         {
          "id":215,
-         "image":"Track\/SR_3d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_3d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3694,7 +3686,7 @@
         }, 
         {
          "id":216,
-         "image":"Track\/SR_4a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_4a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3711,7 +3703,7 @@
         }, 
         {
          "id":217,
-         "image":"Track\/SR_4b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_4b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3728,7 +3720,7 @@
         }, 
         {
          "id":218,
-         "image":"Track\/SR_4c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_4c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3745,7 +3737,7 @@
         }, 
         {
          "id":219,
-         "image":"Track\/SR_4d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_4d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3762,7 +3754,7 @@
         }, 
         {
          "id":220,
-         "image":"Track\/SR_5a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_5a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3779,7 +3771,7 @@
         }, 
         {
          "id":221,
-         "image":"Track\/SR_5b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_5b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3796,7 +3788,7 @@
         }, 
         {
          "id":222,
-         "image":"Track\/SR_5c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_5c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3813,7 +3805,7 @@
         }, 
         {
          "id":223,
-         "image":"Track\/SR_5d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_5d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3830,7 +3822,7 @@
         }, 
         {
          "id":224,
-         "image":"Track\/SR_6a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_6a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3847,7 +3839,7 @@
         }, 
         {
          "id":225,
-         "image":"Track\/SR_6b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_6b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3864,7 +3856,7 @@
         }, 
         {
          "id":226,
-         "image":"Track\/SR_6c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_6c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3881,7 +3873,7 @@
         }, 
         {
          "id":227,
-         "image":"Track\/SR_6d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_6d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3898,7 +3890,7 @@
         }, 
         {
          "id":228,
-         "image":"Track\/SR_7a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_7a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3915,7 +3907,7 @@
         }, 
         {
          "id":229,
-         "image":"Track\/SR_7b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_7b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3932,7 +3924,7 @@
         }, 
         {
          "id":230,
-         "image":"Track\/SR_7c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_7c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3949,7 +3941,7 @@
         }, 
         {
          "id":231,
-         "image":"Track\/SR_7d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_7d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3966,7 +3958,7 @@
         }, 
         {
          "id":232,
-         "image":"Track\/SR_8a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_8a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -3983,7 +3975,7 @@
         }, 
         {
          "id":233,
-         "image":"Track\/SR_8b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_8b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4000,7 +3992,7 @@
         }, 
         {
          "id":234,
-         "image":"Track\/SR_8c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_8c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4017,7 +4009,7 @@
         }, 
         {
          "id":235,
-         "image":"Track\/SR_8d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_8d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4034,7 +4026,7 @@
         }, 
         {
          "id":236,
-         "image":"Track\/SR_9a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_9a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4051,7 +4043,7 @@
         }, 
         {
          "id":237,
-         "image":"Track\/SR_9b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_9b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4068,7 +4060,7 @@
         }, 
         {
          "id":238,
-         "image":"Track\/SR_9c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_9c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4085,7 +4077,7 @@
         }, 
         {
          "id":239,
-         "image":"Track\/SR_9d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_9d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4102,7 +4094,7 @@
         }, 
         {
          "id":240,
-         "image":"Track\/SR_10a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_10a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4119,7 +4111,7 @@
         }, 
         {
          "id":241,
-         "image":"Track\/SR_10b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_10b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4136,7 +4128,7 @@
         }, 
         {
          "id":242,
-         "image":"Track\/SR_11a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_11a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4153,7 +4145,7 @@
         }, 
         {
          "id":243,
-         "image":"Track\/SR_11b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_11b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4170,7 +4162,7 @@
         }, 
         {
          "id":244,
-         "image":"Track\/SR_12a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_12a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4187,7 +4179,7 @@
         }, 
         {
          "id":245,
-         "image":"Track\/SR_12b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_12b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4204,7 +4196,7 @@
         }, 
         {
          "id":246,
-         "image":"Track\/SR_12c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_12c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4221,7 +4213,7 @@
         }, 
         {
          "id":247,
-         "image":"Track\/SR_12d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_12d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4238,7 +4230,7 @@
         }, 
         {
          "id":248,
-         "image":"Track\/SR_13a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_13a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4255,7 +4247,7 @@
         }, 
         {
          "id":249,
-         "image":"Track\/SR_13b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_13b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4272,7 +4264,7 @@
         }, 
         {
          "id":250,
-         "image":"Track\/SR_13c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_13c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4289,7 +4281,7 @@
         }, 
         {
          "id":251,
-         "image":"Track\/SR_13d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_13d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4306,7 +4298,7 @@
         }, 
         {
          "id":252,
-         "image":"Track\/SR_14a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_14a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4323,7 +4315,7 @@
         }, 
         {
          "id":253,
-         "image":"Track\/SR_14b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_14b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4340,7 +4332,7 @@
         }, 
         {
          "id":254,
-         "image":"Track\/SR_14c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_14c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4357,7 +4349,7 @@
         }, 
         {
          "id":255,
-         "image":"Track\/SR_14d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_14d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4374,7 +4366,7 @@
         }, 
         {
          "id":256,
-         "image":"Track\/SR_15a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_15a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4391,7 +4383,7 @@
         }, 
         {
          "id":257,
-         "image":"Track\/SR_15b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_15b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4408,7 +4400,7 @@
         }, 
         {
          "id":258,
-         "image":"Track\/SR_15c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_15c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4425,7 +4417,7 @@
         }, 
         {
          "id":259,
-         "image":"Track\/SR_15d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_15d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4442,7 +4434,7 @@
         }, 
         {
          "id":260,
-         "image":"Track\/SR_16a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_16a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4459,7 +4451,7 @@
         }, 
         {
          "id":261,
-         "image":"Track\/SR_16b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_16b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4476,7 +4468,7 @@
         }, 
         {
          "id":262,
-         "image":"Track\/SR_16c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_16c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4493,7 +4485,7 @@
         }, 
         {
          "id":263,
-         "image":"Track\/SR_16d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_16d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4510,7 +4502,7 @@
         }, 
         {
          "id":264,
-         "image":"Track\/SR_17a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_17a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4527,7 +4519,7 @@
         }, 
         {
          "id":265,
-         "image":"Track\/SR_17b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_17b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4544,7 +4536,7 @@
         }, 
         {
          "id":266,
-         "image":"Track\/SR_17c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_17c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4561,7 +4553,7 @@
         }, 
         {
          "id":267,
-         "image":"Track\/SR_17d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_17d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4578,7 +4570,7 @@
         }, 
         {
          "id":268,
-         "image":"Track\/SR_18a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_18a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4595,7 +4587,7 @@
         }, 
         {
          "id":269,
-         "image":"Track\/SR_18b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_18b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4612,7 +4604,7 @@
         }, 
         {
          "id":270,
-         "image":"Track\/SR_18c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_18c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4629,7 +4621,7 @@
         }, 
         {
          "id":271,
-         "image":"Track\/SR_18d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_18d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4646,7 +4638,7 @@
         }, 
         {
          "id":272,
-         "image":"Track\/SR_19a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_19a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4663,7 +4655,7 @@
         }, 
         {
          "id":273,
-         "image":"Track\/SR_19b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_19b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4680,7 +4672,7 @@
         }, 
         {
          "id":274,
-         "image":"Track\/SR_19c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_19c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4697,7 +4689,7 @@
         }, 
         {
          "id":275,
-         "image":"Track\/SR_19d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_19d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4714,7 +4706,7 @@
         }, 
         {
          "id":276,
-         "image":"Track\/SR_20a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_20a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4731,7 +4723,7 @@
         }, 
         {
          "id":277,
-         "image":"Track\/SR_20b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_20b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4748,7 +4740,7 @@
         }, 
         {
          "id":278,
-         "image":"Track\/SR_20c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_20c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4765,7 +4757,7 @@
         }, 
         {
          "id":279,
-         "image":"Track\/SR_20d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_20d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4782,7 +4774,7 @@
         }, 
         {
          "id":280,
-         "image":"Track\/SR_21a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_21a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4799,7 +4791,7 @@
         }, 
         {
          "id":281,
-         "image":"Track\/SR_21b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_21b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4816,7 +4808,7 @@
         }, 
         {
          "id":282,
-         "image":"Track\/SR_21c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_21c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4833,7 +4825,7 @@
         }, 
         {
          "id":283,
-         "image":"Track\/SR_21d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_21d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4850,7 +4842,7 @@
         }, 
         {
          "id":284,
-         "image":"Track\/SR_22a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_22a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4867,7 +4859,7 @@
         }, 
         {
          "id":285,
-         "image":"Track\/SR_22b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_22b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4884,7 +4876,7 @@
         }, 
         {
          "id":286,
-         "image":"Track\/SR_22c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_22c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4901,7 +4893,7 @@
         }, 
         {
          "id":287,
-         "image":"Track\/SR_22d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_22d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4918,7 +4910,7 @@
         }, 
         {
          "id":288,
-         "image":"Track\/SR_23a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_23a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4935,7 +4927,7 @@
         }, 
         {
          "id":289,
-         "image":"Track\/SR_23b.png",
+         "image":"..\/assets\/sprites\/Track\/SR_23b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4952,7 +4944,7 @@
         }, 
         {
          "id":290,
-         "image":"Track\/SR_23c.png",
+         "image":"..\/assets\/sprites\/Track\/SR_23c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4969,7 +4961,7 @@
         }, 
         {
          "id":291,
-         "image":"Track\/SR_23d.png",
+         "image":"..\/assets\/sprites\/Track\/SR_23d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -4986,7 +4978,7 @@
         }, 
         {
          "id":292,
-         "image":"Track\/SR_24a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_24a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5003,7 +4995,7 @@
         }, 
         {
          "id":293,
-         "image":"Track\/SR_25a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_25a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5020,7 +5012,7 @@
         }, 
         {
          "id":294,
-         "image":"Track\/SR_26a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_26a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5037,7 +5029,7 @@
         }, 
         {
          "id":295,
-         "image":"Track\/SR_27a.png",
+         "image":"..\/assets\/sprites\/Track\/SR_27a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5054,7 +5046,7 @@
         }, 
         {
          "id":296,
-         "image":"TrackObjects\/BC_1a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/BC_1a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5071,7 +5063,7 @@
         }, 
         {
          "id":297,
-         "image":"TrackObjects\/BC_1b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/BC_1b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5088,7 +5080,7 @@
         }, 
         {
          "id":298,
-         "image":"TrackObjects\/BC_2a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/BC_2a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5105,7 +5097,7 @@
         }, 
         {
          "id":299,
-         "image":"TrackObjects\/BC_2b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/BC_2b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5122,7 +5114,7 @@
         }, 
         {
          "id":300,
-         "image":"TrackObjects\/BC_3a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/BC_3a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5139,7 +5131,7 @@
         }, 
         {
          "id":301,
-         "image":"TrackObjects\/BC_3b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/BC_3b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5156,7 +5148,7 @@
         }, 
         {
          "id":302,
-         "image":"TrackObjects\/BC_4a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/BC_4a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5173,7 +5165,7 @@
         }, 
         {
          "id":303,
-         "image":"TrackObjects\/BC_4b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/BC_4b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5190,7 +5182,7 @@
         }, 
         {
          "id":304,
-         "image":"TrackObjects\/CC_1a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/CC_1a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5207,7 +5199,7 @@
         }, 
         {
          "id":305,
-         "image":"TrackObjects\/CC_1b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/CC_1b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5224,7 +5216,7 @@
         }, 
         {
          "id":306,
-         "image":"TrackObjects\/CC_2a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/CC_2a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5241,7 +5233,7 @@
         }, 
         {
          "id":307,
-         "image":"TrackObjects\/CC_2b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/CC_2b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5258,7 +5250,7 @@
         }, 
         {
          "id":308,
-         "image":"TrackObjects\/DM_1a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/DM_1a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5275,7 +5267,7 @@
         }, 
         {
          "id":309,
-         "image":"TrackObjects\/DM_2a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/DM_2a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5292,7 +5284,7 @@
         }, 
         {
          "id":310,
-         "image":"TrackObjects\/GC_1a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/GC_1a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5309,7 +5301,7 @@
         }, 
         {
          "id":311,
-         "image":"TrackObjects\/GC_1b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/GC_1b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5326,7 +5318,7 @@
         }, 
         {
          "id":312,
-         "image":"TrackObjects\/GC_2a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/GC_2a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5343,7 +5335,7 @@
         }, 
         {
          "id":313,
-         "image":"TrackObjects\/GC_2b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/GC_2b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5360,7 +5352,7 @@
         }, 
         {
          "id":314,
-         "image":"TrackObjects\/GC_3a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/GC_3a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5377,7 +5369,7 @@
         }, 
         {
          "id":315,
-         "image":"TrackObjects\/GC_3b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/GC_3b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5394,7 +5386,7 @@
         }, 
         {
          "id":316,
-         "image":"TrackObjects\/GC_4a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/GC_4a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5411,7 +5403,7 @@
         }, 
         {
          "id":317,
-         "image":"TrackObjects\/GC_4b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/GC_4b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5428,7 +5420,7 @@
         }, 
         {
          "id":318,
-         "image":"TrackObjects\/TD_1.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_1.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5445,7 +5437,7 @@
         }, 
         {
          "id":319,
-         "image":"TrackObjects\/TD_2.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_2.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5462,7 +5454,7 @@
         }, 
         {
          "id":320,
-         "image":"TrackObjects\/TD_3.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_3.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5479,7 +5471,7 @@
         }, 
         {
          "id":321,
-         "image":"TrackObjects\/TD_4.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_4.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5496,7 +5488,7 @@
         }, 
         {
          "id":322,
-         "image":"TrackObjects\/TD_5.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_5.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5513,7 +5505,7 @@
         }, 
         {
          "id":323,
-         "image":"TrackObjects\/TD_6.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_6.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5530,7 +5522,7 @@
         }, 
         {
          "id":324,
-         "image":"TrackObjects\/TD_7.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_7.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5547,7 +5539,7 @@
         }, 
         {
          "id":325,
-         "image":"TrackObjects\/TD_8.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_8.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5564,7 +5556,7 @@
         }, 
         {
          "id":326,
-         "image":"TrackObjects\/TD_9.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_9.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5581,7 +5573,7 @@
         }, 
         {
          "id":327,
-         "image":"TrackObjects\/TD_10.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TD_10.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5598,7 +5590,7 @@
         }, 
         {
          "id":328,
-         "image":"TrackObjects\/tree_small.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TS_1.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5615,7 +5607,7 @@
         }, 
         {
          "id":329,
-         "image":"TrackObjects\/TU_1.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_1.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5632,7 +5624,7 @@
         }, 
         {
          "id":330,
-         "image":"TrackObjects\/TU_2.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_2.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5649,7 +5641,7 @@
         }, 
         {
          "id":331,
-         "image":"TrackObjects\/TU_3.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_3.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5666,7 +5658,7 @@
         }, 
         {
          "id":332,
-         "image":"TrackObjects\/TU_4.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_4.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5683,7 +5675,7 @@
         }, 
         {
          "id":333,
-         "image":"TrackObjects\/TU_5.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_5.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5700,7 +5692,7 @@
         }, 
         {
          "id":334,
-         "image":"TrackObjects\/TU_6.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_6.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5717,7 +5709,7 @@
         }, 
         {
          "id":335,
-         "image":"TrackObjects\/TU_7.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_7.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5734,7 +5726,7 @@
         }, 
         {
          "id":336,
-         "image":"TrackObjects\/TU_8.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_8.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5751,7 +5743,7 @@
         }, 
         {
          "id":337,
-         "image":"TrackObjects\/TU_9.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_9.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5768,7 +5760,7 @@
         }, 
         {
          "id":338,
-         "image":"TrackObjects\/TU_10.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/TU_10.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5785,7 +5777,7 @@
         }, 
         {
          "id":339,
-         "image":"TrackObjects\/YC_1a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/YC_1a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5802,7 +5794,7 @@
         }, 
         {
          "id":340,
-         "image":"TrackObjects\/YC_1b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/YC_1b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5819,7 +5811,7 @@
         }, 
         {
          "id":341,
-         "image":"TrackObjects\/YC_2a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/YC_2a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5836,7 +5828,7 @@
         }, 
         {
          "id":342,
-         "image":"TrackObjects\/YC_2b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/YC_2b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5853,7 +5845,7 @@
         }, 
         {
          "id":343,
-         "image":"TrackObjects\/B_1a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/B_1a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5870,7 +5862,7 @@
         }, 
         {
          "id":344,
-         "image":"TrackObjects\/B_1b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/B_1b.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5887,7 +5879,7 @@
         }, 
         {
          "id":345,
-         "image":"TrackObjects\/B_2a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/B_2a.png",
          "imageheight":129,
          "imagewidth":128,
          "properties":[
@@ -5904,7 +5896,7 @@
         }, 
         {
          "id":346,
-         "image":"TrackObjects\/W_1a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/W_1a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5921,7 +5913,7 @@
         }, 
         {
          "id":347,
-         "image":"TrackObjects\/W_1b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/W_1b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5938,7 +5930,7 @@
         }, 
         {
          "id":348,
-         "image":"TrackObjects\/W_1c.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/W_1c.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5955,7 +5947,7 @@
         }, 
         {
          "id":349,
-         "image":"TrackObjects\/W_1d.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/W_1d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -5972,14 +5964,14 @@
         }, 
         {
          "id":350,
-         "image":"TrackObjects\/W_2a.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/W_2a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
                 {
                  "name":"ID",
                  "type":"int",
-                 "value":129
+                 "value":128
                 }, 
                 {
                  "name":"R",
@@ -5989,7 +5981,58 @@
         }, 
         {
          "id":351,
-         "image":"TrackObjects\/W_2b.png",
+         "image":"..\/assets\/sprites\/TrackObjects\/W_2b.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":128
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":90
+                }]
+        }, 
+        {
+         "id":352,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_2c.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":128
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":270
+                }]
+        }, 
+        {
+         "id":353,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_2d.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":128
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":180
+                }]
+        }, 
+        {
+         "id":354,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_4a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -6001,12 +6044,12 @@
                 {
                  "name":"R",
                  "type":"int",
-                 "value":90
+                 "value":0
                 }]
         }, 
         {
-         "id":352,
-         "image":"TrackObjects\/W_2c.png",
+         "id":355,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_4b.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -6022,8 +6065,25 @@
                 }]
         }, 
         {
-         "id":353,
-         "image":"TrackObjects\/W_3c.png",
+         "id":356,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_4c.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":129
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":90
+                }]
+        }, 
+        {
+         "id":357,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_4d.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -6039,8 +6099,8 @@
                 }]
         }, 
         {
-         "id":354,
-         "image":"TrackObjects\/W_4a.png",
+         "id":358,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_5a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -6056,59 +6116,8 @@
                 }]
         }, 
         {
-         "id":355,
-         "image":"TrackObjects\/W_4b.png",
-         "imageheight":128,
-         "imagewidth":128,
-         "properties":[
-                {
-                 "name":"ID",
-                 "type":"int",
-                 "value":130
-                }, 
-                {
-                 "name":"R",
-                 "type":"int",
-                 "value":270
-                }]
-        }, 
-        {
-         "id":356,
-         "image":"TrackObjects\/W_4c.png",
-         "imageheight":128,
-         "imagewidth":128,
-         "properties":[
-                {
-                 "name":"ID",
-                 "type":"int",
-                 "value":130
-                }, 
-                {
-                 "name":"R",
-                 "type":"int",
-                 "value":90
-                }]
-        }, 
-        {
-         "id":357,
-         "image":"TrackObjects\/W_4d.png",
-         "imageheight":128,
-         "imagewidth":128,
-         "properties":[
-                {
-                 "name":"ID",
-                 "type":"int",
-                 "value":130
-                }, 
-                {
-                 "name":"R",
-                 "type":"int",
-                 "value":180
-                }]
-        }, 
-        {
-         "id":358,
-         "image":"TrackObjects\/W_5a.png",
+         "id":359,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_6a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -6124,8 +6133,8 @@
                 }]
         }, 
         {
-         "id":359,
-         "image":"TrackObjects\/W_6a.png",
+         "id":360,
+         "image":"..\/assets\/sprites\/TrackObjects\/W_3a.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -6141,8 +6150,8 @@
                 }]
         }, 
         {
-         "id":360,
-         "image":"TrackObjects\/W_7a.png",
+         "id":361,
+         "image":"..\/assets\/sprites\/TrackObjects\/S_1.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -6158,8 +6167,8 @@
                 }]
         }, 
         {
-         "id":361,
-         "image":"TrackObjects\/S_1.png",
+         "id":362,
+         "image":"..\/assets\/sprites\/TrackObjects\/S_2.png",
          "imageheight":128,
          "imagewidth":128,
          "properties":[
@@ -6167,23 +6176,6 @@
                  "name":"ID",
                  "type":"int",
                  "value":134
-                }, 
-                {
-                 "name":"R",
-                 "type":"int",
-                 "value":0
-                }]
-        }, 
-        {
-         "id":362,
-         "image":"TrackObjects\/S_2.png",
-         "imageheight":128,
-         "imagewidth":128,
-         "properties":[
-                {
-                 "name":"ID",
-                 "type":"int",
-                 "value":135
                 }, 
                 {
                  "name":"R",

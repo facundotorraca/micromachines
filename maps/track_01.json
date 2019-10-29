@@ -1,13 +1,4 @@
-{ "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"track_01.json"
-        }
-    },
- "height":120,
+{ "height":120,
  "infinite":false,
  "layers":[
         {
@@ -26,12 +17,12 @@
  "nextobjectid":1,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"2019.10.18",
+ "tiledversion":"1.2.5",
  "tileheight":128,
  "tilesets":[
         {
          "firstgid":1,
-         "source":"tiles.tsx"
+         "source":"tiles.json"
         }],
  "tilewidth":128,
  "type":"map",
