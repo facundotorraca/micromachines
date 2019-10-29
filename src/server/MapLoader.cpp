@@ -34,7 +34,11 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
             int32_t type_ID = json_tiles_data["tiles"][ID_pos]["properties"][ID_PROPERTY_POS]["value"];
             int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS ]["value"];
 
+            std::cout << tile_rotation << " ";
+            //if (type_ID > 126) std::cout << type_ID << " ";
+
             racing_track.add_map_part(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
         }
+        std::cout << "\n";
     }
 }

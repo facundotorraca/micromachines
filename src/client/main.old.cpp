@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     /*Todo esto es lo que hizo facu
     * Habría que reemplazarlo por Qt*/
 
-    std::string port("8082");
+    std::string port("7777");
     std::string host("127.0.0.1");
 
     Socket s;

@@ -10,7 +10,7 @@ class Asphalt : public Terrain {
 
     public:
 
-        Asphalt(int32_t x, int32_t y, int32_t rotation);
+        Asphalt(int32_t x, int32_t y, int32_t rotation, int32_t ID);
 
         UpdateClient get_to_send() override;
 

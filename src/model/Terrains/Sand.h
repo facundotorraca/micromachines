@@ -8,7 +8,7 @@ class Sand : public Terrain {
         void set_terrain_user_data() override;
 
     public:
-        Sand(int32_t x, int32_t y, int32_t rotation);
+        Sand(int32_t x, int32_t y, int32_t rotation, int32_t ID);
 
         UpdateClient get_to_send() override;
 

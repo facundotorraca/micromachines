@@ -13,11 +13,13 @@ class Terrain {
         int32_t map_y;
         int32_t rotation;
 
+        int32_t ID;
+
         b2Body* terrain_body;
         b2Fixture* terrain_fixture;
 
     public:
-        Terrain(int32_t x, int32_t y, int32_t rotation);
+        Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID);
 
         Terrain(Terrain&& other) noexcept;
 

@@ -3,7 +3,8 @@
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
 
-Terrain::Terrain(int32_t x, int32_t y, int32_t rotation) {
+Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID) {
+    this->ID = ID;
     this->map_x = x; //Relative position on a grid
     this->map_y = y; //Relative position on a grid
     this->rotation = rotation;

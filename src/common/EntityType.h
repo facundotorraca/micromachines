@@ -5,11 +5,13 @@
 #define TYPE_TRACK 10
 #define TYPE_WHEEL 15
 
-/*---------TERRAINS---------*/
+/*---------TRACK_TILES---------*/
 #define TYPE_GRASS 1
 #define TYPE_ASPHALT 2
 #define TYPE_SAND 3
 #define TYPE_DIRT 4
-#define TYPE_ASPHALT_TURN 5
+
+
+
 
 #endif //MICROMACHINES_ENTITYTYPE_H

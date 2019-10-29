@@ -166,5 +166,5 @@ void Match::send_to_all(UpdateClient update) {
 
 void Match::initialize_map() {
     MapLoader loader(MAP_PATH);
-    loader.load_map(this->racing_track, "racing_track_1.json", "tiles.json");
+    loader.load_map(this->racing_track, "track_01.json", "tiles.json");
 }
