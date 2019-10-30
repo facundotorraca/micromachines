@@ -15,13 +15,17 @@ class Terrain {
 
         int32_t ID;
 
+        bool is_static;
+
         b2Body* terrain_body;
         b2Fixture* terrain_fixture;
 
     public:
-        Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID);
+        Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID, bool is_static);
 
         Terrain(Terrain&& other) noexcept;
+
+        void transform_to_static();
 
         void add_to_world(b2World& world);
 

@@ -28,9 +28,18 @@ void RacingTrack::send(ProtocolSocket& p_socket) {
         UpdateClient update_map = terrain->get_to_send();
         update_map.send(p_socket);
     }
+    for (auto& object : this->static_track_objects) {
+        UpdateClient update_map = object.get_to_send();
+        update_map.send(p_socket);
+    }
 }
 
-void RacingTrack::add_map_part(std::unique_ptr<Terrain>&& terrain) {
+void RacingTrack::add_terrain(std::unique_ptr<Terrain>&& terrain) {
     terrain->add_to_world(this->racing_track);
     this->terrains.push_back(std::move(terrain));
+}
+
+void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
+    object.add_to_world(this->racing_track);
+    this->static_track_objects.push_back(std::move(object));
 }

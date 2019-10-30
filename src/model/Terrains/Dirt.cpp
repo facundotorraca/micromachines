@@ -9,7 +9,7 @@
 #define DIRT_TRACTION_PROPORTION 0.7f
 
 Dirt::Dirt(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-        Terrain(x, y, rotation, ID)
+        Terrain(x, y, rotation, ID, false)
 {}
 
 UpdateClient Dirt::get_to_send() {

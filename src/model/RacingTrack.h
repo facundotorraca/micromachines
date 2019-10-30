@@ -7,6 +7,7 @@
 #include <common/ProtocolSocket.h>
 #include "model/Terrains/Terrain.h"
 #include "TerrainContactListener.h"
+#include "StaticTrackObject.h"
 
 class RacingTrack {
     b2World racing_track;
@@ -16,6 +17,7 @@ class RacingTrack {
     int32 position_iterations;
 
     std::list<std::unique_ptr<Terrain>> terrains;
+    std::list<StaticTrackObject> static_track_objects;
 
     TerrainContactListener contact_listener;
 
@@ -28,7 +30,9 @@ class RacingTrack {
 
         b2World& get_world();
 
-        void add_map_part(std::unique_ptr<Terrain>&& terrain);
+        void add_terrain(std::unique_ptr<Terrain>&& terrain);
+
+        void add_static_track_object(StaticTrackObject&& object);
 
         void update();
 };

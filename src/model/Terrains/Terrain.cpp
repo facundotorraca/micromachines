@@ -3,11 +3,12 @@
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
 
-Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID) {
+Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID, bool is_static) {
     this->ID = ID;
     this->map_x = x; //Relative position on a grid
     this->map_y = y; //Relative position on a grid
     this->rotation = rotation;
+    this->is_static = is_static;
     this->terrain_body = nullptr;
     this->terrain_fixture = nullptr;
     /*The real position is calculated with Box2D settings*/
@@ -28,10 +29,12 @@ void Terrain::add_to_world(b2World &world) {
     fixture_def.isSensor = true; /*Set fixture to contact*/
     this->terrain_fixture = this->terrain_body->CreateFixture(&fixture_def);
     this->set_terrain_user_data();
-    //groundAreaFixture->SetUserData( new GroundAreaFUD( 0.5f, false ) );
 }
 
+
+
 Terrain::Terrain(Terrain &&other) noexcept {
+    this->ID = other.ID;
     this->map_x = other.map_x;
     this->map_y = other.map_y;
     this->rotation = other.rotation;
@@ -40,5 +43,9 @@ Terrain::Terrain(Terrain &&other) noexcept {
 
     other.terrain_body = nullptr;
     other.terrain_fixture = nullptr;
+}
+
+void Terrain::transform_to_static() {
+    this->terrain_body->SetBullet(true);
 }
 

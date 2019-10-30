@@ -11,7 +11,4 @@
 #define TYPE_SAND 3
 #define TYPE_DIRT 4
 
-
-
-
 #endif //MICROMACHINES_ENTITYTYPE_H

@@ -9,7 +9,7 @@
 #define SAND_TRACTION_PROPORTION 0.3f
 
 Sand::Sand(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-    Terrain(x, y, rotation, ID)
+    Terrain(x, y, rotation, ID, false)
 {}
 
 UpdateClient Sand::get_to_send() {

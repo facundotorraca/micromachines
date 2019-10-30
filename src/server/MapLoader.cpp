@@ -6,8 +6,10 @@
 #include <model/Terrains/TerrainFactory.h>
 
 #define FIRST_LAYER 0
+
 #define ID_PROPERTY_POS 0
 #define ROTATION_PROPERTY_POS 1
+#define STATIC_PROPERTY_POS 2
 
 using json = nlohmann::json;
 
@@ -33,12 +35,14 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
             unsigned ID_pos = unsigned(json_map_data["layers"][FIRST_LAYER]["data"][j * (int)json_map_data["height"] + i]) - 1;
             int32_t type_ID = json_tiles_data["tiles"][ID_pos]["properties"][ID_PROPERTY_POS]["value"];
             int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS ]["value"];
+            bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS ]["value"];
 
-            std::cout << tile_rotation << " ";
-            //if (type_ID > 126) std::cout << type_ID << " ";
-
-            racing_track.add_map_part(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
+            if (is_static) {
+                racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID ,i, j, tile_rotation)));
+                std::cout << "ENTRE " << type_ID << "\n";
+            } else {
+                racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
+            }
         }
-        std::cout << "\n";
     }
 }

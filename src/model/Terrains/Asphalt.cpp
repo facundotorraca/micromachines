@@ -6,7 +6,7 @@
 #include "model/FixtureUserData.h"
 
 Asphalt::Asphalt(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-        Terrain(x, y, rotation, ID)
+        Terrain(x, y, rotation, ID, false)
 {}
 
 UpdateClient Asphalt::get_to_send() {

@@ -9,7 +9,7 @@
 #define GRASS_TRACTION_PROPORTION 0.5f
 
 Grass::Grass(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-    Terrain(x, y, rotation, ID)
+    Terrain(x, y, rotation, ID, false)
 {}
 
 UpdateClient Grass::get_to_send() {
