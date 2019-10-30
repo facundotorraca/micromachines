@@ -12,9 +12,9 @@
 class AddTile : public Command {
     TileInfo info;
 public:
-    explicit AddTile(TileInfo info, Map& map, Bot& bot) : Command(map, bot), info(info){};
+    explicit AddTile(TileInfo info, Scenario& scenario, Bot& bot) : Command(scenario, bot), info(info){};
     void apply() override{
-        map.addTile(info);
+        scenario.addTile(info);
         bot.add_tile(info);
     }
 };

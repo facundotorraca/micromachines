@@ -6,11 +6,10 @@
 #define TYPE_WHEEL 15
 
 /*---------TRACK_TILES---------*/
-#define TYPE_GRASS 1
-#define TYPE_ASPHALT 2
-#define TYPE_SAND 3
-#define TYPE_DIRT 4
-
+#define TYPE_GRASS 59
+#define TYPE_ASPHALT 27
+#define TYPE_SAND 63
+#define TYPE_DIRT 28
 
 
 

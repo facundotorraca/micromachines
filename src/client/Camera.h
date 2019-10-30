@@ -38,8 +38,10 @@ public:
     void draw();
     void clear();
     void drawCar(int32_t posx, int32_t posy, int32_t rot);
+    void drawDamagedCar(int32_t posx, int32_t posy, int32_t rot);
     void drawTile(int32_t posx, int32_t posy, int32_t rot, int32_t type);
     void drawWheel(int32_t posx, int32_t posy, int32_t rot);
+    void drawBackground(int32_t type, int32_t width, int32_t height);
     ~Camera();
 };
 

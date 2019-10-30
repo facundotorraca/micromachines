@@ -12,12 +12,14 @@
 
 class TextureFactory {
     SDL_Texture* car_texture;
+    SDL_Texture* damaged_car_texture;
     SDL_Texture* wheel_texture;
     std::map<int32_t, SDL_Texture*> tile_textures;
 public:
     explicit TextureFactory(SDL_Renderer* renderer){
         if (renderer) {
             car_texture = IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png");
+            damaged_car_texture = IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png");
             wheel_texture = IMG_LoadTexture(renderer, "assets/sprites/wheel_3.png");
 
             tile_textures.emplace(3, IMG_LoadTexture(renderer,"assets/sprites/Track/AR_3a.png"));
@@ -141,6 +143,11 @@ public:
             SDL_DestroyTexture(tex.second);
         }
     }
+
+    SDL_Texture *getDamagedCarTexture() {
+        return damaged_car_texture;
+    }
+
 };
 
 #endif //MICROMACHINES_TEXTUREFACTORY_H
