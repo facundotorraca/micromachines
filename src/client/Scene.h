@@ -14,11 +14,12 @@
 #include "ServerCommands/ServerCommand.h"
 #include "Camera.h"
 #include "Map.h"
+#include "Scenario.h"
 
 class Scene {
     ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
 
-    Map map;
+    Scenario scenario;
     Bot &bot;
 
     public:

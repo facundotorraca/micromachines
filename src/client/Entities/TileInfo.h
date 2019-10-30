@@ -5,6 +5,8 @@
 #ifndef MICROMACHINES_TILEINFO_H
 #define MICROMACHINES_TILEINFO_H
 
+#include <cstdint>
+
 typedef struct {
     int32_t type;
     int32_t posx;

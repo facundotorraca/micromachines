@@ -12,21 +12,22 @@
 #include <mutex>
 #include <map>
 #include <list>
+#include <memory>
 #include "Camera.h"
 
+struct Background{
+    int32_t type;
+    int32_t width;
+    int32_t height;
+};
+
 class Map {
-    Camera camera;
-    int32_t my_car_id;
-    std::map<int32_t, Car> cars;
     std::list<Tile> tiles;
-    std::mutex mtx;
+    Background back;
 public:
-    Map();
-    void draw();
+    void draw(Camera& camera);
     void addTile(TileInfo& info);
-    void setOwnID(int32_t id);
-    void updateCar(CarInfo& info);
-    void setTrack(int32_t id){}
+    void setBackground(int32_t type, int32_t width, int32_t height);
 };
 
 

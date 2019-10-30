@@ -93,6 +93,11 @@ void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
             CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL);
 }
 
+void Camera::drawDamagedCar(int32_t posx, int32_t posy, int32_t rot) {
+    copyRender(t_factory.getDamagedCarTexture(),posx , posy, rot,
+            CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL);
+}
+
 void Camera::drawTile(int32_t x, int32_t y, int32_t rot, int32_t type) {
     int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+3;
     copyRender(t_factory.getTileTexture(type), x, y, rot, wh, wh);
@@ -122,3 +127,15 @@ Camera::~Camera() {
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
+
+void Camera::drawBackground(int32_t type, int32_t width, int32_t height) {
+    int32_t tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
+    for (int i = 0; i < width; i++){
+        for (int j = 0; j < height; j++){
+            copyRender(t_factory.getTileTexture(type),
+                    tile_width*i, tile_width*j, 0,
+                    tile_width, tile_width);
+        }
+    }
+}
+

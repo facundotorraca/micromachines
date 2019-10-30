@@ -11,13 +11,18 @@ class Car : public Entity{
     Wheel wheel2;
     Wheel wheel3;
     Wheel wheel4;
+    int32_t health = 100;
 public:
     void draw(Camera& camera) override {
         wheel1.draw(camera);
         wheel2.draw(camera);
         wheel3.draw(camera);
         wheel4.draw(camera);
-        camera.drawCar(posX, posY, rot);
+        if (health <= 50){
+            camera.drawDamagedCar(posX, posY, rot);
+        } else {
+            camera.drawCar(posX, posY, rot);
+        }
     }
 
     void update_all(CarInfo& info) {
@@ -26,6 +31,10 @@ public:
         wheel2.update_position(info.w2x, info.w2y, info.w2rot);
         wheel3.update_position(info.w3x, info.w3y, info.w3rot);
         wheel4.update_position(info.w4x, info.w4y, info.w4rot);
+    }
+
+    void setHealth(int32_t health){
+        this->health = health;
     }
 };
 

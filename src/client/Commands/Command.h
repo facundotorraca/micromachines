@@ -7,15 +7,16 @@
 #include <common/MsgTypes.h>
 #include <client/Map.h>
 #include <client/Bot.h>
+#include <client/Scenario.h>
 
 class Command {
 protected:
-    Map& map;
+    Scenario& scenario;
     Bot& bot;
     public:
-        explicit Command(Map& map, Bot& bot) : map(map), bot(bot){}
+        explicit Command(Scenario& scenario, Bot& bot) : scenario(scenario), bot(bot){}
 
-        static std::unique_ptr<Command> create(std::vector<int32_t>& command, Map& map, Bot& bot);
+        static std::unique_ptr<Command> create(std::vector<int32_t>& command, Scenario& scenario, Bot& bot);
 
         virtual void apply() = 0;
 };

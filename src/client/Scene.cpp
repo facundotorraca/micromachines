@@ -14,10 +14,10 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
 }
 
 void Scene::handleServerEvent(std::vector<int32_t>& data) {
-    auto command = Command::create(data, map, bot);
+    auto command = Command::create(data, scenario, bot);
     command->apply();
 }
 
 void Scene::draw() {
-    this->map.draw();
+    this->scenario.draw();
 }
