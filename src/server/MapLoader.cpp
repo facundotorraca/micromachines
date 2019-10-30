@@ -31,6 +31,8 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
     json json_map_data; map_file >> json_map_data;
     json json_tiles_data; tiles_file >> json_tiles_data;
 
+    racing_track.set_track_size(json_map_data["height"], json_map_data["width"]);
+
     for (int i = 0; i < json_map_data["height"]; i++) {
         for (int j = 0; j < json_map_data["width"]; j++) {
 

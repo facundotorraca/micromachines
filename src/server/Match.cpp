@@ -142,6 +142,9 @@ void Match::initialize_players() {
 
         uint8_t flag_match_start = START_MATCH_FLAG;
         player.second.send(flag_match_start);
+        std::vector<int32_t> map_info {MSG_SET_BACKGROUND, TYPE_GRASS, 120, 120};
+        UpdateClient a (std::move(map_info));
+        player.second.send(a);
         player.second.send_track(this->racing_track);
     }
 }
@@ -167,6 +170,4 @@ void Match::send_to_all(UpdateClient update) {
 void Match::initialize_map() {
     MapLoader loader(MAP_PATH);
     loader.load_map(this->racing_track, "track_01.json", "tiles.json");
-    UpdateClient map_info = loader.get_info_to_send(); //Info about background
-    this->send_to_all(map_info);
 }
