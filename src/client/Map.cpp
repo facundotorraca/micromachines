@@ -18,3 +18,5 @@ void Map::addTile(TileInfo &info) {
 void Map::setBackground(int32_t type, int32_t width, int32_t height) {
     back = {type, width, height};
 }
+
+Map::Map() : back({0, 0, 0}){}

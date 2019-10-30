@@ -25,6 +25,7 @@ class Map {
     std::list<Tile> tiles;
     Background back;
 public:
+    Map();
     void draw(Camera& camera);
     void addTile(TileInfo& info);
     void setBackground(int32_t type, int32_t width, int32_t height);
