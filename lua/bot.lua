@@ -12,7 +12,7 @@ function addTile(xi, xf, yi, yf, value)
     for y=yi, yf do
       if map[x] == nil then map[x] = {} end
       map[x][y] = value
-      print(x, y)
+      --print(x, y)
     end
   end
 end

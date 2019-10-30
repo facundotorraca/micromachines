@@ -167,4 +167,6 @@ void Match::send_to_all(UpdateClient update) {
 void Match::initialize_map() {
     MapLoader loader(MAP_PATH);
     loader.load_map(this->racing_track, "track_01.json", "tiles.json");
+    UpdateClient map_info = loader.get_info_to_send(); //Info about background
+    this->send_to_all(map_info);
 }

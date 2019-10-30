@@ -4,12 +4,14 @@
 #include "MapLoader.h"
 #include "json/json.hpp"
 #include <model/Terrains/TerrainFactory.h>
+#include <common/MsgTypes.h>
 
 #define FIRST_LAYER 0
 
 #define ID_PROPERTY_POS 0
 #define ROTATION_PROPERTY_POS 1
 #define STATIC_PROPERTY_POS 2
+
 
 using json = nlohmann::json;
 
@@ -39,10 +41,14 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
 
             if (is_static) {
                 racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID ,i, j, tile_rotation)));
-                std::cout << "ENTRE " << type_ID << "\n";
             } else {
                 racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
             }
         }
     }
+}
+
+UpdateClient MapLoader::get_info_to_send() {
+    std::vector<int32_t> map_info {MSG_SET_BACKGROUND, TYPE_GRASS, 120, 120};
+    return UpdateClient(std::move(map_info));
 }

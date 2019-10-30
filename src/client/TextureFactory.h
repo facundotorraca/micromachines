@@ -109,7 +109,7 @@ public:
         try {
             return tile_textures.at(type);
         } catch (std::out_of_range& e){
-            std::cerr << "Texture not found" << std::endl;
+            std::cerr << "Texture " << type << " not found" << std::endl;
             return nullptr;
         }
     }
