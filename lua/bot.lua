@@ -24,37 +24,26 @@ function updateCar(newCar)
 end
 
 function getDirections(rot_ini)
+  print("GET DIR")
   local rot = math.rad(math.fmod(rot_ini, 360))
-  return math.sin(rot) * -1, math.cos(rot)
-  --[[
-  if 337 <= rot or rot < 22 then
-    return 0, 1
-  elseif 22 <= rot and rot < 67 then 
-    return -0.5, 0.5
-  elseif 67 <= rot and rot < 112 then
-    return -1, 0
-  elseif 112 <= rot and rot < 157 then
-    return -0.5, -0.5
-  elseif 157 <= rot and rot < 202 then
-    return 0, -1
-  elseif 202 <= rot and rot < 247 then
-    return 0.5, -0.5
-  elseif 247 <= rot and rot < 292 then
-    return 1, 0
-  elseif 292 <= rot and rot < 337 then
-    return 0.5, 0.5
-  end
-  return 0, 0
-  ]]--
+  local sen_a = math.sin(rot)
+  local sen = sen_a * -1
+  local cos = math.cos(rot)
+  return sen, cos
 end
 
 function canGo(futureX, futureY)
   if map[futureX] == nil then
+    print("FALSE NILL")
     return false
-  elseif map[futureX][futureY] == nil then
-    return false
+  elseif map[futureX][futureY] >= 3 and map[futureX][futureY] <= 55 then
+    print(map[futureX][futureY])
+    print("TRUE")
+    return true
   end
-  return true
+  print(map[futureX][futureY])
+  print("FALSE")
+  return false
 end
 
 function canTurn(to)
@@ -74,11 +63,12 @@ function canTurnRight()
 end
 
 function calcFuture(dirX, dirY)
+  print("CALCU")
   print(dirX, dirY)
   local velX = car.vel * dirX
   local velY = car.vel * dirY
-  local futureX = math.floor(car.posX + (velX * 0.1))
-  local futureY = math.floor(car.posY + (velY * 0.1))
+  local futureX = math.floor(car.posX + (velX * 0.7))
+  local futureY = math.floor(car.posY + (velY * 0.7))
   print(futureX, futureY)
   return futureX, futureY
 end
@@ -86,17 +76,20 @@ end
 
 function decide()
   print("DECIDE")
-  print(car.posX, car.posY, car.rot)
   local dirX, dirY = getDirections(car.rot)
   local futureX, futureY = calcFuture(dirX, dirY)
   if not canGo(futureX, futureY) then
     if canTurnLeft() then
+      print("TURN LERFT")
       return actions.press, keys.left
     elseif canTurnRight() then
+      print("TURN RIGHT")
       return actions.press, keys.right
     else
+      print("STOP")
       return actions.release, keys.up
     end
   end
+  print("GO")
   return actions.press, keys.up
 end

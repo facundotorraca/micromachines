@@ -9,7 +9,7 @@ ThreadBot::ThreadBot(Bot &bot) : Thread(),
                                  bot(bot) {}
 
 void ThreadBot::run() {
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
     while (this->running) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         this->bot.execute();
