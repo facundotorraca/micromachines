@@ -1,6 +1,11 @@
 i=-2;
 map = {}
-car = {turning = 0, increasing = 0, waitTurn = 0}
+car = {turning = 0, increasing = 0, waitTurn = 0 }
+TO_KEEP_AHEAD = 1
+TO_TURN = 1.5
+TO_STOP_TURN = 1
+ANGLE = 60
+STEP = 0.1
 
 function init(keysDef, actionsDef)
   keys = keysDef
@@ -43,24 +48,32 @@ function canGo(dirX, dirY, seg)
   if map[futureX] == nil or map[futureX][futureY] == nil then
     return false
   end
-  print(map[futureX][futureY])
   if map[futureX][futureY] >= 3 and map[futureX][futureY] <= 55 then
     return true
   end
   return false
 end
 
+function canGoAhead(dirX, dirY, seg)
+  for k=0.1, seg, STEP do
+    if not canGo(dirX, dirY, k) then
+      return false
+    end
+  end
+  return true
+end
+
 function canTurn(to)
   local dirX, dirY = getDirections(car.rot + to)
-  return canGo(dirX, dirY, 0.5)
+  return canGoAhead(dirX, dirY, TO_TURN)
 end
 
 function canTurnLeft()
-  return canTurn(-45)
+  return canTurn(-ANGLE)
 end
 
 function canTurnRight()
-  return canTurn(45)
+  return canTurn(ANGLE)
 end
 
 function stopTurn()
@@ -81,33 +94,28 @@ function keepTurning()
 end
 
 function increase()
-  print("INCREASE")
   car.increasing = 1
   return actions.press, keys.up
 end
 
 function turnRight()
-  print("TURN RIGHT")
   car.turning = 1
   return actions.press, keys.right
 end
 
 function turnLeft()
-  print("TURN LEFT")
   car.turning = 2
   return actions.press, keys.left
 end
 
 function stop()
-  print("STOP")
   car.increasing = 0
   car.waitTurn = 1
   return actions.release, keys.up
 end
 
 function decideTurning(dirX, dirY)
-  print("DECIDE TURNING")
-  if canGo(dirX, dirY, 0.5) then
+  if canGoAhead(dirX, dirY, TO_STOP_TURN) then
     return stopTurn()
   end
   return keepTurning()
@@ -115,22 +123,20 @@ end
 
 
 function decideStoping(dirX, dirY)
-  print("DECIDE STOPING")
   if car.waitTurn == 0 then
     return increase()
   end
-  if canTurnRight() then
-    return turnRight()
-  elseif canTurnLeft() then
+  if canTurnLeft() then
     return turnLeft()
+  elseif canTurnRight() then
+    return turnRight()
   else
     return stop()
   end
 end
 
 function decideIncreasing(dirX, dirY)
-  print("DECIDE INCREASING")
-  if canGo(dirX, dirY, 0.4) then
+  if canGoAhead(dirX, dirY, TO_KEEP_AHEAD) then
     return increase()
   end
   return stop()
