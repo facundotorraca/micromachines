@@ -9,14 +9,15 @@
 #include <string>
 #include <thread>
 #include "Player.h"
-#include <model/Vehicle/Car.h>
+#include "MapLoader.h"
 #include "UpdateRace.h"
+#include <unordered_map>
 #include "ThreadPlayer.h"
 #include "UpdateClient.h"
 #include <common/Thread.h>
+#include <model/Vehicle/Car.h>
 #include <model/RacingTrack.h>
 #include <common/ProtectedQueue.h>
-#include <unordered_map>
 #include "ThreadClientEventMonitor.h"
 
 class Match : public Thread {
@@ -34,6 +35,8 @@ class Match : public Thread {
     std::unordered_map<int32_t, Car> cars;
 
     RacingTrack racing_track;
+
+    MapLoader map_loader;
 
     std::mutex mtx;
 

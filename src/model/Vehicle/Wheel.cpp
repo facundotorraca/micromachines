@@ -155,4 +155,13 @@ Wheel::~Wheel() {
     this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
+void Wheel::set_spawn_point(Coordinate spawn_point) {
+    float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
+    float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
+
+    /*Minus because default start position of Box2D is inverted*/
+    float angle = -spawn_point.get_angle() * DEGTORAD;
+    this->wheel_body->SetTransform( b2Vec2(x_pos, y_pos) , angle);
+}
+
 

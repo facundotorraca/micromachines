@@ -3,19 +3,22 @@
 
 #include <list>
 #include <string>
-#include <model/Terrains/Grass.h>
+#include <unordered_map>
 #include <model/RacingTrack.h>
+#include <common/Coordinate.h>
+#include <model/Vehicle/Car.h>
 
 class MapLoader {
 
     std::string map_paths;
-    int32_t map_withd;
-    int32_t map_heigth;
+    std::vector<Coordinate> spawn_points;
 
-    public:
-        explicit MapLoader(std::string map_path);
+public:
+    explicit MapLoader(std::string map_path);
 
-        void load_map(RacingTrack& racing_track, const std::string& map_filename, const std::string& tiles_filename);
+    void set_cars_spawn_point(std::unordered_map<int32_t, Car>& cars);
+
+    void load_map(RacingTrack& racing_track, const std::string& map_filename, const std::string& tiles_filename);
 };
 
 #endif //MICROMACHINES_MAPLOADER_H

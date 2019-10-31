@@ -5,6 +5,7 @@
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
 #include <model/FixtureUserData.h>
+#include <common/Coordinate.h>
 
 class Wheel {
     b2Body* wheel_body;
@@ -33,6 +34,8 @@ class Wheel {
         explicit Wheel(b2World& world, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse);
 
         Wheel(Wheel&& other_wheel) noexcept;
+
+        void set_spawn_point(Coordinate spawn_point);
 
         const b2Vec2& get_position();
 

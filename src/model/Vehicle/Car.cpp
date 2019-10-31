@@ -26,7 +26,6 @@ Car::Car(RacingTrack& racing_track, CarSpecs specs):
     /*reduce the world velocity of bodies*/
     this->car_body->SetAngularDamping(0.1);
     this->create_wheels(racing_track);
-
 }
 
 Car::Car(Car&& other_car) noexcept:
@@ -97,6 +96,9 @@ void Car::create_wheels(RacingTrack& racing_track) {
     joint_params.localAnchorA.Set( -CAR_WIDTH/2.15, (CAR_HEIGHT/2)*0.62);
     front_right_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
     this->wheels.push_back(front_right_wheel);
+
+    float x_pos = 74 * TILE_TERRAIN_SIZE;
+    float y_pos = 108 * TILE_TERRAIN_SIZE;
 }
 
 void Car::update() {
@@ -170,4 +172,17 @@ UpdateClient Car::get_update(const int32_t id) {
 // En vez de usar esto lo meto en el params de get_update
 int32_t Car::get_speed() {
     return int32_t(METER_TO_PIXEL * this->car_body->GetLinearVelocity().Length());
+}
+
+void Car::set_spawn_point(Coordinate spawn_point) {
+    float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
+    float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
+
+    /*Minus because default start position of Box2D is inverted*/
+    float angle = -spawn_point.get_angle() * DEGTORAD;
+
+    this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
+    for (auto &wheel : this->wheels) {
+        wheel->set_spawn_point(spawn_point);
+    }
 }

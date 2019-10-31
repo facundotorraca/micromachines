@@ -8,6 +8,7 @@
 #include "Box2D/Box2D.h"
 #include "model/RacingTrack.h"
 #include <server/UpdateClient.h>
+#include <common/Coordinate.h>
 
 class Car {
     CarSpecs specs;
@@ -27,6 +28,8 @@ class Car {
         Car(RacingTrack& racing_track, CarSpecs specs);
 
         Car(Car&& other_car) noexcept;
+
+        void set_spawn_point(Coordinate spawn_point);
 
         UpdateClient get_update(int32_t id);
 

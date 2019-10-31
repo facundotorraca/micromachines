@@ -23,6 +23,7 @@ class RacingTrack {
     std::list<std::unique_ptr<Terrain>> terrains;
     std::list<StaticTrackObject> static_track_objects;
 
+
     TerrainContactListener contact_listener;
 
     public:

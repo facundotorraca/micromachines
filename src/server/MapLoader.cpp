@@ -4,14 +4,12 @@
 #include "MapLoader.h"
 #include "json/json.hpp"
 #include <model/Terrains/TerrainFactory.h>
-#include <common/MsgTypes.h>
 
 #define FIRST_LAYER 0
 
 #define ID_PROPERTY_POS 0
 #define ROTATION_PROPERTY_POS 1
 #define STATIC_PROPERTY_POS 2
-
 
 using json = nlohmann::json;
 
@@ -42,14 +40,23 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
             int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS ]["value"];
             bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS ]["value"];
 
-
-
             if (is_static) {
                 racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID ,i, j, tile_rotation)));
             } else {
                 racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
             }
 
+            if (type_ID == TYPE_SPAWN_POINT) {
+                this->spawn_points.emplace_back(float(i), float(j), float(tile_rotation));
+            }
         }
+    }
+}
+
+void MapLoader::set_cars_spawn_point(std::unordered_map<int32_t, Car>& cars) {
+    int spawn_point_pos = this->spawn_points.size() - 1; //Start from end to beginning
+    for (auto &car : cars) {
+        car.second.set_spawn_point(this->spawn_points[spawn_point_pos]);
+        spawn_point_pos--;
     }
 }

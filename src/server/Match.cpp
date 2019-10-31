@@ -21,6 +21,7 @@
 
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),
+    map_loader(MAP_PATH),
     updates_race(10000),
     match_name(std::move(match_name)),
     match_creator(std::move(match_creator)),
@@ -94,6 +95,7 @@ void Match::run() {
     this->initialize_players();
     this->clients_monitor.start();
     this->initialize_thread_players();
+    this->map_loader.set_cars_spawn_point(this->cars);
 
     while (this->running) {
         this->step();
@@ -167,8 +169,8 @@ void Match::send_to_all(UpdateClient update) {
 }
 
 void Match::initialize_map() {
-    MapLoader loader(MAP_PATH);
-    loader.load_map(this->racing_track, "track_01.json", "tiles.json");
+    /* Aca podriamos leer el archivo de configs para los nombres*/
+    this->map_loader.load_map(this->racing_track, "track_01.json", "tiles.json");
 }
 
 void Match::remove_disconnected_players() {
