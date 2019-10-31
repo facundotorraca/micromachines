@@ -18,7 +18,7 @@ class Wheel {
 
     float speed_proportion;
 
-    WheelUserData* wheel_user_data{};
+    FixtureUserData* wheel_user_data{};
 
     private:
         b2Vec2 get_lateral_velocity();

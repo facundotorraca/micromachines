@@ -18,7 +18,7 @@ UpdateClient Asphalt::get_to_send() {
 
 void Asphalt::set_terrain_user_data() {
     this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new AsphaltUserData());
+    this->terrain_fixture->SetUserData(new FixtureUserData(TYPE_ASPHALT));
 }
 
 void Asphalt::apply_effect(Wheel* wheel) {

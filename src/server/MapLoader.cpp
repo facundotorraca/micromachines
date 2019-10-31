@@ -42,11 +42,14 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
             int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS ]["value"];
             bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS ]["value"];
 
+
+
             if (is_static) {
                 racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID ,i, j, tile_rotation)));
             } else {
                 racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
             }
+
         }
     }
 }

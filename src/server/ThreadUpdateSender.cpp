@@ -1,7 +1,3 @@
-//
-// Created by javier on 19/10/19.
-//
-
 #include <iostream>
 #include "UpdateClient.h"
 #include <common/SocketError.h>

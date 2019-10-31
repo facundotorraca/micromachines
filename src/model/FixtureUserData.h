@@ -5,7 +5,6 @@
 #include <common/EntityType.h>
 
 class FixtureUserData {
-    protected:
     int32_t type_ID;
 
     public:
@@ -18,8 +17,9 @@ class FixtureUserData {
         }
 
         virtual ~FixtureUserData() = default;
-};
 
+};
+/*
 class WheelUserData : public FixtureUserData {
     public:
         WheelUserData(): FixtureUserData(TYPE_WHEEL) {}
@@ -44,5 +44,6 @@ class SandUserData : public FixtureUserData {
     public:
         SandUserData(): FixtureUserData(TYPE_SAND) {}
 };
+*/
 
 #endif //MICROMACHINES_FIXTUREUSERDATA_H

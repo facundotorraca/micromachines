@@ -21,7 +21,7 @@ UpdateClient Dirt::get_to_send() {
 
 void Dirt::set_terrain_user_data() {
     this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new DirtUserData());
+    this->terrain_fixture->SetUserData(new FixtureUserData(TYPE_DIRT));
 }
 
 void Dirt::apply_effect(Wheel* wheel) {

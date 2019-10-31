@@ -5,7 +5,10 @@
 #include <iostream>
 
 #define MAX_PROPORTION 1
+
 #define RADTODEG 57.295779513082320876f
+#define DEGTORAD 0.0174532925199432957f
+
 
 Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse) {
     this->max_lateral_impulse = max_lateral_impulse; /*Capacity of changing direction without skidding*/
@@ -27,7 +30,7 @@ Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, 
     polygon.SetAsBox(WIDTH_WHEEL, HEIGHT_WHEEL);
     this->wheel_fixture = this->wheel_body->CreateFixture(/*Shape*/&polygon, 1.5);
 
-    this->wheel_user_data = new WheelUserData();
+    this->wheel_user_data = new FixtureUserData(TYPE_WHEEL);
     this->wheel_fixture->SetUserData(this->wheel_user_data);
 }
 
@@ -113,11 +116,6 @@ b2Body* Wheel::get_body() {
     return this->wheel_body;
 }
 
-Wheel::~Wheel() {
-    delete this->wheel_user_data;
-    //this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
-}
-
 Wheel::Wheel(Wheel &&other_wheel) noexcept {
     this->wheel_body = other_wheel.wheel_body;
     this->speed_proportion = other_wheel.speed_proportion;
@@ -150,6 +148,11 @@ void Wheel::reduce_max_speed(float proportion) {
 
 void Wheel::set_max_speed() {
     this->speed_proportion = MAX_PROPORTION;
+}
+
+Wheel::~Wheel() {
+    delete this->wheel_user_data;
+    this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
 

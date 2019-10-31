@@ -11,6 +11,7 @@ Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID, bool is_sta
     this->is_static = is_static;
     this->terrain_body = nullptr;
     this->terrain_fixture = nullptr;
+    this->fixture_user_data = nullptr;
     /*The real position is calculated with Box2D settings*/
 }
 
@@ -47,5 +48,10 @@ Terrain::Terrain(Terrain &&other) noexcept {
 
 void Terrain::transform_to_static() {
     this->terrain_body->SetBullet(true);
+}
+
+Terrain::~Terrain() {
+    if(this->terrain_fixture->GetUserData())
+        delete (FixtureUserData*) this->terrain_fixture->GetUserData();
 }
 

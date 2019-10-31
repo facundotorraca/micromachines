@@ -16,6 +16,8 @@ class Asphalt : public Terrain {
 
         void apply_effect(Wheel* wheel) override;
 
+        ~Asphalt();
+
 };
 
 #endif //MICROMACHINES_ASPHALT_H

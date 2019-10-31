@@ -21,7 +21,7 @@ UpdateClient Grass::get_to_send() {
 
 void Grass::set_terrain_user_data() {
     this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new GrassUserData());
+    this->terrain_fixture->SetUserData(new FixtureUserData(TYPE_GRASS));
 }
 
 void Grass::apply_effect(Wheel* wheel) {

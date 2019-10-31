@@ -21,12 +21,11 @@ void ThreadPlayer::run() {
     } catch (const ProtectedQueueError& exception) {
         this->stop();
     }
-    this->stop();
 }
 
 void ThreadPlayer::stop() {
     updates_send.close();
-    this->sender.join();
     this->sender.shutdown();
+    this->sender.join();
     this->running = false;
 }

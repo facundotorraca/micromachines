@@ -20,7 +20,7 @@ class RacingTrack {
     int32_t height;
     int32_t width;
 
-            std::list<std::unique_ptr<Terrain>> terrains;
+    std::list<std::unique_ptr<Terrain>> terrains;
     std::list<StaticTrackObject> static_track_objects;
 
     TerrainContactListener contact_listener;
@@ -28,21 +28,21 @@ class RacingTrack {
     public:
         explicit RacingTrack();
 
-        void send(ProtocolSocket& p_socket);
+        void update();
+
+        b2World& get_world();
 
         b2Body* add_body(b2BodyDef& body);
 
-        b2World& get_world();
+        void send(ProtocolSocket& p_socket);
+
+        void set_track_terrain(int32_t terrain);
+
+        void set_track_size(int32_t height, int32_t width);
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
         void add_static_track_object(StaticTrackObject&& object);
-
-        void set_track_size(int32_t height, int32_t width);
-
-        void set_track_terrain(int32_t terrain);
-
-        void update();
 };
 
 

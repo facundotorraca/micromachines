@@ -44,7 +44,11 @@ class Match : public Thread {
 
         void initialize_players();
 
+        void initialize_thread_players();
+
         void create_update_for_players();
+
+        void remove_disconnected_players();
 
         void send_to_all(UpdateClient update);
 
@@ -67,12 +71,9 @@ class Match : public Thread {
 
         bool was_stopped();
 
-        bool is_runnig();
-
         void stop();
 
         void step();
-
 };
 
 

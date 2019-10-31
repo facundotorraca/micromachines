@@ -19,6 +19,7 @@ class Terrain {
 
         b2Body* terrain_body;
         b2Fixture* terrain_fixture;
+        FixtureUserData* fixture_user_data;
 
     public:
         Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID, bool is_static);
@@ -34,6 +35,8 @@ class Terrain {
         virtual void set_terrain_user_data() = 0;
 
         virtual void apply_effect(Wheel* wheel) = 0;
+
+        ~Terrain();
 };
 
 
