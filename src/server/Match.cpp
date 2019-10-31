@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "MapLoader.h"
 #include <common/MsgTypes.h>
+#include <common/SocketError.h>
 #include "ThreadClientEventMonitor.h"
 
 #define FRAMES_PER_SECOND 60
@@ -27,15 +28,19 @@ Match::Match(std::string match_creator, std::string match_name):
 {}
 
 void Match::add_player(Player&& player) {
-    uint8_t flag;
-    if (this->running) {
-        flag = ERROR_MATCH_JOIN_FLAG;
-        player.send(flag);
-    } else {
-        flag = SUCCESS_MATCH_JOIN_FLAG;
-        player.send(flag);
-        player.set_ID((int32_t)players.size());
-        this->players.emplace(players.size(),std::move(player));
+    try {
+        uint8_t flag;
+        if (this->running) {
+            flag = ERROR_MATCH_JOIN_FLAG;
+            player.send(flag);
+        } else {
+            flag = SUCCESS_MATCH_JOIN_FLAG;
+            player.send(flag);
+            player.set_ID((int32_t)players.size());
+            this->players.emplace(players.size(),std::move(player));
+        }
+    } catch (const SocketError& exception) {
+        std::cerr << "Player disconnected during match creation\n";
     }
 }
 
@@ -51,7 +56,6 @@ std::string Match::get_match_name_to_send() {
     }
 
     match_name_to_send.append("\n");
-
     return match_name_to_send;
 }
 
@@ -70,9 +74,10 @@ bool Match::was_stopped() {
 }
 
 void Match::stop() {
-    this->running = false;
-    this->stopped = true;
-    this->updates_race.close();
+    for (auto &player : this->players) {
+        player.second.kill();
+    }
+    this->remove_disconnected_players();
 }
 
 std::string Match::get_match_name() {
@@ -83,41 +88,31 @@ std::string Match::get_match_creator() {
     return this->match_creator;
 }
 
+
 void Match::run() {
     this->initialize_map();
     this->initialize_players();
     this->clients_monitor.start();
-
-    for (auto& player : players) {
-        int32_t id = player.first;
-        this->updates_players.emplace(id, 10000/*queue len*/);
-        this->thread_players.emplace(std::piecewise_construct,
-                                     std::forward_as_tuple(id),
-                                     std::forward_as_tuple(updates_players.at(id), updates_race, player.second));
-        this->create_info_player_updates(id); /* Send own car ID and race track ID*/
-        this->thread_players.at(id).start();
-    }
+    this->initialize_thread_players();
 
     while (this->running) {
         this->step();
         this->create_update_for_players();
-        for (auto &th_player : thread_players) {
-            if (th_player.second.dead()) {
-                th_player.second.join();
-                this->cars.erase(th_player.first);
-                this->players.erase(th_player.first);
-                this->updates_players.erase(th_player.first);
-            }
+        this->remove_disconnected_players();
+
+        if (this->players.empty()) {
+            this->updates_race.close();
+            this->clients_monitor.join();
+            this->running = false;
+
+            /*Used by the MatchTable, a non started
+            match is also not running, but not dead*/
+            this->stopped = true;
+            return;
         }
+
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
     }
-
-    //this->updates_race.close();
-    this->clients_monitor.join();
-}
-
-bool Match::is_runnig() {
-    return this->running;
 }
 
 void Match::apply_update(UpdateRace update) {
@@ -140,12 +135,16 @@ void Match::initialize_players() {
                            std::forward_as_tuple(player.first),
                            std::forward_as_tuple(racing_track, specs));
 
-        uint8_t flag_match_start = START_MATCH_FLAG;
-        player.second.send(flag_match_start);
-        std::vector<int32_t> map_info {MSG_SET_BACKGROUND, TYPE_GRASS, 120, 120};
-        UpdateClient a (std::move(map_info));
-        player.second.send(a);
-        player.second.send_track(this->racing_track);
+        try {
+            uint8_t flag_match_start = START_MATCH_FLAG;
+            player.second.send(flag_match_start);
+            std::vector<int32_t> map_info{MSG_SET_BACKGROUND, TYPE_GRASS, 120, 120};
+            UpdateClient update_map_info(std::move(map_info));
+            player.second.send(update_map_info);
+            player.second.send_track(this->racing_track);
+        } catch (const SocketError& exception) {
+            this->players.erase(player.first);
+        }
     }
 }
 
@@ -170,4 +169,30 @@ void Match::send_to_all(UpdateClient update) {
 void Match::initialize_map() {
     MapLoader loader(MAP_PATH);
     loader.load_map(this->racing_track, "track_01.json", "tiles.json");
+}
+
+void Match::remove_disconnected_players() {
+    for (auto th_player = this->thread_players.begin(); th_player != this->thread_players.end();) {
+        if ((*th_player).second.dead()) {
+            (*th_player).second.join();
+            this->cars.erase((*th_player).first);
+            this->players.erase((*th_player).first);
+            this->updates_players.erase((*th_player).first);
+            th_player =  this->thread_players.erase(th_player);
+        } else {
+            th_player++;
+        }
+    }
+}
+
+void Match::initialize_thread_players() {
+    for (auto& player : players) {
+        int32_t id = player.first;
+        this->updates_players.emplace(id, 10000/*queue len*/);
+        this->thread_players.emplace(std::piecewise_construct,
+                                     std::forward_as_tuple(id),
+                                     std::forward_as_tuple(updates_players.at(id), updates_race, player.second));
+        this->create_info_player_updates(id); /* Send own car ID and race track ID*/
+        this->thread_players.at(id).start();
+    }
 }

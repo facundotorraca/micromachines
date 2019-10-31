@@ -21,7 +21,7 @@ UpdateClient Sand::get_to_send() {
 
 void Sand::set_terrain_user_data() {
     this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new SandUserData());
+    this->terrain_fixture->SetUserData(new FixtureUserData(TYPE_SAND));
 }
 
 void Sand::apply_effect(Wheel* wheel) {

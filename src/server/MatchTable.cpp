@@ -27,6 +27,7 @@ void MatchTable::remove_end_matches() {
 }
 
 void MatchTable::send_matches(ProtocolSocket &p_socket) {
+    this->remove_end_matches(); //Send only running matches
     std::lock_guard<std::mutex> lock(this->mtx);
     std::string match_name_to_send;
     for (auto & it : this->map) {

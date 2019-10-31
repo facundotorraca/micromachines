@@ -15,7 +15,6 @@ class Grass : public Terrain {
         UpdateClient get_to_send() override;
 
         void apply_effect(Wheel* wheel) override;
-
 };
 
 

@@ -11,6 +11,7 @@ RacingTrack::RacingTrack():
     this->velocity_iterations = 6;
     this->position_iterations = 2;
     this->time_step = 1.0f / 60.0f;
+    this->track_terrain = TYPE_GRASS; //Default
     this->racing_track.SetContactListener(&this->contact_listener);
 }
 
@@ -27,7 +28,8 @@ b2World& RacingTrack::get_world() {
 }
 
 void RacingTrack::send(ProtocolSocket& p_socket) {
-    std::vector<int32_t> map_info {MSG_SET_BACKGROUND ,TYPE_GRASS, this->height, this->width};
+    std::vector<int32_t> map_info {MSG_SET_BACKGROUND ,this->track_terrain,
+                                   this->height, this->width};
     p_socket.send(map_info);
 
     for (auto& terrain : this->terrains) {
@@ -54,4 +56,8 @@ void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
 void RacingTrack::set_track_size(int32_t height, int32_t width) {
     this->height = height;
     this->width = width;
+}
+
+void RacingTrack::set_track_terrain(int32_t terrain) {
+    this->track_terrain = terrain;
 }

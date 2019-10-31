@@ -50,6 +50,8 @@ public:
         bool is_on_join_mode();
 
         void kill();
+
+        ~Player();
 };
 
 #endif //MICROMACHINES_PLAYER_H

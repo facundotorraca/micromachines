@@ -16,6 +16,7 @@ class RacingTrack {
     int32 velocity_iterations;
     int32 position_iterations;
 
+    int32_t track_terrain;
     int32_t height;
     int32_t width;
 
@@ -27,19 +28,21 @@ class RacingTrack {
     public:
         explicit RacingTrack();
 
-        void send(ProtocolSocket& p_socket);
+        void update();
+
+        b2World& get_world();
 
         b2Body* add_body(b2BodyDef& body);
 
-        b2World& get_world();
+        void send(ProtocolSocket& p_socket);
+
+        void set_track_terrain(int32_t terrain);
+
+        void set_track_size(int32_t height, int32_t width);
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
         void add_static_track_object(StaticTrackObject&& object);
-
-        void set_track_size(int32_t height, int32_t width);
-
-        void update();
 };
 
 

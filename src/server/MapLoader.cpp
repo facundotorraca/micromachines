@@ -32,6 +32,7 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
     json json_tiles_data; tiles_file >> json_tiles_data;
 
     racing_track.set_track_size(json_map_data["height"], json_map_data["width"]);
+    racing_track.set_track_terrain(TYPE_GRASS);
 
     for (int i = 0; i < json_map_data["height"]; i++) {
         for (int j = 0; j < json_map_data["width"]; j++) {
@@ -41,16 +42,14 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
             int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS ]["value"];
             bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS ]["value"];
 
+
+
             if (is_static) {
                 racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID ,i, j, tile_rotation)));
             } else {
                 racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
             }
+
         }
     }
-}
-
-UpdateClient MapLoader::get_info_to_send() {
-    std::vector<int32_t> map_info {MSG_SET_BACKGROUND, TYPE_GRASS, 120, 120};
-    return UpdateClient(std::move(map_info));
 }
