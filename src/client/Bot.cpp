@@ -25,7 +25,7 @@ Bot::Bot(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue) : state(luaL_new
 
 void Bot::execute() {
     std::lock_guard<std::mutex> lock(this->mutex);
-    this->release_old_keys();
+    //this->release_old_keys();
     auto key_event = std::vector<int32_t>();
     this->check_error_lua(lua_getglobal(this->state, this->lua_fun.c_str()));
     this->check_error_lua(lua_pcall(this->state, 0, 2, 0));
