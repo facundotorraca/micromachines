@@ -11,15 +11,22 @@ ThreadPlayer::ThreadPlayer(ProtectedQueue<UpdateClient> &updates_send, Protected
 
 void ThreadPlayer::run() {
     this->sender.start();
-    while (this->running) {
-        try {
+    try {
+        while (this->running) {
             auto data = player.receive_update();
             updates_recv.push(data);
-        } catch (SocketError& exception) {
-            updates_send.close();
-            this->running = false;
         }
+    } catch (const SocketError& exception) {
+        this->stop();
+    } catch (const ProtectedQueueError& exception) {
+        this->stop();
     }
-    this->sender.shutdown();
+    this->stop();
+}
+
+void ThreadPlayer::stop() {
+    updates_send.close();
     this->sender.join();
+    this->sender.shutdown();
+    this->running = false;
 }

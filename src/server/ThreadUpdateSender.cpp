@@ -3,8 +3,9 @@
 //
 
 #include <iostream>
-#include "ThreadUpdateSender.h"
 #include "UpdateClient.h"
+#include <common/SocketError.h>
+#include "ThreadUpdateSender.h"
 
 ThreadUpdateSender::ThreadUpdateSender(Player &player, ProtectedQueue<UpdateClient>& updates):
     player(player),
@@ -12,12 +13,14 @@ ThreadUpdateSender::ThreadUpdateSender(Player &player, ProtectedQueue<UpdateClie
 {}
 
 void ThreadUpdateSender::run() {
-    while (this->running) {
-        try {
+    try {
+        while (this->running) {
             auto update = updates.pop();
             player.send(update);
-        } catch (ProtectedQueueError& exception) {
-            this->running = false;
         }
+    } catch (const ProtectedQueueError& exception) {
+        this->running = false;
+    } catch (const SocketError& exception) {
+        this->running = false;
     }
 }

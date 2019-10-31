@@ -31,7 +31,7 @@ void ThreadAcceptor::remove_confirmed_players() {
 }
 
 void ThreadAcceptor::kill_incoming_players() {
-    for (auto & new_player : this->new_players) {
+    for (auto &new_player : this->new_players) {
         new_player->stop();
     }
 }
@@ -54,3 +54,4 @@ void ThreadAcceptor::run() {
         }
     }
 }
+

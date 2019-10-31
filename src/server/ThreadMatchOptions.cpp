@@ -66,3 +66,4 @@ void ThreadMatchOptions::run_player_options() {
 void ThreadMatchOptions::join() {
     this->thread.join();
 }
+

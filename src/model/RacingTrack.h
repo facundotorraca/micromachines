@@ -16,10 +16,11 @@ class RacingTrack {
     int32 velocity_iterations;
     int32 position_iterations;
 
+    int32_t track_terrain;
     int32_t height;
     int32_t width;
 
-    std::list<std::unique_ptr<Terrain>> terrains;
+            std::list<std::unique_ptr<Terrain>> terrains;
     std::list<StaticTrackObject> static_track_objects;
 
     TerrainContactListener contact_listener;
@@ -38,6 +39,8 @@ class RacingTrack {
         void add_static_track_object(StaticTrackObject&& object);
 
         void set_track_size(int32_t height, int32_t width);
+
+        void set_track_terrain(int32_t terrain);
 
         void update();
 };
