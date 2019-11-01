@@ -275,7 +275,7 @@ that can handle both types of tests. Using the wrong macro causes a compiler
 error.
 
 Also, you must first define a test fixture class before using it in a
-`TEST_F()`, or you'll get_sensor the compiler error "`virtual outside class
+`TEST_F()`, or you'll get the compiler error "`virtual outside class
 declaration`".
 
 For each test defined with `TEST_F()`, Google Test will:

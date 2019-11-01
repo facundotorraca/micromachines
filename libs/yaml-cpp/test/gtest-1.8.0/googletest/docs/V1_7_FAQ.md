@@ -929,7 +929,7 @@ heap check/debug routines.
 
 ## I am building my project with Google Test in Visual Studio and all I'm getting is a bunch of linker errors (or warnings). Help! ##
 
-You may get_sensor a number of the following linker error or warnings if you
+You may get a number of the following linker error or warnings if you
 attempt to link your test project with the Google Test library when
 your project and the are not built using the same compiler settings.
 

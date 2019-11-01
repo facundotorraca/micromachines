@@ -429,7 +429,7 @@ using ::testing::Return;
 By the way, the other situation where an expectation may _not_ be sticky is when it's in a sequence - as soon as another expectation that comes after it in the sequence has been used, it automatically retires (and will never be used to match any call).
 
 ## Uninteresting Calls ##
-A mock object may have many methods, and not all of them are that interesting. For example, in some tests we may not care about how many times `GetX()` and `GetY()` get_sensor called.
+A mock object may have many methods, and not all of them are that interesting. For example, in some tests we may not care about how many times `GetX()` and `GetY()` get called.
 
 In Google Mock, if you are not interested in a method, just don't say anything about it. If a call to this method occurs, you'll see a warning in the test output, but it won't be a failure.
 

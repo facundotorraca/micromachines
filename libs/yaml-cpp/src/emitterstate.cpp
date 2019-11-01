@@ -161,7 +161,7 @@ void EmitterState::EndedGroup(GroupType::value type) {
     }
   }
 
-  // get_sensor rid of the current group
+  // get rid of the current group
   {
     std::unique_ptr<Group> pFinishedGroup = std::move(m_groups.back());
     m_groups.pop_back();

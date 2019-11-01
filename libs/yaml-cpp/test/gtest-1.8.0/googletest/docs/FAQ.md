@@ -65,7 +65,7 @@ Currently `TEST(TestCaseName, TestName)` generates a class named
 contains `_`?
 
   1. If `TestCaseName` starts with an `_` followed by an upper-case letter (say, `_Foo`), we end up with `_Foo_TestName_Test`, which is reserved and thus invalid.
-  1. If `TestCaseName` ends with an `_` (say, `Foo_`), we get_sensor `Foo__TestName_Test`, which is invalid.
+  1. If `TestCaseName` ends with an `_` (say, `Foo_`), we get `Foo__TestName_Test`, which is invalid.
   1. If `TestName` starts with an `_` (say, `_Bar`), we get `TestCaseName__Bar_Test`, which is invalid.
   1. If `TestName` ends with an `_` (say, `Bar_`), we get `TestCaseName_Bar__Test`, which is invalid.
 

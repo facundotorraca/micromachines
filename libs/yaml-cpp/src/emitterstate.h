@@ -173,7 +173,7 @@ class EmitterState {
           return EmitterNodeType::BlockMap;
       }
 
-      // can't get_sensor here
+      // can't get here
       assert(false);
       return EmitterNodeType::NoType;
     }

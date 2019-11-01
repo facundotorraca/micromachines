@@ -254,7 +254,7 @@ Stream::operator bool() const {
          (!m_readahead.empty() && m_readahead[0] != Stream::eof());
 }
 
-// get_sensor
+// get
 // . Extracts a character from the stream and updates our position
 char Stream::get() {
   char ch = peek();
@@ -269,7 +269,7 @@ char Stream::get() {
   return ch;
 }
 
-// get_sensor
+// get
 // . Extracts 'n' characters from the stream and updates our position
 std::string Stream::get(int n) {
   std::string ret;

@@ -2980,7 +2980,7 @@ ACTION_TEMPLATE(DuplicateArg,
                 // Note the comma between int and k:
                 HAS_2_TEMPLATE_PARAMS(int, k, typename, T),
                 AND_1_VALUE_PARAMS(output)) {
-  *output = T(std::tr1::get_sensor<k>(args));
+  *output = T(std::tr1::get<k>(args));
 }
 ```
 

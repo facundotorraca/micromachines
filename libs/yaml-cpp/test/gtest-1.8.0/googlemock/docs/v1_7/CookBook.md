@@ -3364,7 +3364,7 @@ class ReturnSecondArgumentAction {
  public:
   template <typename Result, typename ArgumentTuple>
   Result Perform(const ArgumentTuple& args) const {
-    // To get the i-th (0-based) argument, use tr1::get_sensor<i>(args).
+    // To get the i-th (0-based) argument, use tr1::get<i>(args).
     return tr1::get<1>(args);
   }
 };

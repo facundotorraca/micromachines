@@ -448,7 +448,7 @@ EXPECT_CALL(foo, Bar())
     .After(all_inits);
 ```
 says that `Bar()` can be called only after all elements have been
-initialized (but we don't care about which elements get_sensor initialized
+initialized (but we don't care about which elements get initialized
 before the others).
 
 Modifying an `ExpectationSet` after using it in an `.After()` doesn't

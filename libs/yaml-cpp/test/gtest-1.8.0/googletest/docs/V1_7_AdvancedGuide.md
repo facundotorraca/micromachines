@@ -2062,7 +2062,7 @@ the call stack when an exception is thrown.  To achieve that, set the
 
 If you work on a project that has already been using another testing
 framework and is not ready to completely switch to Google Test yet,
-you can get_sensor much of Google Test's benefit by using its assertions in
+you can get much of Google Test's benefit by using its assertions in
 your existing tests.  Just change your `main()` function to look
 like:
 
