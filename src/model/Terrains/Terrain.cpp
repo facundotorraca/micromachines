@@ -43,7 +43,7 @@ Terrain::Terrain(Terrain &&other) noexcept {
 }
 
 void Terrain::apply_effect(Body *body) {
-    this->apply_terrain_effect((Wheel*)body);
+    this->apply_terrain_effect(body);
 }
 
 /*

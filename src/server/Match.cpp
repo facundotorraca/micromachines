@@ -95,12 +95,7 @@ void Match::run() {
         this->remove_disconnected_players();
 
         if (this->players.empty()) {
-            this->updates_race.close();
-            this->clients_monitor.join();
-            this->running = false;
-            /*Used by the MatchTable, a non started
-            match is also not running, but not dead*/
-            this->stopped = true;
+            this->close();
             return;
         }
 
@@ -108,6 +103,15 @@ void Match::run() {
     }
 
     //wait partida
+}
+
+void Match::close() {
+    this->updates_race.close();
+    this->clients_monitor.join();
+    this->running = false;
+    /*Used by the MatchTable, a non started
+    match is also not running, but not dead*/
+    this->stopped = true;
 }
 
 void Match::apply_update(UpdateRace update) {
@@ -132,11 +136,9 @@ void Match::initialize_players() {
 
         try {
             player.second.send((uint8_t)START_MATCH_FLAG);
-            //std::vector<int32_t> map_info{MSG_SET_BACKGROUND, TYPE_GRASS, 120, 120};
-            //UpdateClient update_map_info(std::move(map_info));
-            //player.second.send(update_map_info);
             player.second.send_track(this->racing_track);
         } catch (const SocketError& exception) {
+            std::cerr << "Player disconnected\n";
             this->players.erase(player.first);
         }
     }
@@ -191,3 +193,5 @@ void Match::initialize_thread_players() {
         this->thread_players.at(id).start();
     }
 }
+
+

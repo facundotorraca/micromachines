@@ -1,6 +1,7 @@
 #ifndef MICROMACHINES_BODY_H
 #define MICROMACHINES_BODY_H
 
+#include <cstdint>
 
 class Body {
     public:

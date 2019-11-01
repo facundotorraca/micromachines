@@ -11,7 +11,7 @@ class Grass : public Terrain {
 
         UpdateClient get_to_send() override;
 
-        void apply_terrain_effect(Wheel* wheel) override;
+        void apply_terrain_effect(Body* wheel) override;
 
         void set_terrain_user_data() override;
 };

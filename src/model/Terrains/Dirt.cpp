@@ -19,7 +19,7 @@ UpdateClient Dirt::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Dirt::apply_terrain_effect(Wheel* wheel) {
+void Dirt::apply_terrain_effect(Body* wheel) {
     ((Wheel*)wheel)->reduce_max_speed(DIRT_SPEED_PROPORTION);
     ((Wheel*)wheel)->set_traction(DIRT_TRACTION_PROPORTION);
 }

@@ -5,6 +5,7 @@
 #include <memory>
 #include "Box2D/Box2D.h"
 #include <common/ProtocolSocket.h>
+#include <model/FinishLine.h>
 #include "model/Terrains/Terrain.h"
 #include "ContactListener.h"
 #include "StaticTrackObject.h"
@@ -22,7 +23,7 @@ class RacingTrack {
 
     std::list<std::unique_ptr<Terrain>> terrains;
     std::list<StaticTrackObject> static_track_objects;
-
+    Sensor* finish_line;
 
     ContactListener contact_listener;
 
@@ -43,7 +44,11 @@ class RacingTrack {
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
+        void set_finish_line(Coordinate begin, Coordinate end);
+
         void add_static_track_object(StaticTrackObject&& object);
+
+        ~RacingTrack();
 };
 
 

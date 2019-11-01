@@ -8,6 +8,7 @@ RacingTrack::RacingTrack():
 {
     this->width = 0;
     this->height = 0;
+    this->finish_line = nullptr;
     this->velocity_iterations = 6;
     this->position_iterations = 2;
     this->time_step = 1.0f / 60.0f;
@@ -40,7 +41,6 @@ void RacingTrack::send(ProtocolSocket& p_socket) {
         UpdateClient update_map = object.get_to_send();
         update_map.send(p_socket);
     }
-
 }
 
 void RacingTrack::add_terrain(std::unique_ptr<Terrain>&& terrain) {
@@ -60,4 +60,13 @@ void RacingTrack::set_track_size(int32_t height, int32_t width) {
 
 void RacingTrack::set_track_terrain(int32_t terrain) {
     this->track_terrain = terrain;
+}
+
+void RacingTrack::set_finish_line(Coordinate begin, Coordinate end) {
+    this->finish_line = new FinishLine(begin, end, this->racing_track);
+}
+
+RacingTrack::~RacingTrack() {
+    if(this->finish_line)
+        delete this->finish_line;
 }

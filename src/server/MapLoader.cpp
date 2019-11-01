@@ -32,6 +32,7 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
     racing_track.set_track_size(json_map_data["height"], json_map_data["width"]);
     racing_track.set_track_terrain(TYPE_GRASS);
 
+    std::vector<Coordinate> finish_line;
     for (int i = 0; i < json_map_data["height"]; i++) {
         for (int j = 0; j < json_map_data["width"]; j++) {
 
@@ -49,8 +50,14 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
             if (type_ID == TYPE_SPAWN_POINT) {
                 this->spawn_points.emplace_back(float(i), float(j), float(tile_rotation));
             }
+
+            if (type_ID == TYPE_FINISH_LINE_BORDER) {
+                finish_line.emplace_back(float(i), float(j), float(tile_rotation));
+            }
         }
     }
+    if (finish_line.size() == 2) racing_track.set_finish_line(finish_line[0], finish_line[1]);
+
 }
 
 void MapLoader::set_cars_spawn_point(std::unordered_map<int32_t, Car>& cars) {

@@ -16,7 +16,7 @@ UpdateClient Asphalt::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Asphalt::apply_terrain_effect(Wheel* wheel) {
+void Asphalt::apply_terrain_effect(Body* wheel) {
     ((Wheel*)wheel)->set_max_speed();
     ((Wheel*)wheel)->set_max_traction();
 }

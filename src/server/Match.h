@@ -43,6 +43,8 @@ class Match : public Thread {
     private:
         void step();
 
+        void close();
+
         void run() override;
 
         void initialize_map();
