@@ -184,7 +184,7 @@ or
     -DGTEST_HAS_PTHREAD=0
 
 When Google Test uses pthread, you may need to add flags to your
-compiler and/or linker to select the pthread library, or you'll get
+compiler and/or linker to select the pthread library, or you'll get_sensor
 link errors.  If you use the CMake script or the deprecated Autotools
 script, this is taken care of for you.  If you use your own build
 script, you'll need to read your compiler and linker's manual to

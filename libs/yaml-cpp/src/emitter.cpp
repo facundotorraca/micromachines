@@ -760,7 +760,7 @@ const char* Emitter::ComputeFullBoolName(bool b) const {
     default:
       break;
   }
-  return b ? "y" : "n";  // should never get here, but it can't hurt to give
+  return b ? "y" : "n";  // should never get_sensor here, but it can't hurt to give
                          // these answers
 }
 

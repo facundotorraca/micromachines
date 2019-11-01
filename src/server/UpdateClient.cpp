@@ -2,6 +2,7 @@
 // Created by facundotorraca on 19/10/19.
 //
 
+#include <iostream>
 #include "UpdateClient.h"
 
 UpdateClient::UpdateClient(std::vector<int32_t>&& message):

@@ -74,7 +74,7 @@ void ThreadIncomingPlayer::run() {
 
         this->dead = true;
     } catch (const SocketError& exception) {
-        this->dead = true;
+        this->stop();
     }
-
 }
+

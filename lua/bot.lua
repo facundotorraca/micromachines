@@ -1,6 +1,11 @@
 i=-2;
 map = {}
-car = {}
+car = {turning = 0, increasing = 0, waitTurn = 0 }
+TO_KEEP_AHEAD = 1
+TO_TURN = 1.5
+TO_STOP_TURN = 1
+ANGLE = 60
+STEP = 0.1
 
 function init(keysDef, actionsDef)
   keys = keysDef
@@ -12,7 +17,6 @@ function addTile(xi, xf, yi, yf, value)
     for y=yi, yf do
       if map[x] == nil then map[x] = {} end
       map[x][y] = value
-      print(x, y)
     end
   end
 end
@@ -25,78 +29,142 @@ end
 
 function getDirections(rot_ini)
   local rot = math.rad(math.fmod(rot_ini, 360))
-  return math.sin(rot) * -1, math.cos(rot)
-  --[[
-  if 337 <= rot or rot < 22 then
-    return 0, 1
-  elseif 22 <= rot and rot < 67 then 
-    return -0.5, 0.5
-  elseif 67 <= rot and rot < 112 then
-    return -1, 0
-  elseif 112 <= rot and rot < 157 then
-    return -0.5, -0.5
-  elseif 157 <= rot and rot < 202 then
-    return 0, -1
-  elseif 202 <= rot and rot < 247 then
-    return 0.5, -0.5
-  elseif 247 <= rot and rot < 292 then
-    return 1, 0
-  elseif 292 <= rot and rot < 337 then
-    return 0.5, 0.5
-  end
-  return 0, 0
-  ]]--
+  local sen_a = math.sin(rot)
+  local sen = sen_a * -1
+  local cos = math.cos(rot)
+  return sen, cos
 end
 
-function canGo(futureX, futureY)
-  if map[futureX] == nil then
+function calcFuture(dirX, dirY, seg)
+  local velX = car.vel * dirX
+  local velY = car.vel * dirY
+  local futureX = math.floor(car.posX + (velX * seg))
+  local futureY = math.floor(car.posY + (velY * seg))
+  return futureX, futureY
+end
+
+function canGo(dirX, dirY, seg)
+  local futureX, futureY = calcFuture(dirX, dirY, seg)
+  if map[futureX] == nil or map[futureX][futureY] == nil then
     return false
-  elseif map[futureX][futureY] == nil then
-    return false
+  end
+  if map[futureX][futureY] >= 3 and map[futureX][futureY] <= 55 then
+    return true
+  end
+  return false
+end
+
+function canGoAhead(dirX, dirY, seg)
+  for k=0.1, seg, STEP do
+    if not canGo(dirX, dirY, k) then
+      return false
+    end
   end
   return true
 end
 
 function canTurn(to)
   local dirX, dirY = getDirections(car.rot + to)
-  local futureX, futureY = calcFuture(dirX, dirY)
-  return canGo(futureX, futureY)
+  return canGoAhead(dirX, dirY, TO_TURN)
 end
 
 function canTurnLeft()
-  print("LEFT")
-  return canTurn(-45)
+  return canTurn(-ANGLE)
 end
 
 function canTurnRight()
-  print("RIGHT")
-  return canTurn(45)
+  return canTurn(ANGLE)
 end
 
-function calcFuture(dirX, dirY)
-  print(dirX, dirY)
-  local velX = car.vel * dirX
-  local velY = car.vel * dirY
-  local futureX = math.floor(car.posX + (velX * 0.1))
-  local futureY = math.floor(car.posY + (velY * 0.1))
-  print(futureX, futureY)
-  return futureX, futureY
+function stopTurn()
+  local turning = car.turning
+  car.turning = 0
+  car.waitTurn = 0
+  if (turning == 1) then
+    return actions.release, keys.right
+  end
+  return actions.release, keys.left
+end
+
+function keepTurning()
+  if car.turning == 1 then
+    return actions.press, keys.right
+  end
+  return actions.press, keys.left
+end
+
+function increase()
+  car.increasing = 1
+  return actions.press, keys.up
+end
+
+function turnRight()
+  car.turning = 1
+  return actions.press, keys.right
+end
+
+function turnLeft()
+  car.turning = 2
+  return actions.press, keys.left
+end
+
+function stop()
+  car.increasing = 0
+  car.waitTurn = 1
+  return actions.release, keys.up
+end
+
+function decideTurning(dirX, dirY)
+  if canGoAhead(dirX, dirY, TO_STOP_TURN) then
+    return stopTurn()
+  end
+  return keepTurning()
+end
+
+
+function decideStoping(dirX, dirY)
+  if car.waitTurn == 0 then
+    return increase()
+  end
+  if canTurnLeft() then
+    return turnLeft()
+  elseif canTurnRight() then
+    return turnRight()
+  else
+    return stop()
+  end
+end
+
+function decideIncreasing(dirX, dirY)
+  if canGoAhead(dirX, dirY, TO_KEEP_AHEAD) then
+    return increase()
+  end
+  return stop()
 end
 
 
 function decide()
-  print("DECIDE")
-  print(car.posX, car.posY, car.rot)
   local dirX, dirY = getDirections(car.rot)
-  local futureX, futureY = calcFuture(dirX, dirY)
-  if not canGo(futureX, futureY) then
-    if canTurnLeft() then
-      return actions.press, keys.left
-    elseif canTurnRight() then
-      return actions.press, keys.right
-    else
-      return actions.release, keys.up
-    end
+  if car.turning ~= 0 then
+    return decideTurning(dirX, dirY)
   end
-  return actions.press, keys.up
+  if car.increasing == 0 then
+    return decideStoping()
+  end
+  return decideIncreasing(dirX, dirY)
+end
+
+function fakeInit()
+  init({up=1, down=2, left= 3, right=4}, {press=1, release=2})
+  createFakeCar()
+  createFakeMap()
+end
+
+function createFakeMap()
+  addTile(1, 100, 1, 100, 40)
+end
+
+
+function createFakeCar ()
+  updateCar({posX = 5, posY=5, rot = 180, vel=20})
 end

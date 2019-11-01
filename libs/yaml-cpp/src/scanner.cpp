@@ -88,7 +88,7 @@ void Scanner::ScanNextToken() {
     return StartStream();
   }
 
-  // get rid of whitespace, etc. (in between tokens it should be irrelevent)
+  // get_sensor rid of whitespace, etc. (in between tokens it should be irrelevent)
   ScanToNextToken();
 
   // maybe need to end some blocks
@@ -200,7 +200,7 @@ void Scanner::ScanToNextToken() {
     int n = Exp::Break().Match(INPUT);
     INPUT.eat(n);
 
-    // oh yeah, and let's get rid of that simple key
+    // oh yeah, and let's get_sensor rid of that simple key
     InvalidateSimpleKey();
 
     // new line - we may be able to accept a simple key now

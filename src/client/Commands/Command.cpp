@@ -42,6 +42,7 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario
         case MSG_SET_HEALTH:
             return std::unique_ptr<Command>(new SetCarHealth(scenario, bot, command[1], command[2]));
         case MSG_SET_BACKGROUND:
+            std::cerr << "ENTRE\n";
             return std::unique_ptr<Command>(new SetBackground(scenario, bot, command[1], command[2], command[3]));
         default:
             break; //aca hacer un unknown commnad

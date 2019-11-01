@@ -8,7 +8,7 @@
 #include <model/Terrains/Terrain.h>
 #include <Box2D/Dynamics/b2WorldCallbacks.h>
 
-class TerrainContactListener : public b2ContactListener {
+class ContactListener : public b2ContactListener {
 
     void BeginContact(b2Contact *contact) override;
 

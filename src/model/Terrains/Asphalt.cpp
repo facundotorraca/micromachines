@@ -6,7 +6,7 @@
 #include "model/FixtureUserData.h"
 
 Asphalt::Asphalt(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-        Terrain(x, y, rotation, ID)
+    Terrain(x, y, rotation, ID)
 {}
 
 UpdateClient Asphalt::get_to_send() {
@@ -16,12 +16,11 @@ UpdateClient Asphalt::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Asphalt::set_terrain_user_data() {
-    this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new AsphaltUserData());
+void Asphalt::apply_terrain_effect(Body* wheel) {
+    ((Wheel*)wheel)->set_max_speed();
+    ((Wheel*)wheel)->set_max_traction();
 }
 
-void Asphalt::apply_effect(Wheel* wheel) {
-    wheel->set_max_speed();
-    wheel->set_max_traction();
+void Asphalt::set_terrain_user_data() {
+    this->terrain_fixture->SetUserData(this);
 }

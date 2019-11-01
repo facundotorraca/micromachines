@@ -9,15 +9,17 @@
 #include <string>
 #include <thread>
 #include "Player.h"
-#include <model/Vehicle/Car.h>
+#include "MapLoader.h"
 #include "UpdateRace.h"
+#include <unordered_map>
 #include "ThreadPlayer.h"
 #include "UpdateClient.h"
 #include <common/Thread.h>
+#include <model/Vehicle/Car.h>
 #include <model/RacingTrack.h>
 #include <common/ProtectedQueue.h>
-#include <unordered_map>
 #include "ThreadClientEventMonitor.h"
+#include "model/GameRules.h"
 
 class Match : public Thread {
     std::string match_name;
@@ -35,16 +37,30 @@ class Match : public Thread {
 
     RacingTrack racing_track;
 
+    MapLoader map_loader;
+
+    GameRules game_rules;
+
     std::mutex mtx;
 
     private:
+        void step();
+
+        void close();
+
         void run() override;
 
         void initialize_map();
 
         void initialize_players();
 
-        void create_update_for_players();
+        void initialize_thread_players();
+
+        void create_general_update_for_players();
+
+        void create_specific_update_for_players();
+
+        void remove_disconnected_players();
 
         void send_to_all(UpdateClient update);
 
@@ -61,17 +77,9 @@ class Match : public Thread {
 
         void add_player(Player&& player);
 
-        std::string get_match_creator();
-
-        std::string get_match_name();
-
         bool was_stopped();
 
-        bool is_runnig();
-
         void stop();
-
-        void step();
 
 };
 

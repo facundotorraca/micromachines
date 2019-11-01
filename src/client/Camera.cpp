@@ -134,7 +134,7 @@ void Camera::drawBackground(int32_t type, int32_t width, int32_t height) {
         for (int j = 0; j < height; j++){
             copyRender(t_factory.getTileTexture(type),
                     tile_width*i, tile_width*j, 0,
-                    tile_width, tile_width);
+                    tile_width + 5, tile_width + 5);
         }
     }
 }

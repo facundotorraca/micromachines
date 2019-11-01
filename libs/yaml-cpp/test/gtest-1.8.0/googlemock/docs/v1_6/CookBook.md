@@ -2982,7 +2982,7 @@ allows you to write
 
 Note that you don't need to specify the types of the mock function
 arguments.  Rest assured that your code is type-safe though:
-you'll get a compiler error if `*arg1` doesn't support the `++`
+you'll get_sensor a compiler error if `*arg1` doesn't support the `++`
 operator, or if the type of `++(*arg1)` isn't compatible with the mock
 function's return type.
 

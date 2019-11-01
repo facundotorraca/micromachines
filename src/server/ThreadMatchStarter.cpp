@@ -13,14 +13,13 @@ ThreadMatchStarter::ThreadMatchStarter(MatchTable& matches, std::list<std::share
 
 void ThreadMatchStarter::close_ended_matches() {
     for (auto running_match = this->running_matches.begin(); running_match != this->running_matches.end();) {
-        if (!(*running_match)->is_runnig()) {
+        if ((*running_match)->dead()) {
             (*running_match)->join();
             running_match = running_matches.erase(running_match);
         } else {
             running_match++;
         }
     }
-   this->matches.remove_end_matches();
 }
 
 void ThreadMatchStarter::stop() {
@@ -39,3 +38,4 @@ void ThreadMatchStarter::run() {
         }
     }
 }
+

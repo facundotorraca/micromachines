@@ -28,10 +28,10 @@ void Terrain::add_to_world(b2World &world) {
     fixture_def.isSensor = true; /*Set fixture to contact*/
     this->terrain_fixture = this->terrain_body->CreateFixture(&fixture_def);
     this->set_terrain_user_data();
-    //groundAreaFixture->SetUserData( new GroundAreaFUD( 0.5f, false ) );
 }
 
 Terrain::Terrain(Terrain &&other) noexcept {
+    this->ID = other.ID;
     this->map_x = other.map_x;
     this->map_y = other.map_y;
     this->rotation = other.rotation;
@@ -40,5 +40,9 @@ Terrain::Terrain(Terrain &&other) noexcept {
 
     other.terrain_body = nullptr;
     other.terrain_fixture = nullptr;
+}
+
+void Terrain::apply_effect(Body *body) {
+    this->apply_terrain_effect(body);
 }
 

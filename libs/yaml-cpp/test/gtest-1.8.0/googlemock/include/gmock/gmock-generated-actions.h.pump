@@ -757,7 +757,7 @@ ACTION_TEMPLATE(InvokeArgument,
   using internal::invoke_argument::InvokeArgumentAdl;
   return InvokeArgumentAdl<return_type>(
       internal::invoke_argument::AdlTag(),
-      ::testing::get<k>(args)$for j [[, p$j]]);
+      ::testing::get_sensor<k>(args)$for j [[, p$j]]);
 }
 
 ]]

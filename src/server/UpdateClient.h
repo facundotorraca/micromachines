@@ -6,6 +6,7 @@
 #define MICROMACHINES_UPDATECLIENT_H
 
 #include <common/ProtocolSocket.h>
+#include <iostream>
 
 class UpdateClient {
     std::vector<int32_t> message;

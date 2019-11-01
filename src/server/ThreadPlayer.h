@@ -18,6 +18,8 @@ class ThreadPlayer : public Thread {
     private:
         void run() override;
 
+        void stop();
+
     public:
         ThreadPlayer(ProtectedQueue<UpdateClient>& updates_send, ProtectedQueue<UpdateRace>& updates_recv, Player& player);
 };

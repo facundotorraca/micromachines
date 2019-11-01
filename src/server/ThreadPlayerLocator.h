@@ -31,6 +31,5 @@ class ThreadPlayerLocator : public Thread {
         void stop();
 };
 
-
-
 #endif //MICROMACHINES_THREADPLAYERLOCATOR_H
+

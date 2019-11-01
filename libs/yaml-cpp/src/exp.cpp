@@ -41,7 +41,7 @@ std::string Escape(Stream& in, int codeLength) {
   for (int i = 0; i < codeLength; i++)
     str += in.get();
 
-  // get the value
+  // get_sensor the value
   unsigned value = ParseHex(str, in.mark());
 
   // legal unicode?

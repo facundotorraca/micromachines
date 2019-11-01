@@ -243,7 +243,7 @@ for defining actions as:
 
 There may be a need for composing `ACTION*` definitions (i.e. invoking
 another `ACTION` inside the definition of one `ACTION*`).  We are not
-sure we want it yet, as one can get a similar effect by putting
+sure we want it yet, as one can get_sensor a similar effect by putting
 `ACTION` definitions in function templates and composing the function
 templates.  We'll revisit this based on user feedback.
 

@@ -16,7 +16,7 @@
 #define RADTODEG 57.295779513082320876f
 
 Car::Car(RacingTrack& racing_track, CarSpecs specs):
-    specs(specs), key_h(NOT_PRESSED), key_v(NOT_PRESSED)
+    specs(specs), key_h(NOT_PRESSED), key_v(NOT_PRESSED), life(specs.max_life), lap_complete(false)
 {
     /*create car body*/
     b2BodyDef bodyDef;
@@ -25,33 +25,38 @@ Car::Car(RacingTrack& racing_track, CarSpecs specs):
 
     /*reduce the world velocity of bodies*/
     this->car_body->SetAngularDamping(0.1);
-    this->create_wheels(racing_track);
 
+    b2PolygonShape polygon_shape;
+    polygon_shape.SetAsBox(CAR_WIDTH/2 + 0.05, CAR_HEIGHT/2 + 0.05);
+    this->car_fixture = this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
+
+    this->car_body->SetUserData(this);
+    this->create_wheels(racing_track);
 }
 
 Car::Car(Car&& other_car) noexcept:
+    life(other_car.life),
     specs(other_car.specs),
     car_body(other_car.car_body),
+    car_fixture(other_car.car_fixture),
     wheels(std::move(other_car.wheels)),
     front_left_joint(other_car.front_left_joint),
     front_right_joint(other_car.front_right_joint)
 {
     this->key_h = other_car.key_h;
     this->key_v = other_car.key_v;
+    this->lap_complete = false;
 
     other_car.key_h = NOT_PRESSED;
     other_car.key_v = NOT_PRESSED;
 
     other_car.car_body = nullptr;
+    other_car.car_fixture = nullptr;
     other_car.front_right_joint = nullptr;
     other_car.front_left_joint = nullptr;
 }
 
 void Car::create_wheels(RacingTrack& racing_track) {
-    b2PolygonShape polygon_shape;
-    polygon_shape.SetAsBox(CAR_WIDTH/2, CAR_HEIGHT/2);
-    this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
-
     //common joint parameters
     b2RevoluteJointDef joint_params;
     joint_params.bodyA = this->car_body; /*Main body*/
@@ -167,7 +172,51 @@ UpdateClient Car::get_update(const int32_t id) {
     return UpdateClient(std::move(params));
 }
 
-// En vez de usar esto lo meto en el params de get_update
-int32_t Car::get_speed() {
-    return int32_t(METER_TO_PIXEL * this->car_body->GetLinearVelocity().Length());
+void Car::set_spawn_point(Coordinate spawn_point) {
+    float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
+    float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
+
+    /*Minus because default start position of Box2D is inverted*/
+    float angle = -spawn_point.get_angle() * DEGTORAD;
+
+    this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
+    for (auto &wheel : this->wheels) {
+        wheel->set_spawn_point(spawn_point);
+    }
+}
+
+void Car::collide(Body* stactic_object) {
+    //HAy que recontra modificarlo//
+    this->life.make_damage(10);
+    if (this->life.is_dead()) {
+        this->life.restart_life();
+    }
+}
+
+int32_t Car::get_ID() {
+    return TYPE_CAR;
+}
+
+void Car::complete_lap() {
+    this->lap_complete = true;
+}
+
+void Car::restart_lap() {
+    this->lap_restarted = true;
+}
+
+bool Car::lap_was_completed() {
+    if (this->lap_complete) {
+        this->lap_complete = false;
+        return true;
+    }
+    return false;
+}
+
+bool Car::lap_was_restarted() {
+    if (this->lap_restarted) {
+        this->lap_restarted = false;
+        return true;
+    }
+    return false;
 }

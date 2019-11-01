@@ -19,12 +19,11 @@ UpdateClient Grass::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Grass::set_terrain_user_data() {
-    this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new GrassUserData());
+void Grass::apply_terrain_effect(Body* wheel) {
+    ((Wheel*)wheel)->set_traction(GRASS_TRACTION_PROPORTION);
+    ((Wheel*)wheel)->reduce_max_speed(GRASS_SPEED_PROPORTION);
 }
 
-void Grass::apply_effect(Wheel* wheel) {
-    wheel->set_traction(GRASS_TRACTION_PROPORTION);
-    wheel->reduce_max_speed(GRASS_SPEED_PROPORTION);
+void Grass::set_terrain_user_data() {
+    this->terrain_fixture->SetUserData(this);
 }

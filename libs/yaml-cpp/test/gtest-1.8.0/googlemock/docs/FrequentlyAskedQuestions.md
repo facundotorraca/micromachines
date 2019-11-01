@@ -613,7 +613,7 @@ some other resources you can use:
 
 Please note that creating an issue in the
 [issue tracker](https://github.com/google/googletest/issues) is _not_
-a good way to get your answer, as it is monitored infrequently by a
+a good way to get_sensor your answer, as it is monitored infrequently by a
 very small number of people.
 
 When asking a question, it's helpful to provide as much of the

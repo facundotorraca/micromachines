@@ -3,11 +3,11 @@
 
 #include <cstdint>
 #include "Box2D/Box2D.h"
+#include <model/Sensor.h>
 #include <server/UpdateClient.h>
 #include <model/Vehicle/Wheel.h>
 
-class Terrain {
-
+class Terrain : public Sensor {
     protected:
         int32_t map_x;
         int32_t map_y;
@@ -29,8 +29,9 @@ class Terrain {
 
         virtual void set_terrain_user_data() = 0;
 
-        virtual void apply_effect(Wheel* wheel) = 0;
-};
+        void apply_effect(Body* body) override;
 
+        virtual void apply_terrain_effect(Body* body) = 0;
+};
 
 #endif //MICROMACHINES_TERRAIN_H

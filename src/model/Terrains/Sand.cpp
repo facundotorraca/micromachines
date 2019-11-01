@@ -19,12 +19,11 @@ UpdateClient Sand::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Sand::set_terrain_user_data() {
-    this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new SandUserData());
+void Sand::apply_terrain_effect(Body* wheel) {
+    ((Wheel*)wheel)->set_traction(SAND_TRACTION_PROPORTION);
+    ((Wheel*)wheel)->reduce_max_speed(SAND_SPEED_PROPORTION);
 }
 
-void Sand::apply_effect(Wheel* wheel) {
-    wheel->set_traction(SAND_TRACTION_PROPORTION);
-    wheel->reduce_max_speed(SAND_SPEED_PROPORTION);
+void Sand::set_terrain_user_data() {
+    this->terrain_fixture->SetUserData(this);
 }

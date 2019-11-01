@@ -90,3 +90,7 @@ void Player::send(uint8_t flag) {
 void Player::send_track(RacingTrack& racing_track) {
     racing_track.send(this->p_socket);
 }
+
+Player::~Player() {
+    this->kill();
+}
