@@ -32,7 +32,7 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
     racing_track.set_track_size(json_map_data["height"], json_map_data["width"]);
     racing_track.set_track_terrain(TYPE_GRASS);
 
-    std::vector<Coordinate> finish_line;
+    std::vector<Coordinate> finish_line; //Stores beginning and end coordinate of the finish line
     for (int i = 0; i < json_map_data["height"]; i++) {
         for (int j = 0; j < json_map_data["width"]; j++) {
 
@@ -57,7 +57,6 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
         }
     }
     if (finish_line.size() == 2) racing_track.set_finish_line(finish_line[0], finish_line[1]);
-
 }
 
 void MapLoader::set_cars_spawn_point(std::unordered_map<int32_t, Car>& cars) {

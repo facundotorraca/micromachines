@@ -1,23 +1,30 @@
 #ifndef MICROMACHINES_GAMERULES_H
 #define MICROMACHINES_GAMERULES_H
 
-#define INVALID_ID -1
-
 #include <map>
 #include <vector>
 
 class GameRules {
     uint32_t total_laps;
     bool finished;
-    std::map<uint32_t, uint32_t> laps;
+    std::map<int32_t, int32_t> laps;
     std::vector<uint32_t> positions;
 
     public:
-        explicit GameRules(uint32_t total_laps);
-        bool add_lap(uint32_t id);
+        explicit GameRules(int32_t total_laps);
+
+        bool add_lap(int32_t id);
+
+        void take_lap(int32_t id);
+
         bool is_finished();
+
         int32_t get_winner();
-        uint32_t get_lap(uint32_t id);
+
+        int32_t get_lap(int32_t id);
+
+        void get_update(int32_t id);
+
         ~GameRules();
 };
 

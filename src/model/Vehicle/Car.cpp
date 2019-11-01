@@ -16,7 +16,7 @@
 #define RADTODEG 57.295779513082320876f
 
 Car::Car(RacingTrack& racing_track, CarSpecs specs):
-    specs(specs), key_h(NOT_PRESSED), key_v(NOT_PRESSED), life(specs.max_life)
+    specs(specs), key_h(NOT_PRESSED), key_v(NOT_PRESSED), life(specs.max_life), lap_complete(false)
 {
     /*create car body*/
     b2BodyDef bodyDef;
@@ -45,6 +45,7 @@ Car::Car(Car&& other_car) noexcept:
 {
     this->key_h = other_car.key_h;
     this->key_v = other_car.key_v;
+    this->lap_complete = false;
 
     other_car.key_h = NOT_PRESSED;
     other_car.key_v = NOT_PRESSED;
@@ -194,4 +195,28 @@ void Car::collide(Body* stactic_object) {
 
 int32_t Car::get_ID() {
     return TYPE_CAR;
+}
+
+void Car::complete_lap() {
+    this->lap_complete = true;
+}
+
+void Car::restart_lap() {
+    this->lap_restarted = true;
+}
+
+bool Car::lap_was_completed() {
+    if (this->lap_complete) {
+        this->lap_complete = false;
+        return true;
+    }
+    return false;
+}
+
+bool Car::lap_was_restarted() {
+    if (this->lap_restarted) {
+        this->lap_restarted = false;
+        return true;
+    }
+    return false;
 }

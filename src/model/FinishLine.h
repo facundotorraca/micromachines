@@ -1,18 +1,23 @@
 #ifndef MICROMACHINES_FINISHLINE_H
 #define MICROMACHINES_FINISHLINE_H
 
+#include "Box2D/Box2D.h"
 #include "model/Sensor.h"
-#include <model/Terrains/Asphalt.h>
+#include "FirstFinishLine.h"
+#include "SecondFinishLine.h"
+#include <common/Coordinate.h>
 
-class FinishLine : public Sensor {
+class FinishLine {
 
-    b2Body* fl_body;
-    b2Fixture * fl_fixture;
+    FirstFinishLine f_finish_line;
+    SecondFinishLine s_finish_line;
+
+    bool cross_first;
+    bool cross_second;
 
     public:
         FinishLine(Coordinate begin, Coordinate end, b2World& track);
 
-        void apply_effect(Body *body) override;
 };
 
 

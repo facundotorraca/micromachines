@@ -46,9 +46,3 @@ void Terrain::apply_effect(Body *body) {
     this->apply_terrain_effect(body);
 }
 
-/*
-Terrain::~Terrain() {
-    if(this->terrain_fixture && this->terrain_fixture->GetUserData())
-        delete (FixtureUserData*) this->terrain_fixture->GetUserData();
-}
-*/

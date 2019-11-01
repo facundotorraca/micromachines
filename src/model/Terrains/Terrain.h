@@ -32,8 +32,6 @@ class Terrain : public Sensor {
         void apply_effect(Body* body) override;
 
         virtual void apply_terrain_effect(Body* body) = 0;
-
-        //~Terrain();
 };
 
 #endif //MICROMACHINES_TERRAIN_H

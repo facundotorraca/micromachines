@@ -23,7 +23,7 @@ class RacingTrack {
 
     std::list<std::unique_ptr<Terrain>> terrains;
     std::list<StaticTrackObject> static_track_objects;
-    Sensor* finish_line;
+    FinishLine* finish_line;
 
     ContactListener contact_listener;
 
@@ -40,7 +40,7 @@ class RacingTrack {
 
         void set_track_terrain(int32_t terrain);
 
-        void set_track_size(int32_t height, int32_t width);
+        void set_track_size(int32_t height, int32_t track_width);
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 

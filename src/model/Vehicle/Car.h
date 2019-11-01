@@ -25,6 +25,9 @@ class Car : public Body {
     int32_t key_v;
     int32_t key_h;
 
+    bool lap_complete;
+    bool lap_restarted;
+
     private:
         void create_wheels(RacingTrack& racing_track);
 
@@ -45,11 +48,20 @@ class Car : public Body {
 
         void press_key(int32_t key);
 
+        int32_t get_ID() override;
+
         void update();
 
-        int32_t get_ID() override ;
-
         ~Car();
+
+        /*-------------Race_handlers---------*/
+        bool lap_was_completed();
+
+        bool lap_was_restarted();
+
+        void restart_lap();
+
+        void complete_lap();
 };
 
 #endif //MICROMACHINES_CAR_H

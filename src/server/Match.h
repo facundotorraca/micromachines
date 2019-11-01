@@ -19,6 +19,7 @@
 #include <model/RacingTrack.h>
 #include <common/ProtectedQueue.h>
 #include "ThreadClientEventMonitor.h"
+#include "model/GameRules.h"
 
 class Match : public Thread {
     std::string match_name;
@@ -38,6 +39,8 @@ class Match : public Thread {
 
     MapLoader map_loader;
 
+    GameRules game_rules;
+
     std::mutex mtx;
 
     private:
@@ -53,7 +56,9 @@ class Match : public Thread {
 
         void initialize_thread_players();
 
-        void create_update_for_players();
+        void create_general_update_for_players();
+
+        void create_specific_update_for_players();
 
         void remove_disconnected_players();
 

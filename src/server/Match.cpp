@@ -22,6 +22,7 @@
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),
     map_loader(MAP_PATH),
+    game_rules(5),
     updates_race(10000),
     match_name(std::move(match_name)),
     match_creator(std::move(match_creator)),
@@ -82,7 +83,7 @@ void Match::run() {
     this->initialize_map();
     this->initialize_players();
     this->initialize_thread_players();
-    this->create_update_for_players();
+    this->create_general_update_for_players();
 
     this->clients_monitor.start();
 
@@ -91,7 +92,8 @@ void Match::run() {
 
     while (this->running) {
         this->step();
-        this->create_update_for_players();
+        this->create_general_update_for_players(); //Update related with view
+        this->create_specific_update_for_players(); //Updates related with info
         this->remove_disconnected_players();
 
         if (this->players.empty()) {
@@ -101,7 +103,6 @@ void Match::run() {
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000/FRAMES_PER_SECOND));
     }
-
     //wait partida
 }
 
@@ -145,8 +146,8 @@ void Match::initialize_players() {
     this->map_loader.set_cars_spawn_point(this->cars);
 }
 
-void Match::create_update_for_players() {
-    for (auto& car : cars){
+void Match::create_general_update_for_players() {
+    for (auto& car : cars) {
         auto update = car.second.get_update(car.first);
         this->send_to_all(update);
     }
@@ -191,6 +192,19 @@ void Match::initialize_thread_players() {
                                      std::forward_as_tuple(updates_players.at(id),updates_race, player.second));
         this->create_info_player_updates(id); /* Send own car ID and race track ID*/
         this->thread_players.at(id).start();
+    }
+}
+
+void Match::create_specific_update_for_players() {
+    for (auto& car : cars) {
+        if (car.second.lap_was_completed()) {
+            game_rules.add_lap(car.first);
+            game_rules.get_update(car.first);
+        }
+        if (car.second.lap_was_restarted()) {
+            game_rules.take_lap(car.first);
+            game_rules.get_update(car.first);
+        }
     }
 }
 

@@ -21,7 +21,9 @@ b2Body* RacingTrack::add_body(b2BodyDef& body) {
 }
 
 void RacingTrack::update() {
-    this->racing_track.Step(this->time_step, this->velocity_iterations, this->position_iterations);
+    this->racing_track.Step(this->time_step,
+                      this->velocity_iterations,
+                      this->position_iterations);
 }
 
 b2World& RacingTrack::get_world() {
@@ -29,8 +31,7 @@ b2World& RacingTrack::get_world() {
 }
 
 void RacingTrack::send(ProtocolSocket& p_socket) {
-    std::vector<int32_t> map_info {MSG_SET_BACKGROUND ,this->track_terrain,
-                                   this->height, this->width};
+    std::vector<int32_t> map_info {MSG_SET_BACKGROUND ,this->track_terrain, this->height, this->width};
     p_socket.send(map_info);
 
     for (auto& terrain : this->terrains) {
@@ -51,11 +52,11 @@ void RacingTrack::add_terrain(std::unique_ptr<Terrain>&& terrain) {
 void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
     this->static_track_objects.push_back(std::move(object));
     this->static_track_objects.back().add_to_world(this->racing_track);
-
 }
-void RacingTrack::set_track_size(int32_t height, int32_t width) {
-    this->height = height;
-    this->width = width;
+
+void RacingTrack::set_track_size(int32_t track_height, int32_t track_width) {
+    this->height = track_height;
+    this->width = track_width;
 }
 
 void RacingTrack::set_track_terrain(int32_t terrain) {
@@ -67,6 +68,5 @@ void RacingTrack::set_finish_line(Coordinate begin, Coordinate end) {
 }
 
 RacingTrack::~RacingTrack() {
-    if(this->finish_line)
-        delete this->finish_line;
+    delete this->finish_line;
 }
