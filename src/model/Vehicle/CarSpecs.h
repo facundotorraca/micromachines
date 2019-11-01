@@ -2,6 +2,7 @@
 #define MICROMACHINES_CARSPECS_H
 
 typedef struct {
+    float max_life;
     float max_forward_speed;
     float max_backward_speed;
     float back_wheel_max_force;

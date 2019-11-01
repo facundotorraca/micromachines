@@ -299,7 +299,7 @@ void b2TimeOfImpact(b2TOIOutput* output, const b2TOIInput* input)
 		sweepB.GetTransform(&xfB, t1);
 
 		// Get the distance between shapes. We can also use the results
-		// to get a separating axis.
+		// to get_sensor a separating axis.
 		distanceInput.transformA = xfA;
 		distanceInput.transformB = xfB;
 		b2DistanceOutput distanceOutput;

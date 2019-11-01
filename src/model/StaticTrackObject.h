@@ -1,10 +1,12 @@
 #ifndef MICROMACHINES_STATICTRACKOBJECT_H
 #define MICROMACHINES_STATICTRACKOBJECT_H
 
+#include "Body.h"
+#include "FixtureUserData.h"
 #include <server/UpdateClient.h>
 #include <Box2D/Dynamics/b2Fixture.h>
 
-class StaticTrackObject {
+class StaticTrackObject : public Body {
     protected:
         int32_t map_x;
         int32_t map_y;
@@ -22,7 +24,11 @@ class StaticTrackObject {
 
         void add_to_world(b2World& world);
 
+        void collide(Body* body) override;
+
         UpdateClient get_to_send();
+
+        int32_t get_ID() override ;
 };
 
 #endif //MICROMACHINES_STATICTRACKOBJECT_H

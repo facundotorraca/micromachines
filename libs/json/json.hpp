@@ -1393,7 +1393,7 @@ auto from_json_array_impl(const BasicJsonType& j, ConstructibleArrayType& arr, p
     std::transform(j.begin(), j.end(),
                    std::inserter(arr, end(arr)), [](const BasicJsonType & i)
     {
-        // get<BasicJsonType>() returns *this, this won't call a from_json
+        // get_sensor<BasicJsonType>() returns *this, this won't call a from_json
         // method when value_type is BasicJsonType
         return i.template get<typename ConstructibleArrayType::value_type>();
     });
@@ -1409,7 +1409,7 @@ void from_json_array_impl(const BasicJsonType& j, ConstructibleArrayType& arr,
         j.begin(), j.end(), std::inserter(arr, end(arr)),
         [](const BasicJsonType & i)
     {
-        // get<BasicJsonType>() returns *this, this won't call a from_json
+        // get_sensor<BasicJsonType>() returns *this, this won't call a from_json
         // method when value_type is BasicJsonType
         return i.template get<typename ConstructibleArrayType::value_type>();
     });
@@ -1581,7 +1581,7 @@ constexpr const auto& from_json = detail::static_const<detail::from_json_fn>::va
 
 #include <ciso646> // or, and, not
 #include <iterator> // begin, end
-#include <tuple> // tuple, get
+#include <tuple> // tuple, get_sensor
 #include <type_traits> // is_same, is_constructible, is_floating_point, is_enum, underlying_type
 #include <utility> // move, forward, declval, pair
 #include <valarray> // valarray
@@ -2189,7 +2189,7 @@ struct wide_string_input_helper
         }
         else
         {
-            // get the current character
+            // get_sensor the current character
             const auto wc = static_cast<int>(str[current_wchar++]);
 
             // UTF-32 to UTF-8 encoding
@@ -2244,7 +2244,7 @@ struct wide_string_input_helper<WideStringType, 2>
         }
         else
         {
-            // get the current character
+            // get_sensor the current character
             const auto wc = static_cast<int>(str[current_wchar++]);
 
             // UTF-16 to UTF-8 encoding
@@ -2688,7 +2688,7 @@ class lexer
 
         while (true)
         {
-            // get next character
+            // get_sensor next character
             switch (get())
             {
                 // end of file while parsing string
@@ -3681,7 +3681,7 @@ scan_number_done:
     }
 
     /*
-    @brief get next character from the input
+    @brief get_sensor next character from the input
 
     This function provides the interface to the used input adapter. It does
     not throw in case the input reached EOF, but returns a
@@ -5706,7 +5706,7 @@ class iter_impl
             }
 
             case value_t::null:
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+                JSON_THROW(invalid_iterator::create(214, "cannot get_sensor value"));
 
             default:
             {
@@ -5715,7 +5715,7 @@ class iter_impl
                     return *m_object;
                 }
 
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+                JSON_THROW(invalid_iterator::create(214, "cannot get_sensor value"));
             }
         }
     }
@@ -5749,7 +5749,7 @@ class iter_impl
                     return m_object;
                 }
 
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+                JSON_THROW(invalid_iterator::create(214, "cannot get_sensor value"));
             }
         }
     }
@@ -6039,7 +6039,7 @@ class iter_impl
                 return *std::next(m_it.array_iterator, n);
 
             case value_t::null:
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+                JSON_THROW(invalid_iterator::create(214, "cannot get_sensor value"));
 
             default:
             {
@@ -6048,7 +6048,7 @@ class iter_impl
                     return *m_object;
                 }
 
-                JSON_THROW(invalid_iterator::create(214, "cannot get value"));
+                JSON_THROW(invalid_iterator::create(214, "cannot get_sensor value"));
             }
         }
     }
@@ -11379,7 +11379,7 @@ class serializer
 
     void dump_float(number_float_t x, std::false_type /*is_ieee_single_or_double*/)
     {
-        // get number of digits for a float -> text -> float round-trip
+        // get_sensor number of digits for a float -> text -> float round-trip
         static constexpr auto d = std::numeric_limits<number_float_t>::max_digits10;
 
         // the actual conversion
@@ -14841,12 +14841,12 @@ class basic_json
                                        JSONSerializer<ValueType>::from_json(std::declval<const basic_json_t&>(), std::declval<ValueType&>())))
     {
         // we cannot static_assert on ValueTypeCV being non-const, because
-        // there is support for get<const basic_json_t>(), which is why we
+        // there is support for get_sensor<const basic_json_t>(), which is why we
         // still need the uncvref
         static_assert(not std::is_reference<ValueTypeCV>::value,
-                      "get() cannot be used with reference types, you might want to use get_ref()");
+                      "get_sensor() cannot be used with reference types, you might want to use get_ref()");
         static_assert(std::is_default_constructible<ValueType>::value,
-                      "types must be DefaultConstructible when used with get()");
+                      "types must be DefaultConstructible when used with get_sensor()");
 
         ValueType ret;
         JSONSerializer<ValueType>::from_json(*this, ret);
@@ -14892,7 +14892,7 @@ class basic_json
                                        JSONSerializer<ValueTypeCV>::from_json(std::declval<const basic_json_t&>())))
     {
         static_assert(not std::is_reference<ValueTypeCV>::value,
-                      "get() cannot be used with reference types, you might want to use get_ref()");
+                      "get_sensor() cannot be used with reference types, you might want to use get_ref()");
         return JSONSerializer<ValueTypeCV>::from_json(*this);
     }
 
@@ -15128,7 +15128,7 @@ class basic_json
                    , int >::type = 0 >
     operator ValueType() const
     {
-        // delegate the call to get<>() const
+        // delegate the call to get_sensor<>() const
         return get<ValueType>();
     }
 
@@ -19704,7 +19704,7 @@ class basic_json
                     result.at(top_pointer);
                 }
 
-                // get reference to parent of JSON pointer ptr
+                // get_sensor reference to parent of JSON pointer ptr
                 const auto last_path = ptr.pop_back();
                 basic_json& parent = result[ptr];
 
@@ -19754,7 +19754,7 @@ class basic_json
         // wrapper for "remove" operation; remove value at ptr
         const auto operation_remove = [&result](json_pointer & ptr)
         {
-            // get reference to parent of JSON pointer ptr
+            // get_sensor reference to parent of JSON pointer ptr
             const auto last_path = ptr.pop_back();
             basic_json& parent = result.at(ptr);
 
@@ -19788,7 +19788,7 @@ class basic_json
         // iterate and apply the operations
         for (const auto& val : json_patch)
         {
-            // wrapper to get a value for an operation
+            // wrapper to get_sensor a value for an operation
             const auto get_value = [&val](const std::string & op,
                                           const std::string & member,
                                           bool string_type) -> basic_json &

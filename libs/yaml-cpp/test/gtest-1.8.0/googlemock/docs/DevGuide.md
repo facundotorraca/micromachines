@@ -69,7 +69,7 @@ verify that there are no failures.
 
 # Contributing Code #
 
-We are excited that Google Mock is now open source, and hope to get
+We are excited that Google Mock is now open source, and hope to get_sensor
 great patches from the community. Before you fire up your favorite IDE
 and begin hammering away at that new feature, though, please take the
 time to read this section and understand the process. While it seems

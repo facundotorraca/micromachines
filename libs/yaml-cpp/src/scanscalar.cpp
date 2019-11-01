@@ -57,7 +57,7 @@ std::string ScanScalar(Stream& INPUT, ScanScalarParams& params) {
 
       // escaped newline? (only if we're escaping on slash)
       if (params.escape == '\\' && Exp::EscBreak().Matches(INPUT)) {
-        // eat escape character and get out (but preserve trailing whitespace!)
+        // eat escape character and get_sensor out (but preserve trailing whitespace!)
         INPUT.get();
         lastNonWhitespaceChar = scalar.size();
         lastEscapedChar = scalar.size();

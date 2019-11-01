@@ -2,7 +2,7 @@
 #define MICROMACHINES_ENTITYTYPE_H
 
 #define TYPE_CAR 0
-#define TYPE_TRACK 10
+#define TYPE_STATIC_OBJECT 10
 #define TYPE_WHEEL 15
 
 /*---------TRACK_TILES---------*/

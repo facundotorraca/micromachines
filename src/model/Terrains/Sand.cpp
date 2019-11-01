@@ -9,7 +9,7 @@
 #define SAND_TRACTION_PROPORTION 0.3f
 
 Sand::Sand(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-    Terrain(x, y, rotation, ID, false)
+    Terrain(x, y, rotation, ID)
 {}
 
 UpdateClient Sand::get_to_send() {
@@ -19,12 +19,11 @@ UpdateClient Sand::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Sand::set_terrain_user_data() {
-    this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new FixtureUserData(TYPE_SAND));
+void Sand::apply_terrain_effect(Wheel* wheel) {
+    ((Wheel*)wheel)->set_traction(SAND_TRACTION_PROPORTION);
+    ((Wheel*)wheel)->reduce_max_speed(SAND_SPEED_PROPORTION);
 }
 
-void Sand::apply_effect(Wheel* wheel) {
-    wheel->set_traction(SAND_TRACTION_PROPORTION);
-    wheel->reduce_max_speed(SAND_SPEED_PROPORTION);
+void Sand::set_terrain_user_data() {
+    this->terrain_fixture->SetUserData(this);
 }

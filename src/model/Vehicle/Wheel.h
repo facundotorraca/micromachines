@@ -4,10 +4,12 @@
 #include <set>
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
+#include <model/Body.h>
 #include <model/FixtureUserData.h>
 #include <common/Coordinate.h>
+#include <model/StaticTrackObject.h>
 
-class Wheel {
+class Wheel : public Body {
     b2Body* wheel_body;
     b2Fixture* wheel_fixture{};
 
@@ -37,6 +39,8 @@ class Wheel {
 
         void set_spawn_point(Coordinate spawn_point);
 
+        void collide(Body* static_object) override;
+
         const b2Vec2& get_position();
 
         void update(uint8_t key);
@@ -44,6 +48,8 @@ class Wheel {
         b2Body* get_body();
 
         float get_angle();
+
+        int32_t get_ID() override;
 
         /*--------------Terrain Modifiers------------*/
         void set_traction(float proportion);

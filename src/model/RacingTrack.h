@@ -6,7 +6,7 @@
 #include "Box2D/Box2D.h"
 #include <common/ProtocolSocket.h>
 #include "model/Terrains/Terrain.h"
-#include "TerrainContactListener.h"
+#include "ContactListener.h"
 #include "StaticTrackObject.h"
 
 class RacingTrack {
@@ -24,7 +24,7 @@ class RacingTrack {
     std::list<StaticTrackObject> static_track_objects;
 
 
-    TerrainContactListener contact_listener;
+    ContactListener contact_listener;
 
     public:
         explicit RacingTrack();

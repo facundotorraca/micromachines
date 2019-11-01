@@ -3608,7 +3608,7 @@ class ReturnSecondArgumentAction {
   template <typename Result, typename ArgumentTuple>
   Result Perform(const ArgumentTuple& args) const {
     // To get the i-th (0-based) argument, use ::testing::get<i>(args).
-    return ::testing::get<1>(args);
+    return ::testing::get_sensor<1>(args);
   }
 };
 ```

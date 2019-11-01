@@ -41,6 +41,8 @@ class Match : public Thread {
     std::mutex mtx;
 
     private:
+        void step();
+
         void run() override;
 
         void initialize_map();
@@ -68,15 +70,10 @@ class Match : public Thread {
 
         void add_player(Player&& player);
 
-        std::string get_match_creator();
-
-        std::string get_match_name();
-
         bool was_stopped();
 
         void stop();
 
-        void step();
 };
 
 

@@ -12,13 +12,13 @@ class GameRules {
     std::map<uint32_t, uint32_t> laps;
     std::vector<uint32_t> positions;
 
- public:
-    explicit GameRules(uint32_t total_laps);
-    bool add_lap(uint32_t id);
-    bool is_finished();
-    int32_t get_winner();
-    uint32_t get_lap(uint32_t id);
-    ~GameRules();
+    public:
+        explicit GameRules(uint32_t total_laps);
+        bool add_lap(uint32_t id);
+        bool is_finished();
+        int32_t get_winner();
+        uint32_t get_lap(uint32_t id);
+        ~GameRules();
 };
 
 #endif //MICROMACHINES_GAMERULES_H

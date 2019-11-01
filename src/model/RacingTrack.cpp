@@ -44,15 +44,15 @@ void RacingTrack::send(ProtocolSocket& p_socket) {
 }
 
 void RacingTrack::add_terrain(std::unique_ptr<Terrain>&& terrain) {
-    terrain->add_to_world(this->racing_track);
     this->terrains.push_back(std::move(terrain));
+    this->terrains.back()->add_to_world(this->racing_track);
 }
 
 void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
-    object.add_to_world(this->racing_track);
     this->static_track_objects.push_back(std::move(object));
-}
+    this->static_track_objects.back().add_to_world(this->racing_track);
 
+}
 void RacingTrack::set_track_size(int32_t height, int32_t width) {
     this->height = height;
     this->width = width;
