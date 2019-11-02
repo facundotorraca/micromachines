@@ -157,6 +157,24 @@ void Camera::drawSpeedometer(int32_t p_speed) {
 }
 
 void Camera::drawHealthBar(int32_t health) {
+    SDL_Texture* border = t_factory.getHealthBarTexture();
+    SDL_Texture* bar = t_factory.getHealthTexture();
 
+    int w = 51*window_scale*5;
+    int h = 13*window_scale*5;
+
+    int srcwidth = (int)(12+(36*((double)health/100.0)));
+    SDL_Rect orig_bar{0, 0, srcwidth, 13};
+
+    int x = width - (500*window_scale);
+    int y = 170*window_scale;
+
+    SDL_Rect dst_border{x, y, w, h};
+
+    int dstwidth = (int)(12+(36*((double)health/100.0)))*window_scale*5;
+    SDL_Rect dst_bar{x, y, dstwidth, h};
+
+    SDL_RenderCopy(renderer, border, nullptr, &dst_border);
+    SDL_RenderCopy(renderer, bar, &orig_bar, &dst_bar);
 }
 

@@ -16,3 +16,6 @@ void Hud::draw(Camera &camera) {
     camera.drawSpeedometer(speed);
     camera.drawHealthBar(health);
 }
+
+Hud::Hud() : health(100), lap(0), speed(0){
+}

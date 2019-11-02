@@ -15,6 +15,8 @@ class TextureFactory {
     SDL_Texture* damaged_car_texture;
     SDL_Texture* wheel_texture;
     SDL_Texture* speedo_texture;
+    SDL_Texture* border_texture;
+    SDL_Texture* bar_texture;
     std::map<int32_t, SDL_Texture*> tile_textures;
 public:
     explicit TextureFactory(SDL_Renderer* renderer){
@@ -23,6 +25,8 @@ public:
             damaged_car_texture = IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png");
             wheel_texture = IMG_LoadTexture(renderer, "assets/sprites/wheel_3.png");
             speedo_texture = IMG_LoadTexture(renderer, "assets/sprites/speedometer.png");
+            border_texture = IMG_LoadTexture(renderer, "assets/sprites/UI/Oil bar 2.png");
+            bar_texture = IMG_LoadTexture(renderer, "assets/sprites/UI/Oil bar.png");
 
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             tile_textures.emplace(3, IMG_LoadTexture(renderer,"assets/sprites/Track/AR_3a.png"));
@@ -98,9 +102,13 @@ public:
         this->car_texture = other.car_texture;
         this->wheel_texture = other.wheel_texture;
         this->speedo_texture = other.speedo_texture;
+        this->bar_texture = other.bar_texture;
+        this->border_texture = other.border_texture;
         other.car_texture = nullptr;
         other.wheel_texture = nullptr;
         other.speedo_texture = nullptr;
+        other.bar_texture = nullptr;
+        other.border_texture = nullptr;
         this->tile_textures = std::move(other.tile_textures);
         return *this;
     }
@@ -126,6 +134,17 @@ public:
         return speedo_texture;
     }
 
+    SDL_Texture *getDamagedCarTexture() {
+        return damaged_car_texture;
+    }
+
+    SDL_Texture* getHealthBarTexture(){
+        return border_texture;
+    }
+
+    SDL_Texture* getHealthTexture(){
+        return bar_texture;
+    }
     ~TextureFactory(){
         if (car_texture)
             SDL_DestroyTexture(car_texture);
@@ -133,14 +152,15 @@ public:
             SDL_DestroyTexture(wheel_texture);
         if (speedo_texture)
             SDL_DestroyTexture(speedo_texture);
+        if (border_texture)
+            SDL_DestroyTexture(border_texture);
+        if (bar_texture)
+            SDL_DestroyTexture(bar_texture);
         for (auto& tex : tile_textures){
             SDL_DestroyTexture(tex.second);
         }
     }
 
-    SDL_Texture *getDamagedCarTexture() {
-        return damaged_car_texture;
-    }
 
 };
 
