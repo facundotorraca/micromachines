@@ -11,6 +11,7 @@
 #include <SDL2/SDL.h>
 #include <common/Sizes.h>
 #include "TextureFactory.h"
+#include "TextDrawer.h"
 
 struct CarData{
     int32_t x;
@@ -27,6 +28,7 @@ class Camera {
     double window_scale;
     double draw_scale;
     TextureFactory t_factory;
+    TextDrawer t_drawer;
     SDL_Renderer* renderer;
     SDL_Window* window;
     bool isInCamera(int x, int y, int w, int h);
@@ -42,6 +44,8 @@ public:
     void drawTile(int32_t posx, int32_t posy, int32_t rot, int32_t type);
     void drawWheel(int32_t posx, int32_t posy, int32_t rot);
     void drawBackground(int32_t type, int32_t width, int32_t height);
+    void drawSpeedometer(int32_t speed);
+    void drawHealthBar(int32_t health);
     ~Camera();
 };
 

@@ -24,8 +24,10 @@ void Scenario::updateCar(CarInfo &info) {
                      std::forward_as_tuple(info.car_id),
                      std::forward_as_tuple());
     }
-    if (info.car_id == this->my_car_id)
+    if (info.car_id == this->my_car_id){
         camera.update(info.carx, info.cary, info.carrot);
+        hud.setSpeed(info.carvel);
+    }
 
     cars.at(info.car_id).update_all(info);
 }
@@ -37,6 +39,7 @@ void Scenario::draw() {
     for (auto& car : cars){
         car.second.draw(camera);
     }
+    hud.draw(camera);
     camera.draw();
 }
 
@@ -47,6 +50,8 @@ void Scenario::setCarHealth(int32_t id, int32_t health) {
     } catch (std::out_of_range& e) {
         std::cerr << "setCarHealth: invalid ID" << std::endl;
     }
+    if (id == this->my_car_id)
+        hud.setHealth(health);
 
     cars.at(id).setHealth(health);
 }

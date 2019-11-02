@@ -9,10 +9,12 @@
 #include "Camera.h"
 #include "Map.h"
 #include "Entities/CarInfo.h"
+#include "Hud.h"
 
 class Scenario {
     Camera camera;
     Map map;
+    Hud hud;
     int32_t my_car_id;
     std::map<int32_t, Car> cars;
     std::mutex mtx;

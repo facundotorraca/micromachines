@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Camera.h"
 #include <cmath>
+#include <iomanip>
 
 #define DEG2RAD 0.01745329252
 #define CAM_DEAD_ZONE 0
@@ -17,15 +18,18 @@ Camera::Camera() :
     window_scale(0.5f*(((double)height/1080)+((double)width/1920))),
     draw_scale(1),
     t_factory(nullptr),
+    t_drawer(nullptr),
     renderer(nullptr),
     window(nullptr)
 {
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     window = SDL_CreateWindow("Micromachines", 0, 0, width, height,
             SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1,
             SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     t_factory = std::move(TextureFactory(renderer));
+    t_drawer = std::move(TextDrawer(renderer));
     //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
@@ -125,6 +129,7 @@ bool Camera::isInCamera(int x,int y, int w, int h){
 Camera::~Camera() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_Quit();
     SDL_Quit();
 }
 
@@ -137,5 +142,23 @@ void Camera::drawBackground(int32_t type, int32_t width, int32_t height) {
                     tile_width + 5, tile_width + 5);
         }
     }
+}
+
+void Camera::drawSpeedometer(int32_t p_speed) {
+    int speed = p_speed/METER_TO_PIXEL;
+    int x = width-(500*window_scale);
+    int y = 60*window_scale;
+    int h = 60*window_scale;
+    int w = h*1.1212121;
+
+    SDL_Texture* speedo = t_factory.getSpeedometer();
+    std::string text = std::to_string(speed)+" km/h";
+    SDL_Rect dst{x, y, w, h};
+    SDL_RenderCopy(renderer, speedo, nullptr, &dst);
+    t_drawer.drawText(text, width-(420*window_scale), w, w*0.7, 5*window_scale, 7);
+}
+
+void Camera::drawHealthBar(int32_t health) {
+
 }
 

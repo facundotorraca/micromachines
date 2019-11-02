@@ -14,6 +14,7 @@ class TextureFactory {
     SDL_Texture* car_texture;
     SDL_Texture* damaged_car_texture;
     SDL_Texture* wheel_texture;
+    SDL_Texture* speedo_texture;
     std::map<int32_t, SDL_Texture*> tile_textures;
 public:
     explicit TextureFactory(SDL_Renderer* renderer){
@@ -21,6 +22,7 @@ public:
             car_texture = IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png");
             damaged_car_texture = IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png");
             wheel_texture = IMG_LoadTexture(renderer, "assets/sprites/wheel_3.png");
+            speedo_texture = IMG_LoadTexture(renderer, "assets/sprites/speedometer.png");
 
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             tile_textures.emplace(3, IMG_LoadTexture(renderer,"assets/sprites/Track/AR_3a.png"));
@@ -95,8 +97,10 @@ public:
     TextureFactory& operator=(TextureFactory&& other) noexcept{
         this->car_texture = other.car_texture;
         this->wheel_texture = other.wheel_texture;
+        this->speedo_texture = other.speedo_texture;
         other.car_texture = nullptr;
         other.wheel_texture = nullptr;
+        other.speedo_texture = nullptr;
         this->tile_textures = std::move(other.tile_textures);
         return *this;
     }
@@ -118,11 +122,17 @@ public:
         return wheel_texture;
     }
 
+    SDL_Texture* getSpeedometer(){
+        return speedo_texture;
+    }
+
     ~TextureFactory(){
         if (car_texture)
             SDL_DestroyTexture(car_texture);
         if (wheel_texture)
             SDL_DestroyTexture(wheel_texture);
+        if (speedo_texture)
+            SDL_DestroyTexture(speedo_texture);
         for (auto& tex : tile_textures){
             SDL_DestroyTexture(tex.second);
         }
