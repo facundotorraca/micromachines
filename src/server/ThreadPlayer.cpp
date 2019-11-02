@@ -6,7 +6,8 @@ ThreadPlayer::ThreadPlayer(ProtectedQueue<UpdateClient> &updates_send, Protected
     sender(player, updates_send),
     updates_send(updates_send),
     updates_recv(updates_recv),
-    player(player)
+    player(player),
+    player_on_hold(false)
 {}
 
 void ThreadPlayer::run() {
@@ -14,7 +15,8 @@ void ThreadPlayer::run() {
     try {
         while (this->running) {
             auto data = player.receive_update();
-            updates_recv.push(data);
+            if (!player_on_hold)
+                updates_recv.push(data);
         }
     } catch (const SocketError& exception) {
         this->stop();
@@ -28,4 +30,8 @@ void ThreadPlayer::stop() {
     this->sender.shutdown();
     this->sender.join();
     this->running = false;
+}
+
+void ThreadPlayer::set_player_on_hold() {
+    this->player_on_hold = true;
 }

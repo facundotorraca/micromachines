@@ -3,29 +3,24 @@
 
 #include <map>
 #include <vector>
+#include <server/UpdateClient.h>
 
 class LapCounter {
-    bool finished;
     int32_t total_laps;
     std::map<int32_t /*ID*/, int32_t> laps;
-    std::vector<uint32_t> positions;
 
     public:
         explicit LapCounter(int32_t total_laps);
 
-        bool add_lap(int32_t id);
+        void add_lap(int32_t ID);
 
-        void take_lap(int32_t id);
+        void take_lap(int32_t ID);
 
-        bool is_finished();
+        UpdateClient get_update(int32_t ID);
 
-        int32_t get_winner();
+        bool car_complete_laps(int32_t ID);
 
-        int32_t get_lap(int32_t id);
-
-        void get_update(int32_t id);
-
-        ~LapCounter();
+        int32_t get_total_laps();
 };
 
 #endif //MICROMACHINES_LAPCOUNTER_H

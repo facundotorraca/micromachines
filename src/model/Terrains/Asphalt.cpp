@@ -3,7 +3,6 @@
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
-#include "model/FixtureUserData.h"
 
 Asphalt::Asphalt(int32_t x, int32_t y, int32_t rotation, int32_t ID):
     Terrain(x, y, rotation, ID)

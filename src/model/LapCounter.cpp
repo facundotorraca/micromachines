@@ -1,58 +1,50 @@
+#include <vector>
 #include <iostream>
 #include "LapCounter.h"
+#include <common/MsgTypes.h>
+#include <server/UpdateClient.h>
 
-#define INVALID_ID -1
-
-LapCounter::LapCounter(int32_t total_laps) :
-    total_laps(total_laps),
-    finished(false),
-    laps(),
-    positions()
+LapCounter::LapCounter(int32_t total_laps):
+    total_laps(total_laps)
 {}
 
-bool LapCounter::add_lap(int32_t id) {
+void LapCounter::add_lap(int32_t ID) {
     try {
-        this->laps.at(id);
-        this->laps[id]++;
+        this->laps.at(ID)++;
     } catch(const std::out_of_range &e) {
-        this->laps[id] = 0;
+        /*first appearance of the car*/
+        this->laps[ID] = 0;
     }
-    if (this->laps[id] == this->total_laps) {
-        this->positions.push_back(id);
-    }
-    return false;
 }
 
-void LapCounter::take_lap(int32_t id) {
+void LapCounter::take_lap(int32_t ID) {
     try {
-        if (this->laps.at(id) >= 1)
-            this->laps[id]--;
+        if (this->laps.at(ID) >= 1)
+            this->laps.at(ID)--;
     } catch(const std::out_of_range &e) {
-        std::cerr << "ERROR ID \n";
+        std::cerr << "ERROR ID: Car not loaded\n";
     }
 }
 
-bool LapCounter::is_finished() {
-    return this->laps.size() == this->positions.size();
-}
-
-int32_t LapCounter::get_winner() {
-    if (this->positions.empty())
-        return INVALID_ID;
-    return this->positions[0];
-}
-
-int32_t LapCounter::get_lap(int32_t id) {
+bool LapCounter::car_complete_laps(int32_t ID) {
     try {
-        return this->laps.at(id);
-    } catch (std::out_of_range &e) {
-        return 0;
+        return this->laps.at(ID) > this->total_laps;
+    } catch (const std::out_of_range &e) {
+        return false;
     }
 }
 
-void LapCounter::get_update(int32_t id) {
-    std::cout << "LAP: " << this->laps[id] << "/" << this->total_laps << std::endl;
+UpdateClient LapCounter::get_update(int32_t ID) {
+    try {
+        int32_t player_laps = this->laps.at(ID);
+        //std::cout << "LAP: " << this->laps.at(ID) << "/" << this->total_laps << "\n";
+        return UpdateClient(std::move(std::vector<int32_t> {MSG_SET_LAP, player_laps} ));
+    } catch (const std::out_of_range &e) {
+        //std::cout << "LAP: " << 0 << "/" << this->total_laps << "\n";
+        return UpdateClient(std::move(std::vector<int32_t> {MSG_SET_LAP, 0}));;
+    }
 }
 
-
-LapCounter::~LapCounter() = default;
+int32_t LapCounter::get_total_laps() {
+    return this->total_laps;
+}

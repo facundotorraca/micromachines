@@ -4,6 +4,7 @@
 #include "MapLoader.h"
 #include "json/json.hpp"
 #include <model/Terrains/TerrainFactory.h>
+#include <common/EntityType.h>
 
 #define FIRST_LAYER 0
 

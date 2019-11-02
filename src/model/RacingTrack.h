@@ -17,13 +17,13 @@ class RacingTrack {
     int32 velocity_iterations;
     int32 position_iterations;
 
-    int32_t track_terrain;
     int32_t height;
     int32_t width;
+    int32_t track_terrain;
 
+    FinishLine* finish_line;
     std::list<std::unique_ptr<Terrain>> terrains;
     std::list<StaticTrackObject> static_track_objects;
-    FinishLine* finish_line;
 
     ContactListener contact_listener;
 

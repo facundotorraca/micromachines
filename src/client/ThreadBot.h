@@ -1,14 +1,9 @@
-//
-// Created by aacevedo on 24/10/19.
-//
 
 #ifndef MICROMACHINES_THREADBOT_H
 #define MICROMACHINES_THREADBOT_H
 
-#include <common/Thread.h>
 #include "Bot.h"
-
-#define FRAMES_PER_SECOND 30
+#include <common/Thread.h>
 
 class ThreadBot : public Thread {
     Bot &bot;

@@ -5,7 +5,6 @@
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
 #include <model/Body.h>
-#include <model/FixtureUserData.h>
 #include <common/Coordinate.h>
 #include <model/StaticTrackObject.h>
 
@@ -20,8 +19,6 @@ class Wheel : public Body {
     float traction_proportion;
 
     float speed_proportion;
-
-    FixtureUserData* wheel_user_data{};
 
     private:
         b2Vec2 get_lateral_velocity();

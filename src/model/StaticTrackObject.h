@@ -2,7 +2,6 @@
 #define MICROMACHINES_STATICTRACKOBJECT_H
 
 #include "Body.h"
-#include "FixtureUserData.h"
 #include <server/UpdateClient.h>
 #include <Box2D/Dynamics/b2Fixture.h>
 

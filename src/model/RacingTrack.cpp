@@ -1,17 +1,21 @@
 #include <vector>
 #include <common/MsgTypes.h>
+#include <common/EntityType.h>
 #include "RacingTrack.h"
 #include "Box2D/Box2D.h"
 
 RacingTrack::RacingTrack():
     racing_track(b2Vec2(0,0))
 {
-    this->width = 0;
-    this->height = 0;
+    this->width = 0; //Default
+    this->height = 0; //Default
     this->finish_line = nullptr;
+
+    /*--------HYPERPARAMS----------*/
     this->velocity_iterations = 6;
     this->position_iterations = 2;
     this->time_step = 1.0f / 60.0f;
+
     this->track_terrain = TYPE_GRASS; //Default
     this->racing_track.SetContactListener(&this->contact_listener);
 }
@@ -55,8 +59,8 @@ void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
 }
 
 void RacingTrack::set_track_size(int32_t track_height, int32_t track_width) {
-    this->height = track_height;
     this->width = track_width;
+    this->height = track_height;
 }
 
 void RacingTrack::set_track_terrain(int32_t terrain) {

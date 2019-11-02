@@ -2,7 +2,6 @@
 #include <cstdint>
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
-#include "model/FixtureUserData.h"
 #include <common/EntityType.h>
 
 #define DIRT_SPEED_PROPORTION 0.5f

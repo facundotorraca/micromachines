@@ -1,7 +1,6 @@
 #include <cstdint>
 #include "Grass.h"
 #include <common/Sizes.h>
-#include "model/FixtureUserData.h"
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
 

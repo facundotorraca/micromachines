@@ -1,6 +1,7 @@
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
+#include <common/EntityType.h>
 #include "StaticTrackObject.h"
 
 StaticTrackObject::StaticTrackObject(int32_t ID, int32_t x, int32_t y, int32_t rotation) {

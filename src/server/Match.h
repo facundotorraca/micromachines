@@ -24,21 +24,18 @@
 class Match : public Thread {
     std::string match_name;
     std::string match_creator;
-    std::atomic<bool> stopped;
+    std::atomic<bool> closed;
 
     ThreadClientEventMonitor clients_monitor;
 
     ProtectedQueue<UpdateRace> updates_race;
 
+    std::unordered_map<int32_t, Car> cars;
     std::unordered_map<int32_t, Player> players;
     std::unordered_map<int32_t, ThreadPlayer> thread_players;
     std::unordered_map<int32_t, ProtectedQueue<UpdateClient>> updates_players;
-    std::unordered_map<int32_t, Car> cars;
 
     RacingTrack racing_track;
-
-    MapLoader map_loader;
-
     LapCounter lap_counter;
 
     std::mutex mtx;
@@ -50,21 +47,15 @@ class Match : public Thread {
 
         void run() override;
 
-        void initialize_map();
+        void update_players();
 
         void initialize_players();
-
-        void initialize_thread_players();
-
-        void create_general_update_for_players();
-
-        void create_specific_update_for_players();
 
         void remove_disconnected_players();
 
         void send_to_all(UpdateClient update);
 
-        void create_info_player_updates(int32_t player_ID);
+        void create_initial_player_info(int32_t player_ID);
 
     public:
         explicit Match(std::string match_creator, std::string match_name);
@@ -77,10 +68,9 @@ class Match : public Thread {
 
         void add_player(Player&& player);
 
-        bool was_stopped();
+        bool is_closed();
 
-        void stop();
-
+        void kill();
 };
 
 

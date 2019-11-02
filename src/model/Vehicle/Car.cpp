@@ -51,6 +51,7 @@ Car::Car(Car&& other_car) noexcept:
 {
     this->key_h = other_car.key_h;
     this->key_v = other_car.key_v;
+    this->lap_altered = false;
 
     other_car.key_h = NOT_PRESSED;
     other_car.key_v = NOT_PRESSED;

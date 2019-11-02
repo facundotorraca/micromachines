@@ -4,6 +4,7 @@
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
+#include <common/EntityType.h>
 
 #define MAX_PROPORTION 1
 
@@ -150,7 +151,6 @@ void Wheel::set_max_speed() {
 }
 
 Wheel::~Wheel() {
-    delete this->wheel_user_data;
     this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
