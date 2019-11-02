@@ -46,6 +46,7 @@ public:
     void drawBackground(int32_t type, int32_t width, int32_t height);
     void drawSpeedometer(int32_t speed);
     void drawHealthBar(int32_t health);
+    void drawLapNumber(int32_t lap, int32_t total_laps);
     ~Camera();
 };
 

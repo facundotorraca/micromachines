@@ -178,3 +178,12 @@ void Camera::drawHealthBar(int32_t health) {
     SDL_RenderCopy(renderer, bar, &orig_bar, &dst_bar);
 }
 
+void Camera::drawLapNumber(int32_t lap, int32_t total_laps) {
+    int x = 60*window_scale;
+    int y = 60*window_scale;
+
+    std::string text = "Lap: "+std::to_string(lap)+"/"+std::to_string(total_laps);
+
+    t_drawer.drawText(text, x, y, 60*window_scale, 5*window_scale, 7);
+}
+

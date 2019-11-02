@@ -25,6 +25,8 @@ public:
     void updateCar(CarInfo& info);
     void setCarHealth(int32_t id, int32_t health);
     void setBackground(int32_t type, int32_t width, int32_t height);
+    void setLapNumber(int32_t lap);
+    void setTotalLaps(int32_t laps);
     void draw();
 };
 

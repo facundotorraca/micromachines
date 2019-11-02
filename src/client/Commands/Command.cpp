@@ -8,6 +8,8 @@
 #include "AddTile.h"
 #include "SetCarHealth.h"
 #include "SetBackground.h"
+#include "SetLap.h"
+#include "SetTotalLaps.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
@@ -44,6 +46,10 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario
         case MSG_SET_BACKGROUND:
             std::cerr << "ENTRE\n";
             return std::unique_ptr<Command>(new SetBackground(scenario, bot, command[1], command[2], command[3]));
+        case MSG_SET_LAP:
+            return std::unique_ptr<Command>(new SetLap(scenario, bot, command[1]));
+        case MSG_TOTAL_LAPS:
+            return std::unique_ptr<Command>(new SetTotalLaps(scenario, bot, command[1]));
         default:
             break; //aca hacer un unknown commnad
     }

@@ -60,3 +60,13 @@ void Scenario::setBackground(int32_t type, int32_t width, int32_t height) {
     std::unique_lock<std::mutex> lock(mtx);
     map.setBackground(type, width, height);
 }
+
+void Scenario::setLapNumber(int32_t lap) {
+    std::unique_lock<std::mutex> lock(mtx);
+    hud.setLap(lap);
+}
+
+void Scenario::setTotalLaps(int32_t laps) {
+    std::unique_lock<std::mutex> lock(mtx);
+    hud.setTotalLaps(laps);
+}
