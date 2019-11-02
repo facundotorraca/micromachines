@@ -40,6 +40,7 @@ void Scenario::draw() {
         car.second.draw(camera);
     }
     hud.draw(camera);
+    l_screen.draw(camera);
     camera.draw();
 }
 
@@ -69,4 +70,13 @@ void Scenario::setLapNumber(int32_t lap) {
 void Scenario::setTotalLaps(int32_t laps) {
     std::unique_lock<std::mutex> lock(mtx);
     hud.setTotalLaps(laps);
+}
+
+void Scenario::setLoadingScreen(bool show) {
+    std::unique_lock<std::mutex> lock(mtx);
+    if (show){
+        l_screen.show();
+    } else {
+        l_screen.hide();
+    }
 }

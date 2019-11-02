@@ -102,7 +102,7 @@ void Camera::drawDamagedCar(int32_t posx, int32_t posy, int32_t rot) {
 }
 
 void Camera::drawTile(int32_t x, int32_t y, int32_t rot, int32_t type) {
-    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+3;
+    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;
     copyRender(t_factory.getTileTexture(type), x, y, rot, wh, wh);
 }
 
@@ -185,5 +185,11 @@ void Camera::drawLapNumber(int32_t lap, int32_t total_laps) {
     std::string text = "Lap: "+std::to_string(lap)+"/"+std::to_string(total_laps);
 
     t_drawer.drawText(text, x, y, 60*window_scale, 5*window_scale, 7);
+}
+
+void Camera::drawLoadingScreen() {
+    SDL_Texture* scrn = t_factory.getLoadingTexture();
+    SDL_Rect dst{0,0, width, height};
+    SDL_RenderCopy(renderer, scrn, nullptr, &dst);
 }
 
