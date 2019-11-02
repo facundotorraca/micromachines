@@ -17,6 +17,7 @@
 
 Car::Car(RacingTrack& racing_track, CarSpecs specs):
     specs(specs),
+    lap_altered(false),
     key_h(NOT_PRESSED),
     key_v(NOT_PRESSED),
     life(specs.max_life),
@@ -202,13 +203,17 @@ int32_t Car::get_ID() {
 }
 
 void Car::complete_lap() {
+    this->lap_altered = true;
     this->lap_state.reset(new LapCompleted());
 }
 
 void Car::restart_lap() {
+    this->lap_altered = true;
     this->lap_state.reset(new LapRestarted());
 }
 
 void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
-    this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
+    if (lap_altered) //Just for performance
+        this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
+    this->lap_altered = false;
 }

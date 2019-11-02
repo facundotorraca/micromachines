@@ -26,6 +26,7 @@ class Car : public Body {
     int32_t key_v;
     int32_t key_h;
 
+    bool lap_altered;
     std::unique_ptr<LapState> lap_state;
 
     /*
