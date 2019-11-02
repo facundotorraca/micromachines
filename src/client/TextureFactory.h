@@ -10,23 +10,27 @@
 #include <common/EntityType.h>
 #include <iostream>
 
+#define CAR_TEX 4500
+#define DMG_CAR_TEX 4501
+#define WHEEL_TEX 4502
+#define SPEEDOMETER_TEX 4503
+#define SPEEDOBORDER_TEX 4504
+#define SPEEDOBAR_TEX 4505
+#define LOADING_SCR 4506
+
 class TextureFactory {
-    SDL_Texture* car_texture;
-    SDL_Texture* damaged_car_texture;
-    SDL_Texture* wheel_texture;
-    SDL_Texture* speedo_texture;
-    SDL_Texture* border_texture;
-    SDL_Texture* bar_texture;
+    std::map<int32_t, SDL_Texture*> general_textures;
     std::map<int32_t, SDL_Texture*> tile_textures;
 public:
     explicit TextureFactory(SDL_Renderer* renderer){
         if (renderer) {
-            car_texture = IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png");
-            damaged_car_texture = IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png");
-            wheel_texture = IMG_LoadTexture(renderer, "assets/sprites/wheel_3.png");
-            speedo_texture = IMG_LoadTexture(renderer, "assets/sprites/speedometer.png");
-            border_texture = IMG_LoadTexture(renderer, "assets/sprites/UI/Oil bar 2.png");
-            bar_texture = IMG_LoadTexture(renderer, "assets/sprites/UI/Oil bar.png");
+            general_textures.emplace(CAR_TEX, IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png"));
+            general_textures.emplace(DMG_CAR_TEX, IMG_LoadTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png"));
+            general_textures.emplace(WHEEL_TEX, IMG_LoadTexture(renderer, "assets/sprites/wheel_3.png"));
+            general_textures.emplace(SPEEDOMETER_TEX, IMG_LoadTexture(renderer, "assets/sprites/speedometer.png"));
+            general_textures.emplace(SPEEDOBORDER_TEX, IMG_LoadTexture(renderer, "assets/sprites/UI/Oil bar 2.png"));
+            general_textures.emplace(SPEEDOBAR_TEX, IMG_LoadTexture(renderer, "assets/sprites/UI/Oil bar.png"));
+            general_textures.emplace(LOADING_SCR, IMG_LoadTexture(renderer, "assets/sprites/loading_screen.jpg"));
 
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             tile_textures.emplace(3, IMG_LoadTexture(renderer,"assets/sprites/Track/AR_3a.png"));
@@ -99,22 +103,13 @@ public:
     }
 
     TextureFactory& operator=(TextureFactory&& other) noexcept{
-        this->car_texture = other.car_texture;
-        this->wheel_texture = other.wheel_texture;
-        this->speedo_texture = other.speedo_texture;
-        this->bar_texture = other.bar_texture;
-        this->border_texture = other.border_texture;
-        other.car_texture = nullptr;
-        other.wheel_texture = nullptr;
-        other.speedo_texture = nullptr;
-        other.bar_texture = nullptr;
-        other.border_texture = nullptr;
+        this->general_textures = std::move(other.general_textures);
         this->tile_textures = std::move(other.tile_textures);
         return *this;
     }
 
     SDL_Texture *getCarTexture() {
-        return car_texture;
+        return general_textures.at(CAR_TEX);
     }
 
     SDL_Texture *getTileTexture(int32_t type) {
@@ -127,41 +122,35 @@ public:
     }
 
     SDL_Texture *getWheelTexture() {
-        return wheel_texture;
+        return general_textures.at(WHEEL_TEX);
     }
 
     SDL_Texture* getSpeedometer(){
-        return speedo_texture;
+        return general_textures.at(SPEEDOMETER_TEX);
     }
 
     SDL_Texture *getDamagedCarTexture() {
-        return damaged_car_texture;
+        return general_textures.at(DMG_CAR_TEX);
     }
 
     SDL_Texture* getHealthBarTexture(){
-        return border_texture;
+        return general_textures.at(SPEEDOBORDER_TEX);
     }
 
     SDL_Texture* getHealthTexture(){
-        return bar_texture;
+        return general_textures.at(SPEEDOBAR_TEX);
     }
     ~TextureFactory(){
-        if (car_texture)
-            SDL_DestroyTexture(car_texture);
-        if (wheel_texture)
-            SDL_DestroyTexture(wheel_texture);
-        if (speedo_texture)
-            SDL_DestroyTexture(speedo_texture);
-        if (border_texture)
-            SDL_DestroyTexture(border_texture);
-        if (bar_texture)
-            SDL_DestroyTexture(bar_texture);
-        for (auto& tex : tile_textures){
+        for (auto& tex : general_textures)
             SDL_DestroyTexture(tex.second);
-        }
+        for (auto& tex : tile_textures)
+            SDL_DestroyTexture(tex.second);
     }
 
 
+    SDL_Texture *getLoadingTexture() {
+        return general_textures.at(LOADING_SCR);
+    }
 };
 
 #endif //MICROMACHINES_TEXTUREFACTORY_H
