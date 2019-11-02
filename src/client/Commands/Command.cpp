@@ -12,6 +12,7 @@
 #include "SetTotalLaps.h"
 #include "BeginLoadingScreen.h"
 #include "FinishLoadingScreen.h"
+#include "CountdownCommand.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
@@ -56,6 +57,8 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario
             return std::unique_ptr<Command>(new BeginLoadingScreen(scenario, bot));
         case MSG_FINISH_LOADING:
             return std::unique_ptr<Command>(new FinishLoadingScreen(scenario, bot));
+        case MSG_COUNTDOWN:
+            return std::unique_ptr<Command>(new CountdownCommand(scenario, bot, command[1]));
         default:
             break; //aca hacer un unknown commnad
     }

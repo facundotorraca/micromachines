@@ -29,7 +29,7 @@ void CountdownTimer::run() {
 void CountdownTimer::send_remaining_time(int32_t remaining_time) {
     UpdateClient update_countdown({MSG_COUNTDOWN, remaining_time});
     for (auto& queue : this->updates_players){
-        //queue.second.push(update_countdown);
+        queue.second.push(update_countdown);
         std::cout << "TIME: " << remaining_time << "\n";
     }
 }

@@ -193,3 +193,10 @@ void Camera::drawLoadingScreen() {
     SDL_RenderCopy(renderer, scrn, nullptr, &dst);
 }
 
+void Camera::drawCountdownNumber(const std::string& str) {
+    int h = 200*window_scale;
+    int x = width/2 - h/2*str.size();
+    int y = height/2 - h/2;
+    t_drawer.drawText(str, x, y, h, 5*window_scale, str.size());
+}
+

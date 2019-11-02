@@ -11,12 +11,14 @@
 #include "Entities/CarInfo.h"
 #include "Hud.h"
 #include "LoadingScreen.h"
+#include "Countdown.h"
 
 class Scenario {
     Camera camera;
     Map map;
     Hud hud;
     LoadingScreen l_screen;
+    Countdown countdown;
     int32_t my_car_id;
     std::map<int32_t, Car> cars;
     std::mutex mtx;
@@ -30,6 +32,7 @@ public:
     void setLapNumber(int32_t lap);
     void setTotalLaps(int32_t laps);
     void setLoadingScreen(bool show);
+    void showCountdownNumber(int32_t number);
     void draw();
 };
 

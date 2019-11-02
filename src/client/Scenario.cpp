@@ -40,6 +40,7 @@ void Scenario::draw() {
         car.second.draw(camera);
     }
     hud.draw(camera);
+    countdown.draw(camera);
     l_screen.draw(camera);
     camera.draw();
 }
@@ -79,4 +80,9 @@ void Scenario::setLoadingScreen(bool show) {
     } else {
         l_screen.hide();
     }
+}
+
+void Scenario::showCountdownNumber(int32_t number) {
+    std::unique_lock<std::mutex> lock(mtx);
+    countdown.show(number);
 }
