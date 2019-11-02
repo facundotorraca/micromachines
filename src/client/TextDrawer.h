@@ -15,6 +15,7 @@ class TextDrawer {
     TTF_Font* font;
 public:
     explicit TextDrawer(SDL_Renderer* renderer) : renderer(renderer){
+        TTF_Init();
         font = TTF_OpenFont("assets/fonts/joystix.ttf", 16);
     }
     TextDrawer& operator=(TextDrawer&& other) noexcept{
@@ -42,8 +43,10 @@ public:
         SDL_FreeSurface(surface_b);
     }
     ~TextDrawer(){
-        if (font)
+        if (font){
             TTF_CloseFont(font);
+            TTF_Quit();
+        }
     }
 };
 

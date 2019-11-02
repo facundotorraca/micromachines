@@ -23,7 +23,6 @@ Camera::Camera() :
     window(nullptr)
 {
     SDL_Init(SDL_INIT_VIDEO);
-    TTF_Init();
     window = SDL_CreateWindow("Micromachines", 0, 0, width, height,
             SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1,
@@ -129,7 +128,6 @@ bool Camera::isInCamera(int x,int y, int w, int h){
 Camera::~Camera() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    TTF_Quit();
     SDL_Quit();
 }
 
