@@ -13,13 +13,21 @@ SecondFinishLine::SecondFinishLine(Coordinate begin, Coordinate end, bool &cross
 
     b2PolygonShape polygon_shape;
     /*Center position*/
-    float x_pos = (((end.get_x() + begin.get_x())/2) * TILE_TERRAIN_SIZE ) + TILE_TERRAIN_SIZE/2;
+    float x_pos = ((end.get_x() + begin.get_x())/2) * TILE_TERRAIN_SIZE;
     float y_pos = ((end.get_y() + begin.get_y())/2) * TILE_TERRAIN_SIZE;
 
     float length_X = (end.get_x() - begin.get_x())* TILE_TERRAIN_SIZE;
     float length_Y = (end.get_y() - begin.get_y())* TILE_TERRAIN_SIZE;
 
     /*If length_X == 0, the line is vertical. If length_Y == 0, line is horizontal*/
+    float offset = TILE_TERRAIN_SIZE/2;
+    if (length_X == 0)
+        x_pos += offset;
+    else
+        y_pos +=offset;
+
+    /*The offset is to make the line start at the tile's edge*/
+
     polygon_shape.SetAsBox(length_X/2, length_Y/2, b2Vec2(x_pos, y_pos), 0);
 
     b2FixtureDef fixture_def;

@@ -1,17 +1,17 @@
-#ifndef MICROMACHINES_GAMERULES_H
-#define MICROMACHINES_GAMERULES_H
+#ifndef MICROMACHINES_LAPCOUNTER_H
+#define MICROMACHINES_LAPCOUNTER_H
 
 #include <map>
 #include <vector>
 
-class GameRules {
-    uint32_t total_laps;
+class LapCounter {
     bool finished;
-    std::map<int32_t, int32_t> laps;
+    int32_t total_laps;
+    std::map<int32_t /*ID*/, int32_t> laps;
     std::vector<uint32_t> positions;
 
     public:
-        explicit GameRules(int32_t total_laps);
+        explicit LapCounter(int32_t total_laps);
 
         bool add_lap(int32_t id);
 
@@ -25,7 +25,7 @@ class GameRules {
 
         void get_update(int32_t id);
 
-        ~GameRules();
+        ~LapCounter();
 };
 
-#endif //MICROMACHINES_GAMERULES_H
+#endif //MICROMACHINES_LAPCOUNTER_H

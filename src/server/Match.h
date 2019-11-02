@@ -19,7 +19,7 @@
 #include <model/RacingTrack.h>
 #include <common/ProtectedQueue.h>
 #include "ThreadClientEventMonitor.h"
-#include "model/GameRules.h"
+#include "model/LapCounter.h"
 
 class Match : public Thread {
     std::string match_name;
@@ -39,7 +39,7 @@ class Match : public Thread {
 
     MapLoader map_loader;
 
-    GameRules game_rules;
+    LapCounter lap_counter;
 
     std::mutex mtx;
 

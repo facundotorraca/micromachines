@@ -1,16 +1,16 @@
 #include <iostream>
-#include "GameRules.h"
+#include "LapCounter.h"
 
 #define INVALID_ID -1
 
-GameRules::GameRules(int32_t total_laps) :
+LapCounter::LapCounter(int32_t total_laps) :
     total_laps(total_laps),
     finished(false),
     laps(),
     positions()
 {}
 
-bool GameRules::add_lap(int32_t id) {
+bool LapCounter::add_lap(int32_t id) {
     try {
         this->laps.at(id);
         this->laps[id]++;
@@ -23,7 +23,7 @@ bool GameRules::add_lap(int32_t id) {
     return false;
 }
 
-void GameRules::take_lap(int32_t id) {
+void LapCounter::take_lap(int32_t id) {
     try {
         if (this->laps.at(id) >= 1)
             this->laps[id]--;
@@ -32,17 +32,17 @@ void GameRules::take_lap(int32_t id) {
     }
 }
 
-bool GameRules::is_finished() {
+bool LapCounter::is_finished() {
     return this->laps.size() == this->positions.size();
 }
 
-int32_t GameRules::get_winner() {
+int32_t LapCounter::get_winner() {
     if (this->positions.empty())
         return INVALID_ID;
     return this->positions[0];
 }
 
-int32_t GameRules::get_lap(int32_t id) {
+int32_t LapCounter::get_lap(int32_t id) {
     try {
         return this->laps.at(id);
     } catch (std::out_of_range &e) {
@@ -50,9 +50,9 @@ int32_t GameRules::get_lap(int32_t id) {
     }
 }
 
-void GameRules::get_update(int32_t id) {
+void LapCounter::get_update(int32_t id) {
     std::cout << "LAP: " << this->laps[id] << "/" << this->total_laps << std::endl;
 }
 
 
-GameRules::~GameRules() = default;
+LapCounter::~LapCounter() = default;

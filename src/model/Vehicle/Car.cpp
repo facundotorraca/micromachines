@@ -16,7 +16,12 @@
 #define RADTODEG 57.295779513082320876f
 
 Car::Car(RacingTrack& racing_track, CarSpecs specs):
-    specs(specs), key_h(NOT_PRESSED), key_v(NOT_PRESSED), life(specs.max_life), lap_complete(false)
+    specs(specs),
+    lap_altered(false),
+    key_h(NOT_PRESSED),
+    key_v(NOT_PRESSED),
+    life(specs.max_life),
+    lap_state(std::unique_ptr<LapState> (new LapRunning()))
 {
     /*create car body*/
     b2BodyDef bodyDef;
@@ -41,11 +46,11 @@ Car::Car(Car&& other_car) noexcept:
     car_fixture(other_car.car_fixture),
     wheels(std::move(other_car.wheels)),
     front_left_joint(other_car.front_left_joint),
-    front_right_joint(other_car.front_right_joint)
+    front_right_joint(other_car.front_right_joint),
+    lap_state(std::unique_ptr<LapState> (new LapRunning()))
 {
     this->key_h = other_car.key_h;
     this->key_v = other_car.key_v;
-    this->lap_complete = false;
 
     other_car.key_h = NOT_PRESSED;
     other_car.key_v = NOT_PRESSED;
@@ -198,25 +203,17 @@ int32_t Car::get_ID() {
 }
 
 void Car::complete_lap() {
-    this->lap_complete = true;
+    this->lap_altered = true;
+    this->lap_state.reset(new LapCompleted());
 }
 
 void Car::restart_lap() {
-    this->lap_restarted = true;
+    this->lap_altered = true;
+    this->lap_state.reset(new LapRestarted());
 }
 
-bool Car::lap_was_completed() {
-    if (this->lap_complete) {
-        this->lap_complete = false;
-        return true;
-    }
-    return false;
-}
-
-bool Car::lap_was_restarted() {
-    if (this->lap_restarted) {
-        this->lap_restarted = false;
-        return true;
-    }
-    return false;
+void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
+    if (lap_altered) //Just for performance
+        this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
+    this->lap_altered = false;
 }

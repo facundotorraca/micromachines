@@ -22,7 +22,7 @@
 Match::Match(std::string match_creator, std::string match_name):
     stopped(false),
     map_loader(MAP_PATH),
-    game_rules(5),
+    lap_counter(5),
     updates_race(10000),
     match_name(std::move(match_name)),
     match_creator(std::move(match_creator)),
@@ -197,14 +197,8 @@ void Match::initialize_thread_players() {
 
 void Match::create_specific_update_for_players() {
     for (auto& car : cars) {
-        if (car.second.lap_was_completed()) {
-            game_rules.add_lap(car.first);
-            game_rules.get_update(car.first);
-        }
-        if (car.second.lap_was_restarted()) {
-            game_rules.take_lap(car.first);
-            game_rules.get_update(car.first);
-        }
+        car.second.modify_laps(this->lap_counter, car.first);
+        this->lap_counter.get_update(car.first);
     }
 }
 
