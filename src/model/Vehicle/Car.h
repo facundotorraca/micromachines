@@ -3,13 +3,14 @@
 
 #include <vector>
 #include "Wheel.h"
+#include "CarLife.h"
 #include "CarSpecs.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
-#include "model/RacingTrack.h"
-#include "CarLife.h"
-#include <server/UpdateClient.h>
+#include <model/LapState.h>
 #include <common/Coordinate.h>
+#include "model/RacingTrack.h"
+#include <server/UpdateClient.h>
 
 class Car : public Body {
     CarLife life;
@@ -25,8 +26,12 @@ class Car : public Body {
     int32_t key_v;
     int32_t key_h;
 
+    std::unique_ptr<LapState> lap_state;
+
+    /*
     bool lap_complete;
     bool lap_restarted;
+    */
 
     private:
         void create_wheels(RacingTrack& racing_track);
@@ -55,9 +60,7 @@ class Car : public Body {
         ~Car();
 
         /*-------------Race_handlers---------*/
-        bool lap_was_completed();
-
-        bool lap_was_restarted();
+        void modify_laps(LapCounter& lap_counter, int32_t car_ID);
 
         void restart_lap();
 
