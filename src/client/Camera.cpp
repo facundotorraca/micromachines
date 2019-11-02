@@ -128,7 +128,6 @@ bool Camera::isInCamera(int x,int y, int w, int h){
 Camera::~Camera() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    TTF_Quit();
     SDL_Quit();
 }
 
