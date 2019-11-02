@@ -49,6 +49,8 @@ class Match : public Thread {
 
         void update_players();
 
+        void begin_countdown();
+
         void initialize_players();
 
         void remove_disconnected_players();

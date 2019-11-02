@@ -18,7 +18,7 @@ void Hud::draw(Camera &camera) {
     camera.drawLapNumber(lap, total_laps);
 }
 
-Hud::Hud() : health(100), lap(0), total_laps(0), speed(0){
+Hud::Hud() : health(50), lap(0), total_laps(0), speed(0){
 }
 
 void Hud::setLap(int32_t l) {

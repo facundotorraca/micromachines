@@ -6,8 +6,9 @@
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/SocketError.h>
+#include <model/CountdownTimer.h>
 #include "ThreadClientEventMonitor.h"
-#include <server/FramesSynccronizer.h>
+#include <server/FramesSyncronizer.h>
 
 #define MAP_PATH "maps/"
 
@@ -129,9 +130,24 @@ void Match::apply_update(UpdateRace update) {
     update.update_cars(this->cars);
 }
 
+void Match::begin_countdown() {
+    int32_t max_time = 3;
+    CountdownTimer timer(max_time);
+    std::cout << "TIME: " << max_time << "\n";
+    while (timer.continue_counting()) {
+        max_time -= 1;
+        std::cout << "TIME: " << max_time << "\n";
+    }
+
+    for (auto &th_player : this->thread_players) {
+        th_player.second.set_player_free();
+    }
+}
+
 void Match::run() {
     this->initialize_players();
     this->clients_monitor.start();
+    std::thread countdown(&Match::begin_countdown, this);
 
     while (this->running) {
         this->step();
@@ -140,10 +156,12 @@ void Match::run() {
 
         if (this->players.empty()) {
             this->close();
+            countdown.join();
             return;
         }
-
     }
+
+    countdown.join();
 }
 
 void Match::step() {

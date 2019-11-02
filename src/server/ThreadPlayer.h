@@ -26,6 +26,8 @@ class ThreadPlayer : public Thread {
         ThreadPlayer(ProtectedQueue<UpdateClient>& updates_send, ProtectedQueue<UpdateRace>& updates_recv, Player& player);
 
         void set_player_on_hold();
+
+        void set_player_free();
 };
 
 

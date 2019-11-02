@@ -7,7 +7,7 @@ ThreadPlayer::ThreadPlayer(ProtectedQueue<UpdateClient> &updates_send, Protected
     updates_send(updates_send),
     updates_recv(updates_recv),
     player(player),
-    player_on_hold(false)
+    player_on_hold(true)
 {}
 
 void ThreadPlayer::run() {
@@ -34,4 +34,8 @@ void ThreadPlayer::stop() {
 
 void ThreadPlayer::set_player_on_hold() {
     this->player_on_hold = true;
+}
+
+void ThreadPlayer::set_player_free() {
+    this->player_on_hold = false;
 }
