@@ -27,7 +27,7 @@ class ThreadPlayer : public Thread {
 
         void set_player_on_hold();
 
-        void set_player_free();
+        void wake_up();
 };
 
 

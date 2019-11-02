@@ -3,15 +3,28 @@
 
 #include <cstdint>
 
-class CountdownTimer {
+class CountdownTimer : public Thread {
 
     int32_t max_time;
-    int32_t remaining_time;
+
+    std::unordered_map<int32_t, ThreadPlayer>& thread_players;
+    std::unordered_map<int32_t, ProtectedQueue<UpdateClient>>& updates_players;
+
+    private:
+        void send_remaining_time(int32_t remaining_time);
+
+        void wake_up_players();
+
+        void run() override;
 
     public:
-        explicit CountdownTimer(int32_t time);
+        explicit CountdownTimer(int32_t time,
+                                std::unordered_map<int32_t, ThreadPlayer>& thread_players,
+                                std::unordered_map<int32_t, ProtectedQueue<UpdateClient>>& updates_players);
 
-        bool continue_counting();
+
+
+
 };
 
 

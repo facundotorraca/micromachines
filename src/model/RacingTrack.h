@@ -4,11 +4,12 @@
 #include <list>
 #include <memory>
 #include "Box2D/Box2D.h"
-#include <common/ProtocolSocket.h>
-#include <model/FinishLine.h>
-#include "model/Terrains/Terrain.h"
 #include "ContactListener.h"
+#include <model/FinishLine.h>
 #include "StaticTrackObject.h"
+#include <common/ProtocolSocket.h>
+#include <common/ProtectedQueue.h>
+#include "model/Terrains/Terrain.h"
 
 class RacingTrack {
     b2World racing_track;
@@ -36,15 +37,15 @@ class RacingTrack {
 
         b2Body* add_body(b2BodyDef& body);
 
-        void send(ProtocolSocket& p_socket);
-
         void set_track_terrain(int32_t terrain);
-
-        void set_track_size(int32_t height, int32_t track_width);
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
+        void send(ProtectedQueue<UpdateClient>& player_queue);
+
         void set_finish_line(Coordinate begin, Coordinate end);
+
+        void set_track_size(int32_t height, int32_t track_width);
 
         void add_static_track_object(StaticTrackObject&& object);
 

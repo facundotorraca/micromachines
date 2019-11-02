@@ -23,9 +23,6 @@ class Player {
 
         Player(Player&& other) noexcept;
 
-
-        void send_track(RacingTrack& racing_track);
-
         void send(std::vector<int32_t>& msg);
 
         void send(UpdateClient update);
@@ -33,7 +30,6 @@ class Player {
         void send(std::string& msg);
 
         void send(uint8_t flag);
-
 
         bool is_called(std::string& username);
 

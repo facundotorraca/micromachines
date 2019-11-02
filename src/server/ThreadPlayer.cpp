@@ -36,6 +36,6 @@ void ThreadPlayer::set_player_on_hold() {
     this->player_on_hold = true;
 }
 
-void ThreadPlayer::set_player_free() {
+void ThreadPlayer::wake_up() {
     this->player_on_hold = false;
 }

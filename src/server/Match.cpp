@@ -21,6 +21,8 @@
 
 #define START_MATCH_FLAG 0
 
+#define TIME_START 3
+
 Match::Match(std::string match_creator, std::string match_name):
         closed(false),
         lap_counter(5),
@@ -130,24 +132,11 @@ void Match::apply_update(UpdateRace update) {
     update.update_cars(this->cars);
 }
 
-void Match::begin_countdown() {
-    int32_t max_time = 3;
-    CountdownTimer timer(max_time);
-    std::cout << "TIME: " << max_time << "\n";
-    while (timer.continue_counting()) {
-        max_time -= 1;
-        std::cout << "TIME: " << max_time << "\n";
-    }
-
-    for (auto &th_player : this->thread_players) {
-        th_player.second.set_player_free();
-    }
-}
-
 void Match::run() {
+    CountdownTimer timer(TIME_START, this->thread_players, this->updates_players);
     this->initialize_players();
     this->clients_monitor.start();
-    std::thread countdown(&Match::begin_countdown, this);
+    timer.start();
 
     while (this->running) {
         this->step();
@@ -156,12 +145,11 @@ void Match::run() {
 
         if (this->players.empty()) {
             this->close();
-            countdown.join();
+            timer.join();
             return;
         }
     }
-
-    countdown.join();
+    timer.join();
 }
 
 void Match::step() {
@@ -196,8 +184,8 @@ void Match::initialize_players() {
 
         try {
             this->players.at(ID).send((uint8_t)START_MATCH_FLAG);
-            this->create_initial_player_info(ID);
             this->thread_players.at(ID).start();
+            this->create_initial_player_info(ID);
         } catch (const SocketError& exception) {
             std::cerr << "Player disconnected\n";
             this->players.erase(player.first);
@@ -210,9 +198,9 @@ void Match::initialize_players() {
 
 void Match::create_initial_player_info(int32_t player_ID) {
     int32_t total_laps = this->lap_counter.get_total_laps();
-    //this->updates_players.at(player_ID).push(std::move(UpdateClient(std::move(std::vector<int32_t> {MSG_BEGIN_LOADING}))));
-    this->players.at(player_ID).send_track(this->racing_track);
-    this->updates_players.at(player_ID).push(std::move(UpdateClient(std::move(std::vector<int32_t> {MSG_TOTAL_LAPS, total_laps}))));
-    this->updates_players.at(player_ID).push(std::move(UpdateClient(std::move(std::vector<int32_t> {MSG_CAR_ID, player_ID}))));
-    //this->updates_players.at(player_ID).push(std::move(UpdateClient(std::move(std::vector<int32_t> {MSG_FINISH_LOADING}))));
+    this->updates_players.at(player_ID).push(std::move(UpdateClient({MSG_BEGIN_LOADING})));
+    this->racing_track.send(this->updates_players.at(player_ID));
+    this->updates_players.at(player_ID).push(std::move(UpdateClient({MSG_TOTAL_LAPS, total_laps})));
+    this->updates_players.at(player_ID).push(std::move(UpdateClient({MSG_CAR_ID, player_ID})));
+    this->updates_players.at(player_ID).push(std::move(UpdateClient({MSG_FINISH_LOADING})));
 }

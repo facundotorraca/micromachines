@@ -1,6 +1,7 @@
 #include <vector>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include <common/ProtectedQueue.h>
 #include "RacingTrack.h"
 #include "Box2D/Box2D.h"
 
@@ -34,17 +35,17 @@ b2World& RacingTrack::get_world() {
     return this->racing_track;
 }
 
-void RacingTrack::send(ProtocolSocket& p_socket) {
-    std::vector<int32_t> map_info {MSG_SET_BACKGROUND ,this->track_terrain, this->height, this->width};
-    p_socket.send(map_info);
+void RacingTrack::send(ProtectedQueue<UpdateClient>& player_queue) {
+    UpdateClient update_map_info({MSG_SET_BACKGROUND ,this->track_terrain, this->height, this->width});
+    player_queue.push(update_map_info);
 
     for (auto& terrain : this->terrains) {
         UpdateClient update_map = terrain->get_to_send();
-        update_map.send(p_socket);
+        player_queue.push(update_map);
     }
     for (auto& object : this->static_track_objects) {
         UpdateClient update_map = object.get_to_send();
-        update_map.send(p_socket);
+        player_queue.push(update_map);
     }
 }
 
