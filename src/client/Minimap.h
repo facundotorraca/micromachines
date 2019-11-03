@@ -30,6 +30,7 @@ class Minimap {
     std::map<int32_t, MiniCar>cars;
     SDL_Surface* surface;
     SDL_Surface* white_s;
+    SDL_Surface* black_s;
 public:
     Minimap() : my_car_id(-1), size_x(1), size_y(1) {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -40,14 +41,19 @@ public:
         white_s = SDL_CreateRGBSurface(0, 7, 7, 32, 0, 0, 0, 0);
         SDL_FillRect(white_s, nullptr,
                      SDL_MapRGB(white_s->format, 255, 255, 255));
+        black_s = SDL_CreateRGBSurface(0, 7, 7, 32, 0, 0, 0, 0);
+        SDL_FillRect(black_s, nullptr,
+                     SDL_MapRGB(white_s->format, 0, 0, 0));
     }
     void setMyID(int32_t id){
         my_car_id = id;
     }
     void addTile(TileInfo& info){
         if (info.type >= 3 && info.type <= 27){
-            SDL_Rect dst{300*info.posx/size_x, 300*info.posy/size_y, 4, 4};
-            SDL_BlitSurface(white_s, nullptr, surface, &dst);
+            SDL_Rect dst_w{300*info.posx/size_x, 300*info.posy/size_y, 4, 4};
+            SDL_Rect dst_b{300*info.posx/size_x+10, 300*info.posy/size_y+10, 4, 4};
+            SDL_BlitSurface(black_s, nullptr, surface, &dst_b);
+            SDL_BlitSurface(white_s, nullptr, surface, &dst_w);
         }
     }
     void updateCar(int32_t id, int32_t x, int32_t y){
