@@ -121,6 +121,9 @@ public:
             textures.emplace(55, createTextureWithSize(renderer,"assets/sprites/Track/DR_27a.png", tile_width, tile_width)); 
 
             /*-----------------------------------------GRASS---------------------------------------*/
+            textures.emplace(56, createTextureWithSize(renderer,"assets/sprites/Track/LG_1a.png", tile_width, tile_width));
+            textures.emplace(57, createTextureWithSize(renderer,"assets/sprites/Track/LG_2a.png", tile_width, tile_width));
+            textures.emplace(58, createTextureWithSize(renderer,"assets/sprites/Track/LG_3a.png", tile_width, tile_width));
             textures.emplace(59, createTextureWithSize(renderer,"assets/sprites/Track/LG_4a.png", tile_width, tile_width)); 
 
             /*-----------------------------------SAND_ROADS----------------------------------------*/

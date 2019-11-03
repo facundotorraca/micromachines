@@ -1,16 +1,20 @@
 #include <vector>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include "StaticTrackObject.h"
 #include <common/ProtectedQueue.h>
+#include <server/MapLoader.h>
 #include "RacingTrack.h"
-#include "Box2D/Box2D.h"
 #include "Podium.h"
 
-RacingTrack::RacingTrack():
+
+
+RacingTrack::RacingTrack(std::string& map_path, std::string& map_name):
     racing_track(b2Vec2(0,0))
 {
     this->width = 0; //Default
     this->height = 0; //Default
+    this->podium = nullptr;
     this->finish_line = nullptr;
 
     /*--------HYPERPARAMS----------*/
@@ -20,6 +24,9 @@ RacingTrack::RacingTrack():
 
     this->track_terrain = TYPE_GRASS; //Default
     this->racing_track.SetContactListener(&this->contact_listener);
+
+    MapLoader map_loader(map_path);
+    map_loader.load_map(*this, "track_01.json");
 }
 
 void RacingTrack::update() {
@@ -69,15 +76,27 @@ void RacingTrack::set_podium(Coordinate f_place, Coordinate s_place, Coordinate 
     this->podium = new Podium(f_place, s_place, t_place);
 }
 
-RacingTrack::~RacingTrack() {
-    delete this->podium;
-    delete this->finish_line;
-}
-
 void RacingTrack::add_car(Car &car) {
     car.add_to_world(this->racing_track);
 }
 
 void RacingTrack::add_car_to_podium(Car &car) {
     this->podium->add_car(car);
+}
+
+void RacingTrack::add_spawn_point(Coordinate spawn_point) {
+    this->spawn_points.push_back(spawn_point);
+}
+
+void RacingTrack::set_spawn_points_to_cars(std::unordered_map<int32_t, Car> &cars) {
+    int spawn_point_pos = (int)this->spawn_points.size() - 1; //Start from end to beginning
+    for (auto &car : cars) {
+        car.second.set_spawn_point(this->spawn_points[spawn_point_pos]);
+        spawn_point_pos--;
+    }
+}
+
+RacingTrack::~RacingTrack() {
+    delete this->podium;
+    delete this->finish_line;
 }

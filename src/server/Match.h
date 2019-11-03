@@ -10,16 +10,17 @@
 #include <thread>
 #include "Player.h"
 #include "MapLoader.h"
+#include <model/Race.h>
 #include "UpdateRace.h"
 #include <unordered_map>
 #include "ThreadPlayer.h"
 #include "UpdateClient.h"
 #include <common/Thread.h>
+#include "model/LapCounter.h"
 #include <model/Vehicle/Car.h>
 #include <model/RacingTrack.h>
 #include <common/ProtectedQueue.h>
 #include "ThreadClientEventMonitor.h"
-#include "model/LapCounter.h"
 
 class Match : public Thread {
     std::string match_name;
@@ -29,16 +30,11 @@ class Match : public Thread {
     ThreadClientEventMonitor clients_monitor;
 
     ProtectedQueue<UpdateRace> updates_race;
-
-    std::unordered_map<int32_t, bool> player_running;
-
-    std::unordered_map<int32_t, Car> cars;
     std::unordered_map<int32_t, Player> players;
     std::unordered_map<int32_t, ThreadPlayer> thread_players;
     std::unordered_map<int32_t, ProtectedQueue<UpdateClient>> updates_players;
 
-    RacingTrack racing_track;
-    LapCounter lap_counter;
+    Race race;
 
     std::mutex mtx;
 
@@ -56,8 +52,6 @@ class Match : public Thread {
         void remove_disconnected_players();
 
         void send_to_all(UpdateClient update);
-
-        void create_initial_player_info(int32_t player_ID);
 
     public:
         explicit Match(std::string match_creator, std::string match_name);

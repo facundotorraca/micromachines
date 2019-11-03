@@ -1,0 +1,67 @@
+#include "Race.h"
+#include <unordered_map>
+#include <common/MsgTypes.h>
+
+Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
+    lap_counter(total_laps),
+    racing_track(map_path, map_name)
+{}
+
+void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
+    this->cars.emplace(std::piecewise_construct, std::forward_as_tuple(ID),
+                                                 std::forward_as_tuple(specs));
+
+    this->racing_track.add_car(this->cars.at(ID));
+}
+
+void Race::send_info_to_player(int32_t ID, ProtectedQueue<UpdateClient>& updates_player) {
+    updates_player.push(UpdateClient({MSG_BEGIN_LOADING}));
+    this->racing_track.send(updates_player);
+    updates_player.push(UpdateClient({MSG_TOTAL_LAPS, this->lap_counter.get_total_laps()}));
+    updates_player.push(UpdateClient({MSG_CAR_ID, ID}));
+    updates_player.push(UpdateClient({MSG_FINISH_LOADING}));
+}
+
+void Race::start() {
+    this->racing_track.set_spawn_points_to_cars(this->cars);
+    for (auto &car : this->cars) {
+        this->running_cars.emplace(std::pair<int32_t, Car&>(car.first, car.second));
+    }
+}
+
+void Race::update() {
+    for (auto& car : this->cars) {
+        car.second.update();
+        car.second.modify_laps(this->lap_counter, car.first);
+    }
+
+    for (auto car = this->running_cars.begin(); car != this->running_cars.end();) {
+        if (this->lap_counter.car_complete_laps((*car).first)) {
+            this->racing_track.add_car_to_podium((*car).second);
+            car = this->running_cars.erase(car);
+        } else
+            car ++;
+    }
+
+    this->racing_track.update();
+}
+
+void Race::update_cars(UpdateRace update) {
+    update.update_cars(this->running_cars);
+}
+
+UpdateClient Race::get_update(int32_t ID) {
+    return this->cars.at(ID).get_update(ID);
+}
+
+UpdateClient Race::get_lap_update(int32_t ID) {
+    return this->lap_counter.get_update(ID);
+}
+
+bool Race::car_complete_laps(int32_t ID) {
+    return this->lap_counter.car_complete_laps(ID);
+}
+
+void Race::player_left_game(const int32_t ID) {
+    this->cars.erase(ID);
+}

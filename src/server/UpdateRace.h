@@ -14,7 +14,7 @@ class UpdateRace {
 public:
     UpdateRace(int32_t client_ID, int32_t key, int32_t key_state);
 
-    void update_cars(std::unordered_map<int32_t, Car>& cars);
+    void update_cars(std::unordered_map<int32_t, Car&>& cars);
 };
 
 

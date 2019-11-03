@@ -11,7 +11,7 @@
 #define KEY_STATE_POS 1
 
 Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name):
-        p_socket(std::move(p_socket))
+    p_socket(std::move(p_socket))
 {
     this->ID = INVALID_ID;
     this->car_model = 0; //Esto despues lo hacemos con un objeto!
@@ -21,9 +21,9 @@ Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, st
 }
 
 Player::Player(Player&& other) noexcept:
-        p_socket(std::move(other.p_socket)),
-        username(std::move(other.username)),
-        match_name(std::move(other.match_name))
+    p_socket(std::move(other.p_socket)),
+    username(std::move(other.username)),
+    match_name(std::move(other.match_name))
 {
     this->ID = other.ID;
     this->mode = other.mode;
