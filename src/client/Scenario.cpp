@@ -25,13 +25,13 @@ void Scenario::updateCar(CarInfo &info) {
         cars.emplace(std::piecewise_construct,
                      std::forward_as_tuple(info.car_id),
                      std::forward_as_tuple());
+        minimap.addCar(info.car_id, info.carx, info.cary);
     }
     if (info.car_id == this->my_car_id){
         camera.update(info.carx, info.cary, info.carrot);
         hud.setSpeed(info.carvel);
     }
-    minimap.updateCar(info);
-
+    minimap.updateCar(info.car_id, info.carx, info.cary);
     cars.at(info.car_id).update_all(info);
 }
 
