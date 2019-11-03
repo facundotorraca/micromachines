@@ -62,6 +62,8 @@ std::tuple<double, double, double> mean(std::list<CarData>& points){
 
 void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
     double rad = DEG2RAD*rot;
+    if (hypot(posx-car_pos.back().x, posy-car_pos.back().y) > 200)
+        car_pos.clear();
     car_pos.emplace_back(CarData{posx, posy, rad});
     auto means = mean(car_pos);
     double dx = std::get<0>(means);
