@@ -91,34 +91,10 @@ void Camera::clear() {
     }
 }
 
-void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
-    copyRender(t_factory.getCarTexture(), x, y, rot,
-            CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL);
-}
-
-void Camera::drawDamagedCar(int32_t posx, int32_t posy, int32_t rot) {
-    copyRender(t_factory.getDamagedCarTexture(),posx , posy, rot,
-            CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL);
-}
-
-void Camera::drawTile(int32_t x, int32_t y, int32_t rot, int32_t type) {
-    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;
-    copyRender(t_factory.getTileTexture(type), x, y, rot, wh, wh);
-}
-
-void Camera::drawWheel(int32_t x, int32_t y, int32_t rot) {
-    copyRender(t_factory.getWheelTexture(), x, y,
-            rot, WIDTH_WHEEL*METER_TO_PIXEL, HEIGHT_WHEEL*METER_TO_PIXEL);
-}
-
 void Camera::copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t rot, int32_t w, int32_t h){
-    int32_t px = (0.5f*width) - draw_scale*(posx-x);
-    int32_t py = (0.5f*height) - draw_scale*(posy-y);
-    SDL_Rect dst{px, py, (int)(draw_scale*w), (int)(draw_scale*h)};
-    if (isInCamera(dst.x, dst.y, dst.w, dst.h)) {
-        SDL_RenderCopyEx(renderer, tex, nullptr, &dst, rot,
+    SDL_Rect dst{x, y, w, h};
+    SDL_RenderCopyEx(renderer, tex, nullptr, &dst, rot,
                          nullptr, SDL_FLIP_NONE);
-    }
 }
 
 bool Camera::isInCamera(int x,int y, int w, int h){
@@ -131,72 +107,34 @@ Camera::~Camera() {
     SDL_Quit();
 }
 
-void Camera::drawBackground(int32_t type, int32_t width, int32_t height) {
-    int32_t tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
-    for (int i = 0; i < width; i++){
-        for (int j = 0; j < height; j++){
-            copyRender(t_factory.getTileTexture(type),
-                    tile_width*i, tile_width*j, 0,
-                    tile_width + 5, tile_width + 5);
-        }
+void
+Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t rot) {
+    Texture tex = t_factory.getTexture(id);
+    int32_t draw_x = (0.5f*width) - draw_scale*(posx-px);
+    int32_t draw_y = (0.5f*height) - draw_scale*(posy-py);
+    if (isInCamera(draw_x, draw_y, tex.width*draw_scale, tex.height*draw_scale)){
+        copyRender(tex.tex, draw_x, draw_y, rot, tex.width*draw_scale, tex.height*draw_scale);
     }
 }
 
-void Camera::drawSpeedometer(int32_t p_speed) {
-    int speed = p_speed/METER_TO_PIXEL;
-    int x = width-(500*window_scale);
-    int y = 60*window_scale;
-    int h = 60*window_scale;
-    int w = h*1.1212121;
-
-    SDL_Texture* speedo = t_factory.getSpeedometer();
-    std::string text = std::to_string(speed)+" km/h";
-    SDL_Rect dst{x, y, w, h};
-    SDL_RenderCopy(renderer, speedo, nullptr, &dst);
-    t_drawer.drawText(text, width-(420*window_scale), w, w*0.7, 5*window_scale, 7);
+void Camera::drawTexture(int32_t id, double posx, double posy, double scale) {
+    Texture tex = t_factory.getTexture(id);
+    int x = posx*width;
+    int y = posy*height;
+    int w = tex.width*window_scale*scale;
+    int h = tex.height*window_scale*scale;
+    copyRender(tex.tex, x, y, 0, w, h);
 }
 
-void Camera::drawHealthBar(int32_t health) {
-    SDL_Texture* border = t_factory.getHealthBarTexture();
-    SDL_Texture* bar = t_factory.getHealthTexture();
-
-    int w = 51*window_scale*5;
-    int h = 13*window_scale*5;
-
-    int srcwidth = (int)(12+(36*((double)health/100.0)));
-    SDL_Rect orig_bar{0, 0, srcwidth, 13};
-
-    int x = width - (500*window_scale);
-    int y = 170*window_scale;
-
-    SDL_Rect dst_border{x, y, w, h};
-
-    int dstwidth = (int)(12+(36*((double)health/100.0)))*window_scale*5;
-    SDL_Rect dst_bar{x, y, dstwidth, h};
-
-    SDL_RenderCopy(renderer, border, nullptr, &dst_border);
-    SDL_RenderCopy(renderer, bar, &orig_bar, &dst_bar);
+void Camera::drawText(const std::string &text, double posx, double posy,
+                      double size, size_t padding) {
+    int x = posx*width;
+    int y = posy*height;
+    int h = 60*size*window_scale;
+    t_drawer.drawText(text, x, y, h, 5*window_scale, padding);
 }
 
-void Camera::drawLapNumber(int32_t lap, int32_t total_laps) {
-    int x = 60*window_scale;
-    int y = 60*window_scale;
-
-    std::string text = "Lap: "+std::to_string(lap)+"/"+std::to_string(total_laps);
-
-    t_drawer.drawText(text, x, y, 60*window_scale, 5*window_scale, 7);
+void Camera::drawFullScreenTexture(int32_t id) {
+    Texture tex = t_factory.getTexture(id);
+    copyRender(tex.tex, 0, 0, 0, width, height);
 }
-
-void Camera::drawLoadingScreen() {
-    SDL_Texture* scrn = t_factory.getLoadingTexture();
-    SDL_Rect dst{0,0, width, height};
-    SDL_RenderCopy(renderer, scrn, nullptr, &dst);
-}
-
-void Camera::drawCountdownNumber(const std::string& str) {
-    int h = 200*window_scale;
-    int x = width/2 - h/2*str.size();
-    int y = height/2 - h/2;
-    t_drawer.drawText(str, x, y, h, 5*window_scale, str.size());
-}
-

@@ -60,6 +60,6 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario
         case MSG_COUNTDOWN:
             return std::unique_ptr<Command>(new CountdownCommand(scenario, bot, command[1]));
         default:
-            break; //aca hacer un unknown commnad
+            return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
     }
 }

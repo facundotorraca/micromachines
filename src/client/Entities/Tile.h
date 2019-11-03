@@ -19,7 +19,7 @@ public:
         this->rot = info.rotation;
     }
     void draw(Camera& camera) override {
-        camera.drawTile(posX, posY, rot, info.type);
+        camera.drawWorldTexture(info.type, posX, posY, rot);
     }
 };
 #endif //MICROMACHINES_TILE_H

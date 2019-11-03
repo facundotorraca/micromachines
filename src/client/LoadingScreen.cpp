@@ -16,5 +16,5 @@ void LoadingScreen::show() {
 
 void LoadingScreen::draw(Camera& camera) {
     if (showing)
-        camera.drawLoadingScreen();
+        camera.drawFullScreenTexture(LOADING_SCR);
 }

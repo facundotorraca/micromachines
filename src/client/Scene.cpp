@@ -15,7 +15,8 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
 
 void Scene::handleServerEvent(std::vector<int32_t>& data) {
     auto command = Command::create(data, scenario, bot);
-    command->apply();
+    if (command)
+        command->apply();
 }
 
 void Scene::draw() {

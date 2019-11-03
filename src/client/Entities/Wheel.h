@@ -8,7 +8,7 @@
 class Wheel : public Entity {
     public:
         void draw(Camera& camera) override {
-            camera.drawWheel(posX, posY, rot);
+            camera.drawWorldTexture(WHEEL_TEX, posX, posY, rot);
         }
 };
 
