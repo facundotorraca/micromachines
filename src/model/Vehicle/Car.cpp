@@ -15,29 +15,14 @@
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
 
-Car::Car(RacingTrack& racing_track, CarSpecs specs):
+Car::Car(CarSpecs specs):
     specs(specs),
     lap_altered(false),
     key_h(NOT_PRESSED),
     key_v(NOT_PRESSED),
     life(specs.max_life),
     lap_state(std::unique_ptr<LapState> (new LapRunning()))
-{
-    /*create car body*/
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    this->car_body = racing_track.add_body(bodyDef);
-
-    /*reduce the world velocity of bodies*/
-    this->car_body->SetAngularDamping(0.1);
-
-    b2PolygonShape polygon_shape;
-    polygon_shape.SetAsBox(CAR_WIDTH/2 + 0.05, CAR_HEIGHT/2 + 0.05);
-    this->car_fixture = this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
-
-    this->car_body->SetUserData(this);
-    this->create_wheels(racing_track);
-}
+{}
 
 Car::Car(Car&& other_car) noexcept:
     life(other_car.life),
@@ -48,6 +33,7 @@ Car::Car(Car&& other_car) noexcept:
     front_left_joint(other_car.front_left_joint),
     front_right_joint(other_car.front_right_joint),
     lap_state(std::unique_ptr<LapState> (new LapRunning()))
+  //  race_state(std::unique_ptr<RaceState> (new RunningRace()))
 {
     this->key_h = other_car.key_h;
     this->key_v = other_car.key_v;
@@ -62,7 +48,24 @@ Car::Car(Car&& other_car) noexcept:
     other_car.front_left_joint = nullptr;
 }
 
-void Car::create_wheels(RacingTrack& racing_track) {
+void Car::add_to_world(b2World &world) {
+    /*create car body*/
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    this->car_body = world.CreateBody(&bodyDef);
+
+    /*reduce the world velocity of bodies*/
+    this->car_body->SetAngularDamping(0.1);
+
+    b2PolygonShape polygon_shape;
+    polygon_shape.SetAsBox(CAR_WIDTH/2 + 0.05, CAR_HEIGHT/2 + 0.05);
+    this->car_fixture = this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
+
+    this->car_body->SetUserData(this);
+    this->create_wheels(world);
+}
+
+void Car::create_wheels(b2World& world) {
     //common joint parameters
     b2RevoluteJointDef joint_params;
     joint_params.bodyA = this->car_body; /*Main body*/
@@ -70,43 +73,43 @@ void Car::create_wheels(RacingTrack& racing_track) {
     joint_params.localAnchorB.SetZero(); /*center of tire*/
 
     /*back left tire*/
-    auto* back_left_wheel = new Wheel(racing_track.get_world(), this->specs.max_forward_speed,
+    auto* back_left_wheel = new Wheel(world, this->specs.max_forward_speed,
                                       this->specs.max_backward_speed,
                                       this->specs.back_wheel_max_force,
                                       this->specs.back_max_lateral_impulse);
     joint_params.bodyB = back_left_wheel->get_body();
     joint_params.localAnchorA.Set(CAR_WIDTH/2.15, -(CAR_HEIGHT/2)*0.62);
-    racing_track.get_world().CreateJoint(&joint_params);
+    world.CreateJoint(&joint_params);
     this->wheels.push_back(back_left_wheel);
 
     //back right tire
-    auto* back_right_wheel = new Wheel(racing_track.get_world(), this->specs.max_forward_speed,
+    auto* back_right_wheel = new Wheel(world, this->specs.max_forward_speed,
                                        this->specs.max_backward_speed,
                                        this->specs.back_wheel_max_force,
                                        this->specs.back_max_lateral_impulse);
     joint_params.bodyB = back_right_wheel->get_body();
     joint_params.localAnchorA.Set(-CAR_WIDTH/2.15, -(CAR_HEIGHT/2)*0.62);
-    racing_track.get_world().CreateJoint(&joint_params);
+    world.CreateJoint(&joint_params);
     this->wheels.push_back(back_right_wheel);
 
     //front left tire
-    auto* front_left_wheel = new Wheel(racing_track.get_world(), this->specs.max_forward_speed,
+    auto* front_left_wheel = new Wheel(world, this->specs.max_forward_speed,
                                        this->specs.max_backward_speed,
                                        this->specs.front_wheel_max_force,
                                        this->specs.front_max_lateral_impulse);
     joint_params.bodyB = front_left_wheel->get_body();
     joint_params.localAnchorA.Set( CAR_WIDTH/2.15, (CAR_HEIGHT/2)*0.62);
-    front_left_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
+    front_left_joint = (b2RevoluteJoint*)world.CreateJoint(&joint_params);
     this->wheels.push_back(front_left_wheel);
 
     //front right tire
-    auto* front_right_wheel = new Wheel(racing_track.get_world(), this->specs.max_forward_speed,
+    auto* front_right_wheel = new Wheel(world, this->specs.max_forward_speed,
                                         this->specs.max_backward_speed,
                                         this->specs.front_wheel_max_force,
                                         this->specs.front_max_lateral_impulse);
     joint_params.bodyB = front_right_wheel->get_body();
     joint_params.localAnchorA.Set( -CAR_WIDTH/2.15, (CAR_HEIGHT/2)*0.62);
-    front_right_joint = (b2RevoluteJoint*)racing_track.get_world().CreateJoint(&joint_params);
+    front_right_joint = (b2RevoluteJoint*)world.CreateJoint(&joint_params);
     this->wheels.push_back(front_right_wheel);
 }
 
@@ -165,10 +168,10 @@ Car::~Car() {
 
 UpdateClient Car::get_update(const int32_t id) {
     std::vector<int32_t> params {MSG_UPDATE_ENTITY, TYPE_CAR, id,
-                                (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().x - (CAR_WIDTH*0.5))),
-                                (int32_t)(METER_TO_PIXEL * (this->car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
-                                (int32_t)(RADTODEG * this->car_body->GetAngle()),
-                                (int32_t)(METER_TO_PIXEL * this->car_body->GetLinearVelocity().Length())};
+                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().x - (CAR_WIDTH*0.5))),
+                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
+                                 (int32_t)(RADTODEG * car_body->GetAngle()),
+                                 (int32_t)(METER_TO_PIXEL * car_body->GetLinearVelocity().Length())};
 
     for (auto& wheel : wheels){
         params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5))));
@@ -216,5 +219,18 @@ void Car::restart_lap() {
 void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
     if (lap_altered) //Just for performance
         this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
+    /*if (lap_counter.car_complete_laps(car_ID))
+        this->race_state.reset(new RaceCompleted());*/
     this->lap_altered = false;
+}
+
+void Car::move_to(Coordinate coordinate) {
+    float x_pos = coordinate.get_x() * TILE_TERRAIN_SIZE;
+    float y_pos = coordinate.get_y() * TILE_TERRAIN_SIZE;
+    float angle = -coordinate.get_angle() * DEGTORAD;
+
+    this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
+    for (auto& wheel : this->wheels) {
+        wheel->move_to(coordinate);
+    }
 }

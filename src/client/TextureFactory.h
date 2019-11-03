@@ -99,6 +99,33 @@ public:
             tile_textures.emplace(123, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/S_2.png"));
 
             tile_textures.emplace(124, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/TB_1a.png"));
+
+            /*-----------------------------------------Podium-------------------------------------------------*/
+            tile_textures.emplace(125, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/trophy_s.png"));
+            tile_textures.emplace(126, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/trophy_g.png"));
+            tile_textures.emplace(127, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/trophy_b.png"));
+
+
+            tile_textures.emplace(128, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PF_1a.png"));
+            tile_textures.emplace(129, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PF_2a.png"));
+            tile_textures.emplace(130, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PF_3a.png"));
+            tile_textures.emplace(131, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PF_4a.png"));
+            tile_textures.emplace(132, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PF_5a.png"));
+
+            tile_textures.emplace(133, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PS_1a.png"));
+            tile_textures.emplace(134, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PS_2a.png"));
+            tile_textures.emplace(135, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PS_3a.png"));
+            tile_textures.emplace(136, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PS_4a.png"));
+            tile_textures.emplace(137, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PS_5a.png"));
+            tile_textures.emplace(138, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PT_1a.png"));
+            tile_textures.emplace(139, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PT_2a.png"));
+            tile_textures.emplace(140, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PT_3a.png"));
+            tile_textures.emplace(141, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PT_4a.png"));
+            tile_textures.emplace(142, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PT_5a.png"));
+
+            tile_textures.emplace(143, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PF_1b.png"));
+            tile_textures.emplace(144, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PS_1b.png"));
+            tile_textures.emplace(145, IMG_LoadTexture(renderer,"assets/sprites/TrackObjects/PT_1b.png"));
         }
     }
 

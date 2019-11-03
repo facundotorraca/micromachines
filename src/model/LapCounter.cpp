@@ -13,7 +13,7 @@ void LapCounter::add_lap(int32_t ID) {
         this->laps.at(ID)++;
     } catch(const std::out_of_range &e) {
         /*first appearance of the car*/
-        this->laps[ID] = 0;
+        this->laps[ID] = 1;
     }
 }
 
@@ -37,10 +37,8 @@ bool LapCounter::car_complete_laps(int32_t ID) {
 UpdateClient LapCounter::get_update(int32_t ID) {
     try {
         int32_t player_laps = this->laps.at(ID);
-        //std::cout << "LAP: " << this->laps.at(ID) << "/" << this->total_laps << "\n";
         return UpdateClient(std::move(std::vector<int32_t> {MSG_SET_LAP, player_laps} ));
     } catch (const std::out_of_range &e) {
-        //std::cout << "LAP: " << 0 << "/" << this->total_laps << "\n";
         return UpdateClient(std::move(std::vector<int32_t> {MSG_SET_LAP, 0}));;
     }
 }

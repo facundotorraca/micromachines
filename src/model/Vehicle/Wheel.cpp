@@ -171,4 +171,12 @@ int32_t Wheel::get_ID() {
     return TYPE_WHEEL;
 }
 
+void Wheel::move_to(Coordinate coordinate) {
+    float x_pos = coordinate.get_x() * TILE_TERRAIN_SIZE;
+    float y_pos = coordinate.get_y() * TILE_TERRAIN_SIZE;
+    float angle = -coordinate.get_angle() * DEGTORAD;
+
+    this->wheel_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
+}
+
 

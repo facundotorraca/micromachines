@@ -4,6 +4,7 @@
 #include <common/ProtectedQueue.h>
 #include "RacingTrack.h"
 #include "Box2D/Box2D.h"
+#include "Podium.h"
 
 RacingTrack::RacingTrack():
     racing_track(b2Vec2(0,0))
@@ -21,18 +22,10 @@ RacingTrack::RacingTrack():
     this->racing_track.SetContactListener(&this->contact_listener);
 }
 
-b2Body* RacingTrack::add_body(b2BodyDef& body) {
-    return this->racing_track.CreateBody(&body);
-}
-
 void RacingTrack::update() {
     this->racing_track.Step(this->time_step,
                       this->velocity_iterations,
                       this->position_iterations);
-}
-
-b2World& RacingTrack::get_world() {
-    return this->racing_track;
 }
 
 void RacingTrack::send(ProtectedQueue<UpdateClient>& player_queue) {
@@ -72,6 +65,19 @@ void RacingTrack::set_finish_line(Coordinate begin, Coordinate end) {
     this->finish_line = new FinishLine(begin, end, this->racing_track);
 }
 
+void RacingTrack::set_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place) {
+    this->podium = new Podium(f_place, s_place, t_place);
+}
+
 RacingTrack::~RacingTrack() {
+    delete this->podium;
     delete this->finish_line;
+}
+
+void RacingTrack::add_car(Car &car) {
+    car.add_to_world(this->racing_track);
+}
+
+void RacingTrack::add_car_to_podium(Car &car) {
+    this->podium->add_car(car);
 }

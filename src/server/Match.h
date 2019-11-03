@@ -30,6 +30,8 @@ class Match : public Thread {
 
     ProtectedQueue<UpdateRace> updates_race;
 
+    std::unordered_map<int32_t, bool> player_running;
+
     std::unordered_map<int32_t, Car> cars;
     std::unordered_map<int32_t, Player> players;
     std::unordered_map<int32_t, ThreadPlayer> thread_players;

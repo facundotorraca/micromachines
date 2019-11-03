@@ -7,17 +7,19 @@
 #include "CarSpecs.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
-#include <model/LapState.h>
+#include <model/Vehicle/LapState.h>
 #include <common/Coordinate.h>
-#include "model/RacingTrack.h"
+#include "RaceState.h"
 #include <server/UpdateClient.h>
+
+#define DEGTORAD 0.0174532925199432957f
 
 class Car : public Body {
     CarLife life;
     CarSpecs specs;
 
-    b2Body* car_body;
-    b2Fixture* car_fixture;
+    b2Body* car_body{};
+    b2Fixture* car_fixture{};
     std::vector<Wheel*> wheels;
 
     b2RevoluteJoint* front_left_joint{};
@@ -29,24 +31,21 @@ class Car : public Body {
     bool lap_altered;
     std::unique_ptr<LapState> lap_state;
 
-    /*
-    bool lap_complete;
-    bool lap_restarted;
-    */
-
     private:
-        void create_wheels(RacingTrack& racing_track);
+        void create_wheels(b2World& world);
 
         static float get_desire_angle(int32_t key);
 
     public:
-        Car(RacingTrack& racing_track, CarSpecs specs);
+        explicit Car(CarSpecs specs);
 
         Car(Car&& other_car) noexcept;
 
+        void add_to_world(b2World& world);
+
         void set_spawn_point(Coordinate spawn_point);
 
-        void collide(Body* stactic_object) override;
+        void collide(Body* static_object) override;
 
         UpdateClient get_update(int32_t id);
 
@@ -55,6 +54,8 @@ class Car : public Body {
         void press_key(int32_t key);
 
         int32_t get_ID() override;
+
+        void move_to(Coordinate coordinate);
 
         void update();
 

@@ -2,7 +2,7 @@
 #define MICROMACHINES_LAPSTATE_H
 
 #include <bits/unique_ptr.h>
-#include "LapCounter.h"
+#include "model/LapCounter.h"
 
 class LapRunning;
 class LapRestarted;

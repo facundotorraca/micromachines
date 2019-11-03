@@ -18,12 +18,14 @@ public:
         TTF_Init();
         font = TTF_OpenFont("assets/fonts/joystix.ttf", 16);
     }
+
     TextDrawer& operator=(TextDrawer&& other) noexcept{
         this->font = other.font;
         this->renderer = other.renderer;
         other.font = nullptr;
         return *this;
     }
+
     void drawText(const std::string& orig_text, int x, int y, int h, int shadow_dist, int padding){
         std::stringstream ss;
         ss << std::setw(padding) << orig_text;
@@ -42,6 +44,7 @@ public:
         SDL_FreeSurface(surface_w);
         SDL_FreeSurface(surface_b);
     }
+
     ~TextDrawer(){
         if (font){
             TTF_CloseFont(font);

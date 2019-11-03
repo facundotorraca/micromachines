@@ -20,12 +20,11 @@
 #define SUCCESS_MATCH_JOIN_FLAG 0
 
 #define START_MATCH_FLAG 0
-
 #define TIME_START 3
 
 Match::Match(std::string match_creator, std::string match_name):
         closed(false),
-        lap_counter(5),
+        lap_counter(3),
         updates_race(10000),
         match_name(std::move(match_name)),
         match_creator(std::move(match_creator)),
@@ -92,6 +91,56 @@ bool Match::is_closed() {
     return this->closed;
 }
 
+
+
+
+void Match::initialize_players() {
+    MapLoader map_loader(MAP_PATH);
+    map_loader.load_map(this->racing_track, "track_01.json", "tiles.json");
+
+    for (auto& player : players) {
+        int32_t ID = player.first;
+
+        this->player_running.emplace(std::pair<int32_t, bool>(ID, true));
+
+        CarSpecs specs{100, 120, -20, 130, 150, 8.5, 7.5};
+        this->cars.emplace(std::piecewise_construct,
+                           std::forward_as_tuple(player.first),
+                           std::forward_as_tuple(specs));
+        this->racing_track.add_car(this->cars.at(player.first));
+
+
+        this->updates_players.emplace(ID, 10000/*queue len*/);
+        this->thread_players.emplace(std::piecewise_construct,
+                                     std::forward_as_tuple(ID),
+                                     std::forward_as_tuple(updates_players.at(ID),
+                                                           updates_race, player.second));
+
+        try {
+            this->players.at(ID).send((uint8_t)START_MATCH_FLAG);
+            this->thread_players.at(ID).start();
+            this->create_initial_player_info(ID);
+        } catch (const SocketError& exception) {
+            std::cerr << "Player disconnected\n";
+            this->players.erase(player.first);
+            this->thread_players.at(ID).join();
+            this->thread_players.erase(ID);
+            //aca no va un break?
+        }
+    }
+
+    map_loader.set_cars_spawn_point(this->cars);
+}
+
+void Match::create_initial_player_info(int32_t player_ID) {
+    int32_t total_laps = this->lap_counter.get_total_laps();
+    this->updates_players.at(player_ID).push(UpdateClient({MSG_BEGIN_LOADING}));
+    this->racing_track.send(this->updates_players.at(player_ID));
+    this->updates_players.at(player_ID).push(UpdateClient({MSG_TOTAL_LAPS, total_laps}));
+    this->updates_players.at(player_ID).push(UpdateClient({MSG_CAR_ID, player_ID}));
+    this->updates_players.at(player_ID).push(UpdateClient({MSG_FINISH_LOADING}));
+}
+
 void Match::remove_disconnected_players() {
     for (auto th_player = this->thread_players.begin(); th_player != this->thread_players.end();) {
         if ((*th_player).second.dead()) {
@@ -106,50 +155,35 @@ void Match::remove_disconnected_players() {
     }
 }
 
-void Match::update_players() {
-    for (auto& car : cars) {
-        auto general_update = car.second.get_update(car.first);
-        this->send_to_all(general_update);
-
-        if (this->lap_counter.car_complete_laps(car.first)) {
-            this->thread_players.at(car.first).set_player_on_hold();
-        }
-
-        car.second.modify_laps(this->lap_counter, car.first);
-        auto personalized_update = this->lap_counter.get_update(car.first);
-        this->updates_players.at(car.first).push(personalized_update);
-    }
-}
-
 void Match::send_to_all(UpdateClient update) {
     for (auto& queue : updates_players){
         queue.second.push(update);
     }
 }
 
+void Match::update_players() {
+    for (auto& car : this->cars) {
+        int32_t ID = car.first;
+
+        auto general_update = car.second.get_update(ID);
+        this->send_to_all(general_update);
+
+        if (this->player_running.at(ID) && this->lap_counter.car_complete_laps(ID)) {
+            std::unique_lock<std::mutex> lock(mtx);
+            this->player_running.at(ID) = false;
+            this->thread_players.at(ID).set_player_on_hold();
+            this->racing_track.add_car_to_podium(car.second);
+        } else {
+            car.second.modify_laps(this->lap_counter, ID);
+            auto personalized_update = this->lap_counter.get_update(ID);
+            this->updates_players.at(ID).push(personalized_update);
+        }
+    }
+}
+
 void Match::apply_update(UpdateRace update) {
     std::unique_lock<std::mutex> lock(mtx);
     update.update_cars(this->cars);
-}
-
-void Match::run() {
-    CountdownTimer timer(TIME_START, this->thread_players, this->updates_players);
-    this->initialize_players();
-    this->clients_monitor.start();
-    timer.start();
-
-    while (this->running) {
-        this->step();
-        this->update_players();
-        this->remove_disconnected_players();
-
-        if (this->players.empty()) {
-            this->close();
-            timer.join();
-            return;
-        }
-    }
-    timer.join();
 }
 
 void Match::step() {
@@ -161,46 +195,26 @@ void Match::step() {
     this->racing_track.update();
 }
 
-void Match::initialize_players() {
-    MapLoader map_loader(MAP_PATH);
-    map_loader.load_map(this->racing_track, "track_01.json", "tiles.json");
+void Match::run() {
+    CountdownTimer timer(TIME_START,
+                         this->thread_players,
+                         this->updates_players);
 
-    for (auto& player : players) {
-        int32_t ID = player.first;
+    this->initialize_players();
+    this->clients_monitor.start();
+    timer.start();
 
-        CarSpecs specs{100, 120, -20, 130, 150, 8.5, 7.5};
-        this->cars.emplace(std::piecewise_construct,
-                           std::forward_as_tuple(player.first),
-                           std::forward_as_tuple(racing_track, specs));
+    while (this->running) {
+        this->step();
+        this->update_players();
+        this->remove_disconnected_players();
 
-
-        this->updates_players.emplace(ID, 10000/*queue len*/);
-        this->thread_players.emplace(std::piecewise_construct,
-                                     std::forward_as_tuple(ID),
-                                     std::forward_as_tuple(updates_players.at(ID),
-                                                           updates_race, player.second));
-
-
-
-        try {
-            this->players.at(ID).send((uint8_t)START_MATCH_FLAG);
-            this->thread_players.at(ID).start();
-            this->create_initial_player_info(ID);
-        } catch (const SocketError& exception) {
-            std::cerr << "Player disconnected\n";
-            this->players.erase(player.first);
-            //aca no va un break?
+        if (this->players.empty()) {
+            timer.join();
+            this->close();
+            return;
         }
-
     }
-    map_loader.set_cars_spawn_point(this->cars);
-}
 
-void Match::create_initial_player_info(int32_t player_ID) {
-    int32_t total_laps = this->lap_counter.get_total_laps();
-    this->updates_players.at(player_ID).push(std::move(UpdateClient({MSG_BEGIN_LOADING})));
-    this->racing_track.send(this->updates_players.at(player_ID));
-    this->updates_players.at(player_ID).push(std::move(UpdateClient({MSG_TOTAL_LAPS, total_laps})));
-    this->updates_players.at(player_ID).push(std::move(UpdateClient({MSG_CAR_ID, player_ID})));
-    this->updates_players.at(player_ID).push(std::move(UpdateClient({MSG_FINISH_LOADING})));
+    timer.join();
 }

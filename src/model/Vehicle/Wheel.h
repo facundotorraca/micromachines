@@ -8,6 +8,8 @@
 #include <common/Coordinate.h>
 #include <model/StaticTrackObject.h>
 
+#define DEGTORAD 0.0174532925199432957f
+
 class Wheel : public Body {
     b2Body* wheel_body;
     b2Fixture* wheel_fixture{};
@@ -48,7 +50,9 @@ class Wheel : public Body {
 
         int32_t get_ID() override;
 
-        /*--------------Terrain Modifiers------------*/
+        void move_to(Coordinate coordinate);
+
+    /*--------------Terrain Modifiers------------*/
         void set_traction(float proportion);
 
         void reduce_max_speed(float proportion);
