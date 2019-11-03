@@ -39,17 +39,12 @@ public:
     void update(int32_t posx, int32_t posy, int32_t rot);
     void draw();
     void clear();
-    void drawCar(int32_t posx, int32_t posy, int32_t rot);
-    void drawDamagedCar(int32_t posx, int32_t posy, int32_t rot);
-    void drawTile(int32_t posx, int32_t posy, int32_t rot, int32_t type);
-    void drawWheel(int32_t posx, int32_t posy, int32_t rot);
-    void drawBackground(int32_t type, int32_t width, int32_t height);
-    void drawSpeedometer(int32_t speed);
-    void drawHealthBar(int32_t health);
-    void drawLapNumber(int32_t lap, int32_t total_laps);
-    void drawLoadingScreen();
-    void drawCountdownNumber(const std::string& str);
+    void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t rot);
+    void drawTexture(int32_t id, double posx, double posy, double scale);
+    void drawText(const std::string& text, double posx, double posy, double size, size_t padding);
+    void drawFullScreenTexture(int32_t id);
     ~Camera();
+
 };
 
 

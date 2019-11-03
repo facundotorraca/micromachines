@@ -8,7 +8,7 @@ Countdown::Countdown() : showing(false), number("3"), frames_drawing(0) {}
 
 void Countdown::draw(Camera &camera) {
     if (showing){
-        camera.drawCountdownNumber(number);
+        camera.drawText(number, 0.4, 0.5, 2, number.size());
         frames_drawing++;
         if (frames_drawing > FRAMES_PER_SECOND){
             showing = false;
@@ -18,7 +18,7 @@ void Countdown::draw(Camera &camera) {
 
 void Countdown::show(int32_t n) {
     if (n > 0)
-        this->number = std::to_string(n);
+        this->number = " "+std::to_string(n)+" ";
     else
         this->number = std::string("GO!");
     showing = true;
