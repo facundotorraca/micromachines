@@ -44,8 +44,6 @@ struct Texture{
 
 class TextureFactory {
     std::map<int32_t, Texture> textures;
-    std::map<int32_t, SDL_Texture*> general_textures;
-    std::map<int32_t, SDL_Texture*> tile_textures;
     static Texture createTexture(SDL_Renderer* renderer, const char* path){
         SDL_Surface* surface = IMG_Load(path);
         SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
@@ -154,47 +152,38 @@ public:
             textures.emplace(122, createTextureWithSize(renderer,"assets/sprites/TrackObjects/S_1.png", tile_width, tile_width)); 
             textures.emplace(123, createTextureWithSize(renderer,"assets/sprites/TrackObjects/S_2.png", tile_width, tile_width)); 
 
-            textures.emplace(124, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TB_1a.png", tile_width, tile_width)); 
+            textures.emplace(124, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TB_1a.png", tile_width, tile_width));
+            textures.emplace(125, createTextureWithSize(renderer,"assets/sprites/TrackObjects/trophy_s.png", tile_width, tile_width));
+            textures.emplace(126, createTextureWithSize(renderer,"assets/sprites/TrackObjects/trophy_g.png", tile_width, tile_width));
+            textures.emplace(127, createTextureWithSize(renderer,"assets/sprites/TrackObjects/trophy_b.png", tile_width, tile_width));
+
+
+            textures.emplace(128, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_1a.png", tile_width, tile_width));
+            textures.emplace(129, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_2a.png", tile_width, tile_width));
+            textures.emplace(130, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_3a.png", tile_width, tile_width));
+            textures.emplace(131, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_4a.png", tile_width, tile_width));
+            textures.emplace(132, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_5a.png", tile_width, tile_width));
+
+            textures.emplace(133, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_1a.png", tile_width, tile_width));
+            textures.emplace(134, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_2a.png", tile_width, tile_width));
+            textures.emplace(135, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_3a.png", tile_width, tile_width));
+            textures.emplace(136, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_4a.png", tile_width, tile_width));
+            textures.emplace(137, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_5a.png", tile_width, tile_width));
+            textures.emplace(138, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_1a.png", tile_width, tile_width));
+            textures.emplace(139, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_2a.png", tile_width, tile_width));
+            textures.emplace(140, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_3a.png", tile_width, tile_width));
+            textures.emplace(141, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_4a.png", tile_width, tile_width));
+            textures.emplace(142, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_5a.png", tile_width, tile_width));
+
+            textures.emplace(143, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_1b.png", tile_width, tile_width));
+            textures.emplace(144, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_1b.png", tile_width, tile_width));
+            textures.emplace(145, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_1b.png", tile_width, tile_width));
         }
     }
 
     TextureFactory& operator=(TextureFactory&& other) noexcept{
         this->textures = std::move(other.textures);
-        this->tile_textures = std::move(other.tile_textures);
         return *this;
-    }
-
-    SDL_Texture *getCarTexture() {
-        return general_textures.at(CAR_TEX);
-    }
-
-    SDL_Texture *getTileTexture(int32_t type) {
-        try {
-            return textures.at(type).tex;
-        } catch (std::out_of_range& e){
-            std::cerr << "Texture " << type << " not found" << std::endl;
-            return nullptr;
-        }
-    }
-
-    SDL_Texture *getWheelTexture() {
-        return general_textures.at(WHEEL_TEX);
-    }
-
-    SDL_Texture* getSpeedometer(){
-        return general_textures.at(SPEEDOMETER_TEX);
-    }
-
-    SDL_Texture *getDamagedCarTexture() {
-        return general_textures.at(DMG_CAR_TEX);
-    }
-
-    SDL_Texture* getHealthBarTexture(){
-        return general_textures.at(SPEEDOBORDER_TEX);
-    }
-
-    SDL_Texture* getHealthTexture(){
-        return general_textures.at(SPEEDOBAR_TEX);
     }
 
     Texture getTexture(int32_t id){
@@ -204,15 +193,6 @@ public:
     ~TextureFactory(){
         for (auto& tex : textures)
             SDL_DestroyTexture(tex.second.tex);
-        for (auto& tex : general_textures)
-            SDL_DestroyTexture(tex.second);
-        for (auto& tex : tile_textures)
-            SDL_DestroyTexture(tex.second);
-    }
-
-
-    SDL_Texture *getLoadingTexture() {
-        return general_textures.at(LOADING_SCR);
     }
 };
 
