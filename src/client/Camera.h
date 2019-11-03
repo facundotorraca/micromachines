@@ -41,6 +41,7 @@ public:
     void clear();
     void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t rot);
     void drawTexture(int32_t id, double posx, double posy, double scale);
+    void drawSurface(SDL_Surface* surface, double posx, double posy, double width, double height);
     void drawText(const std::string& text, double posx, double posy, double size, size_t padding);
     void drawFullScreenTexture(int32_t id);
     ~Camera();

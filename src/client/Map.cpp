@@ -5,7 +5,6 @@
 #include "Map.h"
 
 void Map::draw(Camera& camera) {
-    //camera.drawBackground(back.type, back.width, back.height);
     for (int i=0; i < back.width; i++)
         for (int j=0; j < back.height; j++)
             camera.drawWorldTexture(back.type, TILE_TERRAIN_SIZE*METER_TO_PIXEL*i,

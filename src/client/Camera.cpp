@@ -128,6 +128,16 @@ void Camera::drawTexture(int32_t id, double posx, double posy, double scale) {
     copyRender(tex.tex, x, y, 0, w, h);
 }
 
+void Camera::drawSurface(SDL_Surface* surface, double posx, double posy, double w_surface, double h_surface){
+    SDL_Texture* texture =  SDL_CreateTextureFromSurface(renderer, surface);
+    int x = posx*width;
+    int y = posy*height;
+    int w = w_surface*width;
+    int h = h_surface*height;
+    copyRender(texture, x, y, 0, w, h);
+    SDL_DestroyTexture(texture);
+}
+
 void Camera::drawText(const std::string &text, double posx, double posy,
                       double size, size_t padding) {
     int x = posx*width;

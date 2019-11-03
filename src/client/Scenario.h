@@ -12,6 +12,7 @@
 #include "Hud.h"
 #include "LoadingScreen.h"
 #include "Countdown.h"
+#include "Minimap.h"
 
 class Scenario {
     Camera camera;
@@ -19,6 +20,7 @@ class Scenario {
     Hud hud;
     LoadingScreen l_screen;
     Countdown countdown;
+    Minimap minimap;
     int32_t my_car_id;
     std::map<int32_t, Car> cars;
     std::mutex mtx;

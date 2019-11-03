@@ -33,6 +33,8 @@
 #define HEALTH_14 5014
 #define HEALTH_15 5015
 #define HEALTH_16 5016
+#define WHITE_BLOCK 4507
+#define RED_DOT 4508
 
 
 
@@ -68,6 +70,8 @@ public:
             textures.emplace(SPEEDOBORDER_TEX, createTexture(renderer, "assets/sprites/UI/Oil bar 2.png"));
             textures.emplace(SPEEDOBAR_TEX, createTexture(renderer, "assets/sprites/UI/Oil bar.png"));
             textures.emplace(LOADING_SCR, createTexture(renderer, "assets/sprites/loading_screen.jpg"));
+            textures.emplace(WHITE_BLOCK, createTexture(renderer, "assets/sprites/white_block.png"));
+            textures.emplace(RED_DOT, createTexture(renderer, "assets/sprites/red_dot.png"));
             textures.emplace(HEALTH_01, createTexture(renderer, "assets/sprites/HealthBar/100.png"));
             textures.emplace(HEALTH_02, createTexture(renderer, "assets/sprites/HealthBar/92.png"));
             textures.emplace(HEALTH_03, createTexture(renderer, "assets/sprites/HealthBar/85.png"));
