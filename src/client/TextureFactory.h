@@ -194,7 +194,12 @@ public:
     }
 
     Texture getTexture(int32_t id){
-        return textures.at(id);
+        try {
+            return textures.at(id);
+        } catch (std::out_of_range& e) {
+            std::cerr << "TextureFactory: Texture not found: " << std::to_string(id) << std::endl;
+            return {nullptr, 0, 0};
+        }
     }
 
     ~TextureFactory(){
