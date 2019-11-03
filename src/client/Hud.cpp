@@ -9,13 +9,13 @@ void Hud::setHealth(int32_t h) {
 }
 
 void Hud::setSpeed(int32_t s) {
-    this->speed = s;
+    this->speed = s*3.6/METER_TO_PIXEL;
 }
 
 void Hud::draw(Camera &camera) {
     /*---------------------------CREATE SPEEDOMETER---------------------------*/
     camera.drawTexture(SPEEDOMETER_TEX, 0.72, 0.07, 0.28);
-    int show_speed = (int)floor(speed)*3.6/METER_TO_PIXEL;
+    int show_speed = floor(speed);
     camera.drawText(std::to_string(show_speed)+" km/h", 0.76, 0.08, 0.6, 8);
 
     /*---------------------------CREATE HEALTH BAR----------------------------*/

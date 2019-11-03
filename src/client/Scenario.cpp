@@ -9,10 +9,12 @@ Scenario::Scenario() : my_car_id(-1) {}
 void Scenario::addTile(TileInfo &info) {
     std::unique_lock<std::mutex> lock(mtx);
     map.addTile(info);
+    minimap.addTile(info);
 }
 
 void Scenario::setOwnID(int32_t id) {
     this->my_car_id = id;
+    minimap.setMyID(id);
 }
 
 void Scenario::updateCar(CarInfo &info) {
@@ -28,6 +30,7 @@ void Scenario::updateCar(CarInfo &info) {
         camera.update(info.carx, info.cary, info.carrot);
         hud.setSpeed(info.carvel);
     }
+    minimap.updateCar(info);
 
     cars.at(info.car_id).update_all(info);
 }
@@ -41,6 +44,7 @@ void Scenario::draw() {
     }
     hud.draw(camera);
     countdown.draw(camera);
+    minimap.draw(camera);
     l_screen.draw(camera);
     camera.draw();
 }
@@ -61,6 +65,7 @@ void Scenario::setCarHealth(int32_t id, int32_t health) {
 void Scenario::setBackground(int32_t type, int32_t width, int32_t height) {
     std::unique_lock<std::mutex> lock(mtx);
     map.setBackground(type, width, height);
+    minimap.setSize(width, height);
 }
 
 void Scenario::setLapNumber(int32_t lap) {
