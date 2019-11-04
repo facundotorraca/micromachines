@@ -6,16 +6,15 @@
 ThreadDrawer::ThreadDrawer(Scene &scene) : Thread(), scene(scene) {}
 
 void ThreadDrawer::run() {
+    auto ticks = SDL_GetTicks();
+    float prev_ticks;
     while (this->running) {
-        auto start = std::chrono::high_resolution_clock::now();
+        prev_ticks = ticks;
+        ticks = SDL_GetTicks();
         this->scene.draw();
-        auto finish = std::chrono::high_resolution_clock::now();
-        float duration = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start).count();
-        std::cerr << duration << std::endl;
-        if (duration > 16)
-            duration = 16;
-        if (duration < 0)
-            duration = 0;
-        SDL_Delay(1000.0f/60.0f - duration);
+        auto x = ticks - prev_ticks;
+        std::cerr << (x) << std::endl;
+        if (x < 16)
+            SDL_Delay(16 - x);
     }
 }
