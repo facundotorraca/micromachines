@@ -16,17 +16,18 @@
 struct CarData{
     int32_t x;
     int32_t y;
-    double rot;
+    int32_t vel;
+    float rot;
 };
 
 class Camera {
-    double posx;
-    double posy;
+    float posx;
+    float posy;
     std::list<CarData> car_pos;
     int32_t width;
     int32_t height;
-    double window_scale;
-    double draw_scale;
+    float window_scale;
+    float draw_scale;
     TextureFactory t_factory;
     TextDrawer t_drawer;
     SDL_Renderer* renderer;
@@ -36,13 +37,13 @@ class Camera {
             int32_t w, int32_t h);
 public:
     Camera();
-    void update(int32_t posx, int32_t posy, int32_t rot);
+    void update(int32_t posx, int32_t posy, int32_t carvel, int32_t rot);
     void draw();
     void clear();
     void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t rot);
-    void drawTexture(int32_t id, double posx, double posy, double scale);
-    void drawSurface(SDL_Surface* surface, double posx, double posy, double width, double height);
-    void drawText(const std::string& text, double posx, double posy, double size, size_t padding);
+    void drawTexture(int32_t id, float posx, float posy, float scale);
+    void drawSurface(SDL_Surface* surface, float posx, float posy, float width, float height);
+    void drawText(const std::string& text, float posx, float posy, float size, size_t padding);
     void drawFullScreenTexture(int32_t id);
     ~Camera();
 

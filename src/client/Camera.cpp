@@ -6,8 +6,8 @@
 
 #define DEG2RAD 0.01745329252
 #define CAM_DEAD_ZONE 0
-#define CAMERA_DISTANCE 0.013
-#define FORWARD_VIEW 30
+#define CAMERA_DISTANCE 0.0018
+#define FORWARD_VIEW 5
 #define CAM_DELAY 90
 
 Camera::Camera() :
@@ -15,7 +15,7 @@ Camera::Camera() :
     posy(0),
     width(WIDTH_SCREEN),
     height(HEIGHT_SCREEN),
-    window_scale(0.5f*(((double)height/1080)+((double)width/1920))),
+    window_scale(0.5f*(((float)height/1080)+((float)width/1920))),
     draw_scale(1),
     t_factory(nullptr),
     t_drawer(nullptr),
@@ -26,54 +26,43 @@ Camera::Camera() :
     window = SDL_CreateWindow("Micromachines", 0, 0, width, height,
             SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1,
-            SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
+            SDL_RENDERER_ACCELERATED);
     t_factory = std::move(TextureFactory(renderer));
     t_drawer = std::move(TextDrawer(renderer));
     //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
-double f(double x){
+float f(float x){
     if (x<=CAM_DEAD_ZONE)
         return exp(x-CAM_DEAD_ZONE);
     return x-CAM_DEAD_ZONE+1;
 }
 
-std::tuple<double, double, double> mean(std::list<CarData>& points){
+std::tuple<float, float> mean(std::list<CarData>& points){
     if (points.size() <= 1){
-        return {0, 0, 0};
+        return {0, 0};
     }
-
-    double sum_x = 0;
-    double sum_y = 0;
-    double sum_rot = 0;
-    auto iter = points.begin();
-    int prev_x = iter->x;
-    int prev_y = iter->y;
-    iter++;
-    for (;iter != points.end(); iter++){
-        sum_x += (iter->x - prev_x);
-        sum_y += (iter->y - prev_y);
-        sum_rot += iter->rot;
-        prev_x = iter->x;
-        prev_y = iter->y;
+    float sum_vel = 0;
+    float sum_rot = 0;
+    for (auto& point : points){
+        sum_vel += point.vel;
+        sum_rot += point.rot;
     }
-    return {sum_x/(points.size()-1.0), sum_y/(points.size()-1.0), sum_rot/(points.size()-1.0)};
+    return {sum_vel/(points.size()-1.0), sum_rot/(points.size()-1.0)};
 }
 
-void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
-    double rad = DEG2RAD*rot;
+void Camera::update(int32_t posx, int32_t posy, int32_t carvel, int32_t rot) {
+    float rad = DEG2RAD*rot;
     if (hypot(posx-car_pos.back().x, posy-car_pos.back().y) > 200)
         car_pos.clear();
-    car_pos.emplace_back(CarData{posx, posy, rad});
+    car_pos.emplace_back(CarData{posx, posy, carvel, rad});
     auto means = mean(car_pos);
-    double dx = std::get<0>(means);
-    double dy = std::get<1>(means);
-    double prom_rot = std::get<2>(means);
-    double vel = hypot(dx, dy);
-    double factor = f(vel);
+    float vel = std::get<0>(means)*3.6/METER_TO_PIXEL;
+    float prom_rot = std::get<1>(means);
+    float factor = f(vel);
     draw_scale = 1/((factor*CAMERA_DISTANCE)+1)*window_scale;
-    this->posx = (double)posx - (draw_scale*sin(prom_rot)*factor*FORWARD_VIEW);
-    this->posy = (double)posy + (draw_scale*cos(prom_rot)*factor*FORWARD_VIEW*((double)height/width));
+    this->posx = (float)posx - (draw_scale*sin(prom_rot)*factor*FORWARD_VIEW);
+    this->posy = (float)posy + (draw_scale*cos(prom_rot)*factor*FORWARD_VIEW*((float)height/width));
     if (car_pos.size() >= CAM_DELAY)
         car_pos.erase(car_pos.begin());
 }
@@ -89,7 +78,7 @@ void Camera::clear() {
     if (!(w==width && h==height)) {
         width = w;
         height = h;
-        window_scale = (((double) width / 1920) + ((double) height / 1080)) / 2;
+        window_scale = (((float) width / 1920) + ((float) height / 1080)) / 2;
     }
 }
 
@@ -119,7 +108,7 @@ Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t rot) {
     }
 }
 
-void Camera::drawTexture(int32_t id, double posx, double posy, double scale) {
+void Camera::drawTexture(int32_t id, float posx, float posy, float scale) {
     Texture tex = t_factory.getTexture(id);
     int x = posx*width;
     int y = posy*height;
@@ -128,7 +117,7 @@ void Camera::drawTexture(int32_t id, double posx, double posy, double scale) {
     copyRender(tex.tex, x, y, 0, w, h);
 }
 
-void Camera::drawSurface(SDL_Surface* surface, double posx, double posy, double w_surface, double h_surface){
+void Camera::drawSurface(SDL_Surface* surface, float posx, float posy, float w_surface, float h_surface){
     SDL_Texture* texture =  SDL_CreateTextureFromSurface(renderer, surface);
     int x = posx*width;
     int y = posy*height;
@@ -138,8 +127,8 @@ void Camera::drawSurface(SDL_Surface* surface, double posx, double posy, double 
     SDL_DestroyTexture(texture);
 }
 
-void Camera::drawText(const std::string &text, double posx, double posy,
-                      double size, size_t padding) {
+void Camera::drawText(const std::string &text, float posx, float posy,
+                      float size, size_t padding) {
     int x = posx*width;
     int y = posy*height;
     int h = 60*size*window_scale;
