@@ -1,4 +1,3 @@
-#include <iostream>
 #include "ThreadClientEventMonitor.h"
 #include "Match.h"
 

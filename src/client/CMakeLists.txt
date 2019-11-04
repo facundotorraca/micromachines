@@ -13,6 +13,7 @@ target_link_libraries(client
         common
         SDL2
         SDL2_image
+        SDL2_ttf
         pthread
         lua
         dl)

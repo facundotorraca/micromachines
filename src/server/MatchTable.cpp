@@ -18,7 +18,7 @@ std::shared_ptr<Match> MatchTable::get(const std::string& match_name) {
 void MatchTable::remove_end_matches() {
     std::lock_guard<std::mutex> lock(this->mtx);
     for (auto it = this->map.begin(); it != this->map.end();) {
-        if ((*it).second->was_stopped()) {
+        if ((*it).second->is_closed()) {
             it = this->map.erase(it);
         } else {
             it++;

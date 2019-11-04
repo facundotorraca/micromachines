@@ -1,7 +1,6 @@
 #include <cstdint>
 #include "Grass.h"
 #include <common/Sizes.h>
-#include "model/FixtureUserData.h"
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
 
@@ -9,7 +8,7 @@
 #define GRASS_TRACTION_PROPORTION 0.5f
 
 Grass::Grass(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-    Terrain(x, y, rotation, ID, false)
+    Terrain(x, y, rotation, ID)
 {}
 
 UpdateClient Grass::get_to_send() {
@@ -19,12 +18,11 @@ UpdateClient Grass::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Grass::set_terrain_user_data() {
-    this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new FixtureUserData(TYPE_GRASS));
+void Grass::apply_terrain_effect(Body* wheel) {
+    ((Wheel*)wheel)->set_traction(GRASS_TRACTION_PROPORTION);
+    ((Wheel*)wheel)->reduce_max_speed(GRASS_SPEED_PROPORTION);
 }
 
-void Grass::apply_effect(Wheel* wheel) {
-    wheel->set_traction(GRASS_TRACTION_PROPORTION);
-    wheel->reduce_max_speed(GRASS_SPEED_PROPORTION);
+void Grass::set_terrain_user_data() {
+    this->terrain_fixture->SetUserData(this);
 }

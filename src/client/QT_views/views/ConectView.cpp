@@ -5,7 +5,6 @@
 #include <common/SocketError.h>
 #include <client/QT_views/ui_conectview.h>
 
-
 ConectView::ConectView(Socket &sck, QWidget *parent)
                       : QDialog(parent), ui(), socket(sck){
     ui.setupUi(this);

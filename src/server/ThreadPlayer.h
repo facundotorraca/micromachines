@@ -11,7 +11,7 @@
 class ThreadPlayer : public Thread {
     ProtectedQueue<UpdateClient>& updates_send;
     ProtectedQueue<UpdateRace>& updates_recv;
-    
+
     ThreadUpdateSender sender;
     Player& player;
 

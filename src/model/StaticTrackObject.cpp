@@ -1,6 +1,7 @@
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
+#include <common/EntityType.h>
 #include "StaticTrackObject.h"
 
 StaticTrackObject::StaticTrackObject(int32_t ID, int32_t x, int32_t y, int32_t rotation) {
@@ -41,6 +42,8 @@ void StaticTrackObject::add_to_world(b2World &world) {
     fixture_def.shape = &polygon_shape;
     //fixture_def.isSensor = true; /*Set fixture to contact*/
     this->object_fixture = this->object_body->CreateFixture(&fixture_def);
+
+    this->object_body->SetUserData(this); //Set a self reference to handler collisions
 }
 
 UpdateClient StaticTrackObject::get_to_send() {
@@ -48,4 +51,10 @@ UpdateClient StaticTrackObject::get_to_send() {
     int32_t y = METER_TO_PIXEL * ((this->map_y * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
     std::vector<int32_t> update_info {MSG_SEND_TILE, this->ID, x, y, this->rotation};
     return UpdateClient(std::move(update_info));
+}
+
+void StaticTrackObject::collide(Body *body) {}
+
+int32_t StaticTrackObject::get_ID() {
+    return TYPE_STATIC_OBJECT;
 }

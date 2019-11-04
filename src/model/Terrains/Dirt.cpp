@@ -2,14 +2,13 @@
 #include <cstdint>
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
-#include "model/FixtureUserData.h"
 #include <common/EntityType.h>
 
 #define DIRT_SPEED_PROPORTION 0.5f
 #define DIRT_TRACTION_PROPORTION 0.7f
 
 Dirt::Dirt(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-        Terrain(x, y, rotation, ID, false)
+        Terrain(x, y, rotation, ID)
 {}
 
 UpdateClient Dirt::get_to_send() {
@@ -19,12 +18,11 @@ UpdateClient Dirt::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Dirt::set_terrain_user_data() {
-    this->terrain_body->SetUserData(this); //Set a self reference to handler collisions
-    this->terrain_fixture->SetUserData(new FixtureUserData(TYPE_DIRT));
+void Dirt::apply_terrain_effect(Body* wheel) {
+    ((Wheel*)wheel)->reduce_max_speed(DIRT_SPEED_PROPORTION);
+    ((Wheel*)wheel)->set_traction(DIRT_TRACTION_PROPORTION);
 }
 
-void Dirt::apply_effect(Wheel* wheel) {
-    wheel->reduce_max_speed(DIRT_SPEED_PROPORTION);
-    wheel->set_traction(DIRT_TRACTION_PROPORTION);
+void Dirt::set_terrain_user_data() {
+    this->terrain_fixture->SetUserData(this);
 }

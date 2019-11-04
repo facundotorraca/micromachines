@@ -5,15 +5,14 @@
 #include <model/Vehicle/Wheel.h>
 
 class Dirt : public Terrain {
-    private:
-        void set_terrain_user_data() override;
-
     public:
         Dirt(int32_t x, int32_t y, int32_t rotation, int32_t ID);
 
         UpdateClient get_to_send() override;
 
-        void apply_effect(Wheel* wheel) override;
+        void apply_terrain_effect(Body* wheel) override;
+
+        void set_terrain_user_data() override;
 };
 
 

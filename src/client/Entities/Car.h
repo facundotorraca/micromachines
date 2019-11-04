@@ -19,9 +19,9 @@ public:
         wheel3.draw(camera);
         wheel4.draw(camera);
         if (health <= 50){
-            camera.drawDamagedCar(posX, posY, rot);
+            camera.drawWorldTexture(DMG_CAR_TEX, posX, posY, rot);
         } else {
-            camera.drawCar(posX, posY, rot);
+            camera.drawWorldTexture(CAR_TEX, posX, posY, rot);
         }
     }
 

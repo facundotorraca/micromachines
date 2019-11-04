@@ -1,8 +1,10 @@
+#include "Car.h"
 #include "Wheel.h"
+#include <iostream>
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
-#include <iostream>
+#include <common/EntityType.h>
 
 #define MAX_PROPORTION 1
 
@@ -27,11 +29,9 @@ Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, 
     this->wheel_body->SetUserData(this);
 
     b2PolygonShape polygon;
-    polygon.SetAsBox(WIDTH_WHEEL, HEIGHT_WHEEL);
-    this->wheel_fixture = this->wheel_body->CreateFixture(/*Shape*/&polygon, 1.5);
-
-    this->wheel_user_data = new FixtureUserData(TYPE_WHEEL);
-    this->wheel_fixture->SetUserData(this->wheel_user_data);
+    polygon.SetAsBox(WIDTH_WHEEL/2/*0.1*/, HEIGHT_WHEEL/2 /*0.25*/);
+    this->wheel_fixture = this->wheel_body->CreateFixture(/*Shape*/&polygon, /*16.875*/ 6.92 /*1.5*/ );
+    //Wheels are like punctual particle
 }
 
 b2Vec2 Wheel::get_lateral_velocity() {
@@ -151,7 +151,6 @@ void Wheel::set_max_speed() {
 }
 
 Wheel::~Wheel() {
-    delete this->wheel_user_data;
     this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
@@ -162,6 +161,22 @@ void Wheel::set_spawn_point(Coordinate spawn_point) {
     /*Minus because default start position of Box2D is inverted*/
     float angle = -spawn_point.get_angle() * DEGTORAD;
     this->wheel_body->SetTransform( b2Vec2(x_pos, y_pos) , angle);
+}
+
+void Wheel::collide(Body *static_object) {
+    std::cout << "WHEEL: ME LA PUSE\n";
+}
+
+int32_t Wheel::get_ID() {
+    return TYPE_WHEEL;
+}
+
+void Wheel::move_to(Coordinate coordinate) {
+    float x_pos = coordinate.get_x() * TILE_TERRAIN_SIZE;
+    float y_pos = coordinate.get_y() * TILE_TERRAIN_SIZE;
+    float angle = -coordinate.get_angle() * DEGTORAD;
+
+    this->wheel_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
 }
 
 

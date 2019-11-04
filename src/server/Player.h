@@ -2,9 +2,9 @@
 #define MICROMACHINES_PLAYER_H
 
 #include <string>
-#include "common/Socket.h"
 #include "UpdateRace.h"
 #include "UpdateClient.h"
+#include "common/Socket.h"
 #include <common/ProtocolSocket.h>
 
 class Player {
@@ -18,12 +18,13 @@ class Player {
     std::string username;
     std::string match_name;
 
-public:
+    bool playing;
+    unsigned current_view_ID;
+
+    public:
         Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name);
 
         Player(Player&& other) noexcept;
-
-        void send_track(RacingTrack& racing_track);
 
         void send(std::vector<int32_t>& msg);
 
@@ -48,6 +49,15 @@ public:
         void set_ID(int32_t id);
 
         bool is_on_join_mode();
+
+        void set_view(int32_t ID);
+
+
+        UpdateClient get_view(int32_t total_players);
+
+        void set_finished();
+
+
 
         void kill();
 

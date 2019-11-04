@@ -1,4 +1,5 @@
 #include <memory>
+#include <model/FinishLine.h>
 #include "Dirt.h"
 #include "Sand.h"
 #include "Grass.h"

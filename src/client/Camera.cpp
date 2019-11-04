@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Camera.h"
 #include <cmath>
+#include <iomanip>
 
 #define DEG2RAD 0.01745329252
 #define CAM_DEAD_ZONE 0
@@ -17,6 +18,7 @@ Camera::Camera() :
     window_scale(0.5f*(((double)height/1080)+((double)width/1920))),
     draw_scale(1),
     t_factory(nullptr),
+    t_drawer(nullptr),
     renderer(nullptr),
     window(nullptr)
 {
@@ -26,6 +28,7 @@ Camera::Camera() :
     renderer = SDL_CreateRenderer(window, -1,
             SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     t_factory = std::move(TextureFactory(renderer));
+    t_drawer = std::move(TextDrawer(renderer));
     //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 }
 
@@ -59,6 +62,8 @@ std::tuple<double, double, double> mean(std::list<CarData>& points){
 
 void Camera::update(int32_t posx, int32_t posy, int32_t rot) {
     double rad = DEG2RAD*rot;
+    if (hypot(posx-car_pos.back().x, posy-car_pos.back().y) > 200)
+        car_pos.clear();
     car_pos.emplace_back(CarData{posx, posy, rad});
     auto means = mean(car_pos);
     double dx = std::get<0>(means);
@@ -88,34 +93,10 @@ void Camera::clear() {
     }
 }
 
-void Camera::drawCar(int32_t x, int32_t y, int32_t rot) {
-    copyRender(t_factory.getCarTexture(), x, y, rot,
-            CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL);
-}
-
-void Camera::drawDamagedCar(int32_t posx, int32_t posy, int32_t rot) {
-    copyRender(t_factory.getDamagedCarTexture(),posx , posy, rot,
-            CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL);
-}
-
-void Camera::drawTile(int32_t x, int32_t y, int32_t rot, int32_t type) {
-    int32_t wh = TILE_TERRAIN_SIZE*METER_TO_PIXEL+3;
-    copyRender(t_factory.getTileTexture(type), x, y, rot, wh, wh);
-}
-
-void Camera::drawWheel(int32_t x, int32_t y, int32_t rot) {
-    copyRender(t_factory.getWheelTexture(), x, y,
-            rot, WIDTH_WHEEL*METER_TO_PIXEL, HEIGHT_WHEEL*METER_TO_PIXEL);
-}
-
 void Camera::copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t rot, int32_t w, int32_t h){
-    int32_t px = (0.5f*width) - draw_scale*(posx-x);
-    int32_t py = (0.5f*height) - draw_scale*(posy-y);
-    SDL_Rect dst{px, py, (int)(draw_scale*w), (int)(draw_scale*h)};
-    if (isInCamera(dst.x, dst.y, dst.w, dst.h)) {
-        SDL_RenderCopyEx(renderer, tex, nullptr, &dst, rot,
+    SDL_Rect dst{x, y, w, h};
+    SDL_RenderCopyEx(renderer, tex, nullptr, &dst, rot,
                          nullptr, SDL_FLIP_NONE);
-    }
 }
 
 bool Camera::isInCamera(int x,int y, int w, int h){
@@ -128,14 +109,44 @@ Camera::~Camera() {
     SDL_Quit();
 }
 
-void Camera::drawBackground(int32_t type, int32_t width, int32_t height) {
-    int32_t tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
-    for (int i = 0; i < width; i++){
-        for (int j = 0; j < height; j++){
-            copyRender(t_factory.getTileTexture(type),
-                    tile_width*i, tile_width*j, 0,
-                    tile_width + 5, tile_width + 5);
-        }
+void
+Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t rot) {
+    Texture tex = t_factory.getTexture(id);
+    int32_t draw_x = (0.5f*width) - draw_scale*(posx-px);
+    int32_t draw_y = (0.5f*height) - draw_scale*(posy-py);
+    if (isInCamera(draw_x, draw_y, tex.width*draw_scale, tex.height*draw_scale)){
+        copyRender(tex.tex, draw_x, draw_y, rot, tex.width*draw_scale, tex.height*draw_scale);
     }
 }
 
+void Camera::drawTexture(int32_t id, double posx, double posy, double scale) {
+    Texture tex = t_factory.getTexture(id);
+    int x = posx*width;
+    int y = posy*height;
+    int w = tex.width*window_scale*scale;
+    int h = tex.height*window_scale*scale;
+    copyRender(tex.tex, x, y, 0, w, h);
+}
+
+void Camera::drawSurface(SDL_Surface* surface, double posx, double posy, double w_surface, double h_surface){
+    SDL_Texture* texture =  SDL_CreateTextureFromSurface(renderer, surface);
+    int x = posx*width;
+    int y = posy*height;
+    int w = w_surface*width;
+    int h = h_surface*height;
+    copyRender(texture, x, y, 0, w, h);
+    SDL_DestroyTexture(texture);
+}
+
+void Camera::drawText(const std::string &text, double posx, double posy,
+                      double size, size_t padding) {
+    int x = posx*width;
+    int y = posy*height;
+    int h = 60*size*window_scale;
+    t_drawer.drawText(text, x, y, h, 5*window_scale, padding);
+}
+
+void Camera::drawFullScreenTexture(int32_t id) {
+    Texture tex = t_factory.getTexture(id);
+    copyRender(tex.tex, 0, 0, 0, width, height);
+}
