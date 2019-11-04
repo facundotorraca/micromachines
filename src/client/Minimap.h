@@ -14,13 +14,8 @@
 #include <SDL2/SDL.h>
 
 struct MiniCar{
-    double x;
-    double y;
-};
-
-struct MiniTile{
-    double x;
-    double y;
+    float x;
+    float y;
 };
 
 class Minimap {

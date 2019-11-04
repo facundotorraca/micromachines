@@ -19,24 +19,23 @@ void Scenario::setOwnID(int32_t id) {
 
 void Scenario::updateCar(CarInfo &info) {
     std::unique_lock<std::mutex> lock(mtx);
-    try {
-        this->cars.at(info.car_id);
-    } catch (std::out_of_range& e) {
-        cars.emplace(std::piecewise_construct,
-                     std::forward_as_tuple(info.car_id),
-                     std::forward_as_tuple());
+    auto car = cars.emplace(std::piecewise_construct,
+                            std::forward_as_tuple(info.car_id),
+                            std::forward_as_tuple());
+    if (car.second){
         minimap.addCar(info.car_id, info.carx, info.cary);
+    } else {
+        minimap.updateCar(info.car_id, info.carx, info.cary);
+        cars.at(info.car_id).update_all(info);
     }
     if (info.car_id == this->my_car_id){
-        camera.update(info.carx, info.cary, info.carrot);
+        camera.update(info.carx, info.cary, info.carvel, info.carrot);
         hud.setSpeed(info.carvel);
     }
-    minimap.updateCar(info.car_id, info.carx, info.cary);
-    cars.at(info.car_id).update_all(info);
 }
 
 void Scenario::draw() {
-    std::unique_lock<std::mutex> lock(mtx);
+    mtx.lock();
     camera.clear();
     map.draw(camera);
     for (auto& car : cars){
@@ -46,6 +45,7 @@ void Scenario::draw() {
     countdown.draw(camera);
     minimap.draw(camera);
     l_screen.draw(camera);
+    mtx.unlock();
     camera.draw();
 }
 

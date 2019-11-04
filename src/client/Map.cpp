@@ -5,10 +5,11 @@
 #include "Map.h"
 
 void Map::draw(Camera& camera) {
+    float tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
     for (int i=0; i < back.width; i++)
         for (int j=0; j < back.height; j++)
-            camera.drawWorldTexture(back.type, TILE_TERRAIN_SIZE*METER_TO_PIXEL*i,
-                    TILE_TERRAIN_SIZE*METER_TO_PIXEL*j, 0);
+            camera.drawWorldTexture(back.type, tile_width*i,
+                    tile_width*j, 0);
     for (auto& tile : tiles){
         tile.draw(camera);
     }
