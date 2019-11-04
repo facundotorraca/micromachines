@@ -3,8 +3,6 @@
 #include <thread>
 #include <chrono>
 
-#define FPS_CONSTANT 22
-
 ThreadDrawer::ThreadDrawer(Scene &scene) : Thread(), scene(scene) {}
 
 void ThreadDrawer::run() {
