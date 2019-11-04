@@ -13,6 +13,9 @@
 #include "Camera.h"
 #include <SDL2/SDL.h>
 
+#define MINIMAP_WIDTH 0.12f
+#define MINIMAP_HEIGHT 0.213f
+
 struct MiniCar{
     float x;
     float y;
@@ -53,14 +56,14 @@ public:
     }
     void updateCar(int32_t id, int32_t x, int32_t y){
         auto& car = cars.at(id);
-        car.x = 0.09f*x/size_x;
-        car.y = 0.16f*y/size_y + 0.8f;
+        car.x = MINIMAP_WIDTH*x/size_x;
+        car.y = MINIMAP_HEIGHT*y/size_y + 0.8f;
     }
     void addCar(int32_t id, int32_t x, int32_t y){
-        cars.emplace(id, MiniCar{0.09f*x/size_x, 0.16f*y/size_y+0.91f});
+        cars.emplace(id, MiniCar{MINIMAP_WIDTH*x/size_x, MINIMAP_HEIGHT*y/size_y+(1-MINIMAP_WIDTH)});
     }
     void draw(Camera& camera){
-        camera.drawSurface(surface, 0.05, 0.75, 0.09, 0.16);
+        camera.drawSurface(surface, 0.05, 0.75, MINIMAP_WIDTH, MINIMAP_HEIGHT);
         for (auto& car : cars)
             camera.drawTexture(RED_DOT, car.second.x+0.05, car.second.y-0.05, 0.5);
     }
