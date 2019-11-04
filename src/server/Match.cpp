@@ -25,7 +25,7 @@ Match::Match(std::string match_creator, std::string match_name):
     closed(false),
     updates_race(10000),
     match_name(std::move(match_name)),
-    race(5, MAP_PATH, MAP_NAME),
+    race(3, MAP_PATH, MAP_NAME),
     match_creator(std::move(match_creator)),
     clients_monitor(this, this->updates_race)
 {}
@@ -134,6 +134,7 @@ void Match::send_to_all(UpdateClient update) {
 void Match::apply_update(UpdateRace update) {
     std::unique_lock<std::mutex> lock(mtx);
     this->race.update_cars(update);
+    update.update_player_view(this->players);
 }
 
 void Match::step() {
@@ -151,7 +152,9 @@ void Match::update_players() {
 
         if (this->race.car_complete_laps(ID)) {
             std::unique_lock<std::mutex> lock(mtx);
-            this->thread_players.at(ID).set_player_on_hold();
+            this->players.at(ID).set_finished();
+            //this->thread_players.at(ID).set_player_on_hold();
+            this->updates_players.at(ID).push(this->players.at(ID).get_view(this->players.size()));
         } else {
             auto personalized_update = this->race.get_lap_update(ID);
             this->updates_players.at(ID).push(personalized_update);
@@ -160,10 +163,9 @@ void Match::update_players() {
 }
 
 void Match::run() {
-    CountdownTimer timer(TIME_START, this->thread_players, this->updates_players);
+    CountdownTimer timer(TIME_START, this->race, this->updates_players);
     this->initialize_players();
     this->clients_monitor.start();
-    this->race.start();
     timer.start();
 
     while (this->running) {

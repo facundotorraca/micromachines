@@ -73,6 +73,9 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
                 case TYPE_T_PLACE_PODIUM:
                     podium.insert(std::pair<int32_t, Coordinate>(3, Coordinate(float(i), float(j), float(tile_rotation))));
                     break;
+                case TYPE_NO_PODIUM_PLACE:
+                    break;
+                    //podium.insert(std::pair<int32_t, Coordinate>(3, Coordinate(float(i), float(j), float(tile_rotation))));
                 default:
                     break;
             }

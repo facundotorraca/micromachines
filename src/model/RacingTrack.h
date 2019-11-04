@@ -40,7 +40,7 @@ class RacingTrack {
 
         void add_car(Car& car);
 
-        void add_car_to_podium(Car& car);
+        void add_car_to_podium(Car& car, int32_t ID);
 
         void set_track_terrain(int32_t terrain);
 

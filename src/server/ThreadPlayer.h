@@ -12,8 +12,6 @@ class ThreadPlayer : public Thread {
     ProtectedQueue<UpdateClient>& updates_send;
     ProtectedQueue<UpdateRace>& updates_recv;
 
-    std::atomic<bool> player_on_hold;
-
     ThreadUpdateSender sender;
     Player& player;
 
@@ -24,10 +22,6 @@ class ThreadPlayer : public Thread {
 
     public:
         ThreadPlayer(ProtectedQueue<UpdateClient>& updates_send, ProtectedQueue<UpdateRace>& updates_recv, Player& player);
-
-        void set_player_on_hold();
-
-        void wake_up();
 };
 
 

@@ -6,16 +6,16 @@
 
 #define ONE_SECOND 1000
 
-CountdownTimer::CountdownTimer(int32_t time,
-                               std::unordered_map<int32_t, ThreadPlayer> &thread_players,
+CountdownTimer::CountdownTimer(int32_t time, Race& race,
                                std::unordered_map<int32_t, ProtectedQueue < UpdateClient>>& updates_players):
-    thread_players(thread_players),
+    race(race),
     updates_players(updates_players)
 {
     this->max_time = time;
 }
 
 void CountdownTimer::run() {
+    this->race.prepare();
     int32_t remaining_time = this->max_time;
     this->send_remaining_time(remaining_time);
     while (remaining_time > 0) {
@@ -23,7 +23,7 @@ void CountdownTimer::run() {
         remaining_time-= 1;
         this->send_remaining_time(remaining_time);
     }
-    this->wake_up_players();
+    this->race.start();
 }
 
 void CountdownTimer::send_remaining_time(int32_t remaining_time) {
@@ -31,11 +31,5 @@ void CountdownTimer::send_remaining_time(int32_t remaining_time) {
     for (auto& queue : this->updates_players){
         queue.second.push(update_countdown);
         std::cout << "TIME: " << remaining_time << "\n";
-    }
-}
-
-void CountdownTimer::wake_up_players() {
-    for (auto& player : this->thread_players){
-        player.second.wake_up();
     }
 }

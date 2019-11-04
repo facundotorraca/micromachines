@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include "model/Vehicle/Car.h"
 
+class Player;
+
 class UpdateRace {
     int32_t key;
     int32_t key_state;
@@ -14,7 +16,9 @@ class UpdateRace {
 public:
     UpdateRace(int32_t client_ID, int32_t key, int32_t key_state);
 
-    void update_cars(std::unordered_map<int32_t, Car&>& cars);
+    void update_cars(std::unordered_map<int32_t, Car>& cars);
+
+    void update_player_view(std::unordered_map<int32_t, Player>& players);
 };
 
 

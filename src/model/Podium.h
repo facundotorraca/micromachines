@@ -1,6 +1,7 @@
 #ifndef MICROMACHINES_PODIUM_H
 #define MICROMACHINES_PODIUM_H
 
+#include <unordered_map>
 #include <common/Coordinate.h>
 #include <model/Vehicle/Car.h>
 
@@ -14,10 +15,13 @@ class Podium {
     Coordinate s_place;
     Coordinate t_place;
 
+    //ID and Place;
+    std::unordered_map<int32_t, Coordinate> podium;
+
     public:
         Podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
 
-        void add_car(Car& car);
+        void add_car(Car& car, int32_t ID);
 };
 
 

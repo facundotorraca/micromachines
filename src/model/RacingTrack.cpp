@@ -80,8 +80,9 @@ void RacingTrack::add_car(Car &car) {
     car.add_to_world(this->racing_track);
 }
 
-void RacingTrack::add_car_to_podium(Car &car) {
-    this->podium->add_car(car);
+void RacingTrack::add_car_to_podium(Car &car, int32_t ID) {
+    if (this->podium)
+        this->podium->add_car(car, ID);
 }
 
 void RacingTrack::add_spawn_point(Coordinate spawn_point) {

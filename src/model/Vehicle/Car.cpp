@@ -3,6 +3,8 @@
 #include <iostream>
 #include "CarSpecs.h"
 #include "common/Key.h"
+#include "CarStopped.h"
+#include "CarRunning.h"
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
@@ -16,12 +18,13 @@
 #define RADTODEG 57.295779513082320876f
 
 Car::Car(CarSpecs specs):
-    specs(specs),
-    lap_altered(false),
-    key_h(NOT_PRESSED),
-    key_v(NOT_PRESSED),
-    life(specs.max_life),
-    lap_state(std::unique_ptr<LapState> (new LapRunning()))
+        specs(specs),
+        lap_altered(false),
+        key_h(NOT_PRESSED),
+        key_v(NOT_PRESSED),
+        life(specs.max_life),
+        lap_state(new LapRunning()),
+        car_state(new CarStopped())
 {}
 
 Car::Car(Car&& other_car) noexcept:
@@ -32,8 +35,8 @@ Car::Car(Car&& other_car) noexcept:
     wheels(std::move(other_car.wheels)),
     front_left_joint(other_car.front_left_joint),
     front_right_joint(other_car.front_right_joint),
-    lap_state(std::unique_ptr<LapState> (new LapRunning()))
-  //  race_state(std::unique_ptr<RaceState> (new RunningRace()))
+    lap_state(new LapRunning()),
+    car_state(new CarStopped())
 {
     this->key_h = other_car.key_h;
     this->key_v = other_car.key_v;
@@ -147,17 +150,11 @@ float Car::get_desire_angle(int32_t key) {
 }
 
 void Car::press_key(int32_t key) {
-    if (key == KEY_DOWN || key == KEY_UP)
-        key_v = key;
-    else
-        key_h = key;
+    this->car_state->move(key, this->key_v, this->key_h);
 }
 
 void Car::release_key(int32_t key) {
-    if (key == KEY_DOWN || key == KEY_UP)
-        key_v = NOT_PRESSED;
-    else
-        key_h = NOT_PRESSED;
+    this->car_state->stop(key, this->key_v, this->key_h);
 }
 
 Car::~Car() {
@@ -217,14 +214,21 @@ void Car::restart_lap() {
 }
 
 void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
-    if (lap_altered) //Just for performance
+    if (lap_altered) {//Just for performance
         this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
-    /*if (lap_counter.car_complete_laps(car_ID))
-        this->race_state.reset(new RaceCompleted());*/
-    this->lap_altered = false;
+        if (lap_counter.car_complete_laps(car_ID)) {
+            this->key_v = NOT_PRESSED;
+            this->car_state.reset(new CarStopped());
+        }
+        this->lap_altered = false;
+    }
 }
 
 void Car::move_to(Coordinate coordinate) {
+    if (this->car_body->GetLinearVelocity().Length() > 20)
+        //avoid teleporting very roughly
+        return;
+
     float x_pos = coordinate.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = coordinate.get_y() * TILE_TERRAIN_SIZE;
     float angle = -coordinate.get_angle() * DEGTORAD;
@@ -233,4 +237,9 @@ void Car::move_to(Coordinate coordinate) {
     for (auto& wheel : this->wheels) {
         wheel->move_to(coordinate);
     }
+}
+
+void Car::turn_on() {
+    this->car_state.reset(new CarRunning());
+
 }

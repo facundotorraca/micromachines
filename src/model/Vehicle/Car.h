@@ -9,7 +9,7 @@
 #include "Box2D/Box2D.h"
 #include <model/Vehicle/LapState.h>
 #include <common/Coordinate.h>
-#include "RaceState.h"
+#include "CarState.h"
 #include <server/UpdateClient.h>
 
 #define DEGTORAD 0.0174532925199432957f
@@ -30,6 +30,7 @@ class Car : public Body {
 
     bool lap_altered;
     std::unique_ptr<LapState> lap_state;
+    std::unique_ptr<CarState> car_state;
 
     private:
         void create_wheels(b2World& world);
@@ -58,6 +59,8 @@ class Car : public Body {
         void move_to(Coordinate coordinate);
 
         void update();
+
+        void turn_on();
 
         ~Car();
 

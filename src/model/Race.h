@@ -25,6 +25,8 @@ class Race {
 
         void update_cars(UpdateRace race);
 
+        void prepare();
+
         UpdateClient get_update(int32_t ID);
 
         UpdateClient get_lap_update(int32_t ID);

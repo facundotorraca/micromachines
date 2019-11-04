@@ -23,9 +23,9 @@ void Race::send_info_to_player(int32_t ID, ProtectedQueue<UpdateClient>& updates
 }
 
 void Race::start() {
-    this->racing_track.set_spawn_points_to_cars(this->cars);
     for (auto &car : this->cars) {
         this->running_cars.emplace(std::pair<int32_t, Car&>(car.first, car.second));
+        car.second.turn_on();
     }
 }
 
@@ -33,21 +33,14 @@ void Race::update() {
     for (auto& car : this->cars) {
         car.second.update();
         car.second.modify_laps(this->lap_counter, car.first);
+        if (this->lap_counter.car_complete_laps(car.first))
+            this->racing_track.add_car_to_podium(car.second, car.first );
     }
-
-    for (auto car = this->running_cars.begin(); car != this->running_cars.end();) {
-        if (this->lap_counter.car_complete_laps((*car).first)) {
-            this->racing_track.add_car_to_podium((*car).second);
-            car = this->running_cars.erase(car);
-        } else
-            car ++;
-    }
-
     this->racing_track.update();
 }
 
 void Race::update_cars(UpdateRace update) {
-    update.update_cars(this->running_cars);
+    update.update_cars(this->cars);
 }
 
 UpdateClient Race::get_update(int32_t ID) {
@@ -64,4 +57,11 @@ bool Race::car_complete_laps(int32_t ID) {
 
 void Race::player_left_game(const int32_t ID) {
     this->cars.erase(ID);
+}
+
+void Race::prepare() {
+    for (auto &car : this->cars) {
+        this->running_cars.emplace(std::pair<int32_t, Car&>(car.first, car.second));
+    }
+    this->racing_track.set_spawn_points_to_cars(this->cars);
 }

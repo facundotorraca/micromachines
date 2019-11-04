@@ -1,7 +1,8 @@
 #include <map>
 #include <string>
-#include "model/Vehicle/Car.h"
+#include "Player.h"
 #include "UpdateRace.h"
+#include "model/Vehicle/Car.h"
 
 UpdateRace::UpdateRace(int32_t client_ID, int32_t key, int32_t key_state) {
     this->key = key;
@@ -9,10 +10,15 @@ UpdateRace::UpdateRace(int32_t client_ID, int32_t key, int32_t key_state) {
     this->key_state = key_state;
 }
 
-void UpdateRace::update_cars(std::unordered_map<int32_t, Car&>& cars) {
+void UpdateRace::update_cars(std::unordered_map<int32_t, Car>& cars) {
     if (this->key_state == KEY_PRESSED) {
         cars.at(this->client_ID).press_key(key);
     } else /*KEY_UNPRESSED*/ {
         cars.at(this->client_ID).release_key(key);
     }
+}
+
+void UpdateRace::update_player_view(std::unordered_map<int32_t, Player>& players) {
+    if (this->key_state == KEY_PRESSED && (this->key == KEY_LEFT || this->key == KEY_RIGHT))
+        players.at(this->client_ID).set_view(this->key);
 }
