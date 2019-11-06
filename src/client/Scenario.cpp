@@ -38,6 +38,7 @@ void Scenario::draw() {
     mtx.lock();
     camera.clear();
     map.draw(camera);
+    entities.draw(camera);
     for (auto& car : cars){
         car.second.draw(camera);
     }
