@@ -88,6 +88,11 @@ public:
             textures.emplace(HEALTH_14, createTexture(renderer, "assets/sprites/HealthBar/12.png"));
             textures.emplace(HEALTH_15, createTexture(renderer, "assets/sprites/HealthBar/6.png"));
             textures.emplace(HEALTH_16, createTexture(renderer, "assets/sprites/HealthBar/0.png"));
+            textures.emplace(TYPE_BOOST, createTexture(renderer, "assets/sprites/modifiers/boost.png"));
+            textures.emplace(TYPE_FIX, createTexture(renderer, "assets/sprites/modifiers/fix.png"));
+            textures.emplace(TYPE_MUD, createTexture(renderer, "assets/sprites/modifiers/mud.png"));
+            textures.emplace(TYPE_OIL, createTexture(renderer, "assets/sprites/modifiers/oil.png"));
+            textures.emplace(TYPE_ROCK, createTexture(renderer, "assets/sprites/modifiers/rock.png"));
 
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             int tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;

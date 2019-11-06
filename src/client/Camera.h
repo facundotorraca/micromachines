@@ -41,6 +41,7 @@ public:
     void draw();
     void clear();
     void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t rot);
+    void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t sizex, int32_t sizey, int32_t rot);
     void drawTexture(int32_t id, float posx, float posy, float scale);
     void drawSurface(SDL_Surface* surface, float posx, float posy, float width, float height);
     void drawText(const std::string& text, float posx, float posy, float size, size_t padding);

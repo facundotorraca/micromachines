@@ -91,3 +91,13 @@ void Scenario::showCountdownNumber(int32_t number) {
     std::unique_lock<std::mutex> lock(mtx);
     countdown.show(number);
 }
+
+void Scenario::addModifier(int32_t type, int32_t x, int32_t y) {
+    std::unique_lock<std::mutex> lock(mtx);
+    entities.addModifier(type, x, y);
+}
+
+void Scenario::removeModifier(int32_t x, int32_t y) {
+    std::unique_lock<std::mutex> lock(mtx);
+    entities.removeModifier(x, y);
+}
