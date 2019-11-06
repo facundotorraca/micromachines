@@ -63,7 +63,7 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario
         case MSG_ADD_MODIFIER:
             return std::unique_ptr<Command>(new AddModifier(scenario, bot, command[1], command[2], command[3]));
         case MSG_REMOVE_MODIFIER:
-            return std::unique_ptr<Command>(new RemoveModifier(scenario, bot, command[1], command[2], command[3]));
+            return std::unique_ptr<Command>(new RemoveModifier(scenario, bot, command[1], command[2]));
         default:
             return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
     }
