@@ -9,14 +9,12 @@ Entities::Entities() {
 }
 
 void Entities::addModifier(int32_t type, int32_t x, int32_t y) {
-    uint64_t hash = (x << 32) | y;
-    auto modifier = modifiers.emplace(std::piecewise_construct,
-            std::forward_as_tuple(hash),
-            std::forward_as_tuple(type, x, y));
+    uint64_t hash = (x << 31) | y;
+    auto modifier = modifiers.emplace(hash, Modifier{type, x, y});
 }
 
 void Entities::removeModifier(int32_t x, int32_t y) {
-    uint64_t hash = (x << 32) | y;
+    uint64_t hash = (x << 31) | y;
     modifiers.erase(hash);
 }
 
