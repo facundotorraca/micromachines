@@ -55,7 +55,10 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
             if (is_static) {
                 racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID ,i, j, tile_rotation)));
             } else {
-                racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
+                if ((type_ID >= 0 && type_ID <= 27) || (type_ID >= 29 && type_ID <= 55)  || (type_ID >= 63 && type_ID <= 89))
+                    racing_track.add_track(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
+                else
+                    racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
             }
 
             switch (type_ID) {

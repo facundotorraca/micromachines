@@ -5,7 +5,6 @@
 #ifndef MICROMACHINES_SCENARIO_H
 #define MICROMACHINES_SCENARIO_H
 
-#include "Entities/TileInfo.h"
 #include "Camera.h"
 #include "Map.h"
 #include "Entities/CarInfo.h"
@@ -14,6 +13,7 @@
 #include "Countdown.h"
 #include "Minimap.h"
 #include "Entities.h"
+#include "Entities/TileInfo.h"
 
 class Scenario {
     Camera camera;

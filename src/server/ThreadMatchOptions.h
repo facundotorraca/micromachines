@@ -35,6 +35,4 @@ class ThreadMatchOptions {
         void join();
 };
 
-
-
 #endif //MICROMACHINES_THREADMATCHOPTIONS_H

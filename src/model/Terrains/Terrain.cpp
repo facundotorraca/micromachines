@@ -46,3 +46,7 @@ void Terrain::apply_effect(Body *body) {
     this->apply_terrain_effect(body);
 }
 
+Coordinate Terrain::get_map_coordinate() {
+    return {(float)this->map_x, (float)this->map_y, 0};
+}
+

@@ -147,13 +147,14 @@ void Match::update_players() {
     for (auto& player : this->players) {
         int32_t ID = player.first;
 
-        auto general_update = this->race.get_update(ID);
-        this->send_to_all(general_update);
+        auto general_cars_update = this->race.get_update(ID);
+        this->send_to_all(general_cars_update);
+        auto modifier_updates = this->race.get_spawned_modifiers();
+        this->send_to_all(modifier_updates);
 
         if (this->race.car_complete_laps(ID)) {
             std::unique_lock<std::mutex> lock(mtx);
             this->players.at(ID).set_finished();
-            //this->thread_players.at(ID).set_player_on_hold();
             this->updates_players.at(ID).push(this->players.at(ID).get_view(this->players.size()));
         } else {
             auto personalized_update = this->race.get_lap_update(ID);

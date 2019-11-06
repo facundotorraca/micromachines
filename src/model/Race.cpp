@@ -2,9 +2,12 @@
 #include <unordered_map>
 #include <common/MsgTypes.h>
 
+#define SPAWN_PROBABILITY 0.1f//0.0015f
+
 Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
-    lap_counter(total_laps),
-    racing_track(map_path, map_name)
+        lap_counter(total_laps),
+        racing_track(map_path, map_name),
+        modifier_spawner(SPAWN_PROBABILITY, this->racing_track)
 {}
 
 void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
@@ -36,6 +39,7 @@ void Race::update() {
         if (this->lap_counter.car_complete_laps(car.first))
             this->racing_track.add_car_to_podium(car.second, car.first );
     }
+    this->modifier_spawner.update();
     this->racing_track.update();
 }
 
@@ -49,6 +53,10 @@ UpdateClient Race::get_update(int32_t ID) {
 
 UpdateClient Race::get_lap_update(int32_t ID) {
     return this->lap_counter.get_update(ID);
+}
+
+UpdateClient Race::get_spawned_modifiers() {
+    return this->modifier_spawner.get_update_modifiers();
 }
 
 bool Race::car_complete_laps(int32_t ID) {
@@ -65,3 +73,4 @@ void Race::prepare() {
     }
     this->racing_track.set_spawn_points_to_cars(this->cars);
 }
+

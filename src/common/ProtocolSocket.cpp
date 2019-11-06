@@ -1,8 +1,8 @@
 #include <vector>
 #include <string>
+#include "Socket.h"
 #include <iostream>
 #include <netinet/in.h>
-#include "Socket.h"
 #include "ProtocolSocket.h"
 
 ProtocolSocket::ProtocolSocket(Socket &&socket):

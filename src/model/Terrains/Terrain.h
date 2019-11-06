@@ -31,6 +31,8 @@ class Terrain : public Sensor {
 
         void apply_effect(Body* body) override;
 
+        Coordinate get_map_coordinate();
+
         virtual void apply_terrain_effect(Body* body) = 0;
 };
 
