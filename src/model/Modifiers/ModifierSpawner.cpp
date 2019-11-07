@@ -28,7 +28,7 @@ ModifierSpawner::ModifierSpawner(float probability, RacingTrack &racing_track):
     this->probability = probability;
 }
 
-void ModifierSpawner::get_update_modifiers(ClientUpdater& updater) {
+void ModifierSpawner::send_modifiers_update(ClientUpdater& updater) {
     double number = get_uniform_number();
 
     if (number < this->probability) {
@@ -66,9 +66,10 @@ void ModifierSpawner::try_spawn_modifier(ClientUpdater& updater) {
     float x_map = modifier_spawn_pos.get_x();
     float y_map = modifier_spawn_pos.get_y();
 
-    std::unique_ptr<Modifier> modifier = this->factory.get_modifier_randomly(TIME_OF_LIFE, x_map, y_map);
-    int32_t modifier_type = modifier->get_modifier_type();
+    std::shared_ptr<Modifier> modifier = this->factory.get_modifier_randomly(TIME_OF_LIFE, x_map, y_map);
+    this->racing_track.add_modifier(modifier);
 
+    int32_t modifier_type = modifier->get_modifier_type();
     this->spawned_modifiers.emplace_back(std::move(modifier));
 
     int32_t x_upd = (x_map * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;

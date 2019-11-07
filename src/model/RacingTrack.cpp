@@ -124,3 +124,7 @@ RacingTrack::~RacingTrack() {
     delete this->finish_line;
 }
 
+void RacingTrack::add_modifier(std::shared_ptr<Modifier> modifier) {
+    modifier->add_to_world(this->racing_track);
+}
+

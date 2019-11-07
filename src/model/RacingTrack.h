@@ -13,6 +13,7 @@
 #include <server/ClientUpdater.h>
 #include <common/ProtectedQueue.h>
 #include <common/ProtocolSocket.h>
+#include <model/Modifiers/Modifier.h>
 #include "model/Terrains/Terrain.h"
 
 class RacingTrack {
@@ -54,6 +55,8 @@ class RacingTrack {
         void add_track(std::unique_ptr<Terrain>&& track);
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
+
+        void add_modifier(std::shared_ptr<Modifier> modifier);
 
         void send(ClientUpdater& client_updater, int32_t ID);
 

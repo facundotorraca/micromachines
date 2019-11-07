@@ -219,3 +219,7 @@ void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
     client_updater.send_to_all(UpdateClient(std::move(params)));
     this->life.send_general_update(ID, client_updater);
 }
+
+void Car::repair() {
+    this->life.restart_life();
+}

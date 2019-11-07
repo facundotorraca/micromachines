@@ -12,7 +12,7 @@ class ModifierFactory {
     public:
         explicit ModifierFactory(ModifierProbability probability);
 
-        std::unique_ptr<Modifier> get_modifier_randomly(int32_t time_of_life, int32_t map_x, int32_t map_y);
+        std::shared_ptr<Modifier> get_modifier_randomly(int32_t time_of_life, int32_t map_x, int32_t map_y);
 
 
 };

@@ -12,7 +12,7 @@ class ModifierSpawner {
     ModifierFactory factory;
 
     RacingTrack& racing_track;
-    std::vector<std::unique_ptr<Modifier>> spawned_modifiers;
+    std::vector<std::shared_ptr<Modifier>> spawned_modifiers;
 
     private:
         void try_spawn_modifier(ClientUpdater& updater);
@@ -22,7 +22,7 @@ class ModifierSpawner {
     public:
         ModifierSpawner(float probability, RacingTrack& racing_track);
 
-        void get_update_modifiers(ClientUpdater& updater);
+        void send_modifiers_update(ClientUpdater& updater);
 
         void update();
 };

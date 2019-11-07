@@ -65,7 +65,7 @@ void Race::prepare() {
 
 void Race::send_general_updates_of_player(int32_t ID, ClientUpdater &updater) {
     this->cars.at(ID).send_general_update(ID, updater);
-    this->modifier_spawner.get_update_modifiers(updater);
+    this->modifier_spawner.send_modifiers_update(updater);
     this->lap_counter.send_update(ID, updater);
 }
 

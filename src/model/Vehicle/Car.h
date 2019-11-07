@@ -67,6 +67,8 @@ class Car : public Body {
         void modify_laps(LapCounter& lap_counter, int32_t car_ID);
 
         void restart_lap();
+        
+        void repair();
 
         void complete_lap();
 };
