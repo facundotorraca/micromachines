@@ -42,21 +42,21 @@ void RacingTrack::update() {
                       this->position_iterations);
 }
 
-void RacingTrack::send(ProtectedQueue<UpdateClient>& player_queue) {
+void RacingTrack::send(ClientUpdater& client_updater, int32_t ID) {
     UpdateClient update_map_info({MSG_SET_BACKGROUND ,this->track_terrain, this->height, this->width});
-    player_queue.push(update_map_info);
+    client_updater.send_to(ID, update_map_info);
 
     for (auto& track_part : this->track) {
         UpdateClient update_map = track_part->get_to_send();
-        player_queue.push(update_map);
+        client_updater.send_to(ID, update_map);
     }
     for (auto& terrain : this->terrains) {
         UpdateClient update_map = terrain->get_to_send();
-        player_queue.push(update_map);
+        client_updater.send_to(ID, update_map);
     }
     for (auto& object : this->static_track_objects) {
         UpdateClient update_map = object.get_to_send();
-        player_queue.push(update_map);
+        client_updater.send_to(ID, update_map);
     }
 }
 
@@ -122,5 +122,9 @@ Coordinate RacingTrack::get_random_track_position() {
 RacingTrack::~RacingTrack() {
     delete this->podium;
     delete this->finish_line;
+}
+
+void RacingTrack::add_modifier(std::shared_ptr<Modifier> modifier) {
+    modifier->add_to_world(this->racing_track);
 }
 

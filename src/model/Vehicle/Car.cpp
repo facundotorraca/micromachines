@@ -27,30 +27,6 @@ Car::Car(CarSpecs specs):
         car_state(new CarStopped())
 {}
 
-Car::Car(Car&& other_car) noexcept:
-    life(other_car.life),
-    specs(other_car.specs),
-    car_body(other_car.car_body),
-    car_fixture(other_car.car_fixture),
-    wheels(std::move(other_car.wheels)),
-    front_left_joint(other_car.front_left_joint),
-    front_right_joint(other_car.front_right_joint),
-    lap_state(new LapRunning()),
-    car_state(new CarStopped())
-{
-    this->key_h = other_car.key_h;
-    this->key_v = other_car.key_v;
-    this->lap_altered = false;
-
-    other_car.key_h = NOT_PRESSED;
-    other_car.key_v = NOT_PRESSED;
-
-    other_car.car_body = nullptr;
-    other_car.car_fixture = nullptr;
-    other_car.front_right_joint = nullptr;
-    other_car.front_left_joint = nullptr;
-}
-
 void Car::add_to_world(b2World &world) {
     /*create car body*/
     b2BodyDef bodyDef;
@@ -163,21 +139,6 @@ Car::~Car() {
     }
 }
 
-UpdateClient Car::get_update(const int32_t id) {
-    std::vector<int32_t> params {MSG_UPDATE_ENTITY, TYPE_CAR, id,
-                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().x - (CAR_WIDTH*0.5))),
-                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
-                                 (int32_t)(RADTODEG * car_body->GetAngle()),
-                                 (int32_t)(METER_TO_PIXEL * car_body->GetLinearVelocity().Length())};
-
-    for (auto& wheel : wheels){
-        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5))));
-        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5))));
-        params.emplace_back(int32_t(wheel->get_angle()));
-    }
-    return UpdateClient(std::move(params));
-}
-
 void Car::set_spawn_point(Coordinate spawn_point) {
     float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
@@ -192,7 +153,6 @@ void Car::set_spawn_point(Coordinate spawn_point) {
 }
 
 void Car::collide(Body* stactic_object) {
-    //HAy que recontra modificarlo//
     this->life.make_damage(10);
     if (this->life.is_dead()) {
         this->life.restart_life();
@@ -241,5 +201,25 @@ void Car::move_to(Coordinate coordinate) {
 
 void Car::turn_on() {
     this->car_state.reset(new CarRunning());
+}
 
+void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
+    std::vector<int32_t> params {MSG_UPDATE_ENTITY, TYPE_CAR, ID,
+                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().x - (CAR_WIDTH*0.5))),
+                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
+                                 (int32_t)(RADTODEG * car_body->GetAngle()),
+                                 (int32_t)(METER_TO_PIXEL * car_body->GetLinearVelocity().Length())};
+
+    for (auto& wheel : wheels) {
+        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5))));
+        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5))));
+        params.emplace_back(int32_t(wheel->get_angle()));
+    }
+
+    client_updater.send_to_all(UpdateClient(std::move(params)));
+    this->life.send_general_update(ID, client_updater);
+}
+
+void Car::repair() {
+    this->life.restart_life();
 }

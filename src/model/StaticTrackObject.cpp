@@ -2,6 +2,7 @@
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include <model/Vehicle/Car.h>
 #include "StaticTrackObject.h"
 
 StaticTrackObject::StaticTrackObject(int32_t ID, int32_t x, int32_t y, int32_t rotation) {
@@ -53,7 +54,11 @@ UpdateClient StaticTrackObject::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void StaticTrackObject::collide(Body *body) {}
+void StaticTrackObject::collide(Body *body) {
+    if (body->get_ID() != TYPE_CAR)
+        return;
+
+}
 
 int32_t StaticTrackObject::get_ID() {
     return TYPE_STATIC_OBJECT;

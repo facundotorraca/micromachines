@@ -2,23 +2,27 @@
 #define MICROMACHINES_MODIFIERSPAWNER_H
 
 #include "Modifier.h"
+#include "ModifierFactory.h"
 #include <model/RacingTrack.h>
 
 class ModifierSpawner {
 
     float probability;
+
+    ModifierFactory factory;
+
     RacingTrack& racing_track;
-    std::vector<Modifier> spawned_modifiers;
+    std::vector<std::shared_ptr<Modifier>> spawned_modifiers;
 
     private:
-        UpdateClient spawn_modifier();
+        void try_spawn_modifier(ClientUpdater& updater);
 
-        UpdateClient despawn_modifier();
+        void try_despawn_modifier(ClientUpdater& updater);
 
     public:
         ModifierSpawner(float probability, RacingTrack& racing_track);
 
-        UpdateClient get_update_modifiers();
+        void send_modifiers_update(ClientUpdater& updater);
 
         void update();
 };
