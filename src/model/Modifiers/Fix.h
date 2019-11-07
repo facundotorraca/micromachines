@@ -24,8 +24,6 @@ class Fix : public Modifier {
         void apply_modifier_effect(Body* body) override {
             if (body->get_ID() == TYPE_CAR) {
                 ((Car*)body)->repair();
-
-                std::unique_lock<std::mutex> lock(mtx);
                 this->remaining_time = 0; //destroy itself
             }
         }
