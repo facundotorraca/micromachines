@@ -116,24 +116,6 @@ b2Body* Wheel::get_body() {
     return this->wheel_body;
 }
 
-Wheel::Wheel(Wheel &&other_wheel) noexcept {
-    this->wheel_body = other_wheel.wheel_body;
-    this->speed_proportion = other_wheel.speed_proportion;
-    this->max_driver_force = other_wheel.max_driver_force;
-    this->max_forward_speed = other_wheel.max_forward_speed;
-    this->max_backward_speed = other_wheel.max_backward_speed;
-    this->max_lateral_impulse = other_wheel.max_lateral_impulse;
-    this->traction_proportion = other_wheel.traction_proportion;
-
-    other_wheel.traction_proportion = 0;
-    other_wheel.max_lateral_impulse = 0;
-    other_wheel.max_backward_speed = 0;
-    other_wheel.max_forward_speed = 0;
-    other_wheel.speed_proportion = 0;
-    other_wheel.max_driver_force = 0;
-    other_wheel.wheel_body = nullptr;
-}
-
 void Wheel::set_traction(float traction) {
     this->traction_proportion = traction;
 }

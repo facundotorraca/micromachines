@@ -1,6 +1,7 @@
 #ifndef MICROMACHINES_PLAYER_H
 #define MICROMACHINES_PLAYER_H
 
+#include <atomic>
 #include <string>
 #include "UpdateRace.h"
 #include "UpdateClient.h"
@@ -19,10 +20,14 @@ class Player {
     std::string match_name;
 
     bool playing;
+
+    std::atomic<bool> change_view;
     unsigned current_view_ID;
 
     public:
         Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name);
+
+        void update_view(int32_t total_players, ClientUpdater& updater);
 
         Player(Player&& other) noexcept;
 
@@ -50,11 +55,11 @@ class Player {
 
         bool is_on_join_mode();
 
+        bool is_playing();
+
         void set_view(int32_t ID);
 
         int32_t get_ID();
-
-        UpdateClient get_view(int32_t total_players);
 
         void set_finished();
 

@@ -1,6 +1,7 @@
 #ifndef MICROMACHINES_CARLIFE_H
 #define MICROMACHINES_CARLIFE_H
 
+#include <atomic>
 #include <cstdint>
 #include <server/ClientUpdater.h>
 
@@ -8,6 +9,7 @@ class CarLife {
 
     float life;
     float max_life;
+    std::atomic<bool> changed;
 
     public:
         explicit CarLife(float life);

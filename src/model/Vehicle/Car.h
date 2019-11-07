@@ -41,8 +41,6 @@ class Car : public Body {
     public:
         explicit Car(CarSpecs specs);
 
-        Car(Car&& other_car) noexcept;
-
         void add_to_world(b2World& world);
 
         void set_spawn_point(Coordinate spawn_point);

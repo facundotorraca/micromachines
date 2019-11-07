@@ -27,30 +27,6 @@ Car::Car(CarSpecs specs):
         car_state(new CarStopped())
 {}
 
-Car::Car(Car&& other_car) noexcept:
-    life(other_car.life),
-    specs(other_car.specs),
-    car_body(other_car.car_body),
-    car_fixture(other_car.car_fixture),
-    wheels(std::move(other_car.wheels)),
-    front_left_joint(other_car.front_left_joint),
-    front_right_joint(other_car.front_right_joint),
-    lap_state(new LapRunning()),
-    car_state(new CarStopped())
-{
-    this->key_h = other_car.key_h;
-    this->key_v = other_car.key_v;
-    this->lap_altered = false;
-
-    other_car.key_h = NOT_PRESSED;
-    other_car.key_v = NOT_PRESSED;
-
-    other_car.car_body = nullptr;
-    other_car.car_fixture = nullptr;
-    other_car.front_right_joint = nullptr;
-    other_car.front_left_joint = nullptr;
-}
-
 void Car::add_to_world(b2World &world) {
     /*create car body*/
     b2BodyDef bodyDef;

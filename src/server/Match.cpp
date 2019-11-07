@@ -144,14 +144,12 @@ void Match::update_players() {
 
         this->race.send_general_updates_of_player(ID, this->client_updater);
 
-        if (this->race.car_complete_laps(ID)) {
-            std::unique_lock<std::mutex> lock(mtx);
+        if (this->players.at(ID).is_playing() && this->race.car_complete_laps(ID)) {
             this->players.at(ID).set_finished();
-            this->client_updater.send_to(ID, this->players.at(ID).get_view(this->players.size()));
-        } else {
-            auto lap_update = this->race.get_lap_update(ID);
-            this->client_updater.send_to(ID, lap_update);
         }
+
+        if (!this->players.at(ID).is_playing())
+            this->players.at(ID).update_view(players.size(), client_updater);
     }
 }
 

@@ -30,8 +30,6 @@ class Race {
 
         bool car_complete_laps(int32_t ID);
 
-        UpdateClient get_lap_update(int32_t ID);
-
         void add_car_with_specs(int32_t ID, CarSpecs specs);
 
         void send_info_to_player(int32_t ID, ClientUpdater& client_updater);

@@ -48,10 +48,6 @@ void Race::update_cars(UpdateRace update) {
     update.update_cars(this->cars);
 }
 
-UpdateClient Race::get_lap_update(int32_t ID) {
-    return this->lap_counter.get_update(ID);
-}
-
 bool Race::car_complete_laps(int32_t ID) {
     return this->lap_counter.car_complete_laps(ID);
 }
@@ -70,5 +66,6 @@ void Race::prepare() {
 void Race::send_general_updates_of_player(int32_t ID, ClientUpdater &updater) {
     this->cars.at(ID).send_general_update(ID, updater);
     this->modifier_spawner.get_update_modifiers(updater);
+    this->lap_counter.send_update(ID, updater);
 }
 

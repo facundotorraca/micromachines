@@ -11,7 +11,8 @@
 #define KEY_STATE_POS 1
 
 Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name):
-    p_socket(std::move(p_socket))
+    p_socket(std::move(p_socket)),
+    change_view(false)
 {
     this->ID = INVALID_ID;
     this->car_model = 0; //Esto despues lo hacemos con un objeto!
@@ -26,15 +27,18 @@ Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, st
 Player::Player(Player&& other) noexcept:
     p_socket(std::move(other.p_socket)),
     username(std::move(other.username)),
-    match_name(std::move(other.match_name))
+    match_name(std::move(other.match_name)),
+    change_view(false)
 {
     this->ID = other.ID;
     this->mode = other.mode;
     this->car_model = other.car_model;
     this->playing = other.playing;
+    this->current_view_ID = other.current_view_ID;
 
     other.ID = INVALID_ID;
     other.playing = false;
+    other.current_view_ID = INVALID_ID;
 }
 
 bool Player::is_on_join_mode() {
@@ -101,12 +105,16 @@ void Player::set_view(int32_t key) {
     if (this->playing) {
         return;
     }
+    this->change_view = true;
     key == KEY_LEFT ? (this->current_view_ID -= 1) : (this->current_view_ID += 1);
-
 }
 
-UpdateClient Player::get_view(int32_t total_players) {
-    return UpdateClient({MSG_CAR_ID, (int32_t)(this->current_view_ID % total_players)} );
+void Player::update_view(int32_t total_players, ClientUpdater& updater) {
+    if (this->change_view) {
+        UpdateClient update_view({MSG_CAR_ID, (int32_t)(this->current_view_ID % total_players)});
+        updater.send_to(this->ID, update_view);
+        this->change_view = false;
+    }
 }
 
 void Player::set_finished() {
@@ -115,4 +123,8 @@ void Player::set_finished() {
 
 int32_t Player::get_ID() {
     return this->ID;
+}
+
+bool Player::is_playing() {
+    return this->playing;
 }
