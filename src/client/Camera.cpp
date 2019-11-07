@@ -98,16 +98,6 @@ Camera::~Camera() {
     SDL_Quit();
 }
 
-void
-Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t rot) {
-    Texture tex = t_factory.getTexture(id);
-    int32_t draw_x = (0.5f*width) - draw_scale*(posx-px);
-    int32_t draw_y = (0.5f*height) - draw_scale*(posy-py);
-    if (isInCamera(draw_x, draw_y, tex.width*draw_scale, tex.height*draw_scale)){
-        copyRender(tex.tex, draw_x, draw_y, rot, tex.width*draw_scale, tex.height*draw_scale);
-    }
-}
-
 void Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t sizex,
                          int32_t sizey, int32_t rot) {
     Texture tex = t_factory.getTexture(id);
@@ -118,7 +108,7 @@ void Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t sizex,
     }
 }
 
-void Camera::drawTexture(int32_t id, float posx, float posy, float scale) {
+void Camera::drawScreenTexture(int32_t id, float posx, float posy, float scale) {
     Texture tex = t_factory.getTexture(id);
     int x = posx*width;
     int y = posy*height;
