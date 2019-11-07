@@ -55,6 +55,10 @@ UpdateClient Race::get_lap_update(int32_t ID) {
     return this->lap_counter.get_update(ID);
 }
 
+UpdateClient Race::get_life_update(int32_t ID) {
+    return this->cars.at(ID).get_life_update(ID);
+}
+
 UpdateClient Race::get_spawned_modifiers() {
     return this->modifier_spawner.get_update_modifiers();
 }

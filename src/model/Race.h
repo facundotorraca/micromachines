@@ -38,6 +38,8 @@ class Race {
         void add_car_with_specs(int32_t ID, CarSpecs specs);
 
         void send_info_to_player(int32_t ID, ProtectedQueue<UpdateClient>& updates_player);
+
+    UpdateClient get_life_update(int32_t ID);
 };
 
 

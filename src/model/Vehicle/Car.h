@@ -70,6 +70,8 @@ class Car : public Body {
         void restart_lap();
 
         void complete_lap();
+
+    UpdateClient get_life_update(const int32_t id);
 };
 
 #endif //MICROMACHINES_CAR_H

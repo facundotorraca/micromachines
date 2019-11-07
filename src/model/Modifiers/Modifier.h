@@ -5,9 +5,11 @@
 #include <common/Coordinate.h>
 
 class Modifier {
-    int32_t map_x;
-    int32_t map_y;
-    int32_t remaining_time;
+
+    protected:
+        int32_t map_x;
+        int32_t map_y;
+        int32_t remaining_time;
 
     public:
         explicit Modifier(int32_t time_of_life, int32_t map_x, int32_t map_y) {
@@ -27,6 +29,8 @@ class Modifier {
         Coordinate get_coordinate() {
             return {float(this->map_x), float(this->map_y), 0};
         }
+
+        virtual int32_t get_modifier_type() = 0;
 
 };
 

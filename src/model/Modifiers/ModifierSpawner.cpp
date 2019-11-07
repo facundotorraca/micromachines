@@ -6,9 +6,15 @@
 #include <common/Sizes.h>
 #include <common/EntityType.h>
 
+#define MUD_PROB 0.2
+#define OIL_PROB 0.2
+#define FIX_PROB 0.2
+#define ROCK_PROB 0.2
+#define BOOST_PROB 0.2
+
 #define TIME_OF_LIFE 6000 //10 sec
 
-double get_uniform_number() {
+static double get_uniform_number() {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_real_distribution<double> dist(0.0, 1.0);
@@ -16,7 +22,8 @@ double get_uniform_number() {
 }
 
 ModifierSpawner::ModifierSpawner(float probability, RacingTrack &racing_track):
-    racing_track(racing_track)
+    racing_track(racing_track),
+    factory(ModifierProbability{MUD_PROB, OIL_PROB, FIX_PROB, ROCK_PROB, BOOST_PROB} )
 {
     this->probability = probability;
 }
@@ -25,7 +32,6 @@ UpdateClient ModifierSpawner::get_update_modifiers() {
     double number = get_uniform_number();
 
     if (number < this->probability) {
-        std::cout << "AGREGUE UN MODIFIER \n";
         return this->spawn_modifier();
     } else {
         return this->despawn_modifier();
@@ -34,20 +40,19 @@ UpdateClient ModifierSpawner::get_update_modifiers() {
 
 void ModifierSpawner::update() {
     for (auto& modifier : this->spawned_modifiers) {
-        modifier.update_remaining_life();
+        modifier->update_remaining_life();
     }
 }
 
 UpdateClient ModifierSpawner::despawn_modifier() {
     for (auto modifier = this->spawned_modifiers.begin(); modifier != this->spawned_modifiers.end();) {
-        if ((*modifier).is_dead()) {
-            Coordinate dead_modifier_pos = (*modifier).get_coordinate();
+        if ((*modifier)->is_dead()) {
+            Coordinate dead_modifier_pos = (*modifier)->get_coordinate();
 
             int32_t x_upd = (dead_modifier_pos.get_x() * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
             int32_t y_upd = (dead_modifier_pos.get_y() * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
 
             this->spawned_modifiers.erase(modifier);
-            std::cout << "ELIMINE UN MODIFIER \n";
             return UpdateClient({MSG_REMOVE_MODIFIER, x_upd, y_upd});
         } else {
             modifier++;
@@ -62,10 +67,13 @@ UpdateClient ModifierSpawner::spawn_modifier() {
     float x_map = modifier_spawn_pos.get_x();
     float y_map = modifier_spawn_pos.get_y();
 
-    this->spawned_modifiers.emplace_back(TIME_OF_LIFE, x_map, y_map);
+    std::unique_ptr<Modifier> modifier = this->factory.get_modifier_randomly(TIME_OF_LIFE, x_map, y_map);
+    int32_t modifier_type = modifier->get_modifier_type();
+
+    this->spawned_modifiers.emplace_back(std::move(modifier));
 
     int32_t x_upd = (x_map * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
     int32_t y_upd = (y_map * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
 
-    return UpdateClient({MSG_ADD_MODIFIER, TYPE_BOOST, x_upd, y_upd});
+    return UpdateClient({MSG_ADD_MODIFIER, modifier_type, x_upd, y_upd});
 }

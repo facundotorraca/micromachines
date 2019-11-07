@@ -1,4 +1,6 @@
 #include <iostream>
+#include <server/UpdateClient.h>
+#include <common/MsgTypes.h>
 #include "CarLife.h"
 
 CarLife::CarLife(float max_life) {
@@ -18,4 +20,8 @@ bool CarLife::is_dead() {
 void CarLife::restart_life() {
     this->life = this->max_life;
     std::cout << "LIFE RESTARTED: " << this->life << "\n";
+}
+
+UpdateClient CarLife::get_life_update(int32_t ID) {
+    return UpdateClient({MSG_SET_HEALTH, ID, int32_t(this->life) });
 }

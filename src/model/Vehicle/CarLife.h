@@ -16,6 +16,8 @@ class CarLife {
         bool is_dead();
 
         void restart_life();
+
+        UpdateClient get_life_update(int32_t ID);
 };
 
 

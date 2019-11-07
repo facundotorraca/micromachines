@@ -157,8 +157,10 @@ void Match::update_players() {
             this->players.at(ID).set_finished();
             this->updates_players.at(ID).push(this->players.at(ID).get_view(this->players.size()));
         } else {
-            auto personalized_update = this->race.get_lap_update(ID);
-            this->updates_players.at(ID).push(personalized_update);
+            auto lap_update = this->race.get_lap_update(ID);
+            auto life_update = this->race.get_life_update(ID);
+            this->updates_players.at(ID).push(lap_update);
+            this->updates_players.at(ID).push(life_update);
         }
     }
 }
