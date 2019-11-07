@@ -21,8 +21,6 @@ class Modifier : public Sensor {
         b2Body* modifier_body;
         b2Fixture* modifier_fixture;
 
-        std::mutex mtx;
-
     public:
         explicit Modifier(int32_t time_of_life, int32_t map_x, int32_t map_y, float side_size);
 
@@ -38,9 +36,9 @@ class Modifier : public Sensor {
 
         void update_remaining_life();
 
-        bool is_dead();
-
         Coordinate get_coordinate();
+
+        bool is_dead();
 
         ~Modifier() override;
 };

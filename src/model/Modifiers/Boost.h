@@ -19,8 +19,7 @@ class Boost : public Modifier {
             this->modifier_fixture->SetUserData(this);
         }
 
-        void apply_modifier_effect(Body* body) override {
-        }
+        void apply_modifier_effect(Body* body) override {}
 
 
 };
