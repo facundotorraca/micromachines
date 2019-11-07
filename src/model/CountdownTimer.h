@@ -9,7 +9,7 @@ class CountdownTimer : public Thread {
     int32_t max_time;
 
     Race& race;
-    std::unordered_map<int32_t, ProtectedQueue<UpdateClient>>& updates_players;
+    ClientUpdater& client_updater;
 
     private:
         void send_remaining_time(int32_t remaining_time);
@@ -17,8 +17,7 @@ class CountdownTimer : public Thread {
         void run() override;
 
     public:
-        explicit CountdownTimer(int32_t time, Race& race,
-                                std::unordered_map<int32_t, ProtectedQueue<UpdateClient>>& updates_players);
+        explicit CountdownTimer(int32_t time, Race& race, ClientUpdater& client_updater);
 
 
 

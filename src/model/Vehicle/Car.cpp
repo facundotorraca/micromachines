@@ -163,25 +163,6 @@ Car::~Car() {
     }
 }
 
-UpdateClient Car::get_update(const int32_t id) {
-    std::vector<int32_t> params {MSG_UPDATE_ENTITY, TYPE_CAR, id,
-                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().x - (CAR_WIDTH*0.5))),
-                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
-                                 (int32_t)(RADTODEG * car_body->GetAngle()),
-                                 (int32_t)(METER_TO_PIXEL * car_body->GetLinearVelocity().Length())};
-
-    for (auto& wheel : wheels) {
-        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5))));
-        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5))));
-        params.emplace_back(int32_t(wheel->get_angle()));
-    }
-    return UpdateClient(std::move(params));
-}
-
-UpdateClient Car::get_life_update(const int32_t id) {
-    return this->life.get_life_update(id);
-}
-
 void Car::set_spawn_point(Coordinate spawn_point) {
     float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
@@ -244,5 +225,21 @@ void Car::move_to(Coordinate coordinate) {
 
 void Car::turn_on() {
     this->car_state.reset(new CarRunning());
+}
 
+void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
+    std::vector<int32_t> params {MSG_UPDATE_ENTITY, TYPE_CAR, ID,
+                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().x - (CAR_WIDTH*0.5))),
+                                 (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
+                                 (int32_t)(RADTODEG * car_body->GetAngle()),
+                                 (int32_t)(METER_TO_PIXEL * car_body->GetLinearVelocity().Length())};
+
+    for (auto& wheel : wheels) {
+        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().x - (WIDTH_WHEEL*0.5))));
+        params.emplace_back(int32_t(METER_TO_PIXEL * (wheel->get_position().y - (HEIGHT_WHEEL*0.5))));
+        params.emplace_back(int32_t(wheel->get_angle()));
+    }
+
+    client_updater.send_to_all(UpdateClient(std::move(params)));
+    this->life.send_general_update(ID, client_updater);
 }

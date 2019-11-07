@@ -21,6 +21,8 @@
 #define START_MATCH_FLAG 0
 #define TIME_START 3
 
+#define UPDATE_QUEUE_MAX_SIZE 1000
+
 Match::Match(std::string match_creator, std::string match_name):
     closed(false),
     updates_race(10000),
@@ -84,7 +86,6 @@ bool Match::is_closed() {
     return this->closed;
 }
 
-
 void Match::initialize_players() {
     for (auto& player : players) {
         int32_t ID = player.first;
@@ -92,15 +93,15 @@ void Match::initialize_players() {
         CarSpecs specs{100, 120, -20, 130, 150, 8.5, 7.5};
         this->race.add_car_with_specs(player.first, specs);
 
-        this->updates_players.emplace(ID, 10000/*queue len*/);
+        this->client_updater.create_update_queue(ID, UPDATE_QUEUE_MAX_SIZE);
         this->thread_players.emplace(std::piecewise_construct, std::forward_as_tuple(ID),
-                                                               std::forward_as_tuple(updates_players.at(ID),
+                                                               std::forward_as_tuple(this->client_updater,
                                                                                       updates_race, player.second));
 
         try {
             this->players.at(ID).send((uint8_t)START_MATCH_FLAG);
             this->thread_players.at(ID).start();
-            this->race.send_info_to_player(ID, this->updates_players.at(ID));
+            this->race.send_info_to_player(ID, this->client_updater);
         } catch (const SocketError& exception) {
             std::cerr << "Player disconnected\n";
             this->players.erase(player.first);
@@ -117,17 +118,11 @@ void Match::remove_disconnected_players() {
             (*th_player).second.join();
             this->race.player_left_game((*th_player).first);
             this->players.erase((*th_player).first);
-            this->updates_players.erase((*th_player).first);
+            this->client_updater.remove_queue((*th_player).first);
             th_player =  this->thread_players.erase(th_player);
         } else {
             th_player++;
         }
-    }
-}
-
-void Match::send_to_all(UpdateClient update) {
-    for (auto& queue : updates_players){
-        queue.second.push(update);
     }
 }
 
@@ -147,26 +142,21 @@ void Match::update_players() {
     for (auto& player : this->players) {
         int32_t ID = player.first;
 
-        auto general_cars_update = this->race.get_update(ID);
-        this->send_to_all(general_cars_update);
-        auto modifier_updates = this->race.get_spawned_modifiers();
-        this->send_to_all(modifier_updates);
+        this->race.send_general_updates_of_player(ID, this->client_updater);
 
         if (this->race.car_complete_laps(ID)) {
             std::unique_lock<std::mutex> lock(mtx);
             this->players.at(ID).set_finished();
-            this->updates_players.at(ID).push(this->players.at(ID).get_view(this->players.size()));
+            this->client_updater.send_to(ID, this->players.at(ID).get_view(this->players.size()));
         } else {
             auto lap_update = this->race.get_lap_update(ID);
-            auto life_update = this->race.get_life_update(ID);
-            this->updates_players.at(ID).push(lap_update);
-            this->updates_players.at(ID).push(life_update);
+            this->client_updater.send_to(ID, lap_update);
         }
     }
 }
 
 void Match::run() {
-    CountdownTimer timer(TIME_START, this->race, this->updates_players);
+    CountdownTimer timer(TIME_START,this->race, this->client_updater);
     this->initialize_players();
     this->clients_monitor.start();
     timer.start();

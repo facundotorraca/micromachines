@@ -5,12 +5,13 @@
 #include "Wheel.h"
 #include "CarLife.h"
 #include "CarSpecs.h"
+#include "CarState.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
-#include <model/Vehicle/LapState.h>
 #include <common/Coordinate.h>
-#include "CarState.h"
 #include <server/UpdateClient.h>
+#include <server/ClientUpdater.h>
+#include <model/Vehicle/LapState.h>
 
 #define DEGTORAD 0.0174532925199432957f
 
@@ -48,7 +49,7 @@ class Car : public Body {
 
         void collide(Body* static_object) override;
 
-        UpdateClient get_update(int32_t id);
+        void send_general_update(int32_t ID, ClientUpdater& client_updater);
 
         void release_key(int32_t key);
 
@@ -70,8 +71,6 @@ class Car : public Body {
         void restart_lap();
 
         void complete_lap();
-
-    UpdateClient get_life_update(const int32_t id);
 };
 
 #endif //MICROMACHINES_CAR_H

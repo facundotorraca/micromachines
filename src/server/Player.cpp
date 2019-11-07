@@ -112,3 +112,7 @@ UpdateClient Player::get_view(int32_t total_players) {
 void Player::set_finished() {
     this->playing = false;
 }
+
+int32_t Player::get_ID() {
+    return this->ID;
+}

@@ -5,13 +5,14 @@
 #include <memory>
 #include "Podium.h"
 #include "Box2D/Box2D.h"
+#include <unordered_map>
 #include "ContactListener.h"
 #include <model/FinishLine.h>
 #include "StaticTrackObject.h"
-#include <common/ProtocolSocket.h>
-#include <common/ProtectedQueue.h>
 #include <model/Vehicle/Car.h>
-#include <unordered_map>
+#include <server/ClientUpdater.h>
+#include <common/ProtectedQueue.h>
+#include <common/ProtocolSocket.h>
 #include "model/Terrains/Terrain.h"
 
 class RacingTrack {
@@ -54,7 +55,7 @@ class RacingTrack {
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
-        void send(ProtectedQueue<UpdateClient>& player_queue);
+        void send(ClientUpdater& client_updater, int32_t ID);
 
         void set_finish_line(Coordinate begin, Coordinate end);
 

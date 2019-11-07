@@ -28,13 +28,13 @@ ModifierSpawner::ModifierSpawner(float probability, RacingTrack &racing_track):
     this->probability = probability;
 }
 
-UpdateClient ModifierSpawner::get_update_modifiers() {
+void ModifierSpawner::get_update_modifiers(ClientUpdater& updater) {
     double number = get_uniform_number();
 
     if (number < this->probability) {
-        return this->spawn_modifier();
+        this->try_spawn_modifier(updater);
     } else {
-        return this->despawn_modifier();
+        this->try_despawn_modifier(updater);
     }
 }
 
@@ -44,7 +44,7 @@ void ModifierSpawner::update() {
     }
 }
 
-UpdateClient ModifierSpawner::despawn_modifier() {
+void ModifierSpawner::try_despawn_modifier(ClientUpdater& updater) {
     for (auto modifier = this->spawned_modifiers.begin(); modifier != this->spawned_modifiers.end();) {
         if ((*modifier)->is_dead()) {
             Coordinate dead_modifier_pos = (*modifier)->get_coordinate();
@@ -52,16 +52,15 @@ UpdateClient ModifierSpawner::despawn_modifier() {
             int32_t x_upd = (dead_modifier_pos.get_x() * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
             int32_t y_upd = (dead_modifier_pos.get_y() * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
 
-            this->spawned_modifiers.erase(modifier);
-            return UpdateClient({MSG_REMOVE_MODIFIER, x_upd, y_upd});
+            modifier = this->spawned_modifiers.erase(modifier);
+            updater.send_to_all(UpdateClient({MSG_REMOVE_MODIFIER, x_upd, y_upd}));
         } else {
             modifier++;
         }
     }
-    return UpdateClient({NULL_UPDATE});
 }
 
-UpdateClient ModifierSpawner::spawn_modifier() {
+void ModifierSpawner::try_spawn_modifier(ClientUpdater& updater) {
     Coordinate modifier_spawn_pos = this->racing_track.get_random_track_position();
 
     float x_map = modifier_spawn_pos.get_x();
@@ -75,5 +74,5 @@ UpdateClient ModifierSpawner::spawn_modifier() {
     int32_t x_upd = (x_map * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
     int32_t y_upd = (y_map * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
 
-    return UpdateClient({MSG_ADD_MODIFIER, modifier_type, x_upd, y_upd});
+    updater.send_to_all(UpdateClient({MSG_ADD_MODIFIER, modifier_type, x_upd, y_upd}));
 }

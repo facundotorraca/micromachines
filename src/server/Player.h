@@ -52,12 +52,11 @@ class Player {
 
         void set_view(int32_t ID);
 
+        int32_t get_ID();
 
         UpdateClient get_view(int32_t total_players);
 
         void set_finished();
-
-
 
         void kill();
 

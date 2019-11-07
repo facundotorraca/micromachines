@@ -22,6 +22,6 @@ void CarLife::restart_life() {
     std::cout << "LIFE RESTARTED: " << this->life << "\n";
 }
 
-UpdateClient CarLife::get_life_update(int32_t ID) {
-    return UpdateClient({MSG_SET_HEALTH, ID, int32_t(this->life) });
+void CarLife::send_general_update(int32_t ID, ClientUpdater &updater) {
+    updater.send_to_all(UpdateClient({MSG_SET_HEALTH, ID, int32_t(this->life)} ));
 }

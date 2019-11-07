@@ -15,14 +15,14 @@ class ModifierSpawner {
     std::vector<std::unique_ptr<Modifier>> spawned_modifiers;
 
     private:
-        UpdateClient spawn_modifier();
+        void try_spawn_modifier(ClientUpdater& updater);
 
-        UpdateClient despawn_modifier();
+        void try_despawn_modifier(ClientUpdater& updater);
 
     public:
         ModifierSpawner(float probability, RacingTrack& racing_track);
 
-        UpdateClient get_update_modifiers();
+        void get_update_modifiers(ClientUpdater& updater);
 
         void update();
 };

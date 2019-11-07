@@ -2,6 +2,7 @@
 #define MICROMACHINES_CARLIFE_H
 
 #include <cstdint>
+#include <server/ClientUpdater.h>
 
 class CarLife {
 
@@ -11,13 +12,13 @@ class CarLife {
     public:
         explicit CarLife(float life);
 
-        void make_damage(float damage);
-
         bool is_dead();
 
         void restart_life();
 
-        UpdateClient get_life_update(int32_t ID);
+        void make_damage(float damage);
+
+        void send_general_update(int32_t ID, ClientUpdater &updater);
 };
 
 
