@@ -9,7 +9,7 @@ void Map::draw(Camera& camera) {
     for (int i=0; i < back.width; i++)
         for (int j=0; j < back.height; j++)
             camera.drawWorldTexture(back.type, tile_width*i,
-                    tile_width*j, 0);
+                    tile_width*j, tile_width, tile_width, 0);
     for (auto& tile : tiles){
         tile.draw(camera);
     }

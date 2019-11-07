@@ -8,7 +8,9 @@
 class Wheel : public Entity {
     public:
         void draw(Camera& camera) override {
-            camera.drawWorldTexture(WHEEL_TEX, posX, posY, rot);
+            int32_t size_w = WIDTH_WHEEL*METER_TO_PIXEL;
+            int32_t size_h = HEIGHT_WHEEL*METER_TO_PIXEL;
+            camera.drawWorldTexture(WHEEL_TEX, posX, posY, size_w, size_h, rot);
         }
 };
 

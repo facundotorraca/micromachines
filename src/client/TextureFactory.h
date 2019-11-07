@@ -12,6 +12,7 @@
 
 #define CAR_TEX 4500
 #define DMG_CAR_TEX 4501
+#define WRECKED_CAR_TEX 45011
 #define WHEEL_TEX 4502
 #define SPEEDOMETER_TEX 4503
 #define SPEEDOBORDER_TEX 4504
@@ -60,12 +61,10 @@ class TextureFactory {
 public:
     explicit TextureFactory(SDL_Renderer* renderer){
         if (renderer) {
-            textures.emplace(CAR_TEX, createTextureWithSize(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png",
-                                              CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL));
-            textures.emplace(DMG_CAR_TEX, createTextureWithSize(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png",
-                                                  CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL));
-            textures.emplace(WHEEL_TEX, createTextureWithSize(renderer, "assets/sprites/wheel_3.png",
-                                                WIDTH_WHEEL*METER_TO_PIXEL, HEIGHT_WHEEL*METER_TO_PIXEL));
+            textures.emplace(CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png"));
+            textures.emplace(DMG_CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png"));
+            textures.emplace(WRECKED_CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Dead car front.png"));
+            textures.emplace(WHEEL_TEX, createTexture(renderer, "assets/sprites/wheel_3.png"));
             textures.emplace(SPEEDOMETER_TEX, createTexture(renderer, "assets/sprites/speedometer.png"));
             textures.emplace(SPEEDOBORDER_TEX, createTexture(renderer, "assets/sprites/UI/Oil bar 2.png"));
             textures.emplace(SPEEDOBAR_TEX, createTexture(renderer, "assets/sprites/UI/Oil bar.png"));

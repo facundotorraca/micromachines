@@ -65,7 +65,8 @@ public:
     void draw(Camera& camera){
         camera.drawSurface(surface, 0.05, 0.75, MINIMAP_WIDTH, MINIMAP_HEIGHT);
         for (auto& car : cars)
-            camera.drawTexture(RED_DOT, car.second.x+0.05, car.second.y-0.05, 0.5);
+            camera.drawScreenTexture(RED_DOT, car.second.x + 0.05,
+                                     car.second.y - 0.05, 0.5);
     }
     void setSize(int32_t w, int32_t h){
         size_x = w*TILE_TERRAIN_SIZE*METER_TO_PIXEL;
