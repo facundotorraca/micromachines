@@ -19,8 +19,14 @@ void Entities::removeModifier(int32_t x, int32_t y) {
 }
 
 void Entities::draw(Camera &camera) {
-    auto size = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
     for (auto& modifier : modifiers){
+        auto size = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
+        switch (modifier.second.type){
+            case TYPE_BOOST:
+            case TYPE_FIX:
+                size /= 2;
+                break;
+        }
         camera.drawWorldTexture(modifier.second.type, modifier.second.x, modifier.second.y, size, size, 0);
     }
 }
