@@ -40,8 +40,9 @@ public:
     void update(int32_t posx, int32_t posy, int32_t carvel, int32_t rot);
     void draw();
     void clear();
-    void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t rot);
-    void drawTexture(int32_t id, float posx, float posy, float scale);
+
+    void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t sizex, int32_t sizey, int32_t rot);
+    void drawScreenTexture(int32_t id, float posx, float posy, float scale);
     void drawSurface(SDL_Surface* surface, float posx, float posy, float width, float height);
     void drawText(const std::string& text, float posx, float posy, float size, size_t padding);
     void drawFullScreenTexture(int32_t id);

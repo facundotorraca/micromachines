@@ -47,7 +47,7 @@ public:
         my_car_id = id;
     }
     void addTile(TileInfo& info){
-        if ((info.type >= 3 && info.type <= 27) || (info.type >= 29 && info.type <= 55)){
+        if ((info.type >= 3 && info.type <= 27) || (info.type >= 29 && info.type <= 32) || (info.type >= 34 && info.type <= 55)){
             SDL_Rect dst_w{300*info.posx/size_x, 300*info.posy/size_y, 4, 4};
             SDL_Rect dst_b{300*info.posx/size_x+10, 300*info.posy/size_y+10, 4, 4};
             SDL_BlitSurface(black_s, nullptr, surface, &dst_b);
@@ -65,7 +65,8 @@ public:
     void draw(Camera& camera){
         camera.drawSurface(surface, 0.05, 0.75, MINIMAP_WIDTH, MINIMAP_HEIGHT);
         for (auto& car : cars)
-            camera.drawTexture(RED_DOT, car.second.x+0.05, car.second.y-0.05, 0.5);
+            camera.drawScreenTexture(RED_DOT, car.second.x + 0.05,
+                                     car.second.y - 0.05, 0.5);
     }
     void setSize(int32_t w, int32_t h){
         size_x = w*TILE_TERRAIN_SIZE*METER_TO_PIXEL;

@@ -4,12 +4,13 @@
 #include "Player.h"
 #include "UpdateRace.h"
 #include "UpdateClient.h"
+#include "ClientUpdater.h"
 #include <common/Thread.h>
 #include "ThreadUpdateSender.h"
 #include <common/ProtectedQueue.h>
 
 class ThreadPlayer : public Thread {
-    ProtectedQueue<UpdateClient>& updates_send;
+    ClientUpdater& client_updater;
     ProtectedQueue<UpdateRace>& updates_recv;
 
     ThreadUpdateSender sender;
@@ -21,7 +22,7 @@ class ThreadPlayer : public Thread {
         void stop();
 
     public:
-        ThreadPlayer(ProtectedQueue<UpdateClient>& updates_send, ProtectedQueue<UpdateRace>& updates_recv, Player& player);
+        ThreadPlayer(ClientUpdater& client_updater, ProtectedQueue<UpdateRace>& updates_recv, Player& player);
 };
 
 

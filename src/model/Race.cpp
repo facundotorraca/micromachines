@@ -1,10 +1,14 @@
 #include "Race.h"
 #include <unordered_map>
 #include <common/MsgTypes.h>
+#include <server/ClientUpdater.h>
+
+#define SPAWN_PROBABILITY 0.1f//0.0015f
 
 Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
-    lap_counter(total_laps),
-    racing_track(map_path, map_name)
+        lap_counter(total_laps),
+        racing_track(map_path, map_name),
+        modifier_spawner(SPAWN_PROBABILITY, this->racing_track)
 {}
 
 void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
@@ -14,12 +18,12 @@ void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
     this->racing_track.add_car(this->cars.at(ID));
 }
 
-void Race::send_info_to_player(int32_t ID, ProtectedQueue<UpdateClient>& updates_player) {
-    updates_player.push(UpdateClient({MSG_BEGIN_LOADING}));
-    this->racing_track.send(updates_player);
-    updates_player.push(UpdateClient({MSG_TOTAL_LAPS, this->lap_counter.get_total_laps()}));
-    updates_player.push(UpdateClient({MSG_CAR_ID, ID}));
-    updates_player.push(UpdateClient({MSG_FINISH_LOADING}));
+void Race::send_info_to_player(int32_t ID, ClientUpdater& client_updater) {
+    client_updater.send_to(ID, UpdateClient({MSG_BEGIN_LOADING}));
+    this->racing_track.send(client_updater, ID);
+    client_updater.send_to(ID, UpdateClient({MSG_TOTAL_LAPS, this->lap_counter.get_total_laps()}));
+    client_updater.send_to(ID, UpdateClient({MSG_CAR_ID, ID}));
+    client_updater.send_to(ID, UpdateClient({MSG_FINISH_LOADING}));
 }
 
 void Race::start() {
@@ -36,19 +40,12 @@ void Race::update() {
         if (this->lap_counter.car_complete_laps(car.first))
             this->racing_track.add_car_to_podium(car.second, car.first );
     }
+    this->modifier_spawner.update();
     this->racing_track.update();
 }
 
 void Race::update_cars(UpdateRace update) {
     update.update_cars(this->cars);
-}
-
-UpdateClient Race::get_update(int32_t ID) {
-    return this->cars.at(ID).get_update(ID);
-}
-
-UpdateClient Race::get_lap_update(int32_t ID) {
-    return this->lap_counter.get_update(ID);
 }
 
 bool Race::car_complete_laps(int32_t ID) {
@@ -65,3 +62,10 @@ void Race::prepare() {
     }
     this->racing_track.set_spawn_points_to_cars(this->cars);
 }
+
+void Race::send_general_updates_of_player(int32_t ID, ClientUpdater &updater) {
+    this->cars.at(ID).send_general_update(ID, updater);
+    this->modifier_spawner.send_modifiers_update(updater);
+    this->lap_counter.send_update(ID, updater);
+}
+

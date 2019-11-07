@@ -3,6 +3,7 @@
 #include "LapCounter.h"
 #include <common/MsgTypes.h>
 #include <server/UpdateClient.h>
+#include <server/ClientUpdater.h>
 
 LapCounter::LapCounter(int32_t total_laps):
     total_laps(total_laps)
@@ -34,15 +35,15 @@ bool LapCounter::car_complete_laps(int32_t ID) {
     }
 }
 
-UpdateClient LapCounter::get_update(int32_t ID) {
-    try {
-        int32_t player_laps = this->laps.at(ID);
-        return UpdateClient(std::move(std::vector<int32_t> {MSG_SET_LAP, player_laps} ));
-    } catch (const std::out_of_range &e) {
-        return UpdateClient(std::move(std::vector<int32_t> {MSG_SET_LAP, 0}));;
-    }
-}
-
 int32_t LapCounter::get_total_laps() {
     return this->total_laps;
+}
+
+void LapCounter::send_update(int32_t ID, ClientUpdater& client_updater) {
+    try {
+        int32_t player_laps = this->laps.at(ID);
+        client_updater.send_to(ID, UpdateClient({MSG_SET_LAP, player_laps}));
+    } catch (const std::out_of_range &e) {
+        client_updater.send_to(ID, UpdateClient({MSG_SET_LAP, 0}));
+    }
 }

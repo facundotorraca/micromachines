@@ -5,7 +5,6 @@
 #ifndef MICROMACHINES_SCENARIO_H
 #define MICROMACHINES_SCENARIO_H
 
-#include "Entities/TileInfo.h"
 #include "Camera.h"
 #include "Map.h"
 #include "Entities/CarInfo.h"
@@ -13,6 +12,8 @@
 #include "LoadingScreen.h"
 #include "Countdown.h"
 #include "Minimap.h"
+#include "Entities.h"
+#include "Entities/TileInfo.h"
 
 class Scenario {
     Camera camera;
@@ -21,6 +22,7 @@ class Scenario {
     LoadingScreen l_screen;
     Countdown countdown;
     Minimap minimap;
+    Entities entities;
     int32_t my_car_id;
     std::map<int32_t, Car> cars;
     std::mutex mtx;
@@ -35,6 +37,8 @@ public:
     void setTotalLaps(int32_t laps);
     void setLoadingScreen(bool show);
     void showCountdownNumber(int32_t number);
+    void addModifier(int32_t type, int32_t x, int32_t y);
+    void removeModifier(int32_t x, int32_t y);
     void draw();
 };
 

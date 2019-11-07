@@ -18,4 +18,11 @@
 #define TYPE_T_PLACE_PODIUM 136
 #define TYPE_NO_PODIUM_PLACE 36
 
+/*---------MODIFIERS-----------*/
+#define TYPE_BOOST 2145
+#define TYPE_FIX 2146
+#define TYPE_OIL 2147
+#define TYPE_MUD 2148
+#define TYPE_ROCK 2149
+
 #endif //MICROMACHINES_ENTITYTYPE_

@@ -5,12 +5,13 @@
 #include "Wheel.h"
 #include "CarLife.h"
 #include "CarSpecs.h"
+#include "CarState.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
-#include <model/Vehicle/LapState.h>
 #include <common/Coordinate.h>
-#include "CarState.h"
 #include <server/UpdateClient.h>
+#include <server/ClientUpdater.h>
+#include <model/Vehicle/LapState.h>
 
 #define DEGTORAD 0.0174532925199432957f
 
@@ -40,15 +41,13 @@ class Car : public Body {
     public:
         explicit Car(CarSpecs specs);
 
-        Car(Car&& other_car) noexcept;
-
         void add_to_world(b2World& world);
 
         void set_spawn_point(Coordinate spawn_point);
 
         void collide(Body* static_object) override;
 
-        UpdateClient get_update(int32_t id);
+        void send_general_update(int32_t ID, ClientUpdater& client_updater);
 
         void release_key(int32_t key);
 
@@ -68,6 +67,8 @@ class Car : public Body {
         void modify_laps(LapCounter& lap_counter, int32_t car_ID);
 
         void restart_lap();
+        
+        void repair();
 
         void complete_lap();
 };

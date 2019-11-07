@@ -18,10 +18,14 @@ public:
         wheel2.draw(camera);
         wheel3.draw(camera);
         wheel4.draw(camera);
-        if (health <= 50){
-            camera.drawWorldTexture(DMG_CAR_TEX, posX, posY, rot);
+        int32_t size_w = CAR_WIDTH * METER_TO_PIXEL;
+        int32_t size_h = CAR_HEIGHT * METER_TO_PIXEL;
+        if (health <= 0){
+            camera.drawWorldTexture(WRECKED_CAR_TEX, posX, posY, size_w, size_h, rot);
+        } else if (health <= 50){
+            camera.drawWorldTexture(DMG_CAR_TEX, posX, posY, size_w, size_h, rot);
         } else {
-            camera.drawWorldTexture(CAR_TEX, posX, posY, rot);
+            camera.drawWorldTexture(CAR_TEX, posX, posY, size_w, size_h, rot);
         }
     }
 

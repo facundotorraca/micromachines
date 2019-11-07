@@ -13,6 +13,8 @@
 #include "BeginLoadingScreen.h"
 #include "FinishLoadingScreen.h"
 #include "CountdownCommand.h"
+#include "AddModifier.h"
+#include "RemoveModifier.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
@@ -47,7 +49,6 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario
         case MSG_SET_HEALTH:
             return std::unique_ptr<Command>(new SetCarHealth(scenario, bot, command[1], command[2]));
         case MSG_SET_BACKGROUND:
-            std::cerr << "ENTRE\n";
             return std::unique_ptr<Command>(new SetBackground(scenario, bot, command[1], command[2], command[3]));
         case MSG_SET_LAP:
             return std::unique_ptr<Command>(new SetLap(scenario, bot, command[1]));
@@ -59,6 +60,10 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario
             return std::unique_ptr<Command>(new FinishLoadingScreen(scenario, bot));
         case MSG_COUNTDOWN:
             return std::unique_ptr<Command>(new CountdownCommand(scenario, bot, command[1]));
+        case MSG_ADD_MODIFIER:
+            return std::unique_ptr<Command>(new AddModifier(scenario, bot, command[1], command[2], command[3]));
+        case MSG_REMOVE_MODIFIER:
+            return std::unique_ptr<Command>(new RemoveModifier(scenario, bot, command[1], command[2]));
         default:
             return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
     }

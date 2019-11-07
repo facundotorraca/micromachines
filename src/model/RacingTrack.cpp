@@ -1,12 +1,19 @@
 #include <vector>
-#include <common/MsgTypes.h>
-#include <common/EntityType.h>
-#include "StaticTrackObject.h"
-#include <common/ProtectedQueue.h>
-#include <server/MapLoader.h>
-#include "RacingTrack.h"
+#include <random>
 #include "Podium.h"
+#include "RacingTrack.h"
+#include <common/MsgTypes.h>
+#include <server/MapLoader.h>
+#include "StaticTrackObject.h"
+#include <common/EntityType.h>
+#include <common/ProtectedQueue.h>
 
+int get_random_position(int max_position) {
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<int> dist(0, max_position);
+    return dist(mt);
+}
 
 
 RacingTrack::RacingTrack(std::string& map_path, std::string& map_name):
@@ -35,17 +42,21 @@ void RacingTrack::update() {
                       this->position_iterations);
 }
 
-void RacingTrack::send(ProtectedQueue<UpdateClient>& player_queue) {
+void RacingTrack::send(ClientUpdater& client_updater, int32_t ID) {
     UpdateClient update_map_info({MSG_SET_BACKGROUND ,this->track_terrain, this->height, this->width});
-    player_queue.push(update_map_info);
+    client_updater.send_to(ID, update_map_info);
 
+    for (auto& track_part : this->track) {
+        UpdateClient update_map = track_part->get_to_send();
+        client_updater.send_to(ID, update_map);
+    }
     for (auto& terrain : this->terrains) {
         UpdateClient update_map = terrain->get_to_send();
-        player_queue.push(update_map);
+        client_updater.send_to(ID, update_map);
     }
     for (auto& object : this->static_track_objects) {
         UpdateClient update_map = object.get_to_send();
-        player_queue.push(update_map);
+        client_updater.send_to(ID, update_map);
     }
 }
 
@@ -53,6 +64,12 @@ void RacingTrack::add_terrain(std::unique_ptr<Terrain>&& terrain) {
     this->terrains.push_back(std::move(terrain));
     this->terrains.back()->add_to_world(this->racing_track);
 }
+
+void RacingTrack::add_track(std::unique_ptr<Terrain>&& track_part) {
+    this->track.push_back(std::move(track_part));
+    this->track.back()->add_to_world(this->racing_track);
+}
+
 
 void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
     this->static_track_objects.push_back(std::move(object));
@@ -97,7 +114,17 @@ void RacingTrack::set_spawn_points_to_cars(std::unordered_map<int32_t, Car> &car
     }
 }
 
+Coordinate RacingTrack::get_random_track_position() {
+    int random_position = get_random_position(this->track.size()-1);
+    return this->track.at(random_position)->get_map_coordinate();
+}
+
 RacingTrack::~RacingTrack() {
     delete this->podium;
     delete this->finish_line;
 }
+
+void RacingTrack::add_modifier(std::shared_ptr<Modifier> modifier) {
+    modifier->add_to_world(this->racing_track);
+}
+

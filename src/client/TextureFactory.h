@@ -12,6 +12,7 @@
 
 #define CAR_TEX 4500
 #define DMG_CAR_TEX 4501
+#define WRECKED_CAR_TEX 45011
 #define WHEEL_TEX 4502
 #define SPEEDOMETER_TEX 4503
 #define SPEEDOBORDER_TEX 4504
@@ -48,24 +49,23 @@ class TextureFactory {
     std::map<int32_t, Texture> textures;
     static Texture createTexture(SDL_Renderer* renderer, const char* path){
         SDL_Surface* surface = IMG_Load(path);
-        SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
-        int w = surface->w, h = surface->h;
-        SDL_FreeSurface(surface);
-        return {tex, w, h};
-    }
-    static Texture createTextureWithSize(SDL_Renderer* renderer, const char* path, int w, int h){
-        SDL_Texture* tex = IMG_LoadTexture(renderer, path);
-        return {tex, w, h};
+        if (surface){
+            SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
+            int w = surface->w, h = surface->h;
+            SDL_FreeSurface(surface);
+            return {tex, w, h};
+        } else {
+            std::cerr << "Error loading texture: " << path << std::endl;
+        }
+        return {nullptr, 0, 0};
     }
 public:
     explicit TextureFactory(SDL_Renderer* renderer){
         if (renderer) {
-            textures.emplace(CAR_TEX, createTextureWithSize(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png",
-                                              CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL));
-            textures.emplace(DMG_CAR_TEX, createTextureWithSize(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png",
-                                                  CAR_WIDTH*METER_TO_PIXEL, CAR_HEIGHT*METER_TO_PIXEL));
-            textures.emplace(WHEEL_TEX, createTextureWithSize(renderer, "assets/sprites/wheel_3.png",
-                                                WIDTH_WHEEL*METER_TO_PIXEL, HEIGHT_WHEEL*METER_TO_PIXEL));
+            textures.emplace(CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png"));
+            textures.emplace(DMG_CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png"));
+            textures.emplace(WRECKED_CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Dead car front.png"));
+            textures.emplace(WHEEL_TEX, createTexture(renderer, "assets/sprites/wheel_3.png"));
             textures.emplace(SPEEDOMETER_TEX, createTexture(renderer, "assets/sprites/speedometer.png"));
             textures.emplace(SPEEDOBORDER_TEX, createTexture(renderer, "assets/sprites/UI/Oil bar 2.png"));
             textures.emplace(SPEEDOBAR_TEX, createTexture(renderer, "assets/sprites/UI/Oil bar.png"));
@@ -89,102 +89,108 @@ public:
             textures.emplace(HEALTH_15, createTexture(renderer, "assets/sprites/HealthBar/6.png"));
             textures.emplace(HEALTH_16, createTexture(renderer, "assets/sprites/HealthBar/0.png"));
 
+            textures.emplace(TYPE_BOOST, createTexture(renderer, "assets/sprites/modifiers/boost.png"));
+            textures.emplace(TYPE_FIX, createTexture(renderer, "assets/sprites/modifiers/fix.png"));
+            textures.emplace(TYPE_MUD, createTexture(renderer, "assets/sprites/modifiers/mud.png"));
+            textures.emplace(TYPE_OIL, createTexture(renderer, "assets/sprites/modifiers/oil.png"));
+            textures.emplace(TYPE_ROCK, createTexture(renderer, "assets/sprites/modifiers/rock.png"));
+
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             int tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;
-            textures.emplace(3, createTextureWithSize(renderer,"assets/sprites/Track/AR_3a.png", tile_width, tile_width)); 
-            textures.emplace(4, createTextureWithSize(renderer,"assets/sprites/Track/AR_4a.png", tile_width, tile_width)); 
-            textures.emplace(5, createTextureWithSize(renderer,"assets/sprites/Track/AR_5a.png", tile_width, tile_width)); 
-            textures.emplace(8, createTextureWithSize(renderer,"assets/sprites/Track/AR_8a.png", tile_width, tile_width)); 
-            textures.emplace(9, createTextureWithSize(renderer,"assets/sprites/Track/AR_9a.png", tile_width, tile_width)); 
-            textures.emplace(10, createTextureWithSize(renderer,"assets/sprites/Track/AR_10a.png", tile_width, tile_width)); 
-            textures.emplace(13, createTextureWithSize(renderer,"assets/sprites/Track/AR_13a.png", tile_width, tile_width)); 
-            textures.emplace(14, createTextureWithSize(renderer,"assets/sprites/Track/AR_14a.png", tile_width, tile_width)); 
-            textures.emplace(15, createTextureWithSize(renderer,"assets/sprites/Track/AR_15a.png", tile_width, tile_width)); 
-            textures.emplace(16, createTextureWithSize(renderer,"assets/sprites/Track/AR_16a.png", tile_width, tile_width)); 
-            textures.emplace(17, createTextureWithSize(renderer,"assets/sprites/Track/AR_17a.png", tile_width, tile_width)); 
-            textures.emplace(18, createTextureWithSize(renderer,"assets/sprites/Track/AR_18a.png", tile_width, tile_width)); 
-            textures.emplace(19, createTextureWithSize(renderer,"assets/sprites/Track/AR_19a.png", tile_width, tile_width)); 
-            textures.emplace(21, createTextureWithSize(renderer,"assets/sprites/Track/AR_21a.png", tile_width, tile_width)); 
-            textures.emplace(22, createTextureWithSize(renderer,"assets/sprites/Track/AR_22a.png", tile_width, tile_width)); 
-            textures.emplace(25, createTextureWithSize(renderer,"assets/sprites/Track/AR_25a.png", tile_width, tile_width)); 
-            textures.emplace(27, createTextureWithSize(renderer,"assets/sprites/Track/AR_27a.png", tile_width, tile_width)); 
+            textures.emplace(3, createTexture(renderer,"assets/sprites/Track/AR_3a.png")); 
+            textures.emplace(4, createTexture(renderer,"assets/sprites/Track/AR_4a.png")); 
+            textures.emplace(5, createTexture(renderer,"assets/sprites/Track/AR_5a.png")); 
+            textures.emplace(8, createTexture(renderer,"assets/sprites/Track/AR_8a.png")); 
+            textures.emplace(9, createTexture(renderer,"assets/sprites/Track/AR_9a.png")); 
+            textures.emplace(10, createTexture(renderer,"assets/sprites/Track/AR_10a.png")); 
+            textures.emplace(13, createTexture(renderer,"assets/sprites/Track/AR_13a.png")); 
+            textures.emplace(14, createTexture(renderer,"assets/sprites/Track/AR_14a.png")); 
+            textures.emplace(15, createTexture(renderer,"assets/sprites/Track/AR_15a.png")); 
+            textures.emplace(16, createTexture(renderer,"assets/sprites/Track/AR_16a.png")); 
+            textures.emplace(17, createTexture(renderer,"assets/sprites/Track/AR_17a.png")); 
+            textures.emplace(18, createTexture(renderer,"assets/sprites/Track/AR_18a.png")); 
+            textures.emplace(19, createTexture(renderer,"assets/sprites/Track/AR_19a.png")); 
+            textures.emplace(21, createTexture(renderer,"assets/sprites/Track/AR_21a.png")); 
+            textures.emplace(22, createTexture(renderer,"assets/sprites/Track/AR_22a.png")); 
+            textures.emplace(25, createTexture(renderer,"assets/sprites/Track/AR_25a.png")); 
+            textures.emplace(27, createTexture(renderer,"assets/sprites/Track/AR_27a.png")); 
 
             /*-----------------------------------DIRT_ROADS----------------------------------------*/
-            textures.emplace(28, createTextureWithSize(renderer,"assets/sprites/Track/D_1a.png", tile_width, tile_width)); 
-            textures.emplace(31, createTextureWithSize(renderer,"assets/sprites/Track/DR_3a.png", tile_width, tile_width)); 
-            textures.emplace(32, createTextureWithSize(renderer,"assets/sprites/Track/DR_4a.png", tile_width, tile_width)); 
-            textures.emplace(33, createTextureWithSize(renderer,"assets/sprites/Track/DR_5a.png", tile_width, tile_width)); 
-            textures.emplace(36, createTextureWithSize(renderer,"assets/sprites/Track/DR_8a.png", tile_width, tile_width)); 
-            textures.emplace(41, createTextureWithSize(renderer,"assets/sprites/Track/DR_13a.png", tile_width, tile_width)); 
-            textures.emplace(42, createTextureWithSize(renderer,"assets/sprites/Track/DR_14a.png", tile_width, tile_width)); 
-            textures.emplace(44, createTextureWithSize(renderer,"assets/sprites/Track/DR_16a.png", tile_width, tile_width)); 
-            textures.emplace(55, createTextureWithSize(renderer,"assets/sprites/Track/DR_27a.png", tile_width, tile_width)); 
+            textures.emplace(28, createTexture(renderer,"assets/sprites/Track/D_1a.png")); 
+            textures.emplace(31, createTexture(renderer,"assets/sprites/Track/DR_3a.png")); 
+            textures.emplace(32, createTexture(renderer,"assets/sprites/Track/DR_4a.png")); 
+            textures.emplace(33, createTexture(renderer,"assets/sprites/Track/DR_5a.png")); 
+            textures.emplace(36, createTexture(renderer,"assets/sprites/Track/DR_8a.png")); 
+            textures.emplace(41, createTexture(renderer,"assets/sprites/Track/DR_13a.png")); 
+            textures.emplace(42, createTexture(renderer,"assets/sprites/Track/DR_14a.png")); 
+            textures.emplace(44, createTexture(renderer,"assets/sprites/Track/DR_16a.png")); 
+            textures.emplace(55, createTexture(renderer,"assets/sprites/Track/DR_27a.png")); 
 
             /*-----------------------------------------GRASS---------------------------------------*/
-            textures.emplace(56, createTextureWithSize(renderer,"assets/sprites/Track/LG_1a.png", tile_width, tile_width));
-            textures.emplace(57, createTextureWithSize(renderer,"assets/sprites/Track/LG_2a.png", tile_width, tile_width));
-            textures.emplace(58, createTextureWithSize(renderer,"assets/sprites/Track/LG_3a.png", tile_width, tile_width));
-            textures.emplace(59, createTextureWithSize(renderer,"assets/sprites/Track/LG_4a.png", tile_width, tile_width)); 
+            textures.emplace(56, createTexture(renderer,"assets/sprites/Track/LG_1a.png"));
+            textures.emplace(57, createTexture(renderer,"assets/sprites/Track/LG_2a.png"));
+            textures.emplace(58, createTexture(renderer,"assets/sprites/Track/LG_3a.png"));
+            textures.emplace(59, createTexture(renderer,"assets/sprites/Track/LG_4a.png")); 
 
             /*-----------------------------------SAND_ROADS----------------------------------------*/
-            textures.emplace(63, createTextureWithSize(renderer,"assets/sprites/Track/LS_4a.png", tile_width, tile_width)); 
-            textures.emplace(66, createTextureWithSize(renderer,"assets/sprites/Track/SR_3a.png", tile_width, tile_width)); 
-            textures.emplace(67, createTextureWithSize(renderer,"assets/sprites/Track/SR_4a.png", tile_width, tile_width)); 
-            textures.emplace(78, createTextureWithSize(renderer,"assets/sprites/Track/SR_16a.png", tile_width, tile_width)); 
-            textures.emplace(89, createTextureWithSize(renderer,"assets/sprites/Track/SR_27a.png", tile_width, tile_width)); 
+            textures.emplace(63, createTexture(renderer,"assets/sprites/Track/LS_4a.png")); 
+            textures.emplace(66, createTexture(renderer,"assets/sprites/Track/SR_3a.png")); 
+            textures.emplace(67, createTexture(renderer,"assets/sprites/Track/SR_4a.png")); 
+            textures.emplace(78, createTexture(renderer,"assets/sprites/Track/SR_16a.png")); 
+            textures.emplace(89, createTexture(renderer,"assets/sprites/Track/SR_27a.png")); 
 
             /*-----------------------------------TRACK_OBJECTS-------------------------------------*/
-            textures.emplace(102, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_1.png", tile_width, tile_width)); 
-            textures.emplace(103, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_2.png", tile_width, tile_width)); 
-            textures.emplace(104, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_3.png", tile_width, tile_width)); 
-            textures.emplace(105, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_4.png", tile_width, tile_width)); 
-            textures.emplace(106, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_5.png", tile_width, tile_width)); 
-            textures.emplace(107, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_6.png", tile_width, tile_width)); 
-            textures.emplace(108, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_7.png", tile_width, tile_width)); 
-            textures.emplace(109, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_8.png", tile_width, tile_width)); 
-            textures.emplace(110, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_9.png", tile_width, tile_width)); 
-            textures.emplace(111, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TD_10.png", tile_width, tile_width)); 
+            textures.emplace(102, createTexture(renderer,"assets/sprites/TrackObjects/TD_1.png")); 
+            textures.emplace(103, createTexture(renderer,"assets/sprites/TrackObjects/TD_2.png")); 
+            textures.emplace(104, createTexture(renderer,"assets/sprites/TrackObjects/TD_3.png")); 
+            textures.emplace(105, createTexture(renderer,"assets/sprites/TrackObjects/TD_4.png")); 
+            textures.emplace(106, createTexture(renderer,"assets/sprites/TrackObjects/TD_5.png")); 
+            textures.emplace(107, createTexture(renderer,"assets/sprites/TrackObjects/TD_6.png")); 
+            textures.emplace(108, createTexture(renderer,"assets/sprites/TrackObjects/TD_7.png")); 
+            textures.emplace(109, createTexture(renderer,"assets/sprites/TrackObjects/TD_8.png")); 
+            textures.emplace(110, createTexture(renderer,"assets/sprites/TrackObjects/TD_9.png")); 
+            textures.emplace(111, createTexture(renderer,"assets/sprites/TrackObjects/TD_10.png")); 
 
-            textures.emplace(112, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TS_1.png", tile_width, tile_width)); 
+            textures.emplace(112, createTexture(renderer,"assets/sprites/TrackObjects/TS_1.png")); 
 
-            textures.emplace(114, createTextureWithSize(renderer,"assets/sprites/TrackObjects/B_1a.png", tile_width, tile_width)); 
-            textures.emplace(115, createTextureWithSize(renderer,"assets/sprites/TrackObjects/B_2a.png", tile_width, tile_width)); 
-            textures.emplace(116, createTextureWithSize(renderer,"assets/sprites/TrackObjects/W_1a.png", tile_width, tile_width)); 
-            textures.emplace(117, createTextureWithSize(renderer,"assets/sprites/TrackObjects/W_2a.png", tile_width, tile_width)); 
-            textures.emplace(118, createTextureWithSize(renderer,"assets/sprites/TrackObjects/W_4a.png", tile_width, tile_width)); 
-            textures.emplace(119, createTextureWithSize(renderer,"assets/sprites/TrackObjects/W_5a.png", tile_width, tile_width)); 
-            textures.emplace(120, createTextureWithSize(renderer,"assets/sprites/TrackObjects/W_6a.png", tile_width, tile_width)); 
-            textures.emplace(121, createTextureWithSize(renderer,"assets/sprites/TrackObjects/W_3a.png", tile_width, tile_width)); 
+            textures.emplace(114, createTexture(renderer,"assets/sprites/TrackObjects/B_1a.png")); 
+            textures.emplace(115, createTexture(renderer,"assets/sprites/TrackObjects/B_2a.png")); 
+            textures.emplace(116, createTexture(renderer,"assets/sprites/TrackObjects/W_1a.png")); 
+            textures.emplace(117, createTexture(renderer,"assets/sprites/TrackObjects/W_2a.png")); 
+            textures.emplace(118, createTexture(renderer,"assets/sprites/TrackObjects/W_4a.png")); 
+            textures.emplace(119, createTexture(renderer,"assets/sprites/TrackObjects/W_5a.png")); 
+            textures.emplace(120, createTexture(renderer,"assets/sprites/TrackObjects/W_6a.png")); 
+            textures.emplace(121, createTexture(renderer,"assets/sprites/TrackObjects/W_3a.png")); 
 
-            textures.emplace(122, createTextureWithSize(renderer,"assets/sprites/TrackObjects/S_1.png", tile_width, tile_width)); 
-            textures.emplace(123, createTextureWithSize(renderer,"assets/sprites/TrackObjects/S_2.png", tile_width, tile_width)); 
+            textures.emplace(122, createTexture(renderer,"assets/sprites/TrackObjects/S_1.png")); 
+            textures.emplace(123, createTexture(renderer,"assets/sprites/TrackObjects/S_2.png")); 
 
-            textures.emplace(124, createTextureWithSize(renderer,"assets/sprites/TrackObjects/TB_1a.png", tile_width, tile_width));
-            textures.emplace(125, createTextureWithSize(renderer,"assets/sprites/TrackObjects/trophy_s.png", tile_width, tile_width));
-            textures.emplace(126, createTextureWithSize(renderer,"assets/sprites/TrackObjects/trophy_g.png", tile_width, tile_width));
-            textures.emplace(127, createTextureWithSize(renderer,"assets/sprites/TrackObjects/trophy_b.png", tile_width, tile_width));
+            textures.emplace(124, createTexture(renderer,"assets/sprites/TrackObjects/TB_1a.png"));
+            textures.emplace(125, createTexture(renderer,"assets/sprites/TrackObjects/trophy_s.png"));
+            textures.emplace(126, createTexture(renderer,"assets/sprites/TrackObjects/trophy_g.png"));
+            textures.emplace(127, createTexture(renderer,"assets/sprites/TrackObjects/trophy_b.png"));
 
 
-            textures.emplace(128, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_1a.png", tile_width, tile_width));
-            textures.emplace(129, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_2a.png", tile_width, tile_width));
-            textures.emplace(130, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_3a.png", tile_width, tile_width));
-            textures.emplace(131, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_4a.png", tile_width, tile_width));
-            textures.emplace(132, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_5a.png", tile_width, tile_width));
+            textures.emplace(128, createTexture(renderer,"assets/sprites/TrackObjects/PF_1a.png"));
+            textures.emplace(129, createTexture(renderer,"assets/sprites/TrackObjects/PF_2a.png"));
+            textures.emplace(130, createTexture(renderer,"assets/sprites/TrackObjects/PF_3a.png"));
+            textures.emplace(131, createTexture(renderer,"assets/sprites/TrackObjects/PF_4a.png"));
+            textures.emplace(132, createTexture(renderer,"assets/sprites/TrackObjects/PF_5a.png"));
 
-            textures.emplace(133, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_1a.png", tile_width, tile_width));
-            textures.emplace(134, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_2a.png", tile_width, tile_width));
-            textures.emplace(135, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_3a.png", tile_width, tile_width));
-            textures.emplace(136, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_4a.png", tile_width, tile_width));
-            textures.emplace(137, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_5a.png", tile_width, tile_width));
-            textures.emplace(138, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_1a.png", tile_width, tile_width));
-            textures.emplace(139, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_2a.png", tile_width, tile_width));
-            textures.emplace(140, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_3a.png", tile_width, tile_width));
-            textures.emplace(141, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_4a.png", tile_width, tile_width));
-            textures.emplace(142, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_5a.png", tile_width, tile_width));
+            textures.emplace(133, createTexture(renderer,"assets/sprites/TrackObjects/PS_1a.png"));
+            textures.emplace(134, createTexture(renderer,"assets/sprites/TrackObjects/PS_2a.png"));
+            textures.emplace(135, createTexture(renderer,"assets/sprites/TrackObjects/PS_3a.png"));
+            textures.emplace(136, createTexture(renderer,"assets/sprites/TrackObjects/PS_4a.png"));
+            textures.emplace(137, createTexture(renderer,"assets/sprites/TrackObjects/PS_5a.png"));
+            textures.emplace(138, createTexture(renderer,"assets/sprites/TrackObjects/PT_1a.png"));
+            textures.emplace(139, createTexture(renderer,"assets/sprites/TrackObjects/PT_2a.png"));
+            textures.emplace(140, createTexture(renderer,"assets/sprites/TrackObjects/PT_3a.png"));
+            textures.emplace(141, createTexture(renderer,"assets/sprites/TrackObjects/PT_4a.png"));
+            textures.emplace(142, createTexture(renderer,"assets/sprites/TrackObjects/PT_5a.png"));
 
-            textures.emplace(143, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PF_1b.png", tile_width, tile_width));
-            textures.emplace(144, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PS_1b.png", tile_width, tile_width));
-            textures.emplace(145, createTextureWithSize(renderer,"assets/sprites/TrackObjects/PT_1b.png", tile_width, tile_width));
+            textures.emplace(143, createTexture(renderer,"assets/sprites/TrackObjects/PF_1b.png"));
+            textures.emplace(144, createTexture(renderer,"assets/sprites/TrackObjects/PS_1b.png"));
+            textures.emplace(145, createTexture(renderer,"assets/sprites/TrackObjects/PT_1b.png"));
         }
     }
 

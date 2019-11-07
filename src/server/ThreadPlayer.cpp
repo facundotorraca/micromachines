@@ -1,10 +1,11 @@
-#include <common/SocketError.h>
 #include "ThreadPlayer.h"
+#include "ClientUpdater.h"
 #include "ThreadUpdateSender.h"
+#include <common/SocketError.h>
 
-ThreadPlayer::ThreadPlayer(ProtectedQueue<UpdateClient> &updates_send, ProtectedQueue<UpdateRace> &updates_recv, Player &player) :
-    sender(player, updates_send),
-    updates_send(updates_send),
+ThreadPlayer::ThreadPlayer(ClientUpdater& client_updater, ProtectedQueue<UpdateRace> &updates_recv, Player &player) :
+    sender(player, client_updater),
+    client_updater(client_updater),
     updates_recv(updates_recv),
     player(player)
 {}
@@ -24,7 +25,7 @@ void ThreadPlayer::run() {
 }
 
 void ThreadPlayer::stop() {
-    updates_send.close();
+    this->client_updater.close_queue(this->player.get_ID());
     this->sender.shutdown();
     this->sender.join();
     this->running = false;

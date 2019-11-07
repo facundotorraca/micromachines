@@ -19,7 +19,8 @@ public:
         this->rot = info.rotation;
     }
     void draw(Camera& camera) override {
-        camera.drawWorldTexture(info.type, posX, posY, rot);
+        int32_t size_w = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;
+        camera.drawWorldTexture(info.type, posX, posY, size_w, size_w, rot);
     }
 };
 #endif //MICROMACHINES_TILE_H

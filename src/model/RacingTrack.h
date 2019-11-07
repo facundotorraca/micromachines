@@ -5,13 +5,15 @@
 #include <memory>
 #include "Podium.h"
 #include "Box2D/Box2D.h"
+#include <unordered_map>
 #include "ContactListener.h"
 #include <model/FinishLine.h>
 #include "StaticTrackObject.h"
-#include <common/ProtocolSocket.h>
-#include <common/ProtectedQueue.h>
 #include <model/Vehicle/Car.h>
-#include <unordered_map>
+#include <server/ClientUpdater.h>
+#include <common/ProtectedQueue.h>
+#include <common/ProtocolSocket.h>
+#include <model/Modifiers/Modifier.h>
 #include "model/Terrains/Terrain.h"
 
 class RacingTrack {
@@ -28,6 +30,8 @@ class RacingTrack {
     Podium* podium;
     FinishLine* finish_line;
     std::vector<Coordinate> spawn_points;
+
+    std::vector<std::unique_ptr<Terrain>> track;
     std::list<std::unique_ptr<Terrain>> terrains;
     std::list<StaticTrackObject> static_track_objects;
 
@@ -40,15 +44,21 @@ class RacingTrack {
 
         void add_car(Car& car);
 
-        void add_car_to_podium(Car& car, int32_t ID);
+        Coordinate get_random_track_position();
 
         void set_track_terrain(int32_t terrain);
 
+        void add_car_to_podium(Car& car, int32_t ID);
+
         void add_spawn_point(Coordinate spawn_point);
+
+        void add_track(std::unique_ptr<Terrain>&& track);
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
-        void send(ProtectedQueue<UpdateClient>& player_queue);
+        void add_modifier(std::shared_ptr<Modifier> modifier);
+
+        void send(ClientUpdater& client_updater, int32_t ID);
 
         void set_finish_line(Coordinate begin, Coordinate end);
 
