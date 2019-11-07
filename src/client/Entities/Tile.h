@@ -19,7 +19,7 @@ public:
         this->rot = info.rotation;
     }
     void draw(Camera& camera) override {
-        int32_t size_w = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
+        int32_t size_w = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;
         camera.drawWorldTexture(info.type, posX, posY, size_w, size_w, rot);
     }
 };
