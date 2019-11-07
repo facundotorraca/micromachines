@@ -6,7 +6,21 @@
 #define MICROMACHINES_PLUGINGSMANAGER_H
 
 
+#include <unordered_map>
+#include <model/Vehicle/Car.h>
+#include <boost/filesystem.hpp>
+
+typedef struct {
+    CarSpecs *cars
+
+} pluging_params;
+
 class PlugingsManager {
+
+    std::unordered_map<int32_t, Car> cars;
+
+public:
+    PlugingsManager();
 
 };
 
