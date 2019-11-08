@@ -11,10 +11,13 @@ void ScreenEffectDrawer::draw(Camera &camera) {
        switch (effect){
            case MSG_EFFECT_MUD:
                camera.drawFullScreenTexture(MUD_TEX);
+               break;
            case MSG_EFFECT_BOOST:
                camera.drawScreenTexture(BOOST_TEX, 0.5, 0.8, 1);
+               break;
            case MSG_EFFECT_ROCK:
                camera.drawFullScreenTexture(ROCK_TEX);
+               break;
        }
        if (frames_drawing > FRAMES_PER_SECOND*3){
            showing = false;
