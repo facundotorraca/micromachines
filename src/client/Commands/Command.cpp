@@ -16,6 +16,7 @@
 #include "AddModifier.h"
 #include "RemoveModifier.h"
 #include "PlayerFinished.h"
+#include "ScreenEffect.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 

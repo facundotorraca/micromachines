@@ -44,6 +44,7 @@ void Scenario::draw() {
     }
     hud.draw(camera);
     countdown.draw(camera);
+    screen_effect.draw(camera);
     minimap.draw(camera);
     l_screen.draw(camera);
     mtx.unlock();
