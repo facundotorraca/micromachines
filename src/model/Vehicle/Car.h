@@ -69,6 +69,8 @@ class Car : public Body {
 
         void apply_oil_effect();
 
+        void apply_mud_effect();
+
         void apply_rock_effect();
 
         void apply_boost_effect();

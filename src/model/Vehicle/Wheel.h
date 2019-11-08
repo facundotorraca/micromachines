@@ -9,6 +9,7 @@
 #include <common/Coordinate.h>
 #include <model/StaticTrackObject.h>
 #include <model/Modifiers/Effect.h>
+#include <server/ClientUpdater.h>
 
 #define DEGTORAD 0.0174532925199432957f
 
@@ -47,6 +48,8 @@ class Wheel : public Body {
         b2Body* get_body();
 
         float get_angle();
+
+        void send_effect_update(int32_t ID, ClientUpdater& updater);
 
     /*--------------Terrain & Modifiers------------*/
         void apply_effect(std::unique_ptr<Effect> effect);

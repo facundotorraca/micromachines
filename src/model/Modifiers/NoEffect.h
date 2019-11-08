@@ -19,6 +19,8 @@ class NoEffect : public Effect {
             this->life = INFINITE;
         }
 
+        void send_effect_update(int32_t ID, ClientUpdater& updater) override {};
+
 };
 
 
