@@ -11,6 +11,7 @@ typedef struct {
 
 typedef struct {
     int32_t ID;
+    int32_t laps;
     CarSpecs specs;
     DTO_CarLife life;
     int32_t position;
@@ -18,6 +19,7 @@ typedef struct {
 
 typedef struct {
     int32_t cars;
+    int32_t total_laps;
     DTO_Car car_info[MAX_PLAYERS];
 } DTO_Info;
 

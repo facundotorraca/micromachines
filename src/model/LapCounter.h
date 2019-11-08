@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include "DTO_Info.h"
 #include <server/UpdateClient.h>
 #include <server/ClientUpdater.h>
 
@@ -23,6 +24,10 @@ class LapCounter {
         int32_t get_total_laps();
 
         void send_update(int32_t ID, ClientUpdater& client_updates);
+
+        void send_total_laps(int32_t ID, ClientUpdater &updater);
+
+        void get_dto_info(DTO_Info& param);
 };
 
 #endif //MICROMACHINES_LAPCOUNTER_H
