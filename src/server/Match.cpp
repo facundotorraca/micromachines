@@ -145,7 +145,8 @@ void Match::update_players() {
         this->race.send_general_updates_of_player(ID, this->client_updater);
 
         if (this->players.at(ID).is_playing() && this->race.car_complete_laps(ID)) {
-            this->players.at(ID).set_finished();
+            this->players.at(ID).set_finished(this->client_updater);
+
         }
 
         if (!this->players.at(ID).is_playing())

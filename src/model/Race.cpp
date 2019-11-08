@@ -19,11 +19,11 @@ void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
 }
 
 void Race::send_info_to_player(int32_t ID, ClientUpdater& client_updater) {
-    client_updater.send_to(ID, UpdateClient({MSG_BEGIN_LOADING}));
+    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_BEGIN_LOADING}));
     this->racing_track.send(client_updater, ID);
-    client_updater.send_to(ID, UpdateClient({MSG_TOTAL_LAPS, this->lap_counter.get_total_laps()}));
-    client_updater.send_to(ID, UpdateClient({MSG_CAR_ID, ID}));
-    client_updater.send_to(ID, UpdateClient({MSG_FINISH_LOADING}));
+    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_TOTAL_LAPS, this->lap_counter.get_total_laps()}));
+    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_CAR_ID, ID}));
+    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_FINISH_LOADING}));
 }
 
 void Race::start() {

@@ -43,7 +43,7 @@ void RacingTrack::update() {
 }
 
 void RacingTrack::send(ClientUpdater& client_updater, int32_t ID) {
-    UpdateClient update_map_info({MSG_SET_BACKGROUND ,this->track_terrain, this->height, this->width});
+    UpdateClient update_map_info(std::vector<int32_t>{MSG_SET_BACKGROUND ,this->track_terrain, this->height, this->width});
     client_updater.send_to(ID, update_map_info);
 
     for (auto& track_part : this->track) {

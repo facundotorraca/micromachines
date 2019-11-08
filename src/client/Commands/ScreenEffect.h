@@ -1,7 +1,3 @@
-//
-// Created by javier on 2/11/19.
-//
-
 #ifndef MICROMACHINES_SCREENEFFECT_H
 #define MICROMACHINES_SCREENEFFECT_H
 

@@ -17,7 +17,7 @@ class RockEffect : public Effect {
         }
 
         void send_effect_update(int32_t ID, ClientUpdater& updater) override {
-            UpdateClient effect_info({MSG_COUNTDOWN, 2});
+            UpdateClient effect_info(std::vector<int32_t>{MSG_EFFECT_ROCK});
             updater.send_to(ID, effect_info);
         };
 };

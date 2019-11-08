@@ -16,7 +16,7 @@ class BoostEffect : public Effect {
         }
 
         void send_effect_update(int32_t ID, ClientUpdater& updater) override {
-            UpdateClient effect_info({MSG_COUNTDOWN, 3});
+            UpdateClient effect_info(std::vector<int32_t>{MSG_EFFECT_BOOST});
             updater.send_to(ID, effect_info);
         };
 

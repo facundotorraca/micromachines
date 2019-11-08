@@ -100,9 +100,9 @@ public:
 
             /*-------------------------------SCREEN EFFECT TEXTURES--------------------------------*/
 
-            textures.emplace(MUD_TEX, createTexture(renderer, "assets/sprites/screen_effects/mud.png"));
-            textures.emplace(ROCK_TEX, createTexture(renderer, "assets/sprites/screen_effects/rock.png"));
-            textures.emplace(BOOST_TEX, createTexture(renderer, "assets/sprites/screen_effects/boost.png"));
+            textures.emplace(MUD_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/mud.png"));
+            textures.emplace(ROCK_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/rock.png"));
+            textures.emplace(BOOST_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/boost.png"));
 
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             int tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;

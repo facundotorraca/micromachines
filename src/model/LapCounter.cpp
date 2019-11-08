@@ -42,8 +42,8 @@ int32_t LapCounter::get_total_laps() {
 void LapCounter::send_update(int32_t ID, ClientUpdater& client_updater) {
     try {
         int32_t player_laps = this->laps.at(ID);
-        client_updater.send_to(ID, UpdateClient({MSG_SET_LAP, player_laps}));
+        client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_SET_LAP, player_laps}));
     } catch (const std::out_of_range &e) {
-        client_updater.send_to(ID, UpdateClient({MSG_SET_LAP, 0}));
+        client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_SET_LAP, 0}));
     }
 }

@@ -16,6 +16,7 @@
 #include "AddModifier.h"
 #include "RemoveModifier.h"
 #include "PlayerFinished.h"
+#include "ScreenEffect.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
@@ -68,7 +69,7 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, Bot& bot, ProtocolS
         case MSG_REMOVE_MODIFIER:
             return std::unique_ptr<Command>(new RemoveModifier(scenario, bot, command[1], command[2]));
         case MSG_PLAYER_FINISHED: {
-                std::string player_name;
+                std::string player_name(MAX_LEN_NAME, '\0');
                 socket.receive(player_name);
                 return std::unique_ptr<Command>(new PlayerFinished(scenario, bot, player_name));
             }

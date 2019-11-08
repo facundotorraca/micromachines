@@ -26,7 +26,7 @@ void CarLife::restart_life() {
 
 void CarLife::send_general_update(int32_t ID, ClientUpdater &updater) {
     if (this->changed) {
-        updater.send_to_all(UpdateClient({MSG_SET_HEALTH, ID, int32_t(this->life)} ));
+        updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_SET_HEALTH, ID, int32_t(this->life)} ));
         this->changed = false;
     }
 }
