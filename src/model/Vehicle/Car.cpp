@@ -223,3 +223,15 @@ void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
 void Car::repair() {
     this->life.restart_life();
 }
+
+CarSpecs Car::get_specs() {
+    return this->specs;
+}
+
+int32_t Car::get_max_life() {
+    return this->specs.max_life;
+}
+
+void Car::set_max_life(int32_t max_life) {
+    this->specs.max_life = max_life;
+}

@@ -35,6 +35,8 @@ class Race {
         void send_info_to_player(int32_t ID, ClientUpdater& client_updater);
 
         void send_general_updates_of_player(int32_t ID, ClientUpdater &updater);
+
+        std::unordered_map<int32_t, Car>& get_cars();
 };
 
 

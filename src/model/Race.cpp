@@ -69,3 +69,7 @@ void Race::send_general_updates_of_player(int32_t ID, ClientUpdater &updater) {
     this->lap_counter.send_update(ID, updater);
 }
 
+std::unordered_map<int32_t, Car> &Race::get_cars() {
+    return this->cars;
+}
+

@@ -11,6 +11,8 @@
 #define MAP_PATH "maps/"
 #define MAP_NAME "track_01.json"
 
+#define PLUGINGS_PATH "plugings/"
+
 #define ERROR_MATCH_JOIN_FLAG 1
 
 #define OPEN_MATCH_FLAG "0"
@@ -29,8 +31,12 @@ Match::Match(std::string match_creator, std::string match_name):
     match_name(std::move(match_name)),
     race(3, MAP_PATH, MAP_NAME),
     match_creator(std::move(match_creator)),
-    clients_monitor(this, this->updates_race)
-{}
+    clients_monitor(this, this->updates_race),
+    plugings_manager(race, PLUGINGS_PATH)
+{
+    std::cout << "INICIALIZO MATH" << std::endl;
+    this->plugings_manager.load_plugings();
+}
 
 void Match::add_player(Player&& player) {
     try {
@@ -136,6 +142,7 @@ void Match::step() {
     FramesSynchronizer::sync_FPS(FRAMES_PER_SECOND);
     std::unique_lock<std::mutex> lock(mtx);
     this->race.update();
+    this->plugings_manager.execute();
 }
 
 void Match::update_players() {
@@ -158,7 +165,6 @@ void Match::run() {
     this->initialize_players();
     this->clients_monitor.start();
     timer.start();
-
     while (this->running) {
         this->step();
         this->update_players();
