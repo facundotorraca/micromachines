@@ -57,6 +57,14 @@ void Hud::draw(Camera &camera) {
     /*---------------------------CREATE LAP COUNTER---------------------------*/
     std::string laps_text = std::string("Lap: ")+std::to_string(lap)+"/"+std::to_string(total_laps);
     camera.drawText(laps_text, 0.07, 0.07, 0.6, 7);
+
+    /*--------------------------DRAW FINISHED PLAYERS-------------------------*/
+    int i = 1;
+    for (auto& name : scoreboard){
+        auto show_name = std::to_string(i) + ": " + name;
+        camera.drawText(show_name, 0.07, 0.07+(0.04*i), 0.4, show_name.size());
+        ++i;
+    }
 }
 
 Hud::Hud() : health(100), lap(0), total_laps(0), speed(0){
@@ -68,4 +76,8 @@ void Hud::setLap(int32_t l) {
 
 void Hud::setTotalLaps(int32_t laps) {
     this->total_laps = laps;
+}
+
+void Hud::addFinishedPlayer(std::string &player_name) {
+    scoreboard.emplace_back(player_name);
 }

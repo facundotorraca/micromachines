@@ -22,10 +22,8 @@ class Fix : public Modifier {
         }
 
         void apply_modifier_effect(Body* body) override {
-            if (body->get_ID() == TYPE_CAR) {
-                ((Car*)body)->repair();
-                this->remaining_time = 0; //destroy itself
-            }
+            ((Car*)body)->repair();
+            this->remaining_time = 0; //destroy itself
         }
 };
 

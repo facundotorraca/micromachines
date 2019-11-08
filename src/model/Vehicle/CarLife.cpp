@@ -1,6 +1,7 @@
 #include <iostream>
 #include <server/UpdateClient.h>
 #include <common/MsgTypes.h>
+#include <model/DTO_Info.h>
 #include "CarLife.h"
 
 CarLife::CarLife(float max_life):
@@ -26,7 +27,12 @@ void CarLife::restart_life() {
 
 void CarLife::send_general_update(int32_t ID, ClientUpdater &updater) {
     if (this->changed) {
-        updater.send_to_all(UpdateClient({MSG_SET_HEALTH, ID, int32_t(this->life)} ));
+        updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_SET_HEALTH, ID, int32_t(this->life)} ));
         this->changed = false;
     }
+}
+
+void CarLife::get_dto_info(DTO_CarLife& info_life) {
+    info_life.max_life = this->max_life;
+    info_life.current_life = this->life;
 }

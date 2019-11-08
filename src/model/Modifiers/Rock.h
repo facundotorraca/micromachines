@@ -2,6 +2,7 @@
 #define MICROMACHINES_ROCK_H
 
 #include "Modifier.h"
+#include "RockEffect.h"
 #include <common/EntityType.h>
 
 class Rock : public Modifier {
@@ -20,6 +21,7 @@ class Rock : public Modifier {
         }
 
         void apply_modifier_effect(Body* body) override {
+            ((Car*)body)->apply_rock_effect();
         }
 
 

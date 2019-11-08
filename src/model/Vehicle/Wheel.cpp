@@ -12,17 +12,14 @@
 #define DEGTORAD 0.0174532925199432957f
 
 
-Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse) {
-    this->max_lateral_impulse = max_lateral_impulse; /*Capacity of changing direction without skidding*/
-    this->max_backward_speed = max_backward_speed;
-    this->max_forward_speed = max_forward_speed;
-    this->max_driver_force= max_driver_force; /*Capacity of changing speed*/
+Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse):
+    wheel_state(max_forward_speed, max_backward_speed, max_driver_force, max_lateral_impulse)
+{
+    b2BodyDef wheel_body_def;
+    wheel_body_def.type = b2_dynamicBody;
 
     this->speed_proportion = MAX_PROPORTION;
     this->traction_proportion = MAX_PROPORTION;
-
-    b2BodyDef wheel_body_def;
-    wheel_body_def.type = b2_dynamicBody;
 
     /*Allocates memory for the wheels's body*/
     this->wheel_body = world.CreateBody(&wheel_body_def);
@@ -30,7 +27,7 @@ Wheel::Wheel(b2World& world, float max_forward_speed, float max_backward_speed, 
 
     b2PolygonShape polygon;
     polygon.SetAsBox(WIDTH_WHEEL/2/*0.1*/, HEIGHT_WHEEL/2 /*0.25*/);
-    this->wheel_fixture = this->wheel_body->CreateFixture(/*Shape*/&polygon, /*16.875*/ 6.92 /*1.5*/ );
+    this->wheel_body->CreateFixture(/*Shape*/&polygon, /*16.875*/ 6.92 /*1.5*/ );
     //Wheels are like punctual particle
 }
 
@@ -50,9 +47,9 @@ void Wheel::update_speed(uint8_t key) {
     /*Find if whe want to go UP or DOWN*/
     float desire_speed = 0;
     if (key == KEY_UP) {
-        desire_speed = this->speed_proportion * this->max_forward_speed;
+        desire_speed = this->speed_proportion * this->wheel_state.get_max_forward_speed();
     } else if (key == KEY_DOWN) {
-        desire_speed = this->speed_proportion * this->max_backward_speed;
+        desire_speed = this->speed_proportion * this->wheel_state.get_max_backward_speed();
     } else {
         return;
     }
@@ -64,9 +61,9 @@ void Wheel::update_speed(uint8_t key) {
     /*Apply necessary force*/
     float force = 0;
     if (desire_speed > current_speed) {
-        force = max_driver_force;
+        force = this->wheel_state.get_max_driver_force();
     } else if (desire_speed < current_speed) {
-        force = (-max_driver_force);
+        force = -this->wheel_state.get_max_driver_force();
     } else {
         return;
     }
@@ -84,8 +81,8 @@ void Wheel::update_friction() {
     /* circumstances require a greater correction  */
     /* than allowable                              */
     /*---------------------------------------------*/
-    if (impulse.Length()/*Absolute value*/ > this->max_lateral_impulse) {
-        impulse *= this->max_lateral_impulse / impulse.Length();
+    if (impulse.Length()/*Absolute value*/ > this->wheel_state.get_max_lateral_impulse()) {
+        impulse *= this->wheel_state.get_max_lateral_impulse() / impulse.Length();
     }
     this->wheel_body->ApplyLinearImpulse(this->traction_proportion * impulse, this->wheel_body->GetWorldCenter(), true);
 
@@ -102,6 +99,7 @@ void Wheel::update_friction() {
 void Wheel::update(uint8_t key) {
     this->update_friction();
     this->update_speed(key);
+    this->wheel_state.update();
 }
 
 const b2Vec2& Wheel::get_position() {
@@ -116,24 +114,17 @@ b2Body* Wheel::get_body() {
     return this->wheel_body;
 }
 
-void Wheel::set_traction(float traction) {
-    this->traction_proportion = traction;
+void Wheel::restore_specs() {
+    this->speed_proportion = MAX_PROPORTION;
+    this->traction_proportion = MAX_PROPORTION;
 }
 
-void Wheel::set_max_traction() {
-    this->traction_proportion = MAX_PROPORTION;
+void Wheel::reduce_max_traction(float proportion) {
+    this->traction_proportion = proportion;
 }
 
 void Wheel::reduce_max_speed(float proportion) {
     this->speed_proportion = proportion;
-}
-
-void Wheel::set_max_speed() {
-    this->speed_proportion = MAX_PROPORTION;
-}
-
-Wheel::~Wheel() {
-    this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
 void Wheel::set_spawn_point(Coordinate spawn_point) {
@@ -159,6 +150,18 @@ void Wheel::move_to(Coordinate coordinate) {
     float angle = -coordinate.get_angle() * DEGTORAD;
 
     this->wheel_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
+}
+
+void Wheel::apply_effect(std::unique_ptr<Effect> effect) {
+    this->wheel_state.apply_effect(std::move(effect));
+}
+
+Wheel::~Wheel() {
+    this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
+}
+
+void Wheel::send_effect_update(int32_t ID, ClientUpdater& updater) {
+    this->wheel_state.send_effect_update(ID, updater);
 }
 
 

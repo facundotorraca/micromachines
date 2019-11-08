@@ -36,6 +36,9 @@
 #define HEALTH_16 5016
 #define WHITE_BLOCK 4507
 #define RED_DOT 4508
+#define MUD_TEX 4509
+#define ROCK_TEX 4510
+#define BOOST_TEX 4511
 
 
 
@@ -94,6 +97,12 @@ public:
             textures.emplace(TYPE_MUD, createTexture(renderer, "assets/sprites/modifiers/mud.png"));
             textures.emplace(TYPE_OIL, createTexture(renderer, "assets/sprites/modifiers/oil.png"));
             textures.emplace(TYPE_ROCK, createTexture(renderer, "assets/sprites/modifiers/rock.png"));
+
+            /*-------------------------------SCREEN EFFECT TEXTURES--------------------------------*/
+
+            textures.emplace(MUD_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/mud.png"));
+            textures.emplace(ROCK_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/rock.png"));
+            textures.emplace(BOOST_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/boost.png"));
 
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             int tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;

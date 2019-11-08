@@ -3,7 +3,7 @@
 #include <common/MsgTypes.h>
 #include <server/ClientUpdater.h>
 
-#define SPAWN_PROBABILITY 0.1f//0.0015f
+#define SPAWN_PROBABILITY 0.003f//0.0015f
 
 Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
         lap_counter(total_laps),
@@ -19,16 +19,15 @@ void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
 }
 
 void Race::send_info_to_player(int32_t ID, ClientUpdater& client_updater) {
-    client_updater.send_to(ID, UpdateClient({MSG_BEGIN_LOADING}));
+    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_BEGIN_LOADING}));
     this->racing_track.send(client_updater, ID);
-    client_updater.send_to(ID, UpdateClient({MSG_TOTAL_LAPS, this->lap_counter.get_total_laps()}));
-    client_updater.send_to(ID, UpdateClient({MSG_CAR_ID, ID}));
-    client_updater.send_to(ID, UpdateClient({MSG_FINISH_LOADING}));
+    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_TOTAL_LAPS, this->lap_counter.get_total_laps()}));
+    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_CAR_ID, ID}));
+    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_FINISH_LOADING}));
 }
 
 void Race::start() {
     for (auto &car : this->cars) {
-        this->running_cars.emplace(std::pair<int32_t, Car&>(car.first, car.second));
         car.second.turn_on();
     }
 }
@@ -63,13 +62,18 @@ void Race::prepare() {
     this->racing_track.set_spawn_points_to_cars(this->cars);
 }
 
-void Race::send_general_updates_of_player(int32_t ID, ClientUpdater &updater) {
+void Race::send_general_updates_of_player(int32_t ID, ClientUpdater& updater) {
     this->cars.at(ID).send_general_update(ID, updater);
     this->modifier_spawner.send_modifiers_update(updater);
     this->lap_counter.send_update(ID, updater);
 }
 
-std::unordered_map<int32_t, Car> &Race::get_cars() {
-    return this->cars;
+void Race::get_dto_data(DTO_Info &info) {
+    size_t i = 0;
+    for (auto& car : this->cars) {
+        car.second.get_dto_info(car.first, info.car_info[i]);
+        i++;
+    }
+    info.cars = this->cars.size();
 }
 

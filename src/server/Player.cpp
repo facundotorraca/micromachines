@@ -111,13 +111,17 @@ void Player::set_view(int32_t key) {
 
 void Player::update_view(int32_t total_players, ClientUpdater& updater) {
     if (this->change_view) {
-        UpdateClient update_view({MSG_CAR_ID, (int32_t)(this->current_view_ID % total_players)});
+        UpdateClient update_view(std::vector<int32_t>{MSG_CAR_ID, (int32_t)(this->current_view_ID % total_players)});
         updater.send_to(this->ID, update_view);
         this->change_view = false;
     }
 }
 
-void Player::set_finished() {
+void Player::set_finished(ClientUpdater& updater) {
+    UpdateClient begin_username_flag(std::vector<int32_t>{MSG_PLAYER_FINISHED});
+    UpdateClient username_info(this->username);
+    updater.send_to_all(begin_username_flag);
+    updater.send_to_all(username_info);
     this->playing = false;
 }
 

@@ -30,13 +30,13 @@ public:
         std::stringstream ss;
         ss << std::setw(padding) << orig_text;
         std::string text = ss.str();
-
+        int w = h*text.size()*0.8;
         SDL_Surface* surface_b = TTF_RenderText_Solid(font, text.c_str(), SDL_Color{0,0,0});
         SDL_Surface* surface_w = TTF_RenderText_Solid(font, text.c_str(), SDL_Color{255,255,255});
         SDL_Texture* texture_b = SDL_CreateTextureFromSurface(renderer, surface_b);
         SDL_Texture* texture_w = SDL_CreateTextureFromSurface(renderer, surface_w);
-        SDL_Rect dst_w = {x, y, h*(int)text.size(), h};
-        SDL_Rect dst_b = {x+shadow_dist, y+shadow_dist, h*(int)text.size(), h};
+        SDL_Rect dst_w = {x, y, w, h};
+        SDL_Rect dst_b = {x+shadow_dist, y+shadow_dist, w, h};
         SDL_RenderCopy(renderer, texture_b, nullptr, &dst_b);
         SDL_RenderCopy(renderer, texture_w, nullptr, &dst_w);
         SDL_DestroyTexture(texture_w);

@@ -12,6 +12,8 @@
 #include <server/UpdateClient.h>
 #include <server/ClientUpdater.h>
 #include <model/Vehicle/LapState.h>
+#include <model/Modifiers/Effect.h>
+#include <model/DTO_Info.h>
 
 #define DEGTORAD 0.0174532925199432957f
 
@@ -20,7 +22,6 @@ class Car : public Body {
     CarSpecs specs;
 
     b2Body* car_body{};
-    b2Fixture* car_fixture{};
     std::vector<Wheel*> wheels;
 
     b2RevoluteJoint* front_left_joint{};
@@ -61,6 +62,8 @@ class Car : public Body {
 
         void move_to(Coordinate coordinate);
 
+        void get_dto_info(int32_t ID, DTO_Car& car_info);
+
         void update();
 
         void turn_on();
@@ -72,9 +75,17 @@ class Car : public Body {
         /*-------------Race_handlers---------*/
         void modify_laps(LapCounter& lap_counter, int32_t car_ID);
 
-        void restart_lap();
-        
+        void apply_oil_effect();
+
+        void apply_mud_effect();
+
+        void apply_rock_effect();
+
+        void apply_boost_effect();
+
         void repair();
+
+        void restart_lap();
 
         void complete_lap();
 };

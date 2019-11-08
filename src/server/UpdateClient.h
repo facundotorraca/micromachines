@@ -11,8 +11,12 @@
 class UpdateClient {
     std::vector<int32_t> message;
 
+    std::string string_message;
+
     public:
-        UpdateClient(std::vector<int32_t>&& message);
+        explicit UpdateClient(std::vector<int32_t>&& message);
+
+        explicit UpdateClient(std::string string_message);
 
         void send(ProtocolSocket &socket);
 };

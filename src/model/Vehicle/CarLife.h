@@ -4,6 +4,7 @@
 #include <atomic>
 #include <cstdint>
 #include <server/ClientUpdater.h>
+#include <model/DTO_Info.h>
 
 class CarLife {
 
@@ -21,6 +22,8 @@ class CarLife {
         void make_damage(float damage);
 
         void send_general_update(int32_t ID, ClientUpdater &updater);
+
+        void get_dto_info(DTO_CarLife& info_life);
 };
 
 

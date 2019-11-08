@@ -14,6 +14,7 @@
 #include "Minimap.h"
 #include "Entities.h"
 #include "Entities/TileInfo.h"
+#include "ScreenEffectDrawer.h"
 
 class Scenario {
     Camera camera;
@@ -21,6 +22,7 @@ class Scenario {
     Hud hud;
     LoadingScreen l_screen;
     Countdown countdown;
+    ScreenEffectDrawer screen_effect;
     Minimap minimap;
     Entities entities;
     int32_t my_car_id;
@@ -39,6 +41,8 @@ public:
     void showCountdownNumber(int32_t number);
     void addModifier(int32_t type, int32_t x, int32_t y);
     void removeModifier(int32_t x, int32_t y);
+    void addFinishedPlayer(std::string& player_name);
+    void showScreenEffect(int32_t effect);
     void draw();
 };
 

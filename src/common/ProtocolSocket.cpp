@@ -52,8 +52,8 @@ void ProtocolSocket::receive(std::string& message) {
 }
 
 void ProtocolSocket::receive(std::vector<int32_t>& buffer) {
-    uint8_t len_next_message = 0;
     int32_t buf;
+    uint8_t len_next_message = 0;
     this->socket.receive(&len_next_message, 1);
 
     for (int i = 0; i < len_next_message; i++) {

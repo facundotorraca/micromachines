@@ -26,6 +26,6 @@ void CountdownTimer::run() {
 }
 
 void CountdownTimer::send_remaining_time(int32_t remaining_time) {
-    UpdateClient update_countdown({MSG_COUNTDOWN, remaining_time});
+    UpdateClient update_countdown(std::vector<int32_t>{MSG_COUNTDOWN, remaining_time});
     this->client_updater.send_to_all(update_countdown);
 }

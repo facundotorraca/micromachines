@@ -44,6 +44,7 @@ void Scenario::draw() {
     }
     hud.draw(camera);
     countdown.draw(camera);
+    screen_effect.draw(camera);
     minimap.draw(camera);
     l_screen.draw(camera);
     mtx.unlock();
@@ -102,3 +103,12 @@ void Scenario::removeModifier(int32_t x, int32_t y) {
     std::unique_lock<std::mutex> lock(mtx);
     entities.removeModifier(x, y);
 }
+
+void Scenario::addFinishedPlayer(std::string& player_name) {
+    hud.addFinishedPlayer(player_name);
+}
+
+void Scenario::showScreenEffect(int32_t effect) {
+    screen_effect.show(effect);
+}
+

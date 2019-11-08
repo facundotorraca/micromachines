@@ -16,8 +16,7 @@ UpdateClient Asphalt::get_to_send() {
 }
 
 void Asphalt::apply_terrain_effect(Body* wheel) {
-    ((Wheel*)wheel)->set_max_speed();
-    ((Wheel*)wheel)->set_max_traction();
+    ((Wheel*)wheel)->restore_specs();
 }
 
 void Asphalt::set_terrain_user_data() {

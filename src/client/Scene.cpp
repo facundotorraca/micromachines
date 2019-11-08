@@ -13,12 +13,10 @@ void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
         queue.push(std::move(event));
 }
 
-void Scene::handleServerEvent(std::vector<int32_t>& data) {
-    auto command = Command::create(data, scenario, bot);
-    if (command)
-        command->apply();
-}
-
 void Scene::draw() {
     this->scenario.draw();
+}
+
+std::unique_ptr<Command> Scene::receiveMessage(ProtocolSocket &socket) {
+    return Command::create(scenario, bot, socket);
 }

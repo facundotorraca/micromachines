@@ -3,6 +3,7 @@
 #include "Match.h"
 #include "Player.h"
 #include <common/Sizes.h>
+#include <model/DTO_Info.h>
 #include <common/SocketError.h>
 #include <model/CountdownTimer.h>
 #include "ThreadClientEventMonitor.h"
@@ -152,7 +153,8 @@ void Match::update_players() {
         this->race.send_general_updates_of_player(ID, this->client_updater);
 
         if (this->players.at(ID).is_playing() && this->race.car_complete_laps(ID)) {
-            this->players.at(ID).set_finished();
+            this->players.at(ID).set_finished(this->client_updater);
+
         }
 
         if (!this->players.at(ID).is_playing())
@@ -163,6 +165,10 @@ void Match::update_players() {
 void Match::run() {
     CountdownTimer timer(TIME_START,this->race, this->client_updater);
     this->initialize_players();
+
+    DTO_Info dto;
+    this->race.get_dto_data(dto);
+
     this->clients_monitor.start();
     timer.start();
     while (this->running) {

@@ -26,9 +26,9 @@ class Scene {
 
         explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue, Bot &bot);
 
-        void handleServerEvent(std::vector<int32_t>& data);
-
         void handleKeyEvent(SDL_Keycode key, SDL_EventType type);
+
+        std::unique_ptr<Command> receiveMessage(ProtocolSocket& socket);
 
         void draw();
 };

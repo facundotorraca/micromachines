@@ -8,6 +8,10 @@
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include <model/Modifiers/OilEffect.h>
+#include <model/Modifiers/RockEffect.h>
+#include <model/Modifiers/BoostEffect.h>
+#include <model/Modifiers/MudEffect.h>
 
 #define NOT_PRESSED 0
 
@@ -16,6 +20,11 @@
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
+
+#define L_BACK_WHEEL_POS 0
+#define R_BACK_WHEEL_POS 1
+#define L_FRONT_WHEEL_POS 2
+#define R_FRONT_WHEEL_POS 3
 
 Car::Car(CarSpecs specs):
         specs(specs),
@@ -38,7 +47,7 @@ void Car::add_to_world(b2World &world) {
 
     b2PolygonShape polygon_shape;
     polygon_shape.SetAsBox(CAR_WIDTH/2 + 0.05, CAR_HEIGHT/2 + 0.05);
-    this->car_fixture = this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
+    this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
 
     this->car_body->SetUserData(this);
     this->create_wheels(world);
@@ -133,12 +142,6 @@ void Car::release_key(int32_t key) {
     this->car_state->stop(key, this->key_v, this->key_h);
 }
 
-Car::~Car() {
-    for (auto & wheel : this->wheels) {
-        delete wheel;
-    }
-}
-
 void Car::set_spawn_point(Coordinate spawn_point) {
     float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
@@ -218,20 +221,46 @@ void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
 
     client_updater.send_to_all(UpdateClient(std::move(params)));
     this->life.send_general_update(ID, client_updater);
+    this->wheels[L_BACK_WHEEL_POS]->send_effect_update(ID, client_updater);
 }
 
 void Car::repair() {
     this->life.restart_life();
 }
 
-CarSpecs Car::get_specs() {
-    return this->specs;
+void Car::apply_oil_effect() {
+    this->wheels[L_BACK_WHEEL_POS]->apply_effect(std::unique_ptr<Effect>(new OilEffect()));
+    this->wheels[R_BACK_WHEEL_POS]->apply_effect(std::unique_ptr<Effect>(new OilEffect()));
 }
 
-int32_t Car::get_max_life() {
-    return this->specs.max_life;
+void Car::apply_rock_effect() {
+    for (auto& wheel : this->wheels) {
+        wheel->apply_effect(std::unique_ptr<Effect>(new RockEffect()));
+    }
+    this->life.make_damage(10);
 }
 
-void Car::set_max_life(int32_t max_life) {
-    this->specs.max_life = max_life;
+void Car::apply_boost_effect() {
+    for (auto& wheel : this->wheels) {
+        wheel->apply_effect(std::unique_ptr<Effect>(new BoostEffect()));
+    }
+}
+
+void Car::apply_mud_effect() {
+    for (auto& wheel : this->wheels) {
+        wheel->apply_effect(std::unique_ptr<Effect>(new MudEffect()));
+    }
+}
+
+Car::~Car() {
+    for (auto & wheel : this->wheels) {
+        delete wheel;
+    }
+}
+
+void Car::get_dto_info(int32_t ID, DTO_Car &car_info) {
+    car_info.ID = ID;
+    car_info.specs = this->specs;
+    car_info.position = 1; //Cambiarlo
+    this->life.get_dto_info(car_info.life);
 }

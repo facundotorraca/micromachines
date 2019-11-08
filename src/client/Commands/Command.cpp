@@ -15,11 +15,15 @@
 #include "CountdownCommand.h"
 #include "AddModifier.h"
 #include "RemoveModifier.h"
+#include "PlayerFinished.h"
+#include "ScreenEffect.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
 
-std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario& scenario, Bot& bot){
+std::unique_ptr<Command> Command::create(Scenario& scenario, Bot& bot, ProtocolSocket& socket){
+    std::vector<int32_t> command;
+    socket.receive(command);
     int32_t msg_type = command[0];
 
     switch (msg_type) {
@@ -64,6 +68,15 @@ std::unique_ptr<Command> Command::create(std::vector<int32_t>& command, Scenario
             return std::unique_ptr<Command>(new AddModifier(scenario, bot, command[1], command[2], command[3]));
         case MSG_REMOVE_MODIFIER:
             return std::unique_ptr<Command>(new RemoveModifier(scenario, bot, command[1], command[2]));
+        case MSG_PLAYER_FINISHED: {
+                std::string player_name(MAX_LEN_NAME, '\0');
+                socket.receive(player_name);
+                return std::unique_ptr<Command>(new PlayerFinished(scenario, bot, player_name));
+            }
+        case MSG_EFFECT_BOOST:
+        case MSG_EFFECT_MUD:
+        case MSG_EFFECT_ROCK:
+            return std::unique_ptr<Command> (new ScreenEffect(scenario, bot, command[0]));
         default:
             return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
     }

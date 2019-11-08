@@ -15,6 +15,8 @@
 #define HEIGHT_SCREEN 720
 #define WIDTH_SCREEN 1024
 
-#define MAX_USER_PER_MATCH 8
+#define MAX_LEN_NAME 20
+
+#define MAX_PLAYERS 8
 
 #endif //MICROMACHINES_SIZES_H

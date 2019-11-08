@@ -2,6 +2,7 @@
 #define MICROMACHINES_BOOST_H
 
 #include "Modifier.h"
+#include "BoostEffect.h"
 #include <common/EntityType.h>
 
 class Boost : public Modifier {
@@ -19,9 +20,10 @@ class Boost : public Modifier {
             this->modifier_fixture->SetUserData(this);
         }
 
-        void apply_modifier_effect(Body* body) override {}
-
-
+        void apply_modifier_effect(Body* body) override {
+            ((Car*)body)->apply_boost_effect();
+            this->remaining_time = 0; //destroy itself
+        }
 };
 
 

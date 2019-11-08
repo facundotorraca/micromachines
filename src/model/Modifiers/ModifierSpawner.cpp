@@ -53,7 +53,7 @@ void ModifierSpawner::try_despawn_modifier(ClientUpdater& updater) {
             int32_t y_upd = (dead_modifier_pos.get_y() * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
 
             modifier = this->spawned_modifiers.erase(modifier);
-            updater.send_to_all(UpdateClient({MSG_REMOVE_MODIFIER, x_upd, y_upd}));
+            updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_REMOVE_MODIFIER, x_upd, y_upd}));
         } else {
             modifier++;
         }
@@ -75,5 +75,5 @@ void ModifierSpawner::try_spawn_modifier(ClientUpdater& updater) {
     int32_t x_upd = (x_map * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
     int32_t y_upd = (y_map * TILE_TERRAIN_SIZE * METER_TO_PIXEL) - (TILE_TERRAIN_SIZE * METER_TO_PIXEL)/2;
 
-    updater.send_to_all(UpdateClient({MSG_ADD_MODIFIER, modifier_type, x_upd, y_upd}));
+    updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_ADD_MODIFIER, modifier_type, x_upd, y_upd}));
 }
