@@ -160,4 +160,8 @@ Wheel::~Wheel() {
     this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
+void Wheel::send_effect_update(int32_t ID, ClientUpdater& updater) {
+    this->wheel_state.send_effect_update(ID, updater);
+}
+
 

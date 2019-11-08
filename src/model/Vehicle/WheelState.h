@@ -5,6 +5,7 @@
 #include "Box2D/Box2D.h"
 #include <model/Modifiers/Effect.h>
 #include <model/Modifiers/NoEffect.h>
+#include <server/ClientUpdater.h>
 
 class WheelState {
 
@@ -54,6 +55,10 @@ class WheelState {
 
         virtual float get_max_driver_force() {
             return this->effect->apply_to_driver_force(this->max_driver_force);
+        }
+
+        void send_effect_update(int32_t ID, ClientUpdater& updater) {
+            this->effect->send_effect_update(ID, updater);
         }
 };
 

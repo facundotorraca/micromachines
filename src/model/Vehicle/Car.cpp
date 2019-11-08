@@ -11,6 +11,7 @@
 #include <model/Modifiers/OilEffect.h>
 #include <model/Modifiers/RockEffect.h>
 #include <model/Modifiers/BoostEffect.h>
+#include <model/Modifiers/MudEffect.h>
 
 #define NOT_PRESSED 0
 
@@ -220,6 +221,7 @@ void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
 
     client_updater.send_to_all(UpdateClient(std::move(params)));
     this->life.send_general_update(ID, client_updater);
+    this->wheels[L_BACK_WHEEL_POS]->send_effect_update(ID, client_updater);
 }
 
 void Car::repair() {
@@ -241,6 +243,12 @@ void Car::apply_rock_effect() {
 void Car::apply_boost_effect() {
     for (auto& wheel : this->wheels) {
         wheel->apply_effect(std::unique_ptr<Effect>(new BoostEffect()));
+    }
+}
+
+void Car::apply_mud_effect() {
+    for (auto& wheel : this->wheels) {
+        wheel->apply_effect(std::unique_ptr<Effect>(new MudEffect()));
     }
 }
 

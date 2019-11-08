@@ -15,6 +15,11 @@ class BoostEffect : public Effect {
             return std::unique_ptr<Effect>(new NoEffect());
         }
 
+        void send_effect_update(int32_t ID, ClientUpdater& updater) override {
+            UpdateClient effect_info({MSG_COUNTDOWN, 3});
+            updater.send_to(ID, effect_info);
+        };
+
 };
 
 

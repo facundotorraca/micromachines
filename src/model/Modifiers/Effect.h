@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <server/ClientUpdater.h>
 
 class Effect {
 
@@ -46,6 +47,8 @@ class Effect {
         bool is_over() {
             return this->life == 0;
         }
+
+        virtual void send_effect_update(int32_t ID, ClientUpdater& updater) = 0;
 
         virtual std::unique_ptr<Effect> get_next_effect() = 0;
 };

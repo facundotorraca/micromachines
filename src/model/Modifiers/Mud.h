@@ -20,6 +20,7 @@ class Mud : public Modifier {
         }
 
         void apply_modifier_effect(Body* body) override {
+            ((Car*)body)->apply_mud_effect();
         }
 };
 

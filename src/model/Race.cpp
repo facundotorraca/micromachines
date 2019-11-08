@@ -62,7 +62,7 @@ void Race::prepare() {
     this->racing_track.set_spawn_points_to_cars(this->cars);
 }
 
-void Race::send_general_updates_of_player(int32_t ID, ClientUpdater &updater) {
+void Race::send_general_updates_of_player(int32_t ID, ClientUpdater& updater) {
     this->cars.at(ID).send_general_update(ID, updater);
     this->modifier_spawner.send_modifiers_update(updater);
     this->lap_counter.send_update(ID, updater);
