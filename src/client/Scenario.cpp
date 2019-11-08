@@ -107,3 +107,7 @@ void Scenario::addFinishedPlayer(std::string& player_name) {
     hud.addFinishedPlayer(player_name);
 }
 
+void Scenario::showScreenEffect(int32_t effect) {
+    screen_effect.show(effect);
+}
+

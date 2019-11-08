@@ -72,6 +72,10 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, Bot& bot, ProtocolS
                 socket.receive(player_name);
                 return std::unique_ptr<Command>(new PlayerFinished(scenario, bot, player_name));
             }
+        case MSG_EFFECT_BOOST:
+        case MSG_EFFECT_MUD:
+        case MSG_EFFECT_ROCK:
+            return std::unique_ptr<Command> (new ScreenEffect(scenario, bot, command[0]));
         default:
             return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
     }
