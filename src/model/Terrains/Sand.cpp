@@ -19,7 +19,7 @@ UpdateClient Sand::get_to_send() {
 }
 
 void Sand::apply_terrain_effect(Body* wheel) {
-    ((Wheel*)wheel)->set_traction(SAND_TRACTION_PROPORTION);
+    ((Wheel *) wheel)->reduce_max_traction(SAND_TRACTION_PROPORTION);
     ((Wheel*)wheel)->reduce_max_speed(SAND_SPEED_PROPORTION);
 }
 

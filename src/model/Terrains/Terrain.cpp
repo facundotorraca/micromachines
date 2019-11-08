@@ -2,6 +2,7 @@
 #include "Terrain.h"
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
+#include <common/EntityType.h>
 
 Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID) {
     this->ID = ID;
@@ -43,7 +44,8 @@ Terrain::Terrain(Terrain &&other) noexcept {
 }
 
 void Terrain::apply_effect(Body *body) {
-    this->apply_terrain_effect(body);
+    if (body->get_ID() == TYPE_WHEEL)
+        this->apply_terrain_effect(body);
 }
 
 Coordinate Terrain::get_map_coordinate() {

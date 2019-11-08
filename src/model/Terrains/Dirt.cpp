@@ -20,7 +20,7 @@ UpdateClient Dirt::get_to_send() {
 
 void Dirt::apply_terrain_effect(Body* wheel) {
     ((Wheel*)wheel)->reduce_max_speed(DIRT_SPEED_PROPORTION);
-    ((Wheel*)wheel)->set_traction(DIRT_TRACTION_PROPORTION);
+    ((Wheel *) wheel)->reduce_max_traction(DIRT_TRACTION_PROPORTION);
 }
 
 void Dirt::set_terrain_user_data() {
