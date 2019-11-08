@@ -16,7 +16,7 @@ protected:
     public:
         explicit Command(Scenario& scenario, Bot& bot) : scenario(scenario), bot(bot){}
 
-        static std::unique_ptr<Command> create(std::vector<int32_t>& command, Scenario& scenario, Bot& bot);
+        static std::unique_ptr<Command> create(Scenario& scenario, Bot& bot, ProtocolSocket& socket);
 
         virtual void apply() = 0;
 };

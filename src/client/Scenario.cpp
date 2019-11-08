@@ -102,3 +102,8 @@ void Scenario::removeModifier(int32_t x, int32_t y) {
     std::unique_lock<std::mutex> lock(mtx);
     entities.removeModifier(x, y);
 }
+
+void Scenario::addFinishedPlayer(std::string& player_name) {
+    hud.addFinishedPlayer(player_name);
+}
+

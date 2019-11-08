@@ -39,6 +39,7 @@ public:
     void showCountdownNumber(int32_t number);
     void addModifier(int32_t type, int32_t x, int32_t y);
     void removeModifier(int32_t x, int32_t y);
+    void addFinishedPlayer(std::string& player_name);
     void draw();
 };
 

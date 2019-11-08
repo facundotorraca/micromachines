@@ -14,8 +14,10 @@ void ThreadReceiver::run() {
     while (this->running) {
         std::vector<int32_t> buffer;
         try {
-            this->socket.receive(buffer);
-            this->scene.handleServerEvent(buffer);
+            auto message = this->scene.receiveMessage(socket);
+            message->apply();
+            //this->socket.receive(buffer);
+            //this->scene.handleServerEvent(buffer);
         } catch (SocketError& e) {
             this->running = false;
         }
