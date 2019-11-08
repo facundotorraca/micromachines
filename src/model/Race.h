@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include "RacingTrack.h"
+#include "DTO_Info.h"
 #include <server/UpdateRace.h>
 #include <server/ClientUpdater.h>
 #include <model/Modifiers/ModifierSpawner.h>
@@ -35,6 +36,8 @@ class Race {
         void send_info_to_player(int32_t ID, ClientUpdater& client_updater);
 
         void send_general_updates_of_player(int32_t ID, ClientUpdater &updater);
+
+        void get_dto_data(DTO_Info& info);
 };
 
 

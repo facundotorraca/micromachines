@@ -13,6 +13,7 @@
 #include <server/ClientUpdater.h>
 #include <model/Vehicle/LapState.h>
 #include <model/Modifiers/Effect.h>
+#include <model/DTO_Info.h>
 
 #define DEGTORAD 0.0174532925199432957f
 
@@ -21,7 +22,6 @@ class Car : public Body {
     CarSpecs specs;
 
     b2Body* car_body{};
-    b2Fixture* car_fixture{};
     std::vector<Wheel*> wheels;
 
     b2RevoluteJoint* front_left_joint{};
@@ -57,6 +57,8 @@ class Car : public Body {
         int32_t get_ID() override;
 
         void move_to(Coordinate coordinate);
+
+        void get_dto_info(int32_t ID, DTO_Car& car_info);
 
         void update();
 

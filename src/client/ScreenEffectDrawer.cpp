@@ -13,7 +13,7 @@ void ScreenEffectDrawer::draw(Camera &camera) {
                camera.drawFullScreenTexture(MUD_TEX);
                break;
            case MSG_EFFECT_BOOST:
-               camera.drawScreenTexture(BOOST_TEX, 0.5, 0.8, 1);
+               camera.drawScreenTexture(BOOST_TEX, 0.5, 0.8, 0.1);
                break;
            case MSG_EFFECT_ROCK:
                camera.drawFullScreenTexture(ROCK_TEX);

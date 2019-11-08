@@ -47,7 +47,7 @@ void Car::add_to_world(b2World &world) {
 
     b2PolygonShape polygon_shape;
     polygon_shape.SetAsBox(CAR_WIDTH/2 + 0.05, CAR_HEIGHT/2 + 0.05);
-    this->car_fixture = this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
+    this->car_body->CreateFixture(/*shape*/&polygon_shape, 0.2f);
 
     this->car_body->SetUserData(this);
     this->create_wheels(world);
@@ -256,4 +256,11 @@ Car::~Car() {
     for (auto & wheel : this->wheels) {
         delete wheel;
     }
+}
+
+void Car::get_dto_info(int32_t ID, DTO_Car &car_info) {
+    car_info.ID = ID;
+    car_info.specs = this->specs;
+    car_info.position = 1; //Cambiarlo
+    this->life.get_dto_info(car_info.life);
 }

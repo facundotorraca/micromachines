@@ -68,3 +68,12 @@ void Race::send_general_updates_of_player(int32_t ID, ClientUpdater& updater) {
     this->lap_counter.send_update(ID, updater);
 }
 
+void Race::get_dto_data(DTO_Info &info) {
+    size_t i = 0;
+    for (auto& car : this->cars) {
+        car.second.get_dto_info(car.first, info.car_info[i]);
+        i++;
+    }
+    info.cars = this->cars.size();
+}
+

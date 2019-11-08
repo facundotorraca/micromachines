@@ -17,4 +17,6 @@
 
 #define MAX_LEN_NAME 20
 
+#define MAX_PLAYERS 8
+
 #endif //MICROMACHINES_SIZES_H
