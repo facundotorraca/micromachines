@@ -36,9 +36,8 @@ class WheelState {
         void update() {
             std::unique_lock<std::mutex> lock(this->mtx);
             this->effect->update();
-            if (this->effect->is_over()) {
+            if (this->effect->is_over())
                 this->effect = this->effect->get_next_effect();
-            }
         }
 
         float get_max_lateral_impulse() {

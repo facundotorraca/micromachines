@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include "LapCounter.h"
+#include "DTO_Info.h"
 #include <common/MsgTypes.h>
 #include <server/UpdateClient.h>
 #include <server/ClientUpdater.h>
@@ -45,5 +46,16 @@ void LapCounter::send_update(int32_t ID, ClientUpdater& client_updater) {
         client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_SET_LAP, player_laps}));
     } catch (const std::out_of_range &e) {
         client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_SET_LAP, 0}));
+    }
+}
+
+void LapCounter::send_total_laps(int32_t ID, ClientUpdater &updater) {
+    updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_TOTAL_LAPS, this->total_laps}));
+}
+
+void LapCounter::get_dto_info(DTO_Info& info) {
+    info.total_laps = this->total_laps;
+    for (int i = 0; i < info.cars; i++) {
+        info.car_info[i].laps = this->laps.at(info.car_info[i].ID);
     }
 }

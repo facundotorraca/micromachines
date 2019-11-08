@@ -8,12 +8,12 @@
 #include "CarState.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
+#include <model/DTO_Info.h>
 #include <common/Coordinate.h>
 #include <server/UpdateClient.h>
 #include <server/ClientUpdater.h>
 #include <model/Vehicle/LapState.h>
 #include <model/Modifiers/Effect.h>
-#include <model/DTO_Info.h>
 
 #define DEGTORAD 0.0174532925199432957f
 

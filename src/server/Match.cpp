@@ -166,8 +166,8 @@ void Match::run() {
     CountdownTimer timer(TIME_START,this->race, this->client_updater);
     this->initialize_players();
 
-    DTO_Info dto;
-    this->race.get_dto_data(dto);
+   // DTO_Info dto;
+   // this->race.get_dto_data(dto);
 
     this->clients_monitor.start();
     timer.start();
