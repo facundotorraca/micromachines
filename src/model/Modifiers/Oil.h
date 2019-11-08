@@ -3,7 +3,9 @@
 
 #include <cstdint>
 #include "Modifier.h"
+#include "OilEffect.h"
 #include <common/EntityType.h>
+#include <model/Vehicle/Car.h>
 
 class Oil : public Modifier {
 
@@ -21,6 +23,7 @@ class Oil : public Modifier {
         }
 
         void apply_modifier_effect(Body* body) override {
+            ((Car*)body)->apply_oil_effect();
         }
 
 };

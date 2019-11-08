@@ -12,6 +12,7 @@
 #include <server/UpdateClient.h>
 #include <server/ClientUpdater.h>
 #include <model/Vehicle/LapState.h>
+#include <model/Modifiers/Effect.h>
 
 #define DEGTORAD 0.0174532925199432957f
 
@@ -66,9 +67,15 @@ class Car : public Body {
         /*-------------Race_handlers---------*/
         void modify_laps(LapCounter& lap_counter, int32_t car_ID);
 
-        void restart_lap();
-        
+        void apply_oil_effect();
+
+        void apply_rock_effect();
+
+        void apply_boost_effect();
+
         void repair();
+
+        void restart_lap();
 
         void complete_lap();
 };

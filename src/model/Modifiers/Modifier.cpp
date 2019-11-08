@@ -1,4 +1,5 @@
 #include "Modifier.h"
+#include <common/EntityType.h>
 
 Modifier::Modifier(int32_t time_of_life, int32_t map_x, int32_t map_y, float side_size) {
     this->remaining_time = time_of_life;
@@ -28,7 +29,8 @@ void Modifier::add_to_world(b2World &world) {
 }
 
 void Modifier::apply_effect(Body *body) {
-    this->apply_modifier_effect(body);
+    if (body->get_ID() == TYPE_CAR)
+        this->apply_modifier_effect(body);
 }
 
 void Modifier::update_remaining_life() {

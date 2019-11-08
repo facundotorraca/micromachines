@@ -4,23 +4,21 @@
 #include <set>
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
+#include "WheelState.h"
 #include <model/Body.h>
 #include <common/Coordinate.h>
 #include <model/StaticTrackObject.h>
+#include <model/Modifiers/Effect.h>
 
 #define DEGTORAD 0.0174532925199432957f
 
 class Wheel : public Body {
-    b2Body* wheel_body;
-    b2Fixture* wheel_fixture{};
 
-    float max_driver_force;
-    float max_forward_speed;
-    float max_backward_speed;
-    float max_lateral_impulse;
-    float traction_proportion;
+    b2Body* wheel_body;
+    WheelState wheel_state;
 
     float speed_proportion;
+    float traction_proportion;
 
     private:
         b2Vec2 get_lateral_velocity();
@@ -38,7 +36,11 @@ class Wheel : public Body {
 
         void collide(Body* static_object) override;
 
+        void move_to(Coordinate coordinate);
+
         const b2Vec2& get_position();
+
+        int32_t get_ID() override;
 
         void update(uint8_t key);
 
@@ -46,18 +48,14 @@ class Wheel : public Body {
 
         float get_angle();
 
-        int32_t get_ID() override;
+    /*--------------Terrain & Modifiers------------*/
+        void apply_effect(std::unique_ptr<Effect> effect);
 
-        void move_to(Coordinate coordinate);
-
-    /*--------------Terrain Modifiers------------*/
-        void set_traction(float proportion);
+        void reduce_max_traction(float proportion);
 
         void reduce_max_speed(float proportion);
 
-        void set_max_traction();
-
-        void set_max_speed();
+        void restore_specs();
 
         ~Wheel();
 };

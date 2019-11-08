@@ -3,7 +3,7 @@
 #include <common/MsgTypes.h>
 #include <server/ClientUpdater.h>
 
-#define SPAWN_PROBABILITY 0.1f//0.0015f
+#define SPAWN_PROBABILITY 0.003f//0.0015f
 
 Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
         lap_counter(total_laps),
@@ -28,7 +28,6 @@ void Race::send_info_to_player(int32_t ID, ClientUpdater& client_updater) {
 
 void Race::start() {
     for (auto &car : this->cars) {
-        this->running_cars.emplace(std::pair<int32_t, Car&>(car.first, car.second));
         car.second.turn_on();
     }
 }

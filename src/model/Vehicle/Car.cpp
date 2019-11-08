@@ -8,6 +8,9 @@
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include <model/Modifiers/OilEffect.h>
+#include <model/Modifiers/RockEffect.h>
+#include <model/Modifiers/BoostEffect.h>
 
 #define NOT_PRESSED 0
 
@@ -16,6 +19,11 @@
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
+
+#define L_BACK_WHEEL_POS 0
+#define R_BACK_WHEEL_POS 1
+#define L_FRONT_WHEEL_POS 2
+#define R_FRONT_WHEEL_POS 3
 
 Car::Car(CarSpecs specs):
         specs(specs),
@@ -133,12 +141,6 @@ void Car::release_key(int32_t key) {
     this->car_state->stop(key, this->key_v, this->key_h);
 }
 
-Car::~Car() {
-    for (auto & wheel : this->wheels) {
-        delete wheel;
-    }
-}
-
 void Car::set_spawn_point(Coordinate spawn_point) {
     float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
@@ -222,4 +224,28 @@ void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
 
 void Car::repair() {
     this->life.restart_life();
+}
+
+void Car::apply_oil_effect() {
+    this->wheels[L_BACK_WHEEL_POS]->apply_effect(std::unique_ptr<Effect>(new OilEffect()));
+    this->wheels[R_BACK_WHEEL_POS]->apply_effect(std::unique_ptr<Effect>(new OilEffect()));
+}
+
+void Car::apply_rock_effect() {
+    for (auto& wheel : this->wheels) {
+        wheel->apply_effect(std::unique_ptr<Effect>(new RockEffect()));
+    }
+    this->life.make_damage(10);
+}
+
+void Car::apply_boost_effect() {
+    for (auto& wheel : this->wheels) {
+        wheel->apply_effect(std::unique_ptr<Effect>(new BoostEffect()));
+    }
+}
+
+Car::~Car() {
+    for (auto & wheel : this->wheels) {
+        delete wheel;
+    }
 }
