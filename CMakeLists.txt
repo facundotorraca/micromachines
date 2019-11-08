@@ -48,11 +48,12 @@ add_subdirectory(src/server)
 add_subdirectory(src/client)
 add_subdirectory(src/model)
 add_subdirectory(libs/json)
+add_subdirectory(src/plugings)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY lua DESTINATION ${CMAKE_BINARY_DIR})
-file(COPY plugings DESTINATION ${CMAKE_BINARY_DIR})
+#file(COPY plugings DESTINATION ${CMAKE_BINARY_DIR})
 
 
 file(COPY maps DESTINATION ${CMAKE_BINARY_DIR})
