@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "RacingTrack.h"
 #include "DTO_Info.h"
+#include "PositionManager.h"
 #include <server/UpdateRace.h>
 #include <server/ClientUpdater.h>
 #include <model/Modifiers/ModifierSpawner.h>
@@ -12,6 +13,7 @@ class Race {
     LapCounter lap_counter;
     RacingTrack racing_track;
     ModifierSpawner modifier_spawner;
+    PositionManager position_manager;
 
     std::unordered_map<int32_t, Car> cars;
     std::unordered_map<int32_t, Car&> running_cars;

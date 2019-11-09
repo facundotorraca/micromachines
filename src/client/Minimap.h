@@ -75,6 +75,7 @@ public:
     ~Minimap(){
         SDL_FreeSurface(white_s);
         SDL_FreeSurface(surface);
+        SDL_FreeSurface(black_s);
     }
 };
 

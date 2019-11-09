@@ -70,7 +70,6 @@ void RacingTrack::add_track(std::unique_ptr<Terrain>&& track_part) {
     this->track.back()->add_to_world(this->racing_track);
 }
 
-
 void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
     this->static_track_objects.push_back(std::move(object));
     this->static_track_objects.back().add_to_world(this->racing_track);
@@ -114,17 +113,19 @@ void RacingTrack::set_spawn_points_to_cars(std::unordered_map<int32_t, Car> &car
     }
 }
 
+
+
 Coordinate RacingTrack::get_random_track_position() {
     int random_position = get_random_position(this->track.size()-1);
     return this->track.at(random_position)->get_map_coordinate();
 }
 
+void RacingTrack::add_modifier(std::shared_ptr<Modifier> modifier) {
+    modifier->add_to_world(this->racing_track);
+}
+
 RacingTrack::~RacingTrack() {
     delete this->podium;
     delete this->finish_line;
-}
-
-void RacingTrack::add_modifier(std::shared_ptr<Modifier> modifier) {
-    modifier->add_to_world(this->racing_track);
 }
 

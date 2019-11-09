@@ -13,6 +13,7 @@ class Hud {
     int32_t lap;
     int32_t total_laps;
     int32_t speed;
+    std::string race_position;
     std::list<std::string> scoreboard;
 public:
     Hud();
@@ -22,6 +23,7 @@ public:
     void setLap(int32_t lap);
     void setTotalLaps(int32_t laps);
     void addFinishedPlayer(std::string &player_name);
+    void setRacePosition(int32_t position);
 };
 
 

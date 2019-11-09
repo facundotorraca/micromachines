@@ -110,9 +110,9 @@ void Scenario::addFinishedPlayer(std::string& player_name) {
     hud.addFinishedPlayer(player_name);
 }
 
-void Scenario::showScreenEffect(int32_t effect) {
+void Scenario::showScreenEffect(int32_t effect, int32_t duration) {
     std::unique_lock<std::mutex> lock(mtx);
-    screen_effect.show(effect);
+    screen_effect.show(effect, duration);
 }
 
 void Scenario::togglePause() {
@@ -123,5 +123,15 @@ void Scenario::togglePause() {
 bool Scenario::quit() {
     std::unique_lock<std::mutex> lock(mtx);
     return !pause_menu.canQuit();
+}
+
+void Scenario::addConnectionLostMessage() {
+    std::unique_lock<std::mutex> lock(mtx);
+    pause_menu.addConnectionLostMessage();
+}
+
+void Scenario::setRacePosition(int32_t number) {
+    std::unique_lock<std::mutex> lock(mtx);
+    hud.setRacePosition(number);
 }
 

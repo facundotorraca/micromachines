@@ -17,6 +17,7 @@
 #include "RemoveModifier.h"
 #include "PlayerFinished.h"
 #include "ScreenEffect.h"
+#include "SetRacePosition.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
@@ -76,7 +77,9 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, Bot& bot, ProtocolS
         case MSG_EFFECT_BOOST:
         case MSG_EFFECT_MUD:
         case MSG_EFFECT_ROCK:
-            return std::unique_ptr<Command> (new ScreenEffect(scenario, bot, command[0]));
+            return std::unique_ptr<Command> (new ScreenEffect(scenario, bot, command[0], command[1]));
+        case MSG_SET_POSITION:
+            return std::unique_ptr<Command> (new SetRacePosition(scenario, bot, command[1]));
         default:
             return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
     }

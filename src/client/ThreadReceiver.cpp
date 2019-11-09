@@ -19,6 +19,7 @@ void ThreadReceiver::run() {
             //this->socket.receive(buffer);
             //this->scene.handleServerEvent(buffer);
         } catch (SocketError& e) {
+            this->scene.showConnectionLostMenu();
             this->running = false;
         }
     }

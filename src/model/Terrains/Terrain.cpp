@@ -3,6 +3,7 @@
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
 #include <common/EntityType.h>
+#include <model/Vehicle/Car.h>
 
 Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID) {
     this->ID = ID;
@@ -11,6 +12,7 @@ Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID) {
     this->rotation = rotation;
     this->terrain_body = nullptr;
     this->terrain_fixture = nullptr;
+    this->begin_distance = INFINITE;
     /*The real position is calculated with Box2D settings*/
 }
 
@@ -37,6 +39,7 @@ Terrain::Terrain(Terrain &&other) noexcept {
     this->map_y = other.map_y;
     this->rotation = other.rotation;
     this->terrain_body = other.terrain_body;
+    this->begin_distance = other.begin_distance;
     this->terrain_fixture = other.terrain_fixture;
 
     other.terrain_body = nullptr;
@@ -44,10 +47,21 @@ Terrain::Terrain(Terrain &&other) noexcept {
 }
 
 void Terrain::apply_effect(Body *body) {
+    if (body->get_ID() == TYPE_CAR && this->begin_distance != INFINITE) {
+        ((Car*)body)->set_begin_distance(this->begin_distance);
+    }
      this->apply_terrain_effect(body);
 }
 
 Coordinate Terrain::get_map_coordinate() {
     return {(float)this->map_x, (float)this->map_y, 0};
+}
+
+int32_t Terrain::get_ID() {
+    return this->ID;
+}
+
+void Terrain::set_begin_distance(int32_t distance) {
+    this->begin_distance = distance;
 }
 

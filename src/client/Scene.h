@@ -34,6 +34,8 @@ class Scene {
 
         void togglePause();
 
+        void showConnectionLostMenu();
+
         bool quit();
 };
 

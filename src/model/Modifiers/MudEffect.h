@@ -5,7 +5,7 @@
 #include "NoEffect.h"
 #include <common/MsgTypes.h>
 
-#define MUD_EFFECT_DURATION 180 //3sec
+#define MUD_EFFECT_DURATION 180
 
 class MudEffect : public Effect {
 
@@ -17,7 +17,7 @@ class MudEffect : public Effect {
         }
 
         void send_effect_update(int32_t ID, ClientUpdater& updater) override {
-            UpdateClient effect_info(std::vector<int32_t>{MSG_EFFECT_MUD});
+            UpdateClient effect_info(std::vector<int32_t>{MSG_EFFECT_MUD, MUD_EFFECT_DURATION/FRAMES_PER_SECOND});
             updater.send_to(ID, effect_info);
         };
 

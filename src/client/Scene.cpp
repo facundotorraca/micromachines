@@ -28,3 +28,8 @@ void Scene::togglePause() {
 bool Scene::quit() {
     return scenario.quit();
 }
+
+void Scene::showConnectionLostMenu() {
+    scenario.addConnectionLostMessage();
+    scenario.togglePause();
+}

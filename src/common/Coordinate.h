@@ -11,6 +11,8 @@ class Coordinate {
     public:
         Coordinate(float x, float y, float angle);
 
+        bool is_adjacent_to(Coordinate other);
+
         float get_x();
 
         float get_y();
