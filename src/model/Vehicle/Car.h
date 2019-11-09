@@ -30,6 +30,8 @@ class Car : public Body {
     int32_t throttle;
     int32_t steering_wheel;
 
+    int32_t begin_distance;
+
     bool lap_altered;
 
     std::unique_ptr<LapState> lap_state;
@@ -73,6 +75,10 @@ class Car : public Body {
         void modify_laps(LapCounter& lap_counter, int32_t car_ID);
 
         void make_damage(int32_t damage);
+
+        void set_begin_distance(int32_t begin_distance);
+
+        int32_t get_begin_distance();
 
         void apply_oil_effect();
 

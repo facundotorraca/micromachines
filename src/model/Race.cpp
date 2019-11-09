@@ -7,6 +7,7 @@
 
 Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
         lap_counter(total_laps),
+        position_manager(this->cars),
         racing_track(map_path, map_name),
         modifier_spawner(SPAWN_PROBABILITY, this->racing_track)
 {}
@@ -42,6 +43,7 @@ void Race::update() {
     }
     this->modifier_spawner.update();
     this->racing_track.update();
+    this->position_manager.update(this->lap_counter);
 }
 
 void Race::update_cars(UpdateRace update) {
@@ -67,6 +69,7 @@ void Race::send_general_updates_of_player(int32_t ID, ClientUpdater& updater) {
     this->cars.at(ID).send_general_update(ID, updater);
     this->modifier_spawner.send_modifiers_update(updater);
     this->lap_counter.send_update(ID, updater);
+    this->position_manager.send_update(ID, updater);
 }
 
 void Race::get_dto_data(DTO_Info &info) {

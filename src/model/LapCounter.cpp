@@ -63,3 +63,11 @@ void LapCounter::get_dto_info(DTO_Info& info) {
         }
     }
 }
+
+int32_t LapCounter::get_laps(int32_t ID) {
+    try {
+        return this->laps.at(ID);
+    } catch (std::out_of_range &e) {
+        return 0;
+    }
+}

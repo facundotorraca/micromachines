@@ -23,6 +23,8 @@ class LapCounter {
 
         int32_t get_total_laps();
 
+        int32_t get_laps(int32_t ID);
+
         void send_update(int32_t ID, ClientUpdater& client_updates);
 
         void send_total_laps(int32_t ID, ClientUpdater &updater);

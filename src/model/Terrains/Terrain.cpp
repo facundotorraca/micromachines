@@ -3,6 +3,7 @@
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
 #include <common/EntityType.h>
+#include <model/Vehicle/Car.h>
 
 Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID) {
     this->ID = ID;
@@ -46,6 +47,9 @@ Terrain::Terrain(Terrain &&other) noexcept {
 }
 
 void Terrain::apply_effect(Body *body) {
+    if (body->get_ID() == TYPE_CAR && this->begin_distance != INFINITE) {
+        ((Car*)body)->set_begin_distance(this->begin_distance);
+    }
      this->apply_terrain_effect(body);
 }
 

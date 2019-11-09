@@ -293,3 +293,11 @@ Car::~Car() {
         delete wheel;
     }
 }
+
+void Car::set_begin_distance(int32_t new_begin_distance) {
+    this->begin_distance = new_begin_distance;
+}
+
+int32_t Car::get_begin_distance() {
+    return this->begin_distance;
+}
