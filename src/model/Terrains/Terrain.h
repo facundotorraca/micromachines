@@ -15,6 +15,8 @@ class Terrain : public Sensor {
 
         int32_t ID;
 
+        int32_t begin_distance;
+
         b2Body* terrain_body;
         b2Fixture* terrain_fixture;
 
@@ -22,6 +24,8 @@ class Terrain : public Sensor {
         Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID);
 
         Terrain(Terrain&& other) noexcept;
+
+        void set_begin_distance(int32_t distance);
 
         void add_to_world(b2World& world);
 
@@ -32,6 +36,8 @@ class Terrain : public Sensor {
         void apply_effect(Body* body) override;
 
         Coordinate get_map_coordinate();
+
+        int32_t get_ID();
 
         virtual void apply_terrain_effect(Body* body) = 0;
 };
