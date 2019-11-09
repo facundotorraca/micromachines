@@ -278,6 +278,7 @@ void Car::apply_plugin(DTO_Car &car_info) {
                                                   car_info.specs.front_max_lateral_impulse);
 
     this->life.appy_plugin(car_info.life);
+    this->specs = car_info.specs;
 }
 
 void Car::make_damage(int32_t damage) {
