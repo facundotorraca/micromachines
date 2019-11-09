@@ -36,3 +36,9 @@ void CarLife::get_dto_info(DTO_CarLife& info_life) {
     info_life.max_life = this->max_life;
     info_life.current_life = this->life;
 }
+
+void CarLife::appy_plugin(DTO_CarLife &life_info) {
+    this->max_life = life_info.max_life;
+    this->life = life_info.current_life;
+    this->changed = true;
+}

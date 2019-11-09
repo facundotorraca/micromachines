@@ -79,3 +79,9 @@ void Race::get_dto_data(DTO_Info &info) {
     this->lap_counter.get_dto_info(info);
 }
 
+void Race::apply_plugin(DTO_Info &info) {
+    for (size_t i = 0; i < info.cars; i++) {
+        this->cars.at(info.car_info[i].ID).apply_plugin(info.car_info[i]);
+    }
+}
+

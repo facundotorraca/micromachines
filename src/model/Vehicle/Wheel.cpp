@@ -156,12 +156,18 @@ void Wheel::apply_effect(std::unique_ptr<Effect> effect) {
     this->wheel_state.apply_effect(std::move(effect));
 }
 
+void Wheel::send_effect_update(int32_t ID, ClientUpdater& updater) {
+    this->wheel_state.send_effect_update(ID, updater);
+}
+
 Wheel::~Wheel() {
     this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
-void Wheel::send_effect_update(int32_t ID, ClientUpdater& updater) {
-    this->wheel_state.send_effect_update(ID, updater);
+void Wheel::apply_plugin(float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse) {
+    this->wheel_state.apply_plugin(max_forward_speed, max_backward_speed, max_driver_force, max_lateral_impulse);
 }
+
+
 
 

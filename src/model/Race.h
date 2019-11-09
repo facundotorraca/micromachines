@@ -38,6 +38,8 @@ class Race {
         void send_general_updates_of_player(int32_t ID, ClientUpdater &updater);
 
         void get_dto_data(DTO_Info& info);
+
+        void apply_plugin(DTO_Info& info);
 };
 
 

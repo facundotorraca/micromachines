@@ -15,14 +15,10 @@
 #include <model/Race.h>
 #include <dirent.h>
 
-typedef struct {
-    CarSpecs *cars;
-    int car_len;
-} PlugingsParams;
-
 class PlugingsManager {
 
     Race &race;
+    int32_t life;
     std::string path;
     std::vector<void*> libs;
     std::vector<void*> libs_attrs;

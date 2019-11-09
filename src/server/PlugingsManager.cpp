@@ -5,12 +5,15 @@
 #include "PlugingsManager.h"
 #include <dlfcn.h>
 
-
+#define MAX_LIFE 20 //1/3 sec
 
 PlugingsManager::PlugingsManager(Race &race,
                                  std::string path) : race(race),
                                                      path(path),
-                                                     libs() {}
+                                                     libs()
+{
+    this->life = MAX_LIFE;
+}
 
 void PlugingsManager::load_plugings() {
     DIR *pDIR;
@@ -34,15 +37,21 @@ void PlugingsManager::load_plugings() {
 }
 
 void PlugingsManager::execute() {
+    this->life -= 1;
+    if (this->life > 0)
+        return;
+
+    this->life = MAX_LIFE;
     void (*fun_dl)(void*, DTO_Info*);
     DTO_Info params;
     race.get_dto_data(params);
     for (size_t ind = 0; ind < this->libs.size(); ind++ ) {
         *(void**) (&fun_dl) = dlsym(this->libs.at(ind), PLUG_EXECUTE);
-        if (fun_dl != NULL) {
+        if (fun_dl != nullptr) {
             fun_dl(this->libs_attrs[ind], &params);
         }
     }
+    this->race.apply_plugin(params);
 };
 
 PlugingsManager::~PlugingsManager() {

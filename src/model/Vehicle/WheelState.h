@@ -59,6 +59,13 @@ class WheelState {
         void send_effect_update(int32_t ID, ClientUpdater& updater) {
             this->effect->send_effect_update(ID, updater);
         }
+
+        void apply_plugin(float plugin_forward_speed, float plugin_backward_speed, float plugin_driver_force, float plugin_lateral_impulse) {
+            this->max_lateral_impulse = plugin_lateral_impulse;
+            this->max_backward_speed = plugin_backward_speed;
+            this->max_forward_speed = plugin_forward_speed;
+            this->max_driver_force = plugin_driver_force;
+        }
 };
 
 

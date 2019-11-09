@@ -51,6 +51,8 @@ class Wheel : public Body {
 
         void send_effect_update(int32_t ID, ClientUpdater& updater);
 
+        void apply_plugin(float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse);
+
     /*--------------Terrain & Modifiers------------*/
         void apply_effect(std::unique_ptr<Effect> effect);
 

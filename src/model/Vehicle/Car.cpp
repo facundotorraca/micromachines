@@ -256,6 +256,30 @@ void Car::get_dto_info(int32_t ID, DTO_Car &car_info) {
     this->life.get_dto_info(car_info.life);
 }
 
+void Car::apply_plugin(DTO_Car &car_info) {
+    this->wheels[L_BACK_WHEEL_POS]->apply_plugin(car_info.specs.max_forward_speed,
+                                                 car_info.specs.max_backward_speed,
+                                                 car_info.specs.back_wheel_max_force,
+                                                 car_info.specs.back_max_lateral_impulse);
+
+    this->wheels[R_BACK_WHEEL_POS]->apply_plugin(car_info.specs.max_forward_speed,
+                                                 car_info.specs.max_backward_speed,
+                                                 car_info.specs.back_wheel_max_force,
+                                                 car_info.specs.back_max_lateral_impulse);
+
+    this->wheels[L_FRONT_WHEEL_POS]->apply_plugin(car_info.specs.max_forward_speed,
+                                                  car_info.specs.max_backward_speed,
+                                                  car_info.specs.front_wheel_max_force,
+                                                  car_info.specs.front_max_lateral_impulse);
+
+    this->wheels[R_FRONT_WHEEL_POS]->apply_plugin(car_info.specs.max_forward_speed,
+                                                  car_info.specs.max_backward_speed,
+                                                  car_info.specs.front_wheel_max_force,
+                                                  car_info.specs.front_max_lateral_impulse);
+
+    this->life.appy_plugin(car_info.life);
+}
+
 void Car::make_damage(int32_t damage) {
     this->life.make_damage(damage);
     if (this->life.is_dead()) {
