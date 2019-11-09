@@ -53,6 +53,7 @@ add_subdirectory(src/plugings)
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY lua DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY configs.json DESTINATION ${CMAKE_BINARY_DIR})
 #file(COPY plugings DESTINATION ${CMAKE_BINARY_DIR})
 
 
