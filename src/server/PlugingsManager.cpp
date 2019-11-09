@@ -8,23 +8,24 @@
 
 
 PlugingsManager::PlugingsManager(Race &race,
-                                 std::string path) : cars(race.get_cars()),
-                                                     cars_ids(this->cars.size()),
+                                 std::string path) : race(race),
                                                      path(path),
-                                                     libs(),
-                                                     params() {
-    this->params.car_len = 0;
-    this->params.cars = new CarSpecs[MAX_USER_PER_MATCH];
-}
+                                                     libs() {}
 
 void PlugingsManager::load_plugings() {
     DIR *pDIR;
     struct dirent *entry;
+    void* (*fun_dl)(void);
     if (pDIR = opendir(this->path.c_str())) {
         while (entry = readdir(pDIR)) {
             if (std::string(".").compare(entry->d_name) !=0 && std::string("..").compare(entry->d_name) != 0) {
                 std::string path = this->path + std::string(entry->d_name);
-                this->libs.push_back(dlopen(path.c_str(), RTLD_NOW));
+                void *dll = dlopen(path.c_str(), RTLD_NOW);
+                *(void**) (&fun_dl) = dlsym(dll, PLUG_INIT);
+                if (fun_dl != NULL) {
+                    this->libs_attrs.push_back(fun_dl());
+                    this->libs.push_back(dll);
+                }
                 std::cout << path << std::endl;
             }
         }
@@ -33,37 +34,25 @@ void PlugingsManager::load_plugings() {
 }
 
 void PlugingsManager::execute() {
-    void (*fun_dl)(PlugingsParams*);
-    this->setParams();
+    void (*fun_dl)(void*, DTO_Info*);
+    DTO_Info params;
+    race.get_dto_data(params);
     for (size_t ind = 0; ind < this->libs.size(); ind++ ) {
         *(void**) (&fun_dl) = dlsym(this->libs.at(ind), PLUG_EXECUTE);
-        if (fun_dl == NULL) {
-            std::cout << "NO ENCCONTRE LA FUNCION " << PLUG_EXECUTE << std::endl;
-        } else {
-            std::cout << "SI ENCONTRE LA FUNCION " << PLUG_EXECUTE <<std::endl;
-            fun_dl(&this->params);
+        if (fun_dl != NULL) {
+            fun_dl(this->libs_attrs[ind], &params);
         }
-    }
-    for (size_t ind = 0; ind < this->params.car_len; ind++) {
-        std::cout << this->params.cars[ind].max_life << std::endl;
     }
 };
 
 PlugingsManager::~PlugingsManager() {
+    void (*fun_dl)(void*);
     for (size_t ind = 0; ind < this->libs.size(); ind++ ) {
+        *(void**) (&fun_dl) = dlsym(this->libs[ind], PLUG_DESTROY);
+        if (fun_dl != NULL) {
+           fun_dl(this->libs_attrs[ind]);
+        }
         dlclose(this->libs[ind]);
     }
-    delete[] this->params.cars;
-}
-
-void PlugingsManager::setParams(){
-    size_t ind = 0;
-    for (auto& it : this->cars) {
-        std::cout << "SET PARAMS DEL " << ind << std::endl;
-        this->cars_ids.push_back(it.first);
-        this->params.cars[ind] = it.second.get_specs();
-        ind++;
-    }
-    this->params.car_len = ind;
 }
 
