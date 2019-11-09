@@ -13,12 +13,12 @@ void Hud::setSpeed(int32_t s) {
 }
 
 void Hud::draw(Camera &camera) {
-    /*---------------------------CREATE SPEEDOMETER---------------------------*/
+    /*---------------------------DRAW SPEEDOMETER-----------------------------*/
     camera.drawScreenTexture(SPEEDOMETER_TEX, 0.72, 0.07, 0.28);
     int show_speed = floor(speed);
     camera.drawText(std::to_string(show_speed)+" km/h", 0.76, 0.08, 0.6, 8);
 
-    /*---------------------------CREATE HEALTH BAR----------------------------*/
+    /*---------------------------DRAW HEALTH BAR------------------------------*/
     switch (health){
         case 0 ... 7:
             camera.drawScreenTexture(HEALTH_16, 0.72, 0.14, 0.25); break;
@@ -54,7 +54,7 @@ void Hud::draw(Camera &camera) {
             camera.drawScreenTexture(HEALTH_01, 0.72, 0.14, 0.25); break;
     }
 
-    /*---------------------------CREATE LAP COUNTER---------------------------*/
+    /*---------------------------DRAW LAP COUNTER-----------------------------*/
     std::string laps_text = std::string("Lap: ")+
             std::to_string(lap)+"/"+std::to_string(total_laps);
     camera.drawText(laps_text, 0.07, 0.07, 0.6, 7);
@@ -89,10 +89,22 @@ void Hud::addFinishedPlayer(std::string &player_name) {
     scoreboard.emplace_back(player_name);
 }
 
+std::string stringify(int32_t number){
+    std::string n(std::to_string(number));
+    int last_digit = number%10;
+    switch (last_digit){
+        case 1: return n+"st";
+        case 2: return n+"nd";
+        case 3: return n+"rd";
+        default: return n+"th";
+    }
+}
+
 void Hud::setRacePosition(int32_t position) {
     if (position == (-1)){
         race_position = "?";
     } else {
-        this->race_position = std::to_string(position)+"°";
+        this->race_position = stringify(position);
     }
 }
+
