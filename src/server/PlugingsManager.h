@@ -5,7 +5,9 @@
 #ifndef MICROMACHINES_PLUGINGSMANAGER_H
 #define MICROMACHINES_PLUGINGSMANAGER_H
 
+#define PLUG_INIT "init"
 #define PLUG_EXECUTE "execute"
+#define PLUG_DESTROY "destroy"
 
 
 #include <unordered_map>
@@ -20,11 +22,10 @@ typedef struct {
 
 class PlugingsManager {
 
-    std::unordered_map<int32_t, Car> &cars;
-    std::vector<int32_t> cars_ids;
+    Race &race;
     std::string path;
     std::vector<void*> libs;
-    PlugingsParams params;
+    std::vector<void*> libs_attrs;
 
 public:
     explicit PlugingsManager(Race &race, std::string path);
@@ -32,8 +33,6 @@ public:
     void execute();
     ~PlugingsManager();
 
-private:
-    void setParams();
 };
 
 
