@@ -125,3 +125,8 @@ bool Scenario::quit() {
     return !pause_menu.canQuit();
 }
 
+void Scenario::addConnectionLostMessage() {
+    std::unique_lock<std::mutex> lock(mtx);
+    pause_menu.addConnectionLostMessage();
+}
+
