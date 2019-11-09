@@ -44,7 +44,7 @@ public:
     void addModifier(int32_t type, int32_t x, int32_t y);
     void removeModifier(int32_t x, int32_t y);
     void addFinishedPlayer(std::string& player_name);
-    void showScreenEffect(int32_t effect);
+    void showScreenEffect(int32_t effect, int32_t duration);
     void draw();
     void togglePause();
     bool quit();

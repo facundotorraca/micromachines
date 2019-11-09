@@ -76,7 +76,7 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, Bot& bot, ProtocolS
         case MSG_EFFECT_BOOST:
         case MSG_EFFECT_MUD:
         case MSG_EFFECT_ROCK:
-            return std::unique_ptr<Command> (new ScreenEffect(scenario, bot, command[0]));
+            return std::unique_ptr<Command> (new ScreenEffect(scenario, bot, command[0], command[1]));
         default:
             return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
     }
