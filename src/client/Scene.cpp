@@ -20,3 +20,11 @@ void Scene::draw() {
 std::unique_ptr<Command> Scene::receiveMessage(ProtocolSocket &socket) {
     return Command::create(scenario, bot, socket);
 }
+
+void Scene::togglePause() {
+    scenario.togglePause();
+}
+
+bool Scene::quit() {
+    return scenario.quit();
+}

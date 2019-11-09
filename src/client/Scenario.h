@@ -15,6 +15,7 @@
 #include "Entities.h"
 #include "Entities/TileInfo.h"
 #include "ScreenEffectDrawer.h"
+#include "PauseMenu.h"
 
 class Scenario {
     Camera camera;
@@ -25,6 +26,7 @@ class Scenario {
     ScreenEffectDrawer screen_effect;
     Minimap minimap;
     Entities entities;
+    PauseMenu pause_menu;
     int32_t my_car_id;
     std::map<int32_t, Car> cars;
     std::mutex mtx;
@@ -44,6 +46,8 @@ public:
     void addFinishedPlayer(std::string& player_name);
     void showScreenEffect(int32_t effect);
     void draw();
+    void togglePause();
+    bool quit();
 };
 
 

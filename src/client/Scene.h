@@ -31,6 +31,10 @@ class Scene {
         std::unique_ptr<Command> receiveMessage(ProtocolSocket& socket);
 
         void draw();
+
+        void togglePause();
+
+        bool quit();
 };
 
 
