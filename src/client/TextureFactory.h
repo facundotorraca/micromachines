@@ -39,6 +39,7 @@
 #define MUD_TEX 4509
 #define ROCK_TEX 4510
 #define BOOST_TEX 4511
+#define PAUSE_MENU_TEX 4512
 
 
 
@@ -97,6 +98,7 @@ public:
             textures.emplace(TYPE_MUD, createTexture(renderer, "assets/sprites/modifiers/mud.png"));
             textures.emplace(TYPE_OIL, createTexture(renderer, "assets/sprites/modifiers/oil.png"));
             textures.emplace(TYPE_ROCK, createTexture(renderer, "assets/sprites/modifiers/rock.png"));
+            textures.emplace(PAUSE_MENU_TEX, createTexture(renderer, "assets/sprites/pause.png"));
 
             /*-------------------------------SCREEN EFFECT TEXTURES--------------------------------*/
 
@@ -121,7 +123,8 @@ public:
             textures.emplace(19, createTexture(renderer,"assets/sprites/Track/AR_19a.png")); 
             textures.emplace(21, createTexture(renderer,"assets/sprites/Track/AR_21a.png")); 
             textures.emplace(22, createTexture(renderer,"assets/sprites/Track/AR_22a.png")); 
-            textures.emplace(25, createTexture(renderer,"assets/sprites/Track/AR_25a.png")); 
+            textures.emplace(25, createTexture(renderer,"assets/sprites/Track/AR_25a.png"));
+            textures.emplace(26, createTexture(renderer, "assets/sprites/Track/AR_26a.png"));
             textures.emplace(27, createTexture(renderer,"assets/sprites/Track/AR_27a.png")); 
 
             /*-----------------------------------DIRT_ROADS----------------------------------------*/

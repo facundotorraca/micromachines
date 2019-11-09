@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O1")
+#set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O1")
 
 file(MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/src/client")
 

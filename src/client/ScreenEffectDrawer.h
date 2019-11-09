@@ -17,5 +17,4 @@ public:
     void draw(Camera& camera);
 };
 
-
 #endif //MICROMACHINES_SCREENEFFECTDRAWER_H

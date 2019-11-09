@@ -4,6 +4,7 @@
 
 #include "ThreadKeyMonitor.h"
 #include <SDL2/SDL.h>
+#include "KeyCommands/KeyCommand.h"
 
 ThreadKeyMonitor::ThreadKeyMonitor(Scene &scene) : Thread(), scene(scene) {}
 
@@ -17,26 +18,13 @@ void ThreadKeyMonitor::run() {
             return;
         }
 
-        if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
-            scene.handleKeyEvent(keyEvent.keysym.sym,
-                                 (SDL_EventType)(event.type));
+        if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
 
-
-        /*switch (event.type) {
-            case SDL_QUIT: {
-                running = false;
-                break;
-            }
-
-            case (SDL_KEYDOWN & SDL_KEYUP): {
-                scene.handleKeyEvent(keyEvent.keysym.sym, SDL_KEYDOWN);
-                break;
-            }
-
-            case SDL_KEYUP: {
-                scene.handleKeyEvent(keyEvent.keysym.sym, SDL_KEYUP);
-                break;
-            }
-        }*/
+            //scene.handleKeyEvent(keyEvent.keysym.sym,
+            //                     (SDL_EventType)(event.type));
+            auto command = KeyCommand::create(scene, keyEvent.keysym.sym,
+                                              (SDL_EventType) event.type);
+            this->running = command->apply();
+        }
     }
 }
