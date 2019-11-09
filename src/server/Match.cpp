@@ -139,7 +139,7 @@ void Match::apply_update(UpdateRace update) {
 void Match::step() {
     FramesSynchronizer::sync_FPS(FRAMES_PER_SECOND);
     std::unique_lock<std::mutex> lock(mtx);
-    this->plugings_manager.execute();
+    //this->plugings_manager.execute();
     this->race.update();
 }
 
