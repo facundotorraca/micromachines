@@ -9,6 +9,7 @@ typedef struct {
     float front_wheel_max_force;
     float back_max_lateral_impulse;
     float front_max_lateral_impulse;
+
 } CarSpecs;
 
 #endif //MICROMACHINES_CARSPECS_H

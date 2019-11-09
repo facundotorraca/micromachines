@@ -55,9 +55,8 @@ UpdateClient StaticTrackObject::get_to_send() {
 }
 
 void StaticTrackObject::collide(Body *body) {
-    if (body->get_ID() != TYPE_CAR)
-        return;
-
+    if (body->get_ID() == TYPE_CAR)
+        ((Car*)body)->make_damage(10);
 }
 
 int32_t StaticTrackObject::get_ID() {

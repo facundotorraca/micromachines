@@ -46,9 +46,9 @@ b2Vec2 Wheel::get_forward_velocity() {
 void Wheel::update_speed(uint8_t key) {
     /*Find if whe want to go UP or DOWN*/
     float desire_speed = 0;
-    if (key == KEY_UP) {
+    if (key == ACCELERATE) {
         desire_speed = this->speed_proportion * this->wheel_state.get_max_forward_speed();
-    } else if (key == KEY_DOWN) {
+    } else if (key == BRAKE) {
         desire_speed = this->speed_proportion * this->wheel_state.get_max_backward_speed();
     } else {
         return;
@@ -156,12 +156,18 @@ void Wheel::apply_effect(std::unique_ptr<Effect> effect) {
     this->wheel_state.apply_effect(std::move(effect));
 }
 
+void Wheel::send_effect_update(int32_t ID, ClientUpdater& updater) {
+    this->wheel_state.send_effect_update(ID, updater);
+}
+
 Wheel::~Wheel() {
     this->wheel_body->GetWorld()->DestroyBody(this->wheel_body);
 }
 
-void Wheel::send_effect_update(int32_t ID, ClientUpdater& updater) {
-    this->wheel_state.send_effect_update(ID, updater);
+void Wheel::apply_plugin(float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse) {
+    this->wheel_state.apply_plugin(max_forward_speed, max_backward_speed, max_driver_force, max_lateral_impulse);
 }
+
+
 
 

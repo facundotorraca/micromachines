@@ -12,7 +12,7 @@ class StartLeftTurn : public ServerCommand {
 public:
     StartLeftTurn() : ServerCommand() {
         type = KEY_PRESSED;
-        key = KEY_LEFT;
+        key = TURN_LEFT;
     }
 };
 
@@ -20,7 +20,7 @@ class StartRightTurn : public ServerCommand {
 public:
     StartRightTurn() : ServerCommand() {
         type = KEY_PRESSED;
-        key = KEY_RIGHT;
+        key = TURN_RIGHT;
     }
 };
 
@@ -28,7 +28,7 @@ class StartAccelerate : public ServerCommand {
 public:
     StartAccelerate(): ServerCommand() {
         type = KEY_PRESSED;
-        key = KEY_UP;
+        key = ACCELERATE;
     }
 };
 
@@ -36,7 +36,7 @@ class StartBrake : public ServerCommand {
 public:
     StartBrake(): ServerCommand() {
         type = KEY_PRESSED;
-        key = KEY_DOWN;
+        key = BRAKE;
     }
 };
 
@@ -44,7 +44,7 @@ class EndLeftTurn : public ServerCommand {
 public:
     EndLeftTurn(): ServerCommand() {
         type = KEY_RELEASED;
-        key = KEY_LEFT;
+        key = TURN_LEFT;
     }
 };
 
@@ -52,7 +52,7 @@ class EndRightTurn : public ServerCommand {
 public:
     EndRightTurn(): ServerCommand() {
         type = KEY_RELEASED;
-        key = KEY_RIGHT;
+        key = TURN_RIGHT;
     }
 };
 
@@ -60,7 +60,7 @@ class EndAccelerate : public ServerCommand {
 public:
     EndAccelerate(): ServerCommand() {
         type = KEY_RELEASED;
-        key = KEY_UP;
+        key = ACCELERATE;
     }
 };
 
@@ -68,7 +68,7 @@ class EndBrake : public ServerCommand {
 public:
     EndBrake(): ServerCommand() {
         type = KEY_RELEASED;
-        key = KEY_DOWN;
+        key = BRAKE;
     }
 };
 

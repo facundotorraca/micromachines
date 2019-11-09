@@ -24,6 +24,8 @@ class CarLife {
         void send_general_update(int32_t ID, ClientUpdater &updater);
 
         void get_dto_info(DTO_CarLife& info_life);
+
+    void appy_plugin(DTO_CarLife &life_info);
 };
 
 

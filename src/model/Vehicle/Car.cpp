@@ -3,8 +3,8 @@
 #include <iostream>
 #include "CarSpecs.h"
 #include "common/Key.h"
-#include "CarStopped.h"
-#include "CarRunning.h"
+#include "CarOff.h"
+#include "CarOn.h"
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
@@ -29,11 +29,11 @@
 Car::Car(CarSpecs specs):
         specs(specs),
         lap_altered(false),
-        key_h(NOT_PRESSED),
-        key_v(NOT_PRESSED),
         life(specs.max_life),
-        lap_state(new LapRunning()),
-        car_state(new CarStopped())
+        throttle(NOT_PRESSED),
+        car_state(new CarOff()),
+        steering_wheel(NOT_PRESSED),
+        lap_state(new LapRunning())
 {}
 
 void Car::add_to_world(b2World &world) {
@@ -103,11 +103,11 @@ void Car::create_wheels(b2World& world) {
 
 void Car::update() {
     for (auto & wheel : wheels) {
-        wheel->update(key_v);
+        wheel->update(throttle);
     }
 
     /*axis direction*/
-    float desire_angle = get_desire_angle(key_h);
+    float desire_angle = get_desire_angle(steering_wheel);
     /*0.5 seconds a complete rotation*/
     float rotation_per_step = (ROTATION_PER_SECOND * DEGTORAD) / 60.0f;
 
@@ -121,25 +121,26 @@ void Car::update() {
     /*update axis*/
     front_left_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
     front_right_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
+
 }
 
 float Car::get_desire_angle(int32_t key) {
     float desire_angle = 0;
-    if (key == KEY_RIGHT) {
+    if (key == TURN_RIGHT) {
         desire_angle = MAX_ROTATION_ANGLE * DEGTORAD;
     }
-    if (key == KEY_LEFT) {
+    if (key == TURN_LEFT) {
         desire_angle = -MAX_ROTATION_ANGLE * DEGTORAD;
     }
     return desire_angle;
 }
 
-void Car::press_key(int32_t key) {
-    this->car_state->move(key, this->key_v, this->key_h);
+void Car::move(int32_t movement) {
+    this->car_state->move(movement, this->throttle, this->steering_wheel);
 }
 
-void Car::release_key(int32_t key) {
-    this->car_state->stop(key, this->key_v, this->key_h);
+void Car::stop(int32_t movement) {
+    this->car_state->stop(movement, this->throttle, this->steering_wheel);
 }
 
 void Car::set_spawn_point(Coordinate spawn_point) {
@@ -149,17 +150,13 @@ void Car::set_spawn_point(Coordinate spawn_point) {
     /*Minus because default start position of Box2D is inverted*/
     float angle = -spawn_point.get_angle() * DEGTORAD;
 
-    this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
+   this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
     for (auto &wheel : this->wheels) {
         wheel->set_spawn_point(spawn_point);
     }
 }
 
 void Car::collide(Body* stactic_object) {
-    this->life.make_damage(10);
-    if (this->life.is_dead()) {
-        this->life.restart_life();
-    }
 }
 
 int32_t Car::get_ID() {
@@ -180,8 +177,8 @@ void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
     if (lap_altered) {//Just for performance
         this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
         if (lap_counter.car_complete_laps(car_ID)) {
-            this->key_v = NOT_PRESSED;
-            this->car_state.reset(new CarStopped());
+            this->throttle = NOT_PRESSED;
+            this->car_state.reset(new CarOff());
         }
         this->lap_altered = false;
     }
@@ -203,11 +200,11 @@ void Car::move_to(Coordinate coordinate) {
 }
 
 void Car::turn_on() {
-    this->car_state.reset(new CarRunning());
+    this->car_state.reset(new CarOn());
 }
 
 void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
-    std::vector<int32_t> params {MSG_UPDATE_ENTITY, TYPE_CAR, ID,
+    std::vector<int32_t> params  {MSG_UPDATE_ENTITY, TYPE_CAR, ID,
                                  (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().x - (CAR_WIDTH*0.5))),
                                  (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
                                  (int32_t)(RADTODEG * car_body->GetAngle()),
@@ -252,15 +249,46 @@ void Car::apply_mud_effect() {
     }
 }
 
-Car::~Car() {
-    for (auto & wheel : this->wheels) {
-        delete wheel;
-    }
-}
-
 void Car::get_dto_info(int32_t ID, DTO_Car &car_info) {
     car_info.ID = ID;
     car_info.specs = this->specs;
     car_info.position = 1; //Cambiarlo
     this->life.get_dto_info(car_info.life);
+}
+
+void Car::apply_plugin(DTO_Car &car_info) {
+    this->wheels[L_BACK_WHEEL_POS]->apply_plugin(car_info.specs.max_forward_speed,
+                                                 car_info.specs.max_backward_speed,
+                                                 car_info.specs.back_wheel_max_force,
+                                                 car_info.specs.back_max_lateral_impulse);
+
+    this->wheels[R_BACK_WHEEL_POS]->apply_plugin(car_info.specs.max_forward_speed,
+                                                 car_info.specs.max_backward_speed,
+                                                 car_info.specs.back_wheel_max_force,
+                                                 car_info.specs.back_max_lateral_impulse);
+
+    this->wheels[L_FRONT_WHEEL_POS]->apply_plugin(car_info.specs.max_forward_speed,
+                                                  car_info.specs.max_backward_speed,
+                                                  car_info.specs.front_wheel_max_force,
+                                                  car_info.specs.front_max_lateral_impulse);
+
+    this->wheels[R_FRONT_WHEEL_POS]->apply_plugin(car_info.specs.max_forward_speed,
+                                                  car_info.specs.max_backward_speed,
+                                                  car_info.specs.front_wheel_max_force,
+                                                  car_info.specs.front_max_lateral_impulse);
+
+    this->life.appy_plugin(car_info.life);
+}
+
+void Car::make_damage(int32_t damage) {
+    this->life.make_damage(damage);
+    if (this->life.is_dead()) {
+        this->life.restart_life();
+    }
+}
+
+Car::~Car() {
+    for (auto & wheel : this->wheels) {
+        delete wheel;
+    }
 }

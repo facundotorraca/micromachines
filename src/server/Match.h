@@ -22,6 +22,7 @@
 #include <model/RacingTrack.h>
 #include <common/ProtectedQueue.h>
 #include "ThreadClientEventMonitor.h"
+#include "PlugingsManager.h"
 
 class Match : public Thread {
     std::string match_name;
@@ -37,6 +38,8 @@ class Match : public Thread {
 
     Race race;
     std::mutex mtx;
+
+    PlugingsManager plugings_manager;
 
     private:
         void step();

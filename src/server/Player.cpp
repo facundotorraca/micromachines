@@ -106,7 +106,7 @@ void Player::set_view(int32_t key) {
         return;
     }
     this->change_view = true;
-    key == KEY_LEFT ? (this->current_view_ID -= 1) : (this->current_view_ID += 1);
+    key == TURN_LEFT ? (this->current_view_ID -= 1) : (this->current_view_ID += 1);
 }
 
 void Player::update_view(int32_t total_players, ClientUpdater& updater) {

@@ -12,6 +12,8 @@
 #define MAP_PATH "maps/"
 #define MAP_NAME "track_01.json"
 
+#define PLUGINGS_PATH "plugings/"
+
 #define ERROR_MATCH_JOIN_FLAG 1
 
 #define OPEN_MATCH_FLAG "0"
@@ -30,7 +32,8 @@ Match::Match(std::string match_creator, std::string match_name):
     match_name(std::move(match_name)),
     race(3, MAP_PATH, MAP_NAME),
     match_creator(std::move(match_creator)),
-    clients_monitor(this, this->updates_race)
+    clients_monitor(this, this->updates_race),
+    plugings_manager(this->race, PLUGINGS_PATH)
 {}
 
 void Match::add_player(Player&& player) {
@@ -136,6 +139,7 @@ void Match::apply_update(UpdateRace update) {
 void Match::step() {
     FramesSynchronizer::sync_FPS(FRAMES_PER_SECOND);
     std::unique_lock<std::mutex> lock(mtx);
+    this->plugings_manager.execute();
     this->race.update();
 }
 
@@ -157,10 +161,8 @@ void Match::update_players() {
 
 void Match::run() {
     CountdownTimer timer(TIME_START,this->race, this->client_updater);
+    this->plugings_manager.load_plugings();
     this->initialize_players();
-
-   // DTO_Info dto;
-   // this->race.get_dto_data(dto);
 
     this->clients_monitor.start();
     timer.start();

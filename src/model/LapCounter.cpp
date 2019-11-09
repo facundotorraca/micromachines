@@ -56,6 +56,10 @@ void LapCounter::send_total_laps(int32_t ID, ClientUpdater &updater) {
 void LapCounter::get_dto_info(DTO_Info& info) {
     info.total_laps = this->total_laps;
     for (int i = 0; i < info.cars; i++) {
-        info.car_info[i].laps = this->laps.at(info.car_info[i].ID);
+        try {
+            info.car_info[i].laps = this->laps.at(info.car_info[i].ID);
+        } catch (std::out_of_range &e) {
+            info.car_info[i].laps = 0;
+        }
     }
 }

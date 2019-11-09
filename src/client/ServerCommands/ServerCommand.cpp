@@ -9,24 +9,24 @@
 std::unique_ptr<ServerCommand> ServerCommand::create(int key, int type) {
     if (type == KEY_PRESSED){
         switch (key) {
-            case KEY_LEFT:
+            case TURN_LEFT:
                 return std::unique_ptr<ServerCommand>(new StartLeftTurn());
-            case KEY_RIGHT:
+            case TURN_RIGHT:
                 return std::unique_ptr<ServerCommand>(new StartRightTurn());
-            case KEY_UP:
+            case ACCELERATE:
                 return std::unique_ptr<ServerCommand>(new StartAccelerate());
-            case KEY_DOWN:
+            case BRAKE:
                 return std::unique_ptr<ServerCommand>(new StartBrake());
         }
     } else if (type == KEY_RELEASED) {
         switch (key) {
-            case KEY_LEFT:
+            case TURN_LEFT:
                 return std::unique_ptr<ServerCommand>(new EndLeftTurn());
-            case KEY_RIGHT:
+            case TURN_RIGHT:
                 return std::unique_ptr<ServerCommand>(new EndRightTurn());
-            case KEY_UP:
+            case ACCELERATE:
                 return std::unique_ptr<ServerCommand>(new EndAccelerate());
-            case KEY_DOWN:
+            case BRAKE:
                 return std::unique_ptr<ServerCommand>(new EndBrake());
         }
     }
@@ -43,13 +43,13 @@ ServerCommand::create(SDL_Keycode key, SDL_EventType type) {
         _type = KEY_RELEASED;
     switch (key){
         case SDLK_DOWN:
-            _key = KEY_DOWN; break;
+            _key = BRAKE; break;
         case SDLK_UP:
-            _key = KEY_UP; break;
+            _key = ACCELERATE; break;
         case SDLK_RIGHT:
-            _key = KEY_RIGHT; break;
+            _key = TURN_RIGHT; break;
         case SDLK_LEFT:
-            _key = KEY_LEFT; break;
+            _key = TURN_LEFT; break;
         default:
             break;
     }

@@ -18,9 +18,11 @@ UpdateClient Grass::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Grass::apply_terrain_effect(Body* wheel) {
-    ((Wheel *) wheel)->reduce_max_traction(GRASS_TRACTION_PROPORTION);
-    ((Wheel*)wheel)->reduce_max_speed(GRASS_SPEED_PROPORTION);
+void Grass::apply_terrain_effect(Body* body) {
+    if (body->get_ID() == TYPE_WHEEL) {
+        ((Wheel *)body)->reduce_max_traction(GRASS_TRACTION_PROPORTION);
+        ((Wheel*)body)->reduce_max_speed(GRASS_SPEED_PROPORTION);
+    }
 }
 
 void Grass::set_terrain_user_data() {

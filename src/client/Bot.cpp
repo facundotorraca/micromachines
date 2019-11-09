@@ -86,19 +86,19 @@ void Bot::push_table_int(const char *key, int value) {
 
 void Bot::load_definitions() {
     lua_newtable(this->state);
-    this->push_table_int("up", KEY_UP);
-    this->push_table_int("left", KEY_LEFT);
-    this->push_table_int("right", KEY_RIGHT);
+    this->push_table_int("up", ACCELERATE);
+    this->push_table_int("left", TURN_LEFT);
+    this->push_table_int("right", TURN_RIGHT);
     lua_newtable(this->state);
     this->push_table_int("press", KEY_PRESSED);
     this->push_table_int("release", KEY_RELEASED);
 }
 
 void Bot::release_old_keys() {
-    auto release_right = ServerCommand::create(KEY_RIGHT, KEY_RELEASED);
+    auto release_right = ServerCommand::create(TURN_RIGHT, KEY_RELEASED);
     if (release_right)
         queue.push(std::move(release_right));
-    auto release_left = ServerCommand::create(KEY_LEFT, KEY_RELEASED);
+    auto release_left = ServerCommand::create(TURN_LEFT, KEY_RELEASED);
     if (release_left)
         queue.push(std::move(release_left));
 }
