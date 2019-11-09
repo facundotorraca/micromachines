@@ -16,7 +16,7 @@ void Hud::draw(Camera &camera) {
     /*---------------------------DRAW SPEEDOMETER-----------------------------*/
     camera.drawScreenTexture(SPEEDOMETER_TEX, 0.72, 0.07, 0.28);
     int show_speed = floor(speed);
-    camera.drawText(std::to_string(show_speed)+" km/h", 0.76, 0.08, 0.6, 8);
+    camera.drawText(std::to_string(show_speed)+" KM/H", 0.76, 0.08, 0.6, 8);
 
     /*---------------------------DRAW HEALTH BAR------------------------------*/
     switch (health){
@@ -55,7 +55,7 @@ void Hud::draw(Camera &camera) {
     }
 
     /*---------------------------DRAW LAP COUNTER-----------------------------*/
-    std::string laps_text = std::string("Lap: ")+
+    std::string laps_text = std::string("LAP: ")+
             std::to_string(lap)+"/"+std::to_string(total_laps);
     camera.drawText(laps_text, 0.07, 0.07, 0.6, 7);
 
@@ -70,7 +70,7 @@ void Hud::draw(Camera &camera) {
 
     /*--------------------------DRAW RACE POSITION----------------------------*/
 
-    camera.drawText(race_position, 0.8, 0.8, 3, 2);
+    camera.drawText(race_position, 0.07, 0.14, 1.6, 2);
 
 }
 

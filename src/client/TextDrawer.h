@@ -16,7 +16,7 @@ class TextDrawer {
 public:
     explicit TextDrawer(SDL_Renderer* renderer) : renderer(renderer){
         TTF_Init();
-        font = TTF_OpenFont("assets/fonts/joystix.ttf", 16);
+        font = TTF_OpenFont("assets/fonts/small_pixel-7.ttf", 48);
     }
 
     TextDrawer& operator=(TextDrawer&& other) noexcept{
@@ -31,8 +31,8 @@ public:
         ss << std::setw(padding) << orig_text;
         std::string text = ss.str();
         int w = h*text.size()*0.8;
-        SDL_Surface* surface_b = TTF_RenderText_Solid(font, text.c_str(), SDL_Color{0,0,0});
-        SDL_Surface* surface_w = TTF_RenderText_Solid(font, text.c_str(), SDL_Color{255,255,255});
+        SDL_Surface* surface_b = TTF_RenderUTF8_Solid(font, text.c_str(), SDL_Color{0,0,0});
+        SDL_Surface* surface_w = TTF_RenderUTF8_Solid(font, text.c_str(), SDL_Color{0xff,0xff,0xff});
         SDL_Texture* texture_b = SDL_CreateTextureFromSurface(renderer, surface_b);
         SDL_Texture* texture_w = SDL_CreateTextureFromSurface(renderer, surface_w);
         SDL_Rect dst_w = {x, y, w, h};
