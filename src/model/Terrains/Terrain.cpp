@@ -44,8 +44,7 @@ Terrain::Terrain(Terrain &&other) noexcept {
 }
 
 void Terrain::apply_effect(Body *body) {
-    if (body->get_ID() == TYPE_WHEEL)
-        this->apply_terrain_effect(body);
+     this->apply_terrain_effect(body);
 }
 
 Coordinate Terrain::get_map_coordinate() {

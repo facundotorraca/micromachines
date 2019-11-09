@@ -3,6 +3,7 @@
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include <model/Vehicle/Car.h>
 
 #define DIRT_SPEED_PROPORTION 0.5f
 #define DIRT_TRACTION_PROPORTION 0.7f
@@ -18,9 +19,11 @@ UpdateClient Dirt::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Dirt::apply_terrain_effect(Body* wheel) {
-    ((Wheel*)wheel)->reduce_max_speed(DIRT_SPEED_PROPORTION);
-    ((Wheel *) wheel)->reduce_max_traction(DIRT_TRACTION_PROPORTION);
+void Dirt::apply_terrain_effect(Body* body) {
+    if (body->get_ID() == TYPE_WHEEL) {
+        ((Wheel*)body)->reduce_max_speed(DIRT_SPEED_PROPORTION);
+        ((Wheel *)body)->reduce_max_traction(DIRT_TRACTION_PROPORTION);
+    }
 }
 
 void Dirt::set_terrain_user_data() {

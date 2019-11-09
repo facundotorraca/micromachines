@@ -27,10 +27,11 @@ class Car : public Body {
     b2RevoluteJoint* front_left_joint{};
     b2RevoluteJoint* front_right_joint{};
 
-    int32_t key_v;
-    int32_t key_h;
+    int32_t throttle;
+    int32_t steering_wheel;
 
     bool lap_altered;
+
     std::unique_ptr<LapState> lap_state;
     std::unique_ptr<CarState> car_state;
 
@@ -50,9 +51,9 @@ class Car : public Body {
 
         void send_general_update(int32_t ID, ClientUpdater& client_updater);
 
-        void release_key(int32_t key);
+        void stop(int32_t movement);
 
-        void press_key(int32_t key);
+        void move(int32_t movement);
 
         int32_t get_ID() override;
 
@@ -68,6 +69,8 @@ class Car : public Body {
 
         /*-------------Race_handlers---------*/
         void modify_laps(LapCounter& lap_counter, int32_t car_ID);
+
+        void make_damage(int32_t damage);
 
         void apply_oil_effect();
 

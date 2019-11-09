@@ -3,6 +3,7 @@
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include <model/Vehicle/Car.h>
 
 #define SAND_SPEED_PROPORTION 0.1f
 #define SAND_TRACTION_PROPORTION 0.3f
@@ -18,9 +19,11 @@ UpdateClient Sand::get_to_send() {
     return UpdateClient(std::move(update_info));
 }
 
-void Sand::apply_terrain_effect(Body* wheel) {
-    ((Wheel *) wheel)->reduce_max_traction(SAND_TRACTION_PROPORTION);
-    ((Wheel*)wheel)->reduce_max_speed(SAND_SPEED_PROPORTION);
+void Sand::apply_terrain_effect(Body* body) {
+    if (body->get_ID() == TYPE_WHEEL) {
+        ((Wheel*)body)->reduce_max_speed(SAND_SPEED_PROPORTION);
+        ((Wheel *)body)->reduce_max_traction(SAND_TRACTION_PROPORTION);
+    }
 }
 
 void Sand::set_terrain_user_data() {

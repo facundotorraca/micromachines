@@ -46,9 +46,9 @@ b2Vec2 Wheel::get_forward_velocity() {
 void Wheel::update_speed(uint8_t key) {
     /*Find if whe want to go UP or DOWN*/
     float desire_speed = 0;
-    if (key == KEY_UP) {
+    if (key == ACCELERATE) {
         desire_speed = this->speed_proportion * this->wheel_state.get_max_forward_speed();
-    } else if (key == KEY_DOWN) {
+    } else if (key == BRAKE) {
         desire_speed = this->speed_proportion * this->wheel_state.get_max_backward_speed();
     } else {
         return;
