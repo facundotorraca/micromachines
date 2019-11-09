@@ -5,7 +5,7 @@ TO_KEEP_AHEAD = 1
 TO_TURN = 1.5
 TO_STOP_TURN = 1
 ANGLE = 60
-STEP = 0.1
+STEP = 0.01
 
 function init(keysDef, actionsDef)
   keys = keysDef

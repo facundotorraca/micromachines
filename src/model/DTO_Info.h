@@ -3,6 +3,7 @@
 
 #include <common/Sizes.h>
 #include <model/Vehicle/CarSpecs.h>
+#include <cstdint>
 
 typedef struct {
     int32_t max_life;

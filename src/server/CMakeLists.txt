@@ -8,4 +8,4 @@ file(GLOB server_lib *.cpp)
 list(REMOVE_ITEM server_lib "main.cpp")
 
 add_library(server ${server_lib})
-target_link_libraries(server pthread common model yaml-cpp)
+target_link_libraries(server pthread common model yaml-cpp  libdl.so)

@@ -57,6 +57,10 @@ class Car : public Body {
 
         int32_t get_ID() override;
 
+        int32_t get_max_life();
+
+        void set_max_life(int32_t);
+
         void move_to(Coordinate coordinate);
 
         void get_dto_info(int32_t ID, DTO_Car& car_info);
@@ -64,6 +68,8 @@ class Car : public Body {
         void update();
 
         void turn_on();
+
+        CarSpecs get_specs();
 
         ~Car();
 
