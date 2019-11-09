@@ -130,3 +130,8 @@ void Scenario::addConnectionLostMessage() {
     pause_menu.addConnectionLostMessage();
 }
 
+void Scenario::setRacePosition(int32_t number) {
+    std::unique_lock<std::mutex> lock(mtx);
+    hud.setRacePosition(number);
+}
+
