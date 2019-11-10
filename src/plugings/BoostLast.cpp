@@ -5,8 +5,8 @@
 #include <model/DTO_Info.h>
 #include <iostream>
 
-#define IMPULSE_MODIFIER 1.5
-#define FORCE_MODIFIER 1.5
+#define IMPULSE_MODIFIER 1.5f
+#define FORCE_MODIFIER 1.5f
 
 typedef struct self {
     uint32_t step;

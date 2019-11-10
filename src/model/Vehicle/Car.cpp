@@ -1,13 +1,12 @@
 #include "Car.h"
+#include "Dead.h"
 #include "Wheel.h"
+#include "Alive.h"
 #include <iostream>
 #include "CarSpecs.h"
 #include "common/Key.h"
 #include "EngineOff.h"
 #include "EngineOn.h"
-#include "Stopped.h"
-#include "Alive.h"
-#include "Dead.h"
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
@@ -132,6 +131,7 @@ void Car::update() {
     /* try to spawn depending on car state*/
     if (this->car_state->try_respawn(this->last_track_tile, this->car_body, this->wheels)) {
         this->car_state.reset(new Alive());
+        this->life.restart_life();
         this->turn_on();
     }
 }
@@ -298,7 +298,6 @@ void Car::make_damage(int32_t damage) {
     if (this->life.is_dead()) {
         this->engine_state.reset( new EngineOff());
         this->car_state.reset( new Dead());
-        this->life.restart_life();
     }
 }
 
