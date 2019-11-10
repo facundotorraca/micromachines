@@ -19,6 +19,8 @@ UpdateClient Asphalt::get_to_send() {
 void Asphalt::apply_terrain_effect(Body* body) {
     if (body->get_ID() == TYPE_WHEEL)
         ((Wheel*)body)->restore_specs();
+    if (body->get_ID() == TYPE_CAR)
+        ((Car*)body)->set_respawn(Coordinate(this->map_x, this->map_y, 0));
 }
 
 void Asphalt::set_terrain_user_data() {

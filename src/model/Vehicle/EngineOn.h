@@ -1,12 +1,12 @@
-#ifndef MICROMACHINES_CARON_H
-#define MICROMACHINES_CARON_H
+#ifndef MICROMACHINES_ENGINEON_H
+#define MICROMACHINES_ENGINEON_H
 
-#include "CarState.h"
+#include "EngineState.h"
 #include <common/EntityType.h>
 
 #define RADTODEG 57.295779513082320876f
 
-class CarOn : public CarState {
+class EngineOn : public EngineState {
 
     public:
          void move(int32_t movement, int32_t& throttle, int32_t& steering_wheel) override {
@@ -25,4 +25,4 @@ class CarOn : public CarState {
 };
 
 
-#endif //MICROMACHINES_CARON_H
+#endif //MICROMACHINES_ENGINEON_H

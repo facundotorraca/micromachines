@@ -108,7 +108,7 @@ void RacingTrack::add_spawn_point(Coordinate spawn_point) {
 void RacingTrack::set_spawn_points_to_cars(std::unordered_map<int32_t, Car> &cars) {
     int spawn_point_pos = (int)this->spawn_points.size() - 1; //Start from end to beginning
     for (auto &car : cars) {
-        car.second.set_spawn_point(this->spawn_points[spawn_point_pos]);
+        car.second.set_start_position(this->spawn_points[spawn_point_pos]);
         spawn_point_pos--;
     }
 }

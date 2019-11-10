@@ -24,6 +24,9 @@ void Sand::apply_terrain_effect(Body* body) {
         ((Wheel*)body)->reduce_max_speed(SAND_SPEED_PROPORTION);
         ((Wheel *)body)->reduce_max_traction(SAND_TRACTION_PROPORTION);
     }
+    if (body->get_ID() == TYPE_CAR)
+        ((Car*)body)->set_respawn(Coordinate(this->map_x, this->map_y, 0));
+
 }
 
 void Sand::set_terrain_user_data() {

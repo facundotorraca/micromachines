@@ -47,9 +47,8 @@ Terrain::Terrain(Terrain &&other) noexcept {
 }
 
 void Terrain::apply_effect(Body *body) {
-    if (body->get_ID() == TYPE_CAR && this->begin_distance != INFINITE) {
+    if (body->get_ID() == TYPE_CAR && this->begin_distance != INFINITE)
         ((Car*)body)->set_begin_distance(this->begin_distance);
-    }
      this->apply_terrain_effect(body);
 }
 

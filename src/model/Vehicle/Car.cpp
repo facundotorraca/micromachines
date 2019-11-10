@@ -3,8 +3,11 @@
 #include <iostream>
 #include "CarSpecs.h"
 #include "common/Key.h"
-#include "CarOff.h"
-#include "CarOn.h"
+#include "EngineOff.h"
+#include "EngineOn.h"
+#include "Stopped.h"
+#include "Alive.h"
+#include "Dead.h"
 #include <common/Sizes.h>
 #include <common/MsgTypes.h>
 #include <common/EntityType.h>
@@ -31,10 +34,14 @@ Car::Car(CarSpecs specs):
         lap_altered(false),
         life(specs.max_life),
         throttle(NOT_PRESSED),
-        car_state(new CarOff()),
+        engine_state(new EngineOff()),
         steering_wheel(NOT_PRESSED),
-        lap_state(new LapRunning())
-{}
+        lap_state(new LapRunning()),
+        car_state( new Alive()),
+        last_track_tile(0, 0, 0)
+{
+    this->begin_distance = 0;
+}
 
 void Car::add_to_world(b2World &world) {
     /*create car body*/
@@ -122,6 +129,11 @@ void Car::update() {
     front_left_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
     front_right_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
 
+    /* try to spawn depending on car state*/
+    if (this->car_state->try_respawn(this->last_track_tile, this->car_body, this->wheels)) {
+        this->car_state.reset(new Alive());
+        this->turn_on();
+    }
 }
 
 float Car::get_desire_angle(int32_t key) {
@@ -136,27 +148,27 @@ float Car::get_desire_angle(int32_t key) {
 }
 
 void Car::move(int32_t movement) {
-    this->car_state->move(movement, this->throttle, this->steering_wheel);
+    this->engine_state->move(movement, this->throttle, this->steering_wheel);
 }
 
 void Car::stop(int32_t movement) {
-    this->car_state->stop(movement, this->throttle, this->steering_wheel);
+    this->engine_state->stop(movement, this->throttle, this->steering_wheel);
 }
 
-void Car::set_spawn_point(Coordinate spawn_point) {
-    float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
-    float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
+void Car::set_start_position(Coordinate start_position) {
+    float x_pos = start_position.get_x() * TILE_TERRAIN_SIZE;
+    float y_pos = start_position.get_y() * TILE_TERRAIN_SIZE;
 
     /*Minus because default start position of Box2D is inverted*/
-    float angle = -spawn_point.get_angle() * DEGTORAD;
+    float angle = -start_position.get_angle() * DEGTORAD;
 
-   this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
+    this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
     for (auto &wheel : this->wheels) {
-        wheel->set_spawn_point(spawn_point);
+        wheel->set_start_position(start_position);
     }
 }
 
-void Car::collide(Body* stactic_object) {
+void Car::collide(Body* body) {
 }
 
 int32_t Car::get_ID() {
@@ -178,7 +190,7 @@ void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
         this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
         if (lap_counter.car_complete_laps(car_ID)) {
             this->throttle = NOT_PRESSED;
-            this->car_state.reset(new CarOff());
+            this->engine_state.reset(new EngineOff());
         }
         this->lap_altered = false;
     }
@@ -200,7 +212,7 @@ void Car::move_to(Coordinate coordinate) {
 }
 
 void Car::turn_on() {
-    this->car_state.reset(new CarOn());
+    this->engine_state.reset(new EngineOn());
 }
 
 void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
@@ -284,13 +296,9 @@ void Car::apply_plugin(DTO_Car &car_info) {
 void Car::make_damage(int32_t damage) {
     this->life.make_damage(damage);
     if (this->life.is_dead()) {
+        this->engine_state.reset( new EngineOff());
+        this->car_state.reset( new Dead());
         this->life.restart_life();
-    }
-}
-
-Car::~Car() {
-    for (auto & wheel : this->wheels) {
-        delete wheel;
     }
 }
 
@@ -300,4 +308,14 @@ void Car::set_begin_distance(int32_t new_begin_distance) {
 
 int32_t Car::get_begin_distance() {
     return this->begin_distance;
+}
+
+void Car::set_respawn(Coordinate respawn) {
+    this->last_track_tile = respawn;
+}
+
+Car::~Car() {
+    for (auto & wheel : this->wheels) {
+        delete wheel;
+    }
 }

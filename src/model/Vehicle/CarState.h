@@ -2,19 +2,17 @@
 #define MICROMACHINES_CARSTATE_H
 
 #include "Wheel.h"
-#include "Box2D/Box2D.h"
-#include "Box2D/Box2D.h"
-#include <server/UpdateClient.h>
+#include <common/Coordinate.h>
+#include <Box2D/Dynamics/b2Body.h>
 
-#define NOT_PRESSED 0
+#define RADTODEG 57.295779513082320876f
 
 class CarState {
 
     public:
-        virtual void move(int32_t movement, int32_t& throttle, int32_t& steering_wheel) = 0;
-
-        virtual void stop(int32_t movement, int32_t& throttle, int32_t& steering_wheel) = 0;
+        virtual bool try_respawn(Coordinate respawn_point, b2Body* car_body, std::vector<Wheel*> wheels) = 0;
 
 };
+
 
 #endif //MICROMACHINES_CARSTATE_H

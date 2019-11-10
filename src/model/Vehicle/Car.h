@@ -5,17 +5,16 @@
 #include "Wheel.h"
 #include "CarLife.h"
 #include "CarSpecs.h"
-#include "CarState.h"
+#include "EngineState.h"
 #include "common/Key.h"
 #include "Box2D/Box2D.h"
+#include "CarState.h"
 #include <model/DTO_Info.h>
 #include <common/Coordinate.h>
 #include <server/UpdateClient.h>
 #include <server/ClientUpdater.h>
 #include <model/Vehicle/LapState.h>
 #include <model/Modifiers/Effect.h>
-
-#define DEGTORAD 0.0174532925199432957f
 
 class Car : public Body {
     CarLife life;
@@ -27,6 +26,8 @@ class Car : public Body {
     b2RevoluteJoint* front_left_joint{};
     b2RevoluteJoint* front_right_joint{};
 
+    Coordinate last_track_tile;
+
     int32_t throttle;
     int32_t steering_wheel;
 
@@ -34,8 +35,9 @@ class Car : public Body {
 
     bool lap_altered;
 
-    std::unique_ptr<LapState> lap_state;
     std::unique_ptr<CarState> car_state;
+    std::unique_ptr<LapState> lap_state;
+    std::unique_ptr<EngineState> engine_state;
 
     private:
         void create_wheels(b2World& world);
@@ -47,9 +49,9 @@ class Car : public Body {
 
         void add_to_world(b2World& world);
 
-        void set_spawn_point(Coordinate spawn_point);
+        void set_start_position(Coordinate start_position);
 
-        void collide(Body* static_object) override;
+        void collide(Body* body) override;
 
         void send_general_update(int32_t ID, ClientUpdater& client_updater);
 
@@ -74,11 +76,13 @@ class Car : public Body {
         /*-------------Race_handlers---------*/
         void modify_laps(LapCounter& lap_counter, int32_t car_ID);
 
-        void make_damage(int32_t damage);
-
         void set_begin_distance(int32_t begin_distance);
 
+        void set_respawn(Coordinate respawn);
+
         int32_t get_begin_distance();
+
+        void make_damage(int32_t damage);
 
         void apply_oil_effect();
 
@@ -88,11 +92,11 @@ class Car : public Body {
 
         void apply_boost_effect();
 
-        void repair();
-
         void restart_lap();
 
         void complete_lap();
+
+    void repair();
 };
 
 #endif //MICROMACHINES_CAR_H

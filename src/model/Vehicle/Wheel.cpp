@@ -127,7 +127,7 @@ void Wheel::reduce_max_speed(float proportion) {
     this->speed_proportion = proportion;
 }
 
-void Wheel::set_spawn_point(Coordinate spawn_point) {
+void Wheel::set_start_position(Coordinate spawn_point) {
     float x_pos = spawn_point.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = spawn_point.get_y() * TILE_TERRAIN_SIZE;
 
@@ -147,7 +147,7 @@ int32_t Wheel::get_ID() {
 void Wheel::move_to(Coordinate coordinate) {
     float x_pos = coordinate.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = coordinate.get_y() * TILE_TERRAIN_SIZE;
-    float angle = -coordinate.get_angle() * DEGTORAD;
+    float angle = coordinate.get_angle() * DEGTORAD;
 
     this->wheel_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
 }
