@@ -3,28 +3,36 @@
 #include <utility>
 #include "MapLoader.h"
 #include "json/json.hpp"
+#include <model/RacingTrack.h>
 #include <common/EntityType.h>
-#include <model/Terrains/TerrainFactory.h>
 #include <model/Dijkstra.h>
+#include <model/Terrains/TerrainFactory.h>
+#include <common/MsgTypes.h>
 
 #define BEGIN_TRACK_TILE 26
-#define FIRST_LAYER 0
+
+#define TILES_LAYER 0
+#define ORIENTATION_LAYER 1
 
 #define ID_PROPERTY_POS 0
 #define ROTATION_PROPERTY_POS 1
 #define STATIC_PROPERTY_POS 2
+#define ORIENTATION_PROPERTY_POS 0
 
-#define NOT_EDGE 0
-#define INF 999999
+#define ORIENTATION_UP 1
+#define ORIENTATION_DOWN 2
+#define ORIENTATION_LEFT 3
+#define ORIENTATION_RIGHT 4
 
 using json = nlohmann::json;
 
-MapLoader::MapLoader(std::string map_path) {
+MapLoader::MapLoader(std::string map_path, std::string map_name) {
     this->map_paths = std::move(map_path);
+    this->map_name = std::move(map_name);
 }
 
-void MapLoader::open_files(nlohmann::json &json_map_file, nlohmann::json& json_tiles_file, const std::string& map_filename) {
-    std::ifstream map_file(this->map_paths + map_filename);
+void MapLoader::open_files(nlohmann::json &json_map_file, nlohmann::json& json_tiles_file) {
+    std::ifstream map_file(this->map_paths + this->map_name);
     if (!map_file.is_open()) {
         std::cerr << "MAP FILE ERROR\n";
         return; //ACA VA EXCEPION
@@ -76,10 +84,36 @@ void set_track_to_race(std::vector<std::unique_ptr<Terrain>>& track, RacingTrack
     }
 }
 
-void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filename) {
+void send_tile(int32_t type_ID, int32_t i, int32_t j, int32_t rot, ClientUpdater &updater) {
+    int32_t x = METER_TO_PIXEL * ((i * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
+    int32_t y = METER_TO_PIXEL * ((j * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
+    std::vector<int32_t> update_info {MSG_SEND_TILE, type_ID, x, y, rot};
+    updater.send_to_all(UpdateClient(std::move(update_info)));
+}
+
+void set_orientation(std::unique_ptr<Terrain>& track, int orientation) {
+    switch (orientation) {
+        case ORIENTATION_UP:
+            track->set_orientation(UP);
+            break;
+        case ORIENTATION_DOWN:
+            track->set_orientation(DOWN);
+            break;
+        case ORIENTATION_RIGHT:
+            track->set_orientation(RIGHT);
+            break;
+        case ORIENTATION_LEFT:
+            track->set_orientation(LEFT);
+            break;
+        default:
+            break;
+    }
+}
+
+void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
     json json_map_data;
     json json_tiles_data;
-    this->open_files(json_map_data, json_tiles_data, map_filename);
+    this->open_files(json_map_data, json_tiles_data);
 
     int map_width = json_map_data["width"];
     int map_height = json_map_data["height"];
@@ -89,30 +123,44 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
 
     std::unique_ptr<Terrain> begin_tile(nullptr);
 
+    UpdateClient update_map_info(std::vector<int32_t>{MSG_SET_BACKGROUND , TYPE_GRASS, map_height, map_width});
+    updater.send_to_all(update_map_info);
+
     for (int i = 0; i < map_height; i++) {
         for (int j = 0; j < map_width; j++) {
 
-            unsigned ID_pos =
-                    unsigned(json_map_data["layers"][FIRST_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
+            unsigned ID_pos = unsigned(json_map_data["layers"][TILES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
             int32_t type_ID = json_tiles_data["tiles"][ID_pos]["properties"][ID_PROPERTY_POS]["value"];
 
             int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS]["value"];
             bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS]["value"];
 
-            if (is_static)
-                racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID, i, j, tile_rotation)));
-            else {
-                if (is_track(type_ID) && type_ID == BEGIN_TRACK_TILE)
-                    begin_tile = std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation));
-                else if (is_track(type_ID) & ((type_ID == TYPE_FINISH_LINE_BORDER) || (type_ID == TYPE_FINISH_LINE_CENTER)))
-                    racing_track.add_track((std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation))));
-                else if (is_track(type_ID))
-                    this->track.push_back((std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation))));
-                else
-                    racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j, tile_rotation)));
-            }
+            auto info_pos = unsigned(json_map_data["layers"][ORIENTATION_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
 
+            send_tile(type_ID, i, j, tile_rotation, updater);
+
+            if (is_static) {
+                racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID, i, j)));
+            }
+            else {
+                if (is_track(type_ID) && type_ID == BEGIN_TRACK_TILE) {
+                    begin_tile = std::move(TerrainFactory::create_terrain(type_ID, i, j));
+                }
+                else if (is_track(type_ID) & ((type_ID == TYPE_FINISH_LINE_BORDER) || (type_ID == TYPE_FINISH_LINE_CENTER))) {
+                    racing_track.add_track((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
+                }
+                else if (is_track(type_ID)) {
+                    this->track.push_back((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
+                    int32_t orientation = json_tiles_data["tiles"][info_pos]["properties"][ORIENTATION_PROPERTY_POS]["value"];
+                    //set_orientation(this->track.back(), orientation);
+                }
+                else {
+                    racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j)));
+                }
+            }
             this->add_tile_behaviour(type_ID, i, j, tile_rotation, racing_track);
+
+
         }
     }
 
@@ -120,10 +168,10 @@ void MapLoader::load_map(RacingTrack &racing_track, const std::string& map_filen
     this->generate_track_graph();
     set_track_to_race(this->track, racing_track);
 
+
     if (finish_line.size() == 2) racing_track.set_finish_line(finish_line[0], finish_line[1]);
     if (podium.size() == 3) racing_track.set_podium(podium.at(1), podium.at(2), podium.at(3));
 }
-
 
 bool are_adjacent(std::unique_ptr<Terrain>& t_a, std::unique_ptr<Terrain>& t_b) {
     Coordinate a = t_a->get_map_coordinate();
@@ -150,6 +198,6 @@ void MapLoader::generate_track_graph() {
     for (size_t i = 0; i < distances.size(); i++) {
         this->track[i]->set_begin_distance(distances[i]);
     }
-
 }
+
 

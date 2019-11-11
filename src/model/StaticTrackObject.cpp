@@ -5,11 +5,11 @@
 #include <model/Vehicle/Car.h>
 #include "StaticTrackObject.h"
 
-StaticTrackObject::StaticTrackObject(int32_t ID, int32_t x, int32_t y, int32_t rotation) {
+StaticTrackObject::StaticTrackObject(int32_t ID, int32_t x, int32_t y) {
     this->ID = ID;
     this->map_x = x; //Relative position on a grid
     this->map_y = y; //Relative position on a grid
-    this->rotation = rotation;
+
     this->object_body = nullptr;
     this->object_fixture = nullptr;
     /*The real position is calculated with Box2D settings*/
@@ -19,7 +19,6 @@ StaticTrackObject::StaticTrackObject(StaticTrackObject &&other) noexcept {
     this->ID = other.ID;
     this->map_x = other.map_x;
     this->map_y = other.map_y;
-    this->rotation = other.rotation;
     this->object_body = other.object_body;
     this->object_fixture = other.object_fixture;
 
@@ -45,13 +44,6 @@ void StaticTrackObject::add_to_world(b2World &world) {
     this->object_fixture = this->object_body->CreateFixture(&fixture_def);
 
     this->object_body->SetUserData(this); //Set a self reference to handler collisions
-}
-
-UpdateClient StaticTrackObject::get_to_send() {
-    int32_t x = METER_TO_PIXEL * ((this->map_x * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
-    int32_t y = METER_TO_PIXEL * ((this->map_y * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
-    std::vector<int32_t> update_info {MSG_SEND_TILE, this->ID, x, y, this->rotation};
-    return UpdateClient(std::move(update_info));
 }
 
 void StaticTrackObject::collide(Body *body) {

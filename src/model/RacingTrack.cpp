@@ -17,7 +17,8 @@ int get_random_position(int max_position) {
 
 
 RacingTrack::RacingTrack(std::string& map_path, std::string& map_name):
-    racing_track(b2Vec2(0,0))
+    racing_track(b2Vec2(0,0)),
+    map_loader(map_path, map_name)
 {
     this->width = 0; //Default
     this->height = 0; //Default
@@ -31,33 +32,14 @@ RacingTrack::RacingTrack(std::string& map_path, std::string& map_name):
 
     this->track_terrain = TYPE_GRASS; //Default
     this->racing_track.SetContactListener(&this->contact_listener);
-
-    MapLoader map_loader(map_path);
-    map_loader.load_map(*this, "track_01.json");
 }
+
+
 
 void RacingTrack::update() {
     this->racing_track.Step(this->time_step,
                       this->velocity_iterations,
                       this->position_iterations);
-}
-
-void RacingTrack::send(ClientUpdater& client_updater, int32_t ID) {
-    UpdateClient update_map_info(std::vector<int32_t>{MSG_SET_BACKGROUND ,this->track_terrain, this->height, this->width});
-    client_updater.send_to(ID, update_map_info);
-
-    for (auto& track_part : this->track) {
-        UpdateClient update_map = track_part->get_to_send();
-        client_updater.send_to(ID, update_map);
-    }
-    for (auto& terrain : this->terrains) {
-        UpdateClient update_map = terrain->get_to_send();
-        client_updater.send_to(ID, update_map);
-    }
-    for (auto& object : this->static_track_objects) {
-        UpdateClient update_map = object.get_to_send();
-        client_updater.send_to(ID, update_map);
-    }
 }
 
 void RacingTrack::add_terrain(std::unique_ptr<Terrain>&& terrain) {
@@ -113,8 +95,6 @@ void RacingTrack::set_spawn_points_to_cars(std::unordered_map<int32_t, Car> &car
     }
 }
 
-
-
 Coordinate RacingTrack::get_random_track_position() {
     int random_position = get_random_position(this->track.size()-1);
     return this->track.at(random_position)->get_map_coordinate();
@@ -127,5 +107,9 @@ void RacingTrack::add_modifier(std::shared_ptr<Modifier> modifier) {
 RacingTrack::~RacingTrack() {
     delete this->podium;
     delete this->finish_line;
+}
+
+void RacingTrack::prepare_track(ClientUpdater &updater) {
+    this->map_loader.load_map(*this, updater);
 }
 

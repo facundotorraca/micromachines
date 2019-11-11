@@ -21,12 +21,13 @@ class Dead : public CarState {
             if (this->remaining_time == 0) {
                 float x = respawn_point.get_x();
                 float y = respawn_point.get_y();
-                float angle = car_body->GetAngle();
+                float angle = respawn_point.get_angle();
 
-                car_body->SetTransform(b2Vec2(x*TILE_TERRAIN_SIZE,y*TILE_TERRAIN_SIZE), angle);
-                Coordinate wheel_respawn_point(x, y, angle * RADTODEG);
+                car_body->SetTransform(b2Vec2(x*TILE_TERRAIN_SIZE,y*TILE_TERRAIN_SIZE), angle*DEGTORAD);
+
+                std::cout << "Angle: " << angle << "\n";
                 for (auto& wheel : wheels) {
-                    wheel->move_to(wheel_respawn_point);
+                    wheel->move_to(respawn_point);
                 }
                 return true;
             }

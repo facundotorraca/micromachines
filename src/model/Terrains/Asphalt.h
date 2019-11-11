@@ -5,9 +5,7 @@
 
 class Asphalt : public Terrain  {
     public:
-        Asphalt(int32_t x, int32_t y, int32_t rotation, int32_t ID);
-
-        UpdateClient get_to_send() override;
+        Asphalt(int32_t ID, int32_t x, int32_t y);
 
         void apply_terrain_effect(Body* wheel) override;
 

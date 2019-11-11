@@ -1,10 +1,43 @@
+#include <model/Orientation.h>
 #include "Coordinate.h"
+
+float get_orientation_angle(Orientation orientation) {
+    switch (orientation) {
+        case UP:
+            return 180;
+        case DOWN:
+            return 0;
+        case RIGHT:
+            return 270;
+        case LEFT:
+            return 90;
+        case NOT_ORIENTED:
+            return 0;
+    }
+}
+
+Coordinate::Coordinate(float x, float y, Orientation orientation) {
+    this->x = x;
+    this->y = y;
+    this->orientation = orientation;
+    this->angle = get_orientation_angle(this->orientation);
+}
+
+Coordinate::Coordinate(float x, float y) {
+    this->x = x;
+    this->y = y;
+    this->angle = 0;
+    this->orientation = NOT_ORIENTED;
+}
 
 Coordinate::Coordinate(float x, float y, float angle) {
     this->x = x;
     this->y = y;
     this->angle = angle;
+    this->orientation = NOT_ORIENTED;
 }
+
+
 
 float Coordinate::get_x() {
     return this->x;

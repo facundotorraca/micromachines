@@ -25,9 +25,9 @@ class Race {
 
         void update();
 
-        void prepare();
-
         void update_cars(UpdateRace race);
+
+        void prepare(ClientUpdater& updater);
 
         void player_left_game(int32_t ID);
 

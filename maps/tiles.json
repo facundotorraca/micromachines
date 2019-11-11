@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tiles",
  "spacing":0,
- "tilecount":414,
+ "tilecount":418,
  "tiledversion":"1.2.5",
  "tileheight":129,
  "tiles":[
@@ -9113,6 +9113,54 @@
                  "name":"Static",
                  "type":"bool",
                  "value":false
+                }]
+        }, 
+        {
+         "id":414,
+         "image":"..\/assets\/sprites\/Track\/A_center_D.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"Orientation",
+                 "type":"int",
+                 "value":0
+                }]
+        }, 
+        {
+         "id":415,
+         "image":"..\/assets\/sprites\/Track\/A_center_L.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"Orientation",
+                 "type":"int",
+                 "value":3
+                }]
+        }, 
+        {
+         "id":416,
+         "image":"..\/assets\/sprites\/Track\/A_center_R.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"Orientation",
+                 "type":"int",
+                 "value":4
+                }]
+        }, 
+        {
+         "id":417,
+         "image":"..\/assets\/sprites\/Track\/A_center_U.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"Orientation",
+                 "type":"int",
+                 "value":1
                 }]
         }],
  "tilewidth":129,

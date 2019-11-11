@@ -20,12 +20,9 @@ void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
 }
 
 void Race::send_info_to_player(int32_t ID, ClientUpdater& client_updater) {
-    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_BEGIN_LOADING}));
-    this->racing_track.send(client_updater, ID);
     this->lap_counter.send_total_laps(ID, client_updater);
-    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_TOTAL_LAPS, this->lap_counter.get_total_laps()}));
     client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_CAR_ID, ID}));
-    client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_FINISH_LOADING}));
+
 }
 
 void Race::start() {
@@ -58,11 +55,11 @@ void Race::player_left_game(const int32_t ID) {
     this->cars.erase(ID);
 }
 
-void Race::prepare() {
-    for (auto &car : this->cars) {
-        this->running_cars.emplace(std::pair<int32_t, Car&>(car.first, car.second));
-    }
+void Race::prepare(ClientUpdater& updater) {
+    updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_BEGIN_LOADING}));
+    this->racing_track.prepare_track(updater);
     this->racing_track.set_spawn_points_to_cars(this->cars);
+    updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_FINISH_LOADING}));
 }
 
 void Race::send_general_updates_of_player(int32_t ID, ClientUpdater& updater) {

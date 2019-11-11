@@ -7,25 +7,21 @@
 
 class StaticTrackObject : public Body {
     protected:
+        int32_t ID;
         int32_t map_x;
         int32_t map_y;
-        int32_t rotation;
-
-        int32_t ID{};
 
         b2Body* object_body;
         b2Fixture* object_fixture;
 
     public:
-        StaticTrackObject(int32_t x, int32_t y, int32_t rotation, int32_t ID);
+        StaticTrackObject(int32_t ID, int32_t x, int32_t y);
 
         StaticTrackObject(StaticTrackObject&& other) noexcept;
 
         void add_to_world(b2World& world);
 
         void collide(Body* body) override;
-
-        UpdateClient get_to_send();
 
         int32_t get_ID() override ;
 };

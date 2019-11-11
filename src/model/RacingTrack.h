@@ -14,9 +14,12 @@
 #include <common/ProtectedQueue.h>
 #include <common/ProtocolSocket.h>
 #include <model/Modifiers/Modifier.h>
+#include <server/MapLoader.h>
 #include "model/Terrains/Terrain.h"
 
 class RacingTrack {
+    MapLoader map_loader;
+
     b2World racing_track;
 
     float32 time_step;
@@ -44,6 +47,8 @@ class RacingTrack {
 
         void add_car(Car& car);
 
+        void prepare_track(ClientUpdater& updater);
+
         Coordinate get_random_track_position();
 
         void set_track_terrain(int32_t terrain);
@@ -57,8 +62,6 @@ class RacingTrack {
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
         void add_modifier(std::shared_ptr<Modifier> modifier);
-
-        void send(ClientUpdater& client_updater, int32_t ID);
 
         void set_finish_line(Coordinate begin, Coordinate end);
 

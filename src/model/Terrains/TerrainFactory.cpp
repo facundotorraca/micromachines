@@ -18,13 +18,12 @@
 #define BEG_SAND_IDS 60
 #define END_SAND_IDS 89
 
-std::unique_ptr<Terrain> TerrainFactory::create_terrain(int32_t entity_id, int32_t x, int32_t y, int32_t rotation) {
-    if (entity_id >= BEG_ASPHALT_IDS && entity_id <= END_ASPHALT_IDS )
-        return std::unique_ptr<Terrain> (new Asphalt(x, y, rotation, entity_id));
-    if (entity_id >= BEG_DIRT_IDS && entity_id <= END_DIRT_IDS )
-        return std::unique_ptr<Terrain> (new Dirt(x, y, rotation, entity_id));
-    if (entity_id >= BEG_GRASS_IDS && entity_id <= END_GRASS_IDS )
-        return std::unique_ptr<Terrain> (new Grass(x, y, rotation, entity_id));
-    //if (entity_id >= BEG_SAND_IDS && entity_id <= END_SAND_IDS )
-    return std::unique_ptr<Terrain> (new Sand(x, y, rotation, entity_id));
+std::unique_ptr<Terrain> TerrainFactory::create_terrain(int32_t ID, int32_t x, int32_t y) {
+    if (ID >= BEG_ASPHALT_IDS && ID <= END_ASPHALT_IDS )
+        return std::unique_ptr<Terrain> (new Asphalt(ID, x, y));
+    if (ID >= BEG_DIRT_IDS && ID <= END_DIRT_IDS )
+        return std::unique_ptr<Terrain> (new Dirt(ID, x, y));
+    if (ID >= BEG_GRASS_IDS && ID <= END_GRASS_IDS )
+        return std::unique_ptr<Terrain> (new Grass(ID, x, y));
+    return std::unique_ptr<Terrain> (new Sand(ID, x, y));
 }

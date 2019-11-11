@@ -114,6 +114,7 @@ void Match::initialize_players() {
             this->race.player_left_game(ID);
         }
     }
+    this->race.prepare(this->client_updater);
 }
 
 void Match::remove_disconnected_players() {
@@ -160,8 +161,8 @@ void Match::update_players() {
 
 void Match::run() {
     CountdownTimer timer(TIME_START,this->race, this->client_updater);
-    this->plugings_manager.load_plugings();
     this->initialize_players();
+    this->plugings_manager.load_plugings();
 
     this->clients_monitor.start();
     timer.start();

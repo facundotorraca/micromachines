@@ -7,16 +7,9 @@
 #define GRASS_SPEED_PROPORTION 0.3f
 #define GRASS_TRACTION_PROPORTION 0.5f
 
-Grass::Grass(int32_t x, int32_t y, int32_t rotation, int32_t ID):
-    Terrain(x, y, rotation, ID)
+Grass::Grass(int32_t ID, int32_t x, int32_t y):
+    Terrain(ID, x, y)
 {}
-
-UpdateClient Grass::get_to_send() {
-    int32_t x = METER_TO_PIXEL * ((this->map_x * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
-    int32_t y = METER_TO_PIXEL * ((this->map_y * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
-    std::vector<int32_t> update_info {MSG_SEND_TILE, this->ID, x, y, this->rotation};
-    return UpdateClient(std::move(update_info));
-}
 
 void Grass::apply_terrain_effect(Body* body) {
     if (body->get_ID() == TYPE_WHEEL) {

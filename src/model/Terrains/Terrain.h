@@ -6,22 +6,20 @@
 #include <model/Sensor.h>
 #include <server/UpdateClient.h>
 #include <model/Vehicle/Wheel.h>
+#include <model/Orientation.h>
 
 class Terrain : public Sensor {
     protected:
-        int32_t map_x;
-        int32_t map_y;
-        int32_t rotation;
+        Coordinate coordinate;
 
         int32_t ID;
-
         int32_t begin_distance;
 
         b2Body* terrain_body;
         b2Fixture* terrain_fixture;
 
     public:
-        Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID);
+        Terrain(int32_t ID, int32_t x, int32_t y);
 
         Terrain(Terrain&& other) noexcept;
 
@@ -29,11 +27,11 @@ class Terrain : public Sensor {
 
         void add_to_world(b2World& world);
 
-        virtual UpdateClient get_to_send() = 0;
-
         virtual void set_terrain_user_data() = 0;
 
         void apply_effect(Body* body) override;
+
+        void set_orientation(Orientation new_orientation);
 
         Coordinate get_map_coordinate();
 
