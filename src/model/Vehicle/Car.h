@@ -42,7 +42,7 @@ class Car : public Body {
     private:
         void create_wheels(b2World& world);
 
-        static float get_desire_angle(int32_t key);
+        static float get_desire_angle(int32_t steering_wheel_movement);
 
     public:
         explicit Car(CarSpecs specs);
@@ -53,7 +53,7 @@ class Car : public Body {
 
         void collide(Body* body) override;
 
-        void send_general_update(int32_t ID, ClientUpdater& client_updater);
+        void send_updates(int32_t ID, ClientUpdater& client_updater);
 
         void stop(int32_t movement);
 

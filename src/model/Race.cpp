@@ -22,7 +22,6 @@ void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
 void Race::send_info_to_player(int32_t ID, ClientUpdater& client_updater) {
     this->lap_counter.send_total_laps(ID, client_updater);
     client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_CAR_ID, ID}));
-
 }
 
 void Race::start() {
@@ -62,8 +61,8 @@ void Race::prepare(ClientUpdater& updater) {
     updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_FINISH_LOADING}));
 }
 
-void Race::send_general_updates_of_player(int32_t ID, ClientUpdater& updater) {
-    this->cars.at(ID).send_general_update(ID, updater);
+void Race::send_updates(int32_t ID, ClientUpdater& updater) {
+    this->cars.at(ID).send_updates(ID, updater);
     this->modifier_spawner.send_modifiers_update(updater);
     this->lap_counter.send_update(ID, updater);
     this->position_manager.send_update(ID, updater);

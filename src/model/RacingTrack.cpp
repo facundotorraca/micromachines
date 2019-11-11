@@ -15,13 +15,10 @@ int get_random_position(int max_position) {
     return dist(mt);
 }
 
-
 RacingTrack::RacingTrack(std::string& map_path, std::string& map_name):
     racing_track(b2Vec2(0,0)),
     map_loader(map_path, map_name)
 {
-    this->width = 0; //Default
-    this->height = 0; //Default
     this->podium = nullptr;
     this->finish_line = nullptr;
 
@@ -30,11 +27,8 @@ RacingTrack::RacingTrack(std::string& map_path, std::string& map_name):
     this->position_iterations = 2;
     this->time_step = 1.0f / 60.0f;
 
-    this->track_terrain = TYPE_GRASS; //Default
     this->racing_track.SetContactListener(&this->contact_listener);
 }
-
-
 
 void RacingTrack::update() {
     this->racing_track.Step(this->time_step,
@@ -55,15 +49,6 @@ void RacingTrack::add_track(std::unique_ptr<Terrain>&& track_part) {
 void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
     this->static_track_objects.push_back(std::move(object));
     this->static_track_objects.back().add_to_world(this->racing_track);
-}
-
-void RacingTrack::set_track_size(int32_t track_height, int32_t track_width) {
-    this->width = track_width;
-    this->height = track_height;
-}
-
-void RacingTrack::set_track_terrain(int32_t terrain) {
-    this->track_terrain = terrain;
 }
 
 void RacingTrack::set_finish_line(Coordinate begin, Coordinate end) {
@@ -104,12 +89,12 @@ void RacingTrack::add_modifier(std::shared_ptr<Modifier> modifier) {
     modifier->add_to_world(this->racing_track);
 }
 
+void RacingTrack::prepare_track(ClientUpdater &updater) {
+    this->map_loader.load_map(*this, updater);
+}
+
 RacingTrack::~RacingTrack() {
     delete this->podium;
     delete this->finish_line;
-}
-
-void RacingTrack::prepare_track(ClientUpdater &updater) {
-    this->map_loader.load_map(*this, updater);
 }
 

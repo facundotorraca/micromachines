@@ -21,9 +21,7 @@ class MapLoader {
     std::unordered_map<int32_t, Coordinate> podium;
 
     private:
-        void generate_track_graph();
-
-        void orientate_track(nlohmann::json& map_file, nlohmann::json& tiles_file);
+        void set_begin_distance_to_tiles();
 
         void open_files(nlohmann::json& map_file, nlohmann::json& tiles_file);
 

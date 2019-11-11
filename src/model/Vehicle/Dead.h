@@ -33,6 +33,12 @@ class Dead : public CarState {
             }
             return false;
         }
+
+        bool try_explode(Coordinate last_track_point, b2Body* car_body, CarLife& life) override {
+            return false;
+        }
+
+        void set_last_track_position(Coordinate& car_last_track_pos, Coordinate new_position) override {}
 };
 
 

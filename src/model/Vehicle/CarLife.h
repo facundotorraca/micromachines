@@ -21,11 +21,13 @@ class CarLife {
 
         void make_damage(float damage);
 
-        void send_general_update(int32_t ID, ClientUpdater &updater);
+        void send_updates(int32_t ID, ClientUpdater &updater);
 
         void get_dto_info(DTO_CarLife& info_life);
 
-    void appy_plugin(DTO_CarLife &life_info);
+        void apply_plugin(DTO_CarLife &life_info);
+
+        void kill();
 };
 
 

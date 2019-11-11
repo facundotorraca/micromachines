@@ -1,5 +1,6 @@
-#include <model/Orientation.h>
+#include <cmath>
 #include "Coordinate.h"
+#include <model/Orientation.h>
 
 float get_orientation_angle(Orientation orientation) {
     switch (orientation) {
@@ -37,8 +38,6 @@ Coordinate::Coordinate(float x, float y, float angle) {
     this->orientation = NOT_ORIENTED;
 }
 
-
-
 float Coordinate::get_x() {
     return this->x;
 }
@@ -59,3 +58,13 @@ bool Coordinate::is_adjacent_to(Coordinate other) {
     else
         return (other.x + 1 == this->x) || (other.x - 1 == this->x);
 }
+
+float Coordinate::x_distance_with(Coordinate other) {
+    return std::abs(this->x - other.x);
+}
+
+
+float Coordinate::y_distance_with(Coordinate other) {
+    return std::abs(this->y - other.y);
+}
+

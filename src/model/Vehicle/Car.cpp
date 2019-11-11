@@ -29,15 +29,15 @@
 #define R_FRONT_WHEEL_POS 3
 
 Car::Car(CarSpecs specs):
-        specs(specs),
-        lap_altered(false),
-        life(specs.max_life),
-        throttle(NOT_PRESSED),
-        engine_state(new EngineOff()),
-        steering_wheel(NOT_PRESSED),
-        lap_state(new LapRunning()),
-        car_state( new Alive()),
-        last_track_tile(0, 0, 0)
+    specs(specs),
+    lap_altered(false),
+    life(specs.max_life),
+    throttle(NOT_PRESSED),
+    engine_state(new EngineOff()),
+    steering_wheel(NOT_PRESSED),
+    lap_state(new LapRunning()),
+    car_state( new Alive()),
+    last_track_tile(0, 0, 0)
 {
     this->begin_distance = 0;
 }
@@ -108,9 +108,13 @@ void Car::create_wheels(b2World& world) {
 }
 
 void Car::update() {
-    for (auto & wheel : wheels) {
-        wheel->update(throttle);
+    if (this->car_state->try_explode(this->last_track_tile, this->car_body, this->life) ) {
+        this->engine_state.reset( new EngineOff());
+        this->car_state.reset(new Dead());
     }
+
+    for (auto & wheel : wheels)
+        wheel->update(throttle);
 
     /*axis direction*/
     float desire_angle = get_desire_angle(steering_wheel);
@@ -128,7 +132,6 @@ void Car::update() {
     front_left_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
     front_right_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
 
-    /* try to spawn depending on car state*/
     if (this->car_state->try_respawn(this->last_track_tile, this->car_body, this->wheels)) {
         this->car_state.reset(new Alive());
         this->life.restart_life();
@@ -136,12 +139,12 @@ void Car::update() {
     }
 }
 
-float Car::get_desire_angle(int32_t key) {
+float Car::get_desire_angle(int32_t steering_wheel_movement) {
     float desire_angle = 0;
-    if (key == TURN_RIGHT) {
+    if (steering_wheel_movement == TURN_RIGHT) {
         desire_angle = MAX_ROTATION_ANGLE * DEGTORAD;
     }
-    if (key == TURN_LEFT) {
+    if (steering_wheel_movement == TURN_LEFT) {
         desire_angle = -MAX_ROTATION_ANGLE * DEGTORAD;
     }
     return desire_angle;
@@ -156,6 +159,9 @@ void Car::stop(int32_t movement) {
 }
 
 void Car::set_start_position(Coordinate start_position) {
+    this->last_track_tile = start_position;
+
+
     float x_pos = start_position.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = start_position.get_y() * TILE_TERRAIN_SIZE;
 
@@ -215,7 +221,7 @@ void Car::turn_on() {
     this->engine_state.reset(new EngineOn());
 }
 
-void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
+void Car::send_updates(int32_t ID, ClientUpdater &client_updater) {
     std::vector<int32_t> params  {MSG_UPDATE_ENTITY, TYPE_CAR, ID,
                                  (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().x - (CAR_WIDTH*0.5))),
                                  (int32_t)(METER_TO_PIXEL * (car_body->GetPosition().y - (CAR_HEIGHT*0.5))),
@@ -229,7 +235,7 @@ void Car::send_general_update(int32_t ID, ClientUpdater &client_updater) {
     }
 
     client_updater.send_to_all(UpdateClient(std::move(params)));
-    this->life.send_general_update(ID, client_updater);
+    this->life.send_updates(ID, client_updater);
     this->wheels[L_BACK_WHEEL_POS]->send_effect_update(ID, client_updater);
 }
 
@@ -289,7 +295,7 @@ void Car::apply_plugin(DTO_Car &car_info) {
                                                   car_info.specs.front_wheel_max_force,
                                                   car_info.specs.front_max_lateral_impulse);
 
-    this->life.appy_plugin(car_info.life);
+    this->life.apply_plugin(car_info.life);
     this->specs = car_info.specs;
 }
 
@@ -310,7 +316,7 @@ int32_t Car::get_begin_distance() {
 }
 
 void Car::set_respawn(Coordinate respawn) {
-    this->last_track_tile = respawn;
+    this->car_state->set_last_track_position(this->last_track_tile, respawn);
 }
 
 Car::~Car() {

@@ -9,6 +9,7 @@
 #include <model/Orientation.h>
 
 class Terrain : public Sensor {
+
     protected:
         Coordinate coordinate;
 
@@ -23,9 +24,9 @@ class Terrain : public Sensor {
 
         Terrain(Terrain&& other) noexcept;
 
-        void set_begin_distance(int32_t distance);
-
         void add_to_world(b2World& world);
+
+        void set_begin_distance(int32_t distance);
 
         virtual void set_terrain_user_data() = 0;
 
@@ -33,11 +34,11 @@ class Terrain : public Sensor {
 
         void set_orientation(Orientation new_orientation);
 
+        virtual void apply_terrain_effect(Body* body) = 0;
+
         Coordinate get_map_coordinate();
 
-        int32_t get_ID();
-
-        virtual void apply_terrain_effect(Body* body) = 0;
+       int32_t get_ID();
 };
 
 #endif //MICROMACHINES_TERRAIN_H

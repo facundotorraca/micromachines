@@ -26,10 +26,6 @@ class RacingTrack {
     int32 velocity_iterations;
     int32 position_iterations;
 
-    int32_t height;
-    int32_t width;
-    int32_t track_terrain;
-
     Podium* podium;
     FinishLine* finish_line;
     std::vector<Coordinate> spawn_points;
@@ -47,11 +43,9 @@ class RacingTrack {
 
         void add_car(Car& car);
 
-        void prepare_track(ClientUpdater& updater);
-
         Coordinate get_random_track_position();
 
-        void set_track_terrain(int32_t terrain);
+        void prepare_track(ClientUpdater& updater);
 
         void add_car_to_podium(Car& car, int32_t ID);
 
@@ -66,8 +60,6 @@ class RacingTrack {
         void set_finish_line(Coordinate begin, Coordinate end);
 
         void add_static_track_object(StaticTrackObject&& object);
-
-        void set_track_size(int32_t height, int32_t track_width);
 
         void set_spawn_points_to_cars(std::unordered_map<int32_t, Car>& cars);
 
