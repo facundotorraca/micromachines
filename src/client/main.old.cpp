@@ -55,7 +55,6 @@ int main(int argc, char *argv[]) {
         std::cout << "Answer: " << unsigned(flag_error_match) << "\n";
     }
 
-
     uint8_t flag_error_username = 1;
     while (flag_error_username == 1) {
         std::cout << "Write your username..." << "\n";

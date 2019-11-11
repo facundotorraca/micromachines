@@ -33,8 +33,6 @@ class Wheel : public Body {
     public:
         explicit Wheel(b2World& world, float max_forward_speed, float max_backward_speed, float max_driver_force, float max_lateral_impulse);
 
-        void set_start_position(Coordinate spawn_point);
-
         void collide(Body* static_object) override;
 
         void move_to(Coordinate coordinate);

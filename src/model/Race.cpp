@@ -6,10 +6,10 @@
 #define SPAWN_PROBABILITY 0.003f//0.0015f
 
 Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
-        lap_counter(total_laps),
-        position_manager(this->cars),
-        racing_track(map_path, map_name),
-        modifier_spawner(SPAWN_PROBABILITY, this->racing_track)
+    lap_counter(total_laps),
+    position_manager(this->cars),
+    racing_track(map_path, map_name),
+    modifier_spawner(SPAWN_PROBABILITY, this->racing_track)
 {}
 
 void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
@@ -25,7 +25,7 @@ void Race::send_info_to_player(int32_t ID, ClientUpdater& client_updater) {
 }
 
 void Race::start() {
-    for (auto &car : this->cars) {
+    for (auto& car : this->cars) {
         car.second.turn_on();
     }
 }

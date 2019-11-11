@@ -55,7 +55,7 @@ class RacingTrack {
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
-        void add_modifier(std::shared_ptr<Modifier> modifier);
+        void add_modifier(const std::shared_ptr<Modifier>& modifier);
 
         void set_finish_line(Coordinate begin, Coordinate end);
 

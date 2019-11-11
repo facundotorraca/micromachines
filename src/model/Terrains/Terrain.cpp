@@ -9,6 +9,7 @@ Terrain::Terrain(int32_t ID, int32_t x, int32_t y):
     coordinate(x,y)
 {
     this->ID = ID;
+    this->is_limit = false;
     this->terrain_body = nullptr;
     this->terrain_fixture = nullptr;
     this->begin_distance = INFINITE;
@@ -35,6 +36,7 @@ Terrain::Terrain(Terrain &&other) noexcept:
     coordinate(other.coordinate)
 {
     this->ID = other.ID;
+    this->is_limit = other.is_limit;
     this->terrain_body = other.terrain_body;
     this->begin_distance = other.begin_distance;
     this->terrain_fixture = other.terrain_fixture;
@@ -65,5 +67,9 @@ void Terrain::set_orientation(Orientation orientation) {
     float x = this->coordinate.get_x();
     float y = this->coordinate.get_y();
     this->coordinate = Coordinate(x, y, orientation);
+}
+
+void Terrain::set_as_limit() {
+    this->is_limit = true;
 }
 

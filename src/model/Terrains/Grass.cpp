@@ -1,8 +1,7 @@
 #include <cstdint>
 #include "Grass.h"
-#include <common/Sizes.h>
-#include <common/MsgTypes.h>
 #include <common/EntityType.h>
+#include <model/Vehicle/Car.h>
 
 #define GRASS_SPEED_PROPORTION 0.3f
 #define GRASS_TRACTION_PROPORTION 0.5f
@@ -16,6 +15,8 @@ void Grass::apply_terrain_effect(Body* body) {
         ((Wheel *)body)->reduce_max_traction(GRASS_TRACTION_PROPORTION);
         ((Wheel*)body)->reduce_max_speed(GRASS_SPEED_PROPORTION);
     }
+    if (body->get_ID() == TYPE_CAR && this->is_limit)
+        ((Car*)body)->explode();
 }
 
 void Grass::set_terrain_user_data() {

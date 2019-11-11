@@ -37,7 +37,7 @@ Car::Car(CarSpecs specs):
     steering_wheel(NOT_PRESSED),
     lap_state(new LapRunning()),
     car_state( new Alive()),
-    last_track_tile(0, 0, 0)
+    respawn(0, 0, 0)
 {
     this->begin_distance = 0;
 }
@@ -108,9 +108,10 @@ void Car::create_wheels(b2World& world) {
 }
 
 void Car::update() {
-    if (this->car_state->try_explode(this->last_track_tile, this->car_body, this->life) ) {
-        this->engine_state.reset( new EngineOff());
-        this->car_state.reset(new Dead());
+    if (this->car_state->try_respawn(this->respawn, this->car_body, this->wheels)) {
+        this->car_state.reset(new Alive());
+        this->life.restart_life();
+        this->turn_on();
     }
 
     for (auto & wheel : wheels)
@@ -131,12 +132,6 @@ void Car::update() {
     /*update axis*/
     front_left_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
     front_right_joint->SetLimits(current_angle + angle_to_turn, current_angle + angle_to_turn);
-
-    if (this->car_state->try_respawn(this->last_track_tile, this->car_body, this->wheels)) {
-        this->car_state.reset(new Alive());
-        this->life.restart_life();
-        this->turn_on();
-    }
 }
 
 float Car::get_desire_angle(int32_t steering_wheel_movement) {
@@ -156,22 +151,6 @@ void Car::move(int32_t movement) {
 
 void Car::stop(int32_t movement) {
     this->engine_state->stop(movement, this->throttle, this->steering_wheel);
-}
-
-void Car::set_start_position(Coordinate start_position) {
-    this->last_track_tile = start_position;
-
-
-    float x_pos = start_position.get_x() * TILE_TERRAIN_SIZE;
-    float y_pos = start_position.get_y() * TILE_TERRAIN_SIZE;
-
-    /*Minus because default start position of Box2D is inverted*/
-    float angle = -start_position.get_angle() * DEGTORAD;
-
-    this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
-    for (auto &wheel : this->wheels) {
-        wheel->set_start_position(start_position);
-    }
 }
 
 void Car::collide(Body* body) {
@@ -196,6 +175,7 @@ void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
         this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
         if (lap_counter.car_complete_laps(car_ID)) {
             this->throttle = NOT_PRESSED;
+            this->life.restart_life();
             this->engine_state.reset(new EngineOff());
         }
         this->lap_altered = false;
@@ -209,12 +189,11 @@ void Car::move_to(Coordinate coordinate) {
 
     float x_pos = coordinate.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = coordinate.get_y() * TILE_TERRAIN_SIZE;
-    float angle = -coordinate.get_angle() * DEGTORAD;
+    float angle = coordinate.get_angle() * DEGTORAD;
 
     this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
-    for (auto& wheel : this->wheels) {
+    for (auto& wheel : this->wheels)
         wheel->move_to(coordinate);
-    }
 }
 
 void Car::turn_on() {
@@ -315,8 +294,14 @@ int32_t Car::get_begin_distance() {
     return this->begin_distance;
 }
 
-void Car::set_respawn(Coordinate respawn) {
-    this->car_state->set_last_track_position(this->last_track_tile, respawn);
+void Car::set_respawn(Coordinate new_respawn) {
+    this->car_state->set_respawn_position(this->respawn, new_respawn);
+}
+
+void Car::explode() {
+    this->life.kill();
+    this->car_state.reset(new Dead());
+    this->engine_state.reset( new EngineOff());
 }
 
 Car::~Car() {

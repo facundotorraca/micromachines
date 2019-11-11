@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tiles",
  "spacing":0,
- "tilecount":418,
+ "tilecount":420,
  "tiledversion":"1.2.5",
  "tileheight":129,
  "tiles":[
@@ -598,7 +598,7 @@
                 {
                  "name":"R",
                  "type":"int",
-                 "value":0
+                 "value":180
                 }, 
                 {
                  "name":"Static",
@@ -620,7 +620,7 @@
                 {
                  "name":"R",
                  "type":"int",
-                 "value":90
+                 "value":270
                 }, 
                 {
                  "name":"Static",
@@ -642,7 +642,7 @@
                 {
                  "name":"R",
                  "type":"int",
-                 "value":180
+                 "value":0
                 }, 
                 {
                  "name":"Static",
@@ -664,7 +664,7 @@
                 {
                  "name":"R",
                  "type":"int",
-                 "value":270
+                 "value":90
                 }, 
                 {
                  "name":"Static",
@@ -2578,7 +2578,7 @@
                 {
                  "name":"R",
                  "type":"int",
-                 "value":0
+                 "value":180
                 }, 
                 {
                  "name":"Static",
@@ -2600,7 +2600,7 @@
                 {
                  "name":"R",
                  "type":"int",
-                 "value":90
+                 "value":270
                 }, 
                 {
                  "name":"Static",
@@ -2622,7 +2622,7 @@
                 {
                  "name":"R",
                  "type":"int",
-                 "value":180
+                 "value":0
                 }, 
                 {
                  "name":"Static",
@@ -9161,6 +9161,30 @@
                  "name":"Orientation",
                  "type":"int",
                  "value":1
+                }]
+        }, 
+        {
+         "id":418,
+         "image":"..\/assets\/sprites\/Track\/Explosive.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"explosive",
+                 "type":"bool",
+                 "value":true
+                }]
+        }, 
+        {
+         "id":419,
+         "image":"..\/assets\/sprites\/Track\/NotExplosive.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"explosive",
+                 "type":"bool",
+                 "value":false
                 }]
         }],
  "tilewidth":129,

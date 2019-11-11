@@ -8,7 +8,7 @@
 #include <common/EntityType.h>
 #include <common/ProtectedQueue.h>
 
-int get_random_position(int max_position) {
+size_t get_random_position(size_t max_position) {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(0, max_position);
@@ -75,7 +75,7 @@ void RacingTrack::add_spawn_point(Coordinate spawn_point) {
 void RacingTrack::set_spawn_points_to_cars(std::unordered_map<int32_t, Car> &cars) {
     int spawn_point_pos = (int)this->spawn_points.size() - 1; //Start from end to beginning
     for (auto &car : cars) {
-        car.second.set_start_position(this->spawn_points[spawn_point_pos]);
+        car.second.move_to(this->spawn_points[spawn_point_pos]);
         spawn_point_pos--;
     }
 }
@@ -85,7 +85,7 @@ Coordinate RacingTrack::get_random_track_position() {
     return this->track.at(random_position)->get_map_coordinate();
 }
 
-void RacingTrack::add_modifier(std::shared_ptr<Modifier> modifier) {
+void RacingTrack::add_modifier(const std::shared_ptr<Modifier>& modifier) {
     modifier->add_to_world(this->racing_track);
 }
 

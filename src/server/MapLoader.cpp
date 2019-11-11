@@ -12,12 +12,14 @@
 #define BEGIN_TRACK_TILE 26
 
 #define TILES_LAYER 0
-#define ORIENTATION_LAYER 1
+#define PROPERTIES_LAYER 1
 
 #define ID_PROPERTY_POS 0
 #define ROTATION_PROPERTY_POS 1
 #define STATIC_PROPERTY_POS 2
 #define ORIENTATION_PROPERTY_POS 0
+#define EXPLOSIVE_PROPERTY_POS 0
+
 
 #define ORIENTATION_UP 1
 #define ORIENTATION_DOWN 2
@@ -136,7 +138,7 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
 
             int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS]["value"];
             bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS]["value"];
-            auto info_pos = unsigned(json_map_data["layers"][ORIENTATION_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
+            auto info_pos = unsigned(json_map_data["layers"][PROPERTIES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
 
             send_tile(type_ID, i, j, tile_rotation, updater);
 
@@ -155,7 +157,11 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
                     set_orientation(this->track.back(), orientation);
                 }
                 else {
-                    racing_track.add_terrain(std::move(TerrainFactory::create_terrain(type_ID, i, j)));
+                    bool is_limit = json_tiles_data["tiles"][info_pos]["properties"][EXPLOSIVE_PROPERTY_POS]["value"];
+                    std::unique_ptr<Terrain> terrain = std::move(TerrainFactory::create_terrain(type_ID, i, j));
+                    if (is_limit)
+                        terrain->set_as_limit();
+                    racing_track.add_terrain(std::move(terrain));
                 }
             }
 

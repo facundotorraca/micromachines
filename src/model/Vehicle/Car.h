@@ -26,7 +26,7 @@ class Car : public Body {
     b2RevoluteJoint* front_left_joint{};
     b2RevoluteJoint* front_right_joint{};
 
-    Coordinate last_track_tile;
+    Coordinate respawn;
 
     int32_t throttle;
     int32_t steering_wheel;
@@ -48,8 +48,6 @@ class Car : public Body {
         explicit Car(CarSpecs specs);
 
         void add_to_world(b2World& world);
-
-        void set_start_position(Coordinate start_position);
 
         void collide(Body* body) override;
 
@@ -96,7 +94,9 @@ class Car : public Body {
 
         void complete_lap();
 
-    void repair();
+        void repair();
+
+        void explode();
 };
 
 #endif //MICROMACHINES_CAR_H

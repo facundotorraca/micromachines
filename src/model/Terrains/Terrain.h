@@ -14,6 +14,7 @@ class Terrain : public Sensor {
         Coordinate coordinate;
 
         int32_t ID;
+        bool is_limit;
         int32_t begin_distance;
 
         b2Body* terrain_body;
@@ -31,6 +32,8 @@ class Terrain : public Sensor {
         virtual void set_terrain_user_data() = 0;
 
         void apply_effect(Body* body) override;
+
+        void set_as_limit();
 
         void set_orientation(Orientation new_orientation);
 
