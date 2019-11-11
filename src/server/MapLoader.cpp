@@ -148,7 +148,7 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
                 if (is_track(type_ID) && type_ID == BEGIN_TRACK_TILE) {
                     begin_tile = std::move(TerrainFactory::create_terrain(type_ID, i, j));
                 }
-                else if (is_track(type_ID) & ((type_ID == TYPE_FINISH_LINE_BORDER) || (type_ID == TYPE_FINISH_LINE_CENTER))) {
+                else if (is_track(type_ID) && ((type_ID == TYPE_FINISH_LINE_BORDER) || (type_ID == TYPE_FINISH_LINE_CENTER))) {
                     racing_track.add_track((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
                 }
                 else if (is_track(type_ID)) {
