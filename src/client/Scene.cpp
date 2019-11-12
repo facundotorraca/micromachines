@@ -1,4 +1,5 @@
 #include <client/Menu/NoMenu.h>
+#include <client/Menu/LostConnectionMenu.h>
 #include "Scene.h"
 
 #define KEY_VALUE_POS 0
@@ -43,5 +44,7 @@ bool Scene::quit() {
 }
 
 void Scene::showConnectionLostMenu() {
-    scenario.addConnectionLostMessage();
+    auto new_state = std::unique_ptr<Menu>(new LostConnectionMenu);
+    std::unique_lock<std::mutex> lock(mtx);
+    menu.swap(new_state);
 }

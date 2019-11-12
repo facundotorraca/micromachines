@@ -5,6 +5,7 @@
 #include <common/MsgTypes.h>
 #include "PauseMenu.h"
 #include "NoMenu.h"
+#include "RestartMenu.h"
 
 void NoMenu::draw(Camera& camera) {
 }
@@ -82,6 +83,8 @@ NoMenu::receiveMessage(ProtocolSocket &socket, Scenario &scenario,
             scenario.showScreenEffect(command[0], command[1]); break;
         case MSG_SET_POSITION:
             scenario.setRacePosition(command[1]); break;
+        case MSG_RESTART_RACE:
+            return std::unique_ptr<Menu>(new RestartMenu);
         default:
             break;
     }
