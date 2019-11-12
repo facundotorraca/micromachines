@@ -5,15 +5,14 @@
 #include <common/EntityType.h>
 #include <model/Vehicle/Car.h>
 
-Terrain::Terrain(int32_t x, int32_t y, int32_t rotation, int32_t ID) {
+Terrain::Terrain(int32_t ID, int32_t x, int32_t y):
+    coordinate(x,y)
+{
     this->ID = ID;
-    this->map_x = x; //Relative position on a grid
-    this->map_y = y; //Relative position on a grid
-    this->rotation = rotation;
+    this->is_limit = false;
     this->terrain_body = nullptr;
     this->terrain_fixture = nullptr;
     this->begin_distance = INFINITE;
-    /*The real position is calculated with Box2D settings*/
 }
 
 void Terrain::add_to_world(b2World &world) {
@@ -22,8 +21,8 @@ void Terrain::add_to_world(b2World &world) {
 
     b2PolygonShape polygon_shape;
     /*Center position*/
-    int32_t x_pos = this->map_x * (TILE_TERRAIN_SIZE);
-    int32_t y_pos = this->map_y * (TILE_TERRAIN_SIZE);
+    int32_t x_pos = this->coordinate.get_x() * (TILE_TERRAIN_SIZE);
+    int32_t y_pos = this->coordinate.get_y() * (TILE_TERRAIN_SIZE);
     polygon_shape.SetAsBox(TILE_TERRAIN_SIZE/2, TILE_TERRAIN_SIZE/2,b2Vec2(x_pos, y_pos), 0);
 
     b2FixtureDef fixture_def;
@@ -33,11 +32,11 @@ void Terrain::add_to_world(b2World &world) {
     this->set_terrain_user_data();
 }
 
-Terrain::Terrain(Terrain &&other) noexcept {
+Terrain::Terrain(Terrain &&other) noexcept:
+    coordinate(other.coordinate)
+{
     this->ID = other.ID;
-    this->map_x = other.map_x;
-    this->map_y = other.map_y;
-    this->rotation = other.rotation;
+    this->is_limit = other.is_limit;
     this->terrain_body = other.terrain_body;
     this->begin_distance = other.begin_distance;
     this->terrain_fixture = other.terrain_fixture;
@@ -53,7 +52,7 @@ void Terrain::apply_effect(Body *body) {
 }
 
 Coordinate Terrain::get_map_coordinate() {
-    return {(float)this->map_x, (float)this->map_y, 0};
+    return this->coordinate;
 }
 
 int32_t Terrain::get_ID() {
@@ -62,5 +61,15 @@ int32_t Terrain::get_ID() {
 
 void Terrain::set_begin_distance(int32_t distance) {
     this->begin_distance = distance;
+}
+
+void Terrain::set_orientation(Orientation orientation) {
+    float x = this->coordinate.get_x();
+    float y = this->coordinate.get_y();
+    this->coordinate = Coordinate(x, y, orientation);
+}
+
+void Terrain::set_as_limit() {
+    this->is_limit = true;
 }
 

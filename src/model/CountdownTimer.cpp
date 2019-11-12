@@ -10,11 +10,11 @@ CountdownTimer::CountdownTimer(int32_t time, Race& race, ClientUpdater& client_u
     race(race),
     client_updater(client_updater)
 {
+    //this->race.prepare(this->client_updater);
     this->max_time = time;
 }
 
 void CountdownTimer::run() {
-    this->race.prepare();
     int32_t remaining_time = this->max_time;
     this->send_remaining_time(remaining_time);
     while (remaining_time > 0) {

@@ -1,0 +1,12 @@
+#ifndef MICROMACHINES_ORIENTATION_H
+#define MICROMACHINES_ORIENTATION_H
+
+typedef enum {
+    UP,
+    DOWN,
+    RIGHT,
+    LEFT,
+    NOT_ORIENTED
+} Orientation;
+
+#endif //MICROMACHINES_ORIENTATION_H

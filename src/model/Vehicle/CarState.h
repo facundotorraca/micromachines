@@ -12,6 +12,8 @@ class CarState {
     public:
         virtual bool try_respawn(Coordinate respawn_point, b2Body* car_body, std::vector<Wheel*> wheels) = 0;
 
+        virtual void set_respawn_position(Coordinate& car_last_track_pos, Coordinate new_position) = 0;
+
 };
 
 

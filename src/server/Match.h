@@ -39,7 +39,7 @@ class Match : public Thread {
     Race race;
     std::mutex mtx;
 
-    PlugingsManager plugings_manager;
+    PlugingsManager plugins_manager;
 
     private:
         void step();

@@ -14,18 +14,17 @@
 #include <common/ProtectedQueue.h>
 #include <common/ProtocolSocket.h>
 #include <model/Modifiers/Modifier.h>
+#include <server/MapLoader.h>
 #include "model/Terrains/Terrain.h"
 
 class RacingTrack {
+    MapLoader map_loader;
+
     b2World racing_track;
 
     float32 time_step;
     int32 velocity_iterations;
     int32 position_iterations;
-
-    int32_t height;
-    int32_t width;
-    int32_t track_terrain;
 
     Podium* podium;
     FinishLine* finish_line;
@@ -46,7 +45,7 @@ class RacingTrack {
 
         Coordinate get_random_track_position();
 
-        void set_track_terrain(int32_t terrain);
+        void prepare_track(ClientUpdater& updater);
 
         void add_car_to_podium(Car& car, int32_t ID);
 
@@ -56,15 +55,11 @@ class RacingTrack {
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
-        void add_modifier(std::shared_ptr<Modifier> modifier);
-
-        void send(ClientUpdater& client_updater, int32_t ID);
+        void add_modifier(const std::shared_ptr<Modifier>& modifier);
 
         void set_finish_line(Coordinate begin, Coordinate end);
 
         void add_static_track_object(StaticTrackObject&& object);
-
-        void set_track_size(int32_t height, int32_t track_width);
 
         void set_spawn_points_to_cars(std::unordered_map<int32_t, Car>& cars);
 

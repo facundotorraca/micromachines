@@ -111,7 +111,7 @@ public:
             textures.emplace(3, createTexture(renderer,"assets/sprites/Track/AR_3a.png")); 
             textures.emplace(4, createTexture(renderer,"assets/sprites/Track/AR_4a.png")); 
             textures.emplace(5, createTexture(renderer,"assets/sprites/Track/AR_5a.png")); 
-            textures.emplace(8, createTexture(renderer,"assets/sprites/Track/AR_8a.png")); 
+            textures.emplace(8, createTexture(renderer,"assets/sprites/Track/AR_8c.png"));
             textures.emplace(9, createTexture(renderer,"assets/sprites/Track/AR_9a.png")); 
             textures.emplace(10, createTexture(renderer,"assets/sprites/Track/AR_10a.png")); 
             textures.emplace(13, createTexture(renderer,"assets/sprites/Track/AR_13a.png")); 
@@ -132,7 +132,7 @@ public:
             textures.emplace(31, createTexture(renderer,"assets/sprites/Track/DR_3a.png")); 
             textures.emplace(32, createTexture(renderer,"assets/sprites/Track/DR_4a.png")); 
             textures.emplace(33, createTexture(renderer,"assets/sprites/Track/DR_5a.png")); 
-            textures.emplace(36, createTexture(renderer,"assets/sprites/Track/DR_8a.png")); 
+            textures.emplace(36, createTexture(renderer,"assets/sprites/Track/DR_8c.png"));
             textures.emplace(41, createTexture(renderer,"assets/sprites/Track/DR_13a.png")); 
             textures.emplace(42, createTexture(renderer,"assets/sprites/Track/DR_14a.png")); 
             textures.emplace(44, createTexture(renderer,"assets/sprites/Track/DR_16a.png")); 

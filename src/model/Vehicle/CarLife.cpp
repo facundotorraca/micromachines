@@ -25,7 +25,7 @@ void CarLife::restart_life() {
     this->changed = true;
 }
 
-void CarLife::send_general_update(int32_t ID, ClientUpdater &updater) {
+void CarLife::send_updates(int32_t ID, ClientUpdater &updater) {
     if (this->changed) {
         updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_SET_HEALTH, ID, int32_t(this->life)} ));
         this->changed = false;
@@ -37,8 +37,13 @@ void CarLife::get_dto_info(DTO_CarLife& info_life) {
     info_life.current_life = this->life;
 }
 
-void CarLife::appy_plugin(DTO_CarLife &life_info) {
+void CarLife::apply_plugin(DTO_CarLife &life_info) {
     this->max_life = life_info.max_life;
     this->life = life_info.current_life;
+    this->changed = true;
+}
+
+void CarLife::kill() {
+    this->life = 0;
     this->changed = true;
 }
