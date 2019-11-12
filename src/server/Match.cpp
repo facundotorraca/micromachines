@@ -234,16 +234,10 @@ void Match::set_restart_option(UpdateRace update) {
     if (!update.is_from(creator_ID))
         return;
 
-    this->clients_monitor.set_on_running_game_mode();
 
-    if (update.apply_restart_option(this->race))
-        this->restart_match();
-    else {
-        /*When all players are killed,
-        all threads close RAII */
-        for (auto& player : this->players)
-            player.second.kill();
-    }
+    if (update.apply_restart_option(this->race, this->players, this))
+        this->clients_monitor.set_on_running_game_mode();
+
 }
 
 void Match::restart_match() {

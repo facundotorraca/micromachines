@@ -8,6 +8,7 @@
 
 class Player;
 class Race;
+class Match;
 
 class UpdateRace {
     int32_t key;
@@ -21,7 +22,7 @@ public:
 
     void update_player_view(std::unordered_map<int32_t, Player>& players);
 
-    bool apply_restart_option(Race& race);
+    bool apply_restart_option(Race& race, std::unordered_map<int32_t, Player>& players, Match* match);
 
     bool is_from(int32_t ID);
 };

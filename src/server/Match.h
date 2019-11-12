@@ -58,8 +58,6 @@ class Match : public Thread {
 
         bool all_players_finished();
 
-        void restart_match();
-
         void select_new_creator();
 
         void remove_disconnected_players();
@@ -78,6 +76,8 @@ class Match : public Thread {
         std::string get_match_name_to_send();
 
         void add_player(Player&& player);
+
+        void restart_match();
 
         bool is_closed();
 

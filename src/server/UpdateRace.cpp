@@ -4,6 +4,7 @@
 #include "UpdateRace.h"
 #include <model/Race.h>
 #include "model/Vehicle/Car.h"
+#include "Match.h"
 
 UpdateRace::UpdateRace(int32_t client_ID, int32_t key, int32_t key_state) {
     this->key = key;
@@ -24,9 +25,16 @@ void UpdateRace::update_player_view(std::unordered_map<int32_t, Player>& players
         players.at(this->client_ID).set_view(this->key);
 }
 
-bool UpdateRace::apply_restart_option(Race &race) {
+bool UpdateRace::apply_restart_option(Race &race, std::unordered_map<int32_t, Player>& players,  Match* match) {
     if (this->key_state == KEY_PRESSED && this->key == KEY_RESTART) {
+        match->restart_match();
         race.restart();
+        return true;
+    }
+    if (this->key_state == KEY_PRESSED && this->key == KEY_QUIT) {
+        for (auto& player : players) {
+            player.second.kill();
+        }
         return true;
     }
     return false;
