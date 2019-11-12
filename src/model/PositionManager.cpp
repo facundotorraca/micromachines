@@ -42,3 +42,15 @@ void PositionManager::send_update(int32_t ID, ClientUpdater &updater) {
         updater.send_to(ID, position_info);
     }
 }
+
+void PositionManager::get_dto_info(const int32_t ID, DTO_Car& car_info) {
+    try {
+        car_info.position =  this->positions.at(ID);
+    } catch(const std::out_of_range& e) {
+        car_info.position = 0;
+    }
+}
+
+void PositionManager::restart() {
+    this->positions.clear();
+}

@@ -21,8 +21,6 @@ class LapCounter {
 
         bool car_complete_laps(int32_t ID);
 
-        int32_t get_total_laps();
-
         int32_t get_laps(int32_t ID);
 
         void send_update(int32_t ID, ClientUpdater& client_updates);
@@ -30,6 +28,8 @@ class LapCounter {
         void send_total_laps(int32_t ID, ClientUpdater &updater);
 
         void get_dto_info(DTO_Info& param);
+
+        void restart();
 };
 
 #endif //MICROMACHINES_LAPCOUNTER_H

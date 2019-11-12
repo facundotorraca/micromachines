@@ -72,4 +72,20 @@ public:
     }
 };
 
+class RestartRaceCommand : public ServerCommand{
+public:
+    RestartRaceCommand() : ServerCommand() {
+        key = KEY_RESTART;
+        type = KEY_PRESSED;
+    }
+};
+
+class EndRaceCommand : public ServerCommand{
+public:
+    EndRaceCommand() : ServerCommand() {
+        key = KEY_QUIT;
+        type = KEY_PRESSED;
+    }
+};
+
 #endif //MICROMACHINES_SUBCLASSES_H

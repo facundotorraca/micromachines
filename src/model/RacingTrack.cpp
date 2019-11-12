@@ -75,7 +75,7 @@ void RacingTrack::add_spawn_point(Coordinate spawn_point) {
 void RacingTrack::set_spawn_points_to_cars(std::unordered_map<int32_t, Car> &cars) {
     int spawn_point_pos = (int)this->spawn_points.size() - 1; //Start from end to beginning
     for (auto &car : cars) {
-        car.second.move_to(this->spawn_points[spawn_point_pos]);
+        car.second.move_to(this->spawn_points[spawn_point_pos], false);
         spawn_point_pos--;
     }
 }
@@ -96,5 +96,14 @@ void RacingTrack::prepare_track(ClientUpdater &updater) {
 RacingTrack::~RacingTrack() {
     delete this->podium;
     delete this->finish_line;
+}
+
+void RacingTrack::restart() {
+    if (this->podium)
+        this->podium->restart();
+}
+
+void RacingTrack::remove_car(Car& car) {
+   car.remove_from_race(this->racing_track);
 }
 

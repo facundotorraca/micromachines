@@ -59,11 +59,13 @@ class Car : public Body {
 
         int32_t get_ID() override;
 
-        void move_to(Coordinate coordinate);
+        void move_to(Coordinate coordinate, bool soft);
 
         void get_dto_info(int32_t ID, DTO_Car& car_info);
 
         void apply_plugin(DTO_Car& car_info);
+
+        void remove_from_race(b2World& world);
 
         void update();
 

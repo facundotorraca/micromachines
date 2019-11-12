@@ -63,7 +63,7 @@ void Hud::draw(Camera &camera) {
     int i = 1;
     for (auto& name : scoreboard){
         auto show_name = std::to_string(i) + ": " + name;
-        camera.drawText(show_name, 0.07, 0.07+(0.04*i),
+        camera.drawText(show_name, 0.07, 0.2+(0.04*i),
                 0.4, show_name.size());
         ++i;
     }
@@ -106,5 +106,10 @@ void Hud::setRacePosition(int32_t position) {
     } else {
         this->race_position = stringify(position);
     }
+}
+
+void Hud::reset() {
+    scoreboard.clear();
+    lap = 0;
 }
 

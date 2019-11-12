@@ -10,6 +10,8 @@
 #define KEY_VALUE_POS 0
 #define KEY_STATE_POS 1
 
+
+
 Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name):
     p_socket(std::move(p_socket)),
     change_view(false)
@@ -78,7 +80,11 @@ void Player::set_car_model(int32_t _car_model) {
 UpdateRace Player::receive_update() {
     std::vector<int32_t> buffer;
     this->p_socket.receive(buffer);
-    return {this->ID, buffer.at(KEY_VALUE_POS), buffer.at(KEY_STATE_POS)};
+    try {
+        return {this->ID, buffer.at(KEY_VALUE_POS), buffer.at(KEY_STATE_POS)};
+    } catch (const std::out_of_range& e) {
+        return {this->ID, NOT_PRESSED, NOT_PRESSED};
+    }
 }
 
 void Player::send(UpdateClient update) {
@@ -123,6 +129,17 @@ void Player::set_finished(ClientUpdater& updater) {
     updater.send_to_all(begin_username_flag);
     updater.send_to_all(username_info);
     this->playing = false;
+}
+
+void Player::restart_playing(ClientUpdater& updater) {
+    this->current_view_ID = this->ID;
+
+    UpdateClient update_view(std::vector<int32_t>{MSG_CAR_ID, this->ID});
+    UpdateClient reset_hud(std::vector<int32_t>{MSG_RESET});
+    updater.send_to(this->ID, update_view);
+    updater.send_to(this->ID, reset_hud);
+
+    this->playing = true;
 }
 
 int32_t Player::get_ID() {

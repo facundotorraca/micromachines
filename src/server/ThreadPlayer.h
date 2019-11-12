@@ -16,6 +16,8 @@ class ThreadPlayer : public Thread {
     ThreadUpdateSender sender;
     Player& player;
 
+    std::atomic<bool> on_hold;
+
     private:
         void run() override;
 
@@ -23,6 +25,10 @@ class ThreadPlayer : public Thread {
 
     public:
         ThreadPlayer(ClientUpdater& client_updater, ProtectedQueue<UpdateRace>& updates_recv, Player& player);
+
+        void resume();
+
+        void set_on_hold();
 };
 
 

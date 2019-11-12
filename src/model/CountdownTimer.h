@@ -19,9 +19,6 @@ class CountdownTimer : public Thread {
     public:
         explicit CountdownTimer(int32_t time, Race& race, ClientUpdater& client_updater);
 
-
-
-
 };
 
 

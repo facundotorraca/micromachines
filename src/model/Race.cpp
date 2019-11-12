@@ -51,6 +51,7 @@ bool Race::car_complete_laps(int32_t ID) {
 }
 
 void Race::player_left_game(const int32_t ID) {
+    this->racing_track.remove_car(this->cars.at(ID));
     this->cars.erase(ID);
 }
 
@@ -72,15 +73,27 @@ void Race::get_dto_data(DTO_Info &info) {
     size_t i = 0;
     for (auto& car : this->cars) {
         car.second.get_dto_info(car.first, info.car_info[i]);
+        this->position_manager.get_dto_info(car.first, info.car_info[i]);
         i++;
     }
+
     info.cars = this->cars.size();
     this->lap_counter.get_dto_info(info);
 }
 
 void Race::apply_plugin(DTO_Info &info) {
-    for (size_t i = 0; i < info.cars; i++) {
+    for (size_t i = 0; i < info.cars; i++)
         this->cars.at(info.car_info[i].ID).apply_plugin(info.car_info[i]);
+}
+
+void Race::restart() {
+    this->lap_counter.restart();
+    this->racing_track.restart();
+    this->position_manager.restart();
+    this->racing_track.set_spawn_points_to_cars(this->cars);
+
+    for (auto& car : this->cars) {
+        car.second.repair();
     }
 }
 

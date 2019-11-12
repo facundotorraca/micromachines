@@ -33,13 +33,13 @@ class Terrain : public Sensor {
 
         void apply_effect(Body* body) override;
 
-        void set_as_limit();
-
         void set_orientation(Orientation new_orientation);
 
         virtual void apply_terrain_effect(Body* body) = 0;
 
         Coordinate get_map_coordinate();
+
+       void set_as_limit();
 
        int32_t get_ID();
 };

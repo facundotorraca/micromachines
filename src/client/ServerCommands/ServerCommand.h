@@ -18,7 +18,7 @@ protected:
 public:
     static std::unique_ptr<ServerCommand> create(int key, int type);
     static std::unique_ptr<ServerCommand> create(SDL_Keycode key, SDL_EventType type);
-    void send(ProtocolSocket& socket);
+    virtual void send(ProtocolSocket& socket);
 };
 
 

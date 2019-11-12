@@ -10,25 +10,27 @@
 #include <map>
 #include <list>
 #include <client/Entities/Entity.h>
-#include <client/Commands/Command.h>
 #include "ServerCommands/ServerCommand.h"
 #include "Camera.h"
 #include "Map.h"
 #include "Scenario.h"
+#include "Bot.h"
+#include <client/Menu/Menu.h>
 
 class Scene {
+    Camera camera;
     ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
-
     Scenario scenario;
     Bot &bot;
-
-    public:
+    std::unique_ptr<Menu> menu;
+    std::mutex mtx;
+public:
 
         explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue, Bot &bot);
 
-        void handleKeyEvent(SDL_Keycode key, SDL_EventType type);
+        bool handleKeyEvent(SDL_Keycode key, SDL_EventType type);
 
-        std::unique_ptr<Command> receiveMessage(ProtocolSocket& socket);
+        void receiveMessage(ProtocolSocket& socket);
 
         void draw();
 

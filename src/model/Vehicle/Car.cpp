@@ -182,8 +182,8 @@ void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
     }
 }
 
-void Car::move_to(Coordinate coordinate) {
-    if (this->car_body->GetLinearVelocity().Length() > 20)
+void Car::move_to(Coordinate coordinate, bool soft) {
+    if (soft && this->car_body->GetLinearVelocity().Length() > 20)
         //avoid teleporting very roughly
         return;
 
@@ -300,12 +300,19 @@ void Car::set_respawn(Coordinate new_respawn) {
 
 void Car::explode() {
     this->life.kill();
-    this->car_state.reset(new Dead());
     this->engine_state.reset( new EngineOff());
+    this->car_state.reset(new Dead());
 }
 
 Car::~Car() {
     for (auto & wheel : this->wheels) {
         delete wheel;
     }
+}
+
+void Car::remove_from_race(b2World& world) {
+    for (auto& wheel : this->wheels) {
+        world.DestroyBody(wheel->get_body());
+    }
+    world.DestroyBody(this->car_body);
 }
