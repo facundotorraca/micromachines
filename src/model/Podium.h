@@ -22,6 +22,8 @@ class Podium {
         Podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
 
         void add_car(Car& car, int32_t ID);
+
+        void restart();
 };
 
 

@@ -41,6 +41,8 @@ class Race {
         void send_updates(int32_t ID, ClientUpdater &updater);
 
         void send_info_to_player(int32_t ID, ClientUpdater& client_updater);
+
+    void restart();
 };
 
 

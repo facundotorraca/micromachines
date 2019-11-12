@@ -43,6 +43,10 @@ class PositionManager {
         void update(LapCounter& lap_counter);
 
         void send_update(int32_t ID, ClientUpdater& updater);
+
+        void get_dto_info(int32_t ID, DTO_Car &param);
+
+        void restart();
 };
 
 

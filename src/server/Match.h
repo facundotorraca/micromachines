@@ -21,6 +21,7 @@
 #include <model/Vehicle/Car.h>
 #include <model/RacingTrack.h>
 #include <common/ProtectedQueue.h>
+#include <model/CountdownTimer.h>
 #include "ThreadClientEventMonitor.h"
 #include "PlugingsManager.h"
 
@@ -39,6 +40,7 @@ class Match : public Thread {
     Race race;
     std::mutex mtx;
 
+    CountdownTimer timer;
     PlugingsManager plugins_manager;
 
     private:
@@ -52,7 +54,13 @@ class Match : public Thread {
 
         void initialize_players();
 
+        bool all_players_finished();
+
+        void restart_match();
+
         void remove_disconnected_players();
+
+        void wait_match_creator_decision();
 
     public:
         explicit Match(std::string match_creator, std::string match_name);

@@ -23,6 +23,8 @@
 #define START_MATCH_FLAG 0
 #define TIME_START 3
 
+#define RESTART_RACE_OPTION 1
+
 #define UPDATE_QUEUE_MAX_SIZE 1000
 
 Match::Match(std::string match_creator, std::string match_name):
@@ -32,7 +34,8 @@ Match::Match(std::string match_creator, std::string match_name):
         race(3, MAP_PATH, MAP_NAME),
         match_creator(std::move(match_creator)),
         clients_monitor(this, this->updates_race),
-        plugins_manager(this->race, PLUGINS_PATH)
+        plugins_manager(this->race, PLUGINS_PATH),
+        timer(TIME_START,this->race, this->client_updater)
 {}
 
 void Match::add_player(Player&& player) {
@@ -144,22 +147,51 @@ void Match::step() {
 }
 
 void Match::update_players() {
-    for (auto& player : this->players) {
-        int32_t ID = player.first;
+        for (auto& player : this->players) {
+            int32_t ID = player.first;
 
-        this->race.send_updates(ID, this->client_updater);
+            this->race.send_updates(ID, this->client_updater);
 
-        if (this->players.at(ID).is_playing() && this->race.car_complete_laps(ID)) {
-            this->players.at(ID).set_finished(this->client_updater);
+            if (this->players.at(ID).is_playing() && this->race.car_complete_laps(ID)) {
+                this->players.at(ID).set_finished(this->client_updater);
+            }
+
+            if (!this->players.at(ID).is_playing())
+                this->players.at(ID).update_view(players.size(), client_updater);
         }
+}
 
-        if (!this->players.at(ID).is_playing())
-            this->players.at(ID).update_view(players.size(), client_updater);
+
+void Match::wait_match_creator_decision() {
+    int32_t creator_ID = 0;
+
+    for (auto& player : this->players) {
+        if (player.second.is_called(this->match_creator))
+            creator_ID = player.first;
+    }
+
+    for (auto& th_player : this->thread_players) {
+        th_player.second.set_on_hold();
+    }
+
+    uint8_t option = this->players.at(creator_ID).receive_option();
+
+    if (option == RESTART_RACE_OPTION) {
+        this->restart_match();
+    } else {
+        this->running = false;
     }
 }
 
+bool Match::all_players_finished() {
+    for (auto& player : this->players) {
+        if (player.second.is_playing())
+            return false;
+    }
+    return true;
+}
+
 void Match::run() {
-    CountdownTimer timer(TIME_START,this->race, this->client_updater);
     this->plugins_manager.load_plugings();
     this->initialize_players();
 
@@ -176,7 +208,18 @@ void Match::run() {
             this->close();
             return;
         }
+
+        if (this->all_players_finished()) {
+            this->wait_match_creator_decision();
+        }
+
     }
 
     timer.join();
 }
+
+void Match::restart_match() {
+    this->race.restart();
+    this->timer.start();
+}
+

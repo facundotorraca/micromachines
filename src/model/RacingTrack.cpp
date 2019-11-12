@@ -98,3 +98,9 @@ RacingTrack::~RacingTrack() {
     delete this->finish_line;
 }
 
+void RacingTrack::restart() {
+    if (this->podium)
+        this->podium->restart();
+
+}
+

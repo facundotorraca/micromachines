@@ -66,6 +66,8 @@ class RacingTrack {
         void set_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
 
         ~RacingTrack();
+
+    void restart();
 };
 
 

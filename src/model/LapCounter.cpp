@@ -36,10 +36,6 @@ bool LapCounter::car_complete_laps(int32_t ID) {
     }
 }
 
-int32_t LapCounter::get_total_laps() {
-    return this->total_laps;
-}
-
 void LapCounter::send_update(int32_t ID, ClientUpdater& client_updater) {
     try {
         int32_t player_laps = this->laps.at(ID);
@@ -70,4 +66,8 @@ int32_t LapCounter::get_laps(int32_t ID) {
     } catch (std::out_of_range &e) {
         return 0;
     }
+}
+
+void LapCounter::restart() {
+    this->laps.clear();
 }

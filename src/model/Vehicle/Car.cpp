@@ -300,8 +300,8 @@ void Car::set_respawn(Coordinate new_respawn) {
 
 void Car::explode() {
     this->life.kill();
-    this->car_state.reset(new Dead());
     this->engine_state.reset( new EngineOff());
+    this->car_state.reset(new Dead());
 }
 
 Car::~Car() {
