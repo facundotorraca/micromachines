@@ -24,6 +24,8 @@ public:
     void setTotalLaps(int32_t laps);
     void addFinishedPlayer(std::string &player_name);
     void setRacePosition(int32_t position);
+
+    void reset();
 };
 
 

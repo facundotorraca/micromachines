@@ -85,6 +85,8 @@ NoMenu::receiveMessage(ProtocolSocket &socket, Scenario &scenario,
             scenario.setRacePosition(command[1]); break;
         case MSG_RESTART_RACE:
             return std::unique_ptr<Menu>(new RestartMenu);
+        case MSG_RESET:
+            scenario.reset(); break;
         default:
             break;
     }

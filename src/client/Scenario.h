@@ -45,6 +45,7 @@ public:
     void addConnectionLostMessage();
     void setRacePosition(int32_t number);
     void draw(Camera& camera);
+    void reset();
 };
 
 

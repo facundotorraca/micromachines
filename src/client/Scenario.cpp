@@ -122,3 +122,8 @@ void Scenario::setRacePosition(int32_t number) {
     hud.setRacePosition(number);
 }
 
+void Scenario::reset() {
+    std::unique_lock<std::mutex> lock(mtx);
+    hud.reset();
+}
+
