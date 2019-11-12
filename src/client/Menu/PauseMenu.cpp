@@ -24,3 +24,9 @@ std::unique_ptr<Menu> PauseMenu::handleKey(SDL_Keycode key, SDL_EventType type,
     }
     return std::unique_ptr<Menu> (nullptr);
 }
+
+std::unique_ptr<Menu>
+PauseMenu::receiveMessage(ProtocolSocket &socket, Scenario &scenario,
+                          Camera &camera) {
+    return std::unique_ptr<Menu>(nullptr);
+}

@@ -5,7 +5,7 @@
 #include <client/Menu/NoMenu.h>
 #include "Scenario.h"
 
-Scenario::Scenario() : my_car_id(-1), menu(new NoMenu()) {}
+Scenario::Scenario() : my_car_id(-1) {}
 
 void Scenario::addTile(TileInfo &info) {
     std::unique_lock<std::mutex> lock(mtx);
@@ -14,11 +14,12 @@ void Scenario::addTile(TileInfo &info) {
 }
 
 void Scenario::setOwnID(int32_t id) {
+    std::unique_lock<std::mutex> lock(mtx);
     this->my_car_id = id;
     minimap.setMyID(id);
 }
 
-void Scenario::updateCar(CarInfo &info) {
+void Scenario::updateCar(CarInfo &info, Camera& camera) {
     std::unique_lock<std::mutex> lock(mtx);
     auto car = cars.emplace(std::piecewise_construct,
                             std::forward_as_tuple(info.car_id),
@@ -35,9 +36,8 @@ void Scenario::updateCar(CarInfo &info) {
     }
 }
 
-void Scenario::draw() {
+void Scenario::draw(Camera& camera) {
     std::unique_lock<std::mutex> lock(mtx);
-    camera.clear();
     map.draw(camera);
     entities.draw(camera);
     for (auto& car : cars){
@@ -47,9 +47,7 @@ void Scenario::draw() {
     countdown.draw(camera);
     screen_effect.draw(camera);
     minimap.draw(camera);
-    menu->draw(camera);
     l_screen.draw(camera);
-    camera.draw();
 }
 
 void Scenario::setCarHealth(int32_t id, int32_t health) {
@@ -116,21 +114,11 @@ void Scenario::showScreenEffect(int32_t effect, int32_t duration) {
 }
 
 void Scenario::addConnectionLostMessage() {
-    std::unique_lock<std::mutex> lock(mtx);
     //nothing
 }
 
 void Scenario::setRacePosition(int32_t number) {
     std::unique_lock<std::mutex> lock(mtx);
     hud.setRacePosition(number);
-}
-
-bool Scenario::handleKey(SDL_Keycode key, SDL_EventType type, ProtectedQueue<std::unique_ptr<ServerCommand>>& queue) {
-    std::unique_lock<std::mutex> lock(mtx);
-    bool response = true;
-    auto new_state = menu->handleKey(key, type, queue, response);
-    if (new_state)
-        this->menu.swap(new_state);
-    return response;
 }
 

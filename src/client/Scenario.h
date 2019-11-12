@@ -15,10 +15,8 @@
 #include "Entities.h"
 #include "Entities/TileInfo.h"
 #include "ScreenEffectDrawer.h"
-#include "client/Menu/Menu.h"
 
 class Scenario {
-    Camera camera;
     Map map;
     Hud hud;
     LoadingScreen l_screen;
@@ -26,7 +24,6 @@ class Scenario {
     ScreenEffectDrawer screen_effect;
     Minimap minimap;
     Entities entities;
-    std::unique_ptr<Menu> menu;
     int32_t my_car_id;
     std::map<int32_t, Car> cars;
     std::mutex mtx;
@@ -34,7 +31,7 @@ public:
     Scenario();
     void addTile(TileInfo& info);
     void setOwnID(int32_t id);
-    void updateCar(CarInfo& info);
+    void updateCar(CarInfo& info, Camera& camera);
     void setCarHealth(int32_t id, int32_t health);
     void setBackground(int32_t type, int32_t width, int32_t height);
     void setLapNumber(int32_t lap);
@@ -47,8 +44,7 @@ public:
     void showScreenEffect(int32_t effect, int32_t duration);
     void addConnectionLostMessage();
     void setRacePosition(int32_t number);
-    void draw();
-    bool handleKey(SDL_Keycode key, SDL_EventType type, ProtectedQueue<std::unique_ptr<ServerCommand>>& queue);
+    void draw(Camera& camera);
 };
 
 
