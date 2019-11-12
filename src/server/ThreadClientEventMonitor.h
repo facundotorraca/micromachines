@@ -11,11 +11,17 @@ class ThreadClientEventMonitor : public Thread {
     ProtectedQueue<UpdateRace>& updates;
     Match* match;
 
+    std::atomic<bool> restart_mode;
+
     private:
         void run() override;
 
     public:
         ThreadClientEventMonitor(Match* match, ProtectedQueue<UpdateRace>& updates);
+
+        void set_on_running_game_mode();
+
+        void set_on_restart_mode();
 };
 
 

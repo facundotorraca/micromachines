@@ -81,9 +81,8 @@ void Race::get_dto_data(DTO_Info &info) {
 }
 
 void Race::apply_plugin(DTO_Info &info) {
-    for (size_t i = 0; i < info.cars; i++) {
+    for (size_t i = 0; i < info.cars; i++)
         this->cars.at(info.car_info[i].ID).apply_plugin(info.car_info[i]);
-    }
 }
 
 void Race::restart() {
@@ -91,5 +90,9 @@ void Race::restart() {
     this->racing_track.restart();
     this->position_manager.restart();
     this->racing_track.set_spawn_points_to_cars(this->cars);
+
+    for (auto& car : this->cars) {
+        car.second.repair();
+    }
 }
 

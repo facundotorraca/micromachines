@@ -33,6 +33,8 @@ class Player {
 
         void set_finished(ClientUpdater& updater);
 
+        void restart_playing(ClientUpdater& updater);
+
         bool is_called(std::string& username);
 
         void set_car_model(int32_t car_model);

@@ -10,6 +10,8 @@
 #define KEY_VALUE_POS 0
 #define KEY_STATE_POS 1
 
+
+
 Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name):
     p_socket(std::move(p_socket)),
     change_view(false)
@@ -123,6 +125,15 @@ void Player::set_finished(ClientUpdater& updater) {
     updater.send_to_all(begin_username_flag);
     updater.send_to_all(username_info);
     this->playing = false;
+}
+
+void Player::restart_playing(ClientUpdater& updater) {
+    //UpdateClient restart(std::vector<int32_t>(MSG_RESTART));
+    //updater.send_to(this->ID, restart);
+    this->current_view_ID = this->ID;
+    this->change_view = true;
+    this->update_view(1, updater);
+    this->playing = true;
 }
 
 int32_t Player::get_ID() {

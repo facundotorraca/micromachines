@@ -5,7 +5,6 @@
 #include <common/Sizes.h>
 #include <model/DTO_Info.h>
 #include <common/SocketError.h>
-#include <model/CountdownTimer.h>
 #include "ThreadClientEventMonitor.h"
 #include <server/FramesSyncronizer.h>
 
@@ -35,6 +34,7 @@ Match::Match(std::string match_creator, std::string match_name):
         match_creator(std::move(match_creator)),
         clients_monitor(this, this->updates_race),
         plugins_manager(this->race, PLUGINS_PATH),
+        waiting_restart(false),
         timer(TIME_START,this->race, this->client_updater)
 {}
 
@@ -82,6 +82,7 @@ void Match::close() {
     /*Close is used by the MatchTable,
     a non started  match is also not running,
     but not dead*/
+    this->timer.join();
     this->updates_race.close();
     this->clients_monitor.join();
     this->running = false;
@@ -147,40 +148,37 @@ void Match::step() {
 }
 
 void Match::update_players() {
-        for (auto& player : this->players) {
-            int32_t ID = player.first;
+    for (auto& player : this->players) {
+        int32_t ID = player.first;
 
-            this->race.send_updates(ID, this->client_updater);
+        this->race.send_updates(ID, this->client_updater);
 
-            if (this->players.at(ID).is_playing() && this->race.car_complete_laps(ID)) {
-                this->players.at(ID).set_finished(this->client_updater);
-            }
+        if (this->players.at(ID).is_playing() && this->race.car_complete_laps(ID))
+             this->players.at(ID).set_finished(this->client_updater);
 
-            if (!this->players.at(ID).is_playing())
-                this->players.at(ID).update_view(players.size(), client_updater);
-        }
+        if (!this->players.at(ID).is_playing())
+            this->players.at(ID).update_view(players.size(), client_updater);
+    }
 }
-
 
 void Match::wait_match_creator_decision() {
     int32_t creator_ID = 0;
 
     for (auto& player : this->players) {
-        if (player.second.is_called(this->match_creator))
+        if (player.second.is_called(this->match_creator)) {
             creator_ID = player.first;
+        }
     }
 
     for (auto& th_player : this->thread_players) {
-        th_player.second.set_on_hold();
+        if (th_player.first != creator_ID) {
+            th_player.second.set_on_hold();
+        }
     }
 
-    uint8_t option = this->players.at(creator_ID).receive_option();
-
-    if (option == RESTART_RACE_OPTION) {
-        this->restart_match();
-    } else {
-        this->running = false;
-    }
+    this->clients_monitor.set_on_restart_mode();
+    //Aca mando un msj
+    this->waiting_restart = true;
 }
 
 bool Match::all_players_finished() {
@@ -196,7 +194,7 @@ void Match::run() {
     this->initialize_players();
 
     this->clients_monitor.start();
-    timer.start();
+    this->timer.start();
 
     while (this->running) {
         this->step();
@@ -204,22 +202,47 @@ void Match::run() {
         this->remove_disconnected_players();
 
         if (this->players.empty()) {
-            timer.join();
             this->close();
             return;
         }
 
-        if (this->all_players_finished()) {
+        if(this->all_players_finished() && !waiting_restart) {
             this->wait_match_creator_decision();
         }
+    }
+}
 
+void Match::set_restart_option(UpdateRace update) {
+    int32_t creator_ID = 0;
+
+    for (auto& player : this->players) {
+        if (player.second.is_called(this->match_creator))
+            creator_ID = player.first;
     }
 
-    timer.join();
+    if (!update.is_from(creator_ID))
+        return;
+
+    if (update.apply_restart_option(this->race)) {
+        this->clients_monitor.set_on_running_game_mode();
+        this->restart_match();
+    } else {
+        this->kill();
+    }
 }
 
 void Match::restart_match() {
-    this->race.restart();
+    this->timer.join();
+
+    for (auto& th_player : this->thread_players) {
+        th_player.second.resume();
+    }
+
+    for (auto& player : this->players) {
+        player.second.restart_playing(this->client_updater);
+    }
+
+    this->waiting_restart = false;
     this->timer.start();
 }
 

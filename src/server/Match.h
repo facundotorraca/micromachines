@@ -38,10 +38,12 @@ class Match : public Thread {
     std::unordered_map<int32_t, ThreadPlayer> thread_players;
 
     Race race;
-    std::mutex mtx;
 
     CountdownTimer timer;
     PlugingsManager plugins_manager;
+
+    std::mutex mtx;
+    std::atomic<bool> waiting_restart;
 
     private:
         void step();
@@ -64,6 +66,8 @@ class Match : public Thread {
 
     public:
         explicit Match(std::string match_creator, std::string match_name);
+
+        void set_restart_option(UpdateRace update);
 
         bool has_username(std::string& username);
 

@@ -14,9 +14,10 @@ ThreadPlayer::ThreadPlayer(ClientUpdater& client_updater, ProtectedQueue<UpdateR
 void ThreadPlayer::run() {
     this->sender.start();
     try {
-        while (this->running && !this->on_hold) {
+        while (this->running) {
             auto data = player.receive_update();
-            updates_recv.push(data);
+            if (!this->on_hold)
+                updates_recv.push(data);
         }
     } catch (const SocketError& exception) {
         this->stop();
