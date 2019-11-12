@@ -18,4 +18,9 @@ target_link_libraries(client
         SDL2_ttf
         pthread
         lua
-        dl)
+        dl
+        #avformat
+        #avcodec
+        #avutil
+        #swscale
+        )

@@ -2,6 +2,7 @@
 // Created by javif on 30/10/2019.
 //
 
+#include <client/Menu/NoMenu.h>
 #include "Scenario.h"
 
 Scenario::Scenario() : my_car_id(-1) {}
@@ -13,11 +14,12 @@ void Scenario::addTile(TileInfo &info) {
 }
 
 void Scenario::setOwnID(int32_t id) {
+    std::unique_lock<std::mutex> lock(mtx);
     this->my_car_id = id;
     minimap.setMyID(id);
 }
 
-void Scenario::updateCar(CarInfo &info) {
+void Scenario::updateCar(CarInfo &info, Camera& camera) {
     std::unique_lock<std::mutex> lock(mtx);
     auto car = cars.emplace(std::piecewise_construct,
                             std::forward_as_tuple(info.car_id),
@@ -34,9 +36,8 @@ void Scenario::updateCar(CarInfo &info) {
     }
 }
 
-void Scenario::draw() {
-    mtx.lock();
-    camera.clear();
+void Scenario::draw(Camera& camera) {
+    std::unique_lock<std::mutex> lock(mtx);
     map.draw(camera);
     entities.draw(camera);
     for (auto& car : cars){
@@ -46,10 +47,7 @@ void Scenario::draw() {
     countdown.draw(camera);
     screen_effect.draw(camera);
     minimap.draw(camera);
-    pause_menu.draw(camera);
     l_screen.draw(camera);
-    mtx.unlock();
-    camera.draw();
 }
 
 void Scenario::setCarHealth(int32_t id, int32_t health) {
@@ -115,19 +113,8 @@ void Scenario::showScreenEffect(int32_t effect, int32_t duration) {
     screen_effect.show(effect, duration);
 }
 
-void Scenario::togglePause() {
-    std::unique_lock<std::mutex> lock(mtx);
-    pause_menu.toggle();
-}
-
-bool Scenario::quit() {
-    std::unique_lock<std::mutex> lock(mtx);
-    return !pause_menu.canQuit();
-}
-
 void Scenario::addConnectionLostMessage() {
-    std::unique_lock<std::mutex> lock(mtx);
-    pause_menu.addConnectionLostMessage();
+    //nothing
 }
 
 void Scenario::setRacePosition(int32_t number) {

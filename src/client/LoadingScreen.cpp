@@ -4,7 +4,7 @@
 
 #include "LoadingScreen.h"
 
-LoadingScreen::LoadingScreen() : showing(false){}
+LoadingScreen::LoadingScreen() : showing(true){}
 
 void LoadingScreen::hide() {
     showing = false;

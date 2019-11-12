@@ -108,6 +108,15 @@ void Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t sizex,
     }
 }
 
+void Camera::drawScreenTexture(int32_t id, float posx, float posy, float sizex, float sizey) {
+    Texture tex = t_factory.getTexture(id);
+    int x = posx*width;
+    int y = posy*height;
+    int w = (sizex*width);
+    int h = (sizey*height);
+    copyRender(tex.tex, x, y, 0, w, h);
+}
+
 void Camera::drawScreenTexture(int32_t id, float posx, float posy, float scale) {
     Texture tex = t_factory.getTexture(id);
     int x = posx*width;
