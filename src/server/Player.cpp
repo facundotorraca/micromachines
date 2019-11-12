@@ -80,7 +80,11 @@ void Player::set_car_model(int32_t _car_model) {
 UpdateRace Player::receive_update() {
     std::vector<int32_t> buffer;
     this->p_socket.receive(buffer);
-    return {this->ID, buffer.at(KEY_VALUE_POS), buffer.at(KEY_STATE_POS)};
+    try {
+        return {this->ID, buffer.at(KEY_VALUE_POS), buffer.at(KEY_STATE_POS)};
+    } catch (const std::out_of_range& e) {
+        return {this->ID, NOT_PRESSED, NOT_PRESSED};
+    }
 }
 
 void Player::send(UpdateClient update) {
@@ -131,6 +135,8 @@ void Player::restart_playing(ClientUpdater& updater) {
     //UpdateClient restart(std::vector<int32_t>(MSG_RESTART));
     //updater.send_to(this->ID, restart);
     this->current_view_ID = this->ID;
+    UpdateClient update_view(std::vector<int32_t>{MSG_CAR_ID, this->ID});
+    updater.send_to(this->ID, update_view);
     this->change_view = true;
     this->update_view(1, updater);
     this->playing = true;

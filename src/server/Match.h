@@ -60,6 +60,8 @@ class Match : public Thread {
 
         void restart_match();
 
+        void select_new_creator();
+
         void remove_disconnected_players();
 
         void wait_match_creator_decision();

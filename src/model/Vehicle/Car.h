@@ -65,6 +65,8 @@ class Car : public Body {
 
         void apply_plugin(DTO_Car& car_info);
 
+        void remove_from_race(b2World& world);
+
         void update();
 
         void turn_on();

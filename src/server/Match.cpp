@@ -87,6 +87,8 @@ void Match::close() {
     this->clients_monitor.join();
     this->running = false;
     this->closed = true;
+
+    std::cout << "CERRE TODO\n";
 }
 
 bool Match::is_closed() {
@@ -121,17 +123,24 @@ void Match::initialize_players() {
 }
 
 void Match::remove_disconnected_players() {
+    bool creator_disconnected = false;
+    std::unique_lock<std::mutex> lock(mtx);
     for (auto th_player = this->thread_players.begin(); th_player != this->thread_players.end();) {
+        int32_t ID = (*th_player).first;
         if ((*th_player).second.dead()) {
             (*th_player).second.join();
-            this->race.player_left_game((*th_player).first);
-            this->players.erase((*th_player).first);
-            this->client_updater.remove_queue((*th_player).first);
+            this->race.player_left_game(ID);
+            if (this->players.at(ID).is_called(this->match_creator))
+                creator_disconnected = true;
+            this->players.erase(ID);
+            this->client_updater.remove_queue(ID);
             th_player =  this->thread_players.erase(th_player);
         } else {
             th_player++;
         }
     }
+    if (creator_disconnected)
+        this->select_new_creator();
 }
 
 void Match::apply_update(UpdateRace update) {
@@ -206,15 +215,15 @@ void Match::run() {
             return;
         }
 
-        if(this->all_players_finished() && !waiting_restart) {
+        if (!waiting_restart && this->all_players_finished())
             this->wait_match_creator_decision();
-        }
     }
 }
 
 void Match::set_restart_option(UpdateRace update) {
     int32_t creator_ID = 0;
 
+    std::unique_lock<std::mutex> lock(mtx);
     for (auto& player : this->players) {
         if (player.second.is_called(this->match_creator))
             creator_ID = player.first;
@@ -223,26 +232,34 @@ void Match::set_restart_option(UpdateRace update) {
     if (!update.is_from(creator_ID))
         return;
 
-    if (update.apply_restart_option(this->race)) {
-        this->clients_monitor.set_on_running_game_mode();
+    this->clients_monitor.set_on_running_game_mode();
+
+    if (update.apply_restart_option(this->race))
         this->restart_match();
-    } else {
-        this->kill();
+    else {
+        /*When all players are killed,
+        all threads close RAII */
+        for (auto& player : this->players)
+            player.second.kill();
     }
 }
 
 void Match::restart_match() {
     this->timer.join();
 
-    for (auto& th_player : this->thread_players) {
+    for (auto& th_player : this->thread_players)
         th_player.second.resume();
-    }
 
-    for (auto& player : this->players) {
+    for (auto& player : this->players)
         player.second.restart_playing(this->client_updater);
-    }
 
     this->waiting_restart = false;
     this->timer.start();
+}
+
+void Match::select_new_creator() {
+    //The new match creator is the first of the list
+    if (!this->players.empty())
+        this->match_creator = (*this->players.begin()).second.get_username();
 }
 

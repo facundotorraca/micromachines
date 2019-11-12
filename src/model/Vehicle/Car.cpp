@@ -309,3 +309,10 @@ Car::~Car() {
         delete wheel;
     }
 }
+
+void Car::remove_from_race(b2World& world) {
+    for (auto& wheel : this->wheels) {
+        world.DestroyBody(wheel->get_body());
+    }
+    world.DestroyBody(this->car_body);
+}

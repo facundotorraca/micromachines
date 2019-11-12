@@ -10,7 +10,6 @@ CountdownTimer::CountdownTimer(int32_t time, Race& race, ClientUpdater& client_u
     race(race),
     client_updater(client_updater)
 {
-    //this->race.prepare(this->client_updater);
     this->max_time = time;
 }
 
