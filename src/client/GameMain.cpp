@@ -21,7 +21,6 @@ void GameMain::start() {
     Bot bot(sender_queue);
     Scene scene(sender_queue, bot);
 
-
     ThreadDrawer drawer(scene);
     //ThreadBot threadBot(bot);
     ThreadKeyMonitor key_monitor(scene);

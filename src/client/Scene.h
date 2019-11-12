@@ -18,7 +18,6 @@
 
 class Scene {
     ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
-
     Scenario scenario;
     Bot &bot;
 
@@ -26,7 +25,7 @@ class Scene {
 
         explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue, Bot &bot);
 
-        void handleKeyEvent(SDL_Keycode key, SDL_EventType type);
+        bool handleKeyEvent(SDL_Keycode key, SDL_EventType type);
 
         std::unique_ptr<Command> receiveMessage(ProtocolSocket& socket);
 

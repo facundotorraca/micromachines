@@ -15,7 +15,7 @@
 #include "Entities.h"
 #include "Entities/TileInfo.h"
 #include "ScreenEffectDrawer.h"
-#include "PauseMenu.h"
+#include "client/Menu/Menu.h"
 
 class Scenario {
     Camera camera;
@@ -26,7 +26,7 @@ class Scenario {
     ScreenEffectDrawer screen_effect;
     Minimap minimap;
     Entities entities;
-    PauseMenu pause_menu;
+    std::unique_ptr<Menu> menu;
     int32_t my_car_id;
     std::map<int32_t, Car> cars;
     std::mutex mtx;
@@ -48,8 +48,7 @@ public:
     void addConnectionLostMessage();
     void setRacePosition(int32_t number);
     void draw();
-    void togglePause();
-    bool quit();
+    bool handleKey(SDL_Keycode key, SDL_EventType type, ProtectedQueue<std::unique_ptr<ServerCommand>>& queue);
 };
 
 

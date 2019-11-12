@@ -7,10 +7,8 @@ Scene::Scene(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue, Bot &bot):
         bot(bot)
 {}
 
-void Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
-    auto event = ServerCommand::create(key, type);
-    if (event)
-        queue.push(std::move(event));
+bool Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
+    return scenario.handleKey(key, type, queue);
 }
 
 void Scene::draw() {
@@ -22,14 +20,11 @@ std::unique_ptr<Command> Scene::receiveMessage(ProtocolSocket &socket) {
 }
 
 void Scene::togglePause() {
-    scenario.togglePause();
 }
 
 bool Scene::quit() {
-    return scenario.quit();
 }
 
 void Scene::showConnectionLostMenu() {
     scenario.addConnectionLostMessage();
-    scenario.togglePause();
 }

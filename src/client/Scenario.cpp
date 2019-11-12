@@ -2,9 +2,10 @@
 // Created by javif on 30/10/2019.
 //
 
+#include <client/Menu/NoMenu.h>
 #include "Scenario.h"
 
-Scenario::Scenario() : my_car_id(-1) {}
+Scenario::Scenario() : my_car_id(-1), menu(new NoMenu()) {}
 
 void Scenario::addTile(TileInfo &info) {
     std::unique_lock<std::mutex> lock(mtx);
@@ -35,7 +36,7 @@ void Scenario::updateCar(CarInfo &info) {
 }
 
 void Scenario::draw() {
-    mtx.lock();
+    std::unique_lock<std::mutex> lock(mtx);
     camera.clear();
     map.draw(camera);
     entities.draw(camera);
@@ -46,9 +47,8 @@ void Scenario::draw() {
     countdown.draw(camera);
     screen_effect.draw(camera);
     minimap.draw(camera);
-    pause_menu.draw(camera);
+    menu->draw(camera);
     l_screen.draw(camera);
-    mtx.unlock();
     camera.draw();
 }
 
@@ -115,23 +115,22 @@ void Scenario::showScreenEffect(int32_t effect, int32_t duration) {
     screen_effect.show(effect, duration);
 }
 
-void Scenario::togglePause() {
-    std::unique_lock<std::mutex> lock(mtx);
-    pause_menu.toggle();
-}
-
-bool Scenario::quit() {
-    std::unique_lock<std::mutex> lock(mtx);
-    return !pause_menu.canQuit();
-}
-
 void Scenario::addConnectionLostMessage() {
     std::unique_lock<std::mutex> lock(mtx);
-    pause_menu.addConnectionLostMessage();
+    //nothing
 }
 
 void Scenario::setRacePosition(int32_t number) {
     std::unique_lock<std::mutex> lock(mtx);
     hud.setRacePosition(number);
+}
+
+bool Scenario::handleKey(SDL_Keycode key, SDL_EventType type, ProtectedQueue<std::unique_ptr<ServerCommand>>& queue) {
+    std::unique_lock<std::mutex> lock(mtx);
+    bool response = true;
+    auto new_state = menu->handleKey(key, type, queue, response);
+    if (new_state)
+        this->menu.swap(new_state);
+    return response;
 }
 

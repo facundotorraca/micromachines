@@ -19,12 +19,12 @@ void ThreadKeyMonitor::run() {
         }
 
         if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
-
             //scene.handleKeyEvent(keyEvent.keysym.sym,
             //                     (SDL_EventType)(event.type));
-            auto command = KeyCommand::create(scene, keyEvent.keysym.sym,
-                                              (SDL_EventType) event.type);
-            this->running = command->apply();
+            //auto command = KeyCommand::create(scene, keyEvent.keysym.sym,
+            //                                  (SDL_EventType) event.type);
+            this->running = scene.handleKeyEvent(keyEvent.keysym.sym,
+                                                 (SDL_EventType)(event.type));
         }
     }
 }
