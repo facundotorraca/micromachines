@@ -19,7 +19,8 @@ target_link_libraries(client
         pthread
         lua
         dl
-        avformat
-        avcodec
-        avutil
-        swscale)
+        #avformat
+        #avcodec
+        #avutil
+        #swscale
+        )
