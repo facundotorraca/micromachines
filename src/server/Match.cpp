@@ -7,6 +7,7 @@
 #include <common/SocketError.h>
 #include "ThreadClientEventMonitor.h"
 #include <server/FramesSyncronizer.h>
+#include <common/MsgTypes.h>
 
 #define MAP_PATH "maps/"
 #define MAP_NAME "track_01.json"
@@ -21,8 +22,6 @@
 
 #define START_MATCH_FLAG 0
 #define TIME_START 3
-
-#define RESTART_RACE_OPTION 1
 
 #define UPDATE_QUEUE_MAX_SIZE 1000
 
@@ -186,7 +185,10 @@ void Match::wait_match_creator_decision() {
     }
 
     this->clients_monitor.set_on_restart_mode();
-    //Aca mando un msj
+
+    UpdateClient restart(std::vector<int32_t>({MSG_RESTART_RACE}));
+    this->client_updater.send_to(creator_ID, restart);
+
     this->waiting_restart = true;
 }
 

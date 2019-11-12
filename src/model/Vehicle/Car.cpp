@@ -182,8 +182,8 @@ void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
     }
 }
 
-void Car::move_to(Coordinate coordinate) {
-    if (this->car_body->GetLinearVelocity().Length() > 20)
+void Car::move_to(Coordinate coordinate, bool soft) {
+    if (soft && this->car_body->GetLinearVelocity().Length() > 20)
         //avoid teleporting very roughly
         return;
 

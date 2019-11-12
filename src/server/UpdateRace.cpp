@@ -25,7 +25,7 @@ void UpdateRace::update_player_view(std::unordered_map<int32_t, Player>& players
 }
 
 bool UpdateRace::apply_restart_option(Race &race) {
-    if (this->key_state == KEY_PRESSED && this->key == ACCELERATE) {
+    if (this->key_state == KEY_PRESSED && this->key == KEY_RESTART) {
         race.restart();
         return true;
     }

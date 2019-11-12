@@ -132,13 +132,13 @@ void Player::set_finished(ClientUpdater& updater) {
 }
 
 void Player::restart_playing(ClientUpdater& updater) {
-    //UpdateClient restart(std::vector<int32_t>(MSG_RESTART));
-    //updater.send_to(this->ID, restart);
     this->current_view_ID = this->ID;
+
     UpdateClient update_view(std::vector<int32_t>{MSG_CAR_ID, this->ID});
+    UpdateClient reset_hud(std::vector<int32_t>{MSG_RESET});
     updater.send_to(this->ID, update_view);
-    this->change_view = true;
-    this->update_view(1, updater);
+    updater.send_to(this->ID, reset_hud);
+
     this->playing = true;
 }
 
