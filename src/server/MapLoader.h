@@ -17,6 +17,7 @@ class MapLoader {
     std::string map_paths;
 
     std::vector<Coordinate> finish_line;
+    std::vector<Coordinate> unranked_places;
     std::vector<std::unique_ptr<Terrain>> track;
     std::unordered_map<int32_t, Coordinate> podium;
 

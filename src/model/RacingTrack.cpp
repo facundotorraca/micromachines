@@ -106,3 +106,8 @@ void RacingTrack::restart() {
 void RacingTrack::remove_car(Car& car) {
    car.remove_from_race(this->racing_track);
 }
+
+void RacingTrack::set_unranked_place(Coordinate unranked_place) {
+    if (this->podium)
+        this->podium->add_unranked_place(unranked_place);
+}

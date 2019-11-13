@@ -69,6 +69,8 @@ class RacingTrack {
 
         void set_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
 
+        void set_unranked_place(Coordinate unranked_place);
+
         ~RacingTrack();
 };
 
