@@ -310,15 +310,15 @@ void Car::explode() {
     this->car_state.reset(new Dead());
 }
 
-Car::~Car() {
-    for (auto & wheel : this->wheels) {
-        delete wheel;
-    }
-}
-
 void Car::remove_from_race(b2World& world) {
     for (auto& wheel : this->wheels) {
         world.DestroyBody(wheel->get_body());
     }
     world.DestroyBody(this->car_body);
+}
+
+Car::~Car() {
+    for (auto & wheel : this->wheels) {
+        delete wheel;
+    }
 }

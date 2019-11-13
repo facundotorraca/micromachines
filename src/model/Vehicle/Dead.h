@@ -6,7 +6,7 @@
 #include <cstdint>
 #include "CarState.h"
 
-#define RESPAWN_TIME 90 //1.5sec
+#define RESPAWN_TIME 60 //1.5sec
 
 class Dead : public CarState {
 
