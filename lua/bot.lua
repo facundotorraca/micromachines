@@ -1,15 +1,21 @@
 i=-2;
 map = {}
-car = {turning = 0, increasing = 0, waitTurn = 0 }
+car = {turning = 0, increasing = 0, waitTurn = 0, inited = false }
 TO_KEEP_AHEAD = 1
-TO_TURN = 1.5
 TO_STOP_TURN = 1
+TO_TURN = 1.2
 ANGLE = 60
-STEP = 0.01
+STEP = 0.1
 
 function init(keysDef, actionsDef)
   keys = keysDef
   actions = actionsDef
+end
+
+function resetCar()
+  car.turning = 0;
+  car.increasing = 0;
+  car.waitTurn = 0;
 end
 
 function addTile(xi, xf, yi, yf, value)
@@ -22,6 +28,8 @@ function addTile(xi, xf, yi, yf, value)
 end
 
 function updateCar(newCar)
+  car.inited = true
+  print("CAR UPDATED")
   for key, value in pairs(newCar) do
     car[key] = value
   end
@@ -48,14 +56,20 @@ function canGo(dirX, dirY, seg)
   if map[futureX] == nil or map[futureX][futureY] == nil then
     return false
   end
-  if map[futureX][futureY] >= 3 and map[futureX][futureY] <= 55 then
+  if map[futureX][futureY] == 8 or map[futureX][futureY] == 10 or map[futureX][futureY] == 26  or map[futureX][futureY] == 27 then
     return true
   end
+  if map[futureX][futureY] == 28 or map[futureX][futureY] == 55  then
+    return true
+  end
+  if map[futureX][futureY] >= 63 and map[futureX][futureY] <= 89 then
+    return true
+   end
   return false
 end
 
 function canGoAhead(dirX, dirY, seg)
-  for k=0.1, seg, STEP do
+  for k=0.5, seg, STEP do
     if not canGo(dirX, dirY, k) then
       return false
     end
@@ -126,9 +140,11 @@ function decideStoping(dirX, dirY)
   if car.waitTurn == 0 then
     return increase()
   end
-  if canTurnLeft() then
+  local toLeft = canTurnLeft()
+  local toRight = canTurnRight()
+  if toLeft and  not toRight then
     return turnLeft()
-  elseif canTurnRight() then
+  elseif toRight and not toLeft then
     return turnRight()
   else
     return stop()
@@ -144,7 +160,15 @@ end
 
 
 function decide()
+  if(not car.inited) then
+    print("CAR NOT INITED", car.inited)
+    return stop()
+  end
   local dirX, dirY = getDirections(car.rot)
+  if car.vel == 0 then
+    resetCar();
+    return increase()
+  end
   if car.turning ~= 0 then
     return decideTurning(dirX, dirY)
   end

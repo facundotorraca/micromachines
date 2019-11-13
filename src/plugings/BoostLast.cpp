@@ -11,6 +11,7 @@
 typedef struct self {
     uint32_t step;
     int32_t last_boosted_id;
+    bool boosted;
 } BoostLast_t;
 
 void modify_specs(CarSpecs *specs) {
@@ -41,13 +42,15 @@ void run(BoostLast_t *self, DTO_Info *params) {
             last_specs = &(params->car_info[ind].specs);
             last_id = params->car_info[ind].ID;
         }
-        if (params->car_info[ind].ID == self->last_boosted_id) {
+        if (params->car_info[ind].ID == self->last_boosted_id && self->boosted) {
+            self->boosted = false;
             reset_specs(&(params->car_info[ind].specs));
         }
     }
-    if (self->last_boosted_id != last_id) {
+    if (self->last_boosted_id != last_id && !self->boosted) {
         modify_specs(last_specs);
         self->last_boosted_id = last_id;
+        self->boosted = true;
     }
     self->step++;
 }
@@ -56,6 +59,7 @@ extern "C" {
     void* init() {
         auto *self = (BoostLast_t*) malloc(sizeof(BoostLast_t));
         self->step = 0;
+        self->boosted = false;
         self->last_boosted_id = -1;
         return self;
     }
