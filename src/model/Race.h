@@ -24,6 +24,8 @@ class Race {
 
         void update();
 
+        void restart();
+
         void update_cars(UpdateRace race);
 
         void prepare(ClientUpdater& updater);
@@ -42,7 +44,6 @@ class Race {
 
         void send_info_to_player(int32_t ID, ClientUpdater& client_updater);
 
-    void restart();
 };
 
 

@@ -96,4 +96,3 @@ void Race::restart() {
         car.second.repair();
     }
 }
-

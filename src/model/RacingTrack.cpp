@@ -106,4 +106,3 @@ void RacingTrack::restart() {
 void RacingTrack::remove_car(Car& car) {
    car.remove_from_race(this->racing_track);
 }
-

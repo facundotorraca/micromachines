@@ -47,6 +47,8 @@ class RacingTrack {
 
         void remove_car(Car& car);
 
+        void restart();
+
         void prepare_track(ClientUpdater& updater);
 
         void add_car_to_podium(Car& car, int32_t ID);
@@ -68,8 +70,6 @@ class RacingTrack {
         void set_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
 
         ~RacingTrack();
-
-    void restart();
 };
 
 

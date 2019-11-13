@@ -9,7 +9,7 @@
 
 void RestartMenu::draw(Camera &camera) {
     std::string quit("[R] Restart Race");
-    camera.drawScreenTexture(PAUSE_MENU_TEX, 0.4, 0.4, 1);
+    camera.drawScreenTexture(PAUSE_MENU_TEX, 0.38, 0.38, 0.35, 0.35);
     camera.drawText(quit, 0.45, 0.50, 0.5, quit.size());
     std::string resume("[Q] Quit");
     camera.drawText(resume, 0.45, 0.55, 0.5, resume.size());

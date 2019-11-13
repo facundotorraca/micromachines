@@ -187,6 +187,12 @@ void Car::move_to(Coordinate coordinate, bool soft) {
         //avoid teleporting very roughly
         return;
 
+    this->car_body->SetLinearVelocity(b2Vec2(0,0));
+    this->car_body->SetAngularVelocity(0);
+
+    this->throttle = NOT_PRESSED;
+    this->steering_wheel = NOT_PRESSED;
+
     float x_pos = coordinate.get_x() * TILE_TERRAIN_SIZE;
     float y_pos = coordinate.get_y() * TILE_TERRAIN_SIZE;
     float angle = coordinate.get_angle() * DEGTORAD;

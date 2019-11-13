@@ -140,6 +140,9 @@ void Wheel::move_to(Coordinate coordinate) {
     float y_pos = coordinate.get_y() * TILE_TERRAIN_SIZE;
     float angle = coordinate.get_angle() * DEGTORAD;
 
+    this->wheel_body->SetLinearVelocity(b2Vec2(0,0));
+    this->wheel_body->SetAngularVelocity(0);
+
     this->wheel_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
 }
 

@@ -29,7 +29,6 @@ void Scene::draw() {
 }
 
 void Scene::receiveMessage(ProtocolSocket &socket) {
-
     auto new_state = menu->receiveMessage(socket, scenario, camera);
     if (new_state){
         std::unique_lock<std::mutex> lock(mtx);
