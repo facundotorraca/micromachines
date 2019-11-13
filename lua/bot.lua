@@ -1,6 +1,6 @@
 i=-2;
 map = {}
-car = {turning = 0, increasing = 0, waitTurn = 0 }
+car = {turning = 0, increasing = 0, waitTurn = 0, inited = false }
 TO_KEEP_AHEAD = 1
 TO_STOP_TURN = 1
 TO_TURN = 1.2
@@ -28,6 +28,8 @@ function addTile(xi, xf, yi, yf, value)
 end
 
 function updateCar(newCar)
+  car.inited = true
+  print("CAR UPDATED")
   for key, value in pairs(newCar) do
     car[key] = value
   end
@@ -158,6 +160,10 @@ end
 
 
 function decide()
+  if(not car.inited) then
+    print("CAR NOT INITED", car.inited)
+    return stop()
+  end
   local dirX, dirY = getDirections(car.rot)
   if car.vel == 0 then
     resetCar();
