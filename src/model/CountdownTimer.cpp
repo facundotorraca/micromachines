@@ -7,8 +7,8 @@
 #define ONE_SECOND 1000
 
 CountdownTimer::CountdownTimer(int32_t time, Race& race, ClientUpdater& client_updater):
-    race(race),
-    client_updater(client_updater)
+    client_updater(client_updater),
+    race(race)
 {
     this->max_time = time;
 }

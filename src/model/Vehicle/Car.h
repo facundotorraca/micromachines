@@ -20,20 +20,18 @@ class Car : public Body {
     CarLife life;
     CarSpecs specs;
 
-    b2Body* car_body{};
+    b2Body* car_body;
     std::vector<Wheel*> wheels;
 
-    b2RevoluteJoint* front_left_joint{};
-    b2RevoluteJoint* front_right_joint{};
-
-    Coordinate respawn;
+    b2RevoluteJoint* front_left_joint;
+    b2RevoluteJoint* front_right_joint;
 
     int32_t throttle;
     int32_t steering_wheel;
 
-    int32_t begin_distance;
-
     bool lap_altered;
+    Coordinate respawn;
+    int32_t begin_distance;
 
     std::unique_ptr<CarState> car_state;
     std::unique_ptr<LapState> lap_state;
@@ -59,7 +57,7 @@ class Car : public Body {
 
         int32_t get_ID() override;
 
-        void move_to(Coordinate coordinate, bool soft);
+        bool move_to(Coordinate coordinate, bool soft);
 
         void get_dto_info(int32_t ID, DTO_Car& car_info);
 

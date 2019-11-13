@@ -10,14 +10,11 @@
 #define KEY_VALUE_POS 0
 #define KEY_STATE_POS 1
 
-
-
 Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name):
-    p_socket(std::move(p_socket)),
-    change_view(false)
+        p_socket(std::move(p_socket)),
+        view_changed(false)
 {
     this->ID = INVALID_ID;
-    this->car_model = 0; //Esto despues lo hacemos con un objeto!
     this->mode = mode;
     this->username = std::move(username);
     this->match_name = std::move(match_name);
@@ -27,19 +24,18 @@ Player::Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, st
 }
 
 Player::Player(Player&& other) noexcept:
-    p_socket(std::move(other.p_socket)),
-    username(std::move(other.username)),
-    match_name(std::move(other.match_name)),
-    change_view(false)
+        p_socket(std::move(other.p_socket)),
+        username(std::move(other.username)),
+        match_name(std::move(other.match_name)),
+        view_changed(false)
 {
     this->ID = other.ID;
     this->mode = other.mode;
-    this->car_model = other.car_model;
     this->playing = other.playing;
     this->current_view_ID = other.current_view_ID;
 
-    other.ID = INVALID_ID;
     other.playing = false;
+    other.ID = INVALID_ID;
     other.current_view_ID = INVALID_ID;
 }
 
@@ -63,6 +59,10 @@ void Player::send(std::string& msg) {
     this->p_socket.send(msg);
 }
 
+void Player::send(uint8_t flag) {
+    this->p_socket.send(flag);
+}
+
 uint8_t Player::receive_option() {
     uint8_t option;
     this->p_socket.receive(option);
@@ -71,10 +71,6 @@ uint8_t Player::receive_option() {
 
 void Player::kill() {
     this->p_socket.close();
-}
-
-void Player::set_car_model(int32_t _car_model) {
-    this->car_model = _car_model;
 }
 
 UpdateRace Player::receive_update() {
@@ -99,27 +95,22 @@ bool Player::is_called(std::string& _username) {
     return this->username == _username;
 }
 
-void Player::send(uint8_t flag) {
-    this->p_socket.send(flag);
-}
-
 Player::~Player() {
     this->kill();
 }
 
 void Player::set_view(int32_t key) {
-    if (this->playing) {
+    if (this->playing)
         return;
-    }
-    this->change_view = true;
+    this->view_changed = true;
     key == TURN_LEFT ? (this->current_view_ID -= 1) : (this->current_view_ID += 1);
 }
 
 void Player::update_view(int32_t total_players, ClientUpdater& updater) {
-    if (this->change_view) {
+    if (this->view_changed) {
         UpdateClient update_view(std::vector<int32_t>{MSG_CAR_ID, (int32_t)(this->current_view_ID % total_players)});
         updater.send_to(this->ID, update_view);
-        this->change_view = false;
+        this->view_changed = false;
     }
 }
 

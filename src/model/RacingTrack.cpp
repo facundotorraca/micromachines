@@ -51,12 +51,21 @@ void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
     this->static_track_objects.back().add_to_world(this->racing_track);
 }
 
-void RacingTrack::set_finish_line(Coordinate begin, Coordinate end) {
+void RacingTrack::add_finish_line(Coordinate begin, Coordinate end) {
     this->finish_line = new FinishLine(begin, end, this->racing_track);
 }
 
-void RacingTrack::set_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place) {
+void RacingTrack::add_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place) {
     this->podium = new Podium(f_place, s_place, t_place);
+}
+
+void RacingTrack::add_spawn_point(Coordinate spawn_point) {
+    this->spawn_points.push_back(spawn_point);
+}
+
+void RacingTrack::add_unranked_place(Coordinate unranked_place) {
+    if (this->podium)
+        this->podium->add_unranked_place(unranked_place);
 }
 
 void RacingTrack::add_car(Car &car) {
@@ -66,10 +75,6 @@ void RacingTrack::add_car(Car &car) {
 void RacingTrack::add_car_to_podium(Car &car, int32_t ID) {
     if (this->podium)
         this->podium->add_car(car, ID);
-}
-
-void RacingTrack::add_spawn_point(Coordinate spawn_point) {
-    this->spawn_points.push_back(spawn_point);
 }
 
 void RacingTrack::set_spawn_points_to_cars(std::unordered_map<int32_t, Car> &cars) {
@@ -93,11 +98,6 @@ void RacingTrack::prepare_track(ClientUpdater &updater) {
     this->map_loader.load_map(*this, updater);
 }
 
-RacingTrack::~RacingTrack() {
-    delete this->podium;
-    delete this->finish_line;
-}
-
 void RacingTrack::restart() {
     if (this->podium)
         this->podium->restart();
@@ -107,7 +107,7 @@ void RacingTrack::remove_car(Car& car) {
    car.remove_from_race(this->racing_track);
 }
 
-void RacingTrack::set_unranked_place(Coordinate unranked_place) {
-    if (this->podium)
-        this->podium->add_unranked_place(unranked_place);
+RacingTrack::~RacingTrack() {
+    delete this->podium;
+    delete this->finish_line;
 }

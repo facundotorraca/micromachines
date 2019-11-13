@@ -11,22 +11,17 @@ struct Position{
     int32_t laps;
     int32_t distance;
 
-    bool operator <(const Position& other) const
-    {
-        if (this->laps == other.laps) {
+    bool operator <(const Position& other) const {
+        if (this->laps == other.laps)
             return this->distance < other.distance;
-        }
         return this->laps < other.laps;
     }
 
-    bool operator >(const Position& other) const
-    {
-        if (this->laps == other.laps) {
+    bool operator >(const Position& other) const {
+        if (this->laps == other.laps)
             return this->distance > other.distance;
-        }
         return this->laps > other.laps;
     }
-
 };
 
 class PositionManager {

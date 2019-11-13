@@ -21,6 +21,9 @@ class Podium {
     //ID and Place;
     std::unordered_map<int32_t, Coordinate> podium;
 
+    //ID and is_on_podium
+    std::unordered_map<int32_t, bool> on_podium;
+
     public:
         Podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
 

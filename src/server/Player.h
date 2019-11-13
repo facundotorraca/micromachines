@@ -13,7 +13,6 @@ class Player {
 
     /*-----Options-----*/
     uint8_t mode;
-    uint8_t car_model;
 
     int32_t ID;
     std::string username;
@@ -21,23 +20,21 @@ class Player {
 
     bool playing;
 
-    std::atomic<bool> change_view;
+    std::atomic<bool> view_changed;
     unsigned current_view_ID;
 
     public:
         Player(ProtocolSocket&& p_socket, uint8_t mode, std::string username, std::string match_name);
 
-        void update_view(int32_t total_players, ClientUpdater& updater);
-
         Player(Player&& other) noexcept;
+
+        void update_view(int32_t total_players, ClientUpdater& updater);
 
         void set_finished(ClientUpdater& updater);
 
         void restart_playing(ClientUpdater& updater);
 
         bool is_called(std::string& username);
-
-        void set_car_model(int32_t car_model);
 
         void send(std::vector<int32_t>& msg);
 

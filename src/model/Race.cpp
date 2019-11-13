@@ -25,9 +25,8 @@ void Race::send_info_to_player(int32_t ID, ClientUpdater& client_updater) {
 }
 
 void Race::start() {
-    for (auto& car : this->cars) {
+    for (auto& car : this->cars)
         car.second.turn_on();
-    }
 }
 
 void Race::update() {
@@ -37,8 +36,8 @@ void Race::update() {
         if (this->lap_counter.car_complete_laps(car.first))
             this->racing_track.add_car_to_podium(car.second, car.first );
     }
-    this->modifier_spawner.update();
     this->racing_track.update();
+    this->modifier_spawner.update();
     this->position_manager.update(this->lap_counter);
 }
 

@@ -39,6 +39,9 @@ Car::Car(CarSpecs specs):
     car_state( new Alive()),
     respawn(0, 0, 0)
 {
+    this->car_body = nullptr;
+    this->front_left_joint = nullptr;
+    this->front_right_joint = nullptr;
     this->begin_distance = 0;
 }
 
@@ -154,6 +157,8 @@ void Car::stop(int32_t movement) {
 }
 
 void Car::collide(Body* body) {
+    if (body->get_ID() == TYPE_CAR)
+        ((Car*)body)->make_damage(15);
 }
 
 int32_t Car::get_ID() {
@@ -182,10 +187,10 @@ void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
     }
 }
 
-void Car::move_to(Coordinate coordinate, bool soft) {
+bool Car::move_to(Coordinate coordinate, bool soft) {
     if (soft && this->car_body->GetLinearVelocity().Length() > 20)
         //avoid teleporting very roughly
-        return;
+        return false;
 
     this->car_body->SetLinearVelocity(b2Vec2(0,0));
     this->car_body->SetAngularVelocity(0);
@@ -200,6 +205,8 @@ void Car::move_to(Coordinate coordinate, bool soft) {
     this->car_body->SetTransform(b2Vec2(x_pos, y_pos), angle);
     for (auto& wheel : this->wheels)
         wheel->move_to(coordinate);
+
+    return true;
 }
 
 void Car::turn_on() {

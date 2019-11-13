@@ -32,9 +32,8 @@ bool UpdateRace::apply_restart_option(Race &race, std::unordered_map<int32_t, Pl
         return true;
     }
     if (this->key_state == KEY_PRESSED && this->key == KEY_QUIT) {
-        for (auto& player : players) {
+        for (auto& player : players)
             player.second.kill();
-        }
         return true;
     }
     return false;

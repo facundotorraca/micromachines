@@ -172,11 +172,11 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
     this->set_begin_distance_to_tiles();
     set_track_to_race(this->track, racing_track);
 
-    if (finish_line.size() == 2) racing_track.set_finish_line(finish_line[0], finish_line[1]);
-    if (podium.size() == 3) racing_track.set_podium(podium.at(1), podium.at(2), podium.at(3));
+    if (finish_line.size() == 2) racing_track.add_finish_line(finish_line[0], finish_line[1]);
+    if (podium.size() == 3) racing_track.add_podium(podium.at(1), podium.at(2), podium.at(3));
 
     for (auto& coordinate : this->unranked_places)
-        racing_track.set_unranked_place(coordinate);
+        racing_track.add_unranked_place(coordinate);
 }
 
 

@@ -41,13 +41,13 @@ class RacingTrack {
 
         void update();
 
-        void add_car(Car& car);
+        void restart();
 
-        Coordinate get_random_track_position();
+        void add_car(Car& car);
 
         void remove_car(Car& car);
 
-        void restart();
+        Coordinate get_random_track_position();
 
         void prepare_track(ClientUpdater& updater);
 
@@ -57,19 +57,19 @@ class RacingTrack {
 
         void add_track(std::unique_ptr<Terrain>&& track);
 
+        void add_unranked_place(Coordinate unranked_place);
+
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
         void add_modifier(const std::shared_ptr<Modifier>& modifier);
 
-        void set_finish_line(Coordinate begin, Coordinate end);
+        void add_finish_line(Coordinate begin, Coordinate end);
 
         void add_static_track_object(StaticTrackObject&& object);
 
         void set_spawn_points_to_cars(std::unordered_map<int32_t, Car>& cars);
 
-        void set_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
-
-        void set_unranked_place(Coordinate unranked_place);
+        void add_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
 
         ~RacingTrack();
 };

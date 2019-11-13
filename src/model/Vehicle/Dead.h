@@ -1,8 +1,6 @@
 #ifndef MICROMACHINES_DEAD_H
 #define MICROMACHINES_DEAD_H
 
-
-
 #include <cstdint>
 #include "CarState.h"
 

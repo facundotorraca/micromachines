@@ -27,20 +27,20 @@
 
 Match::Match(std::string match_creator, std::string match_name):
         closed(false),
+        waiting_restart(false),
         updates_race(10000),
         match_name(std::move(match_name)),
         race(3, MAP_PATH, MAP_NAME),
         match_creator(std::move(match_creator)),
-        clients_monitor(this, this->updates_race),
         plugins_manager(this->race, PLUGINS_PATH),
-        waiting_restart(false),
+        clients_monitor(this, this->updates_race),
         timer(TIME_START,this->race, this->client_updater)
 {}
 
 void Match::add_player(Player&& player) {
     try {
         if (this->running || (this->players.size() + 1) >= 8)
-            /*+1 because creator is addead at end*/
+            /*+1 because creator is added at end*/
             player.send((uint8_t)ERROR_MATCH_JOIN_FLAG);
         else {
             player.send((uint8_t)SUCCESS_MATCH_JOIN_FLAG);
@@ -63,18 +63,16 @@ std::string Match::get_match_name_to_send() {
 
 bool Match::has_username(std::string& username) {
     for (auto& player : this->players) {
-        if (player.second.is_called(username)) {
+        if (player.second.is_called(username))
             return true;
-        }
     }
     /* Match creator is added at the end*/
     return this->match_creator == username;
 }
 
 void Match::kill() {
-    for (auto &player : this->players) {
+    for (auto &player : this->players)
         player.second.kill();
-    }
     this->remove_disconnected_players();
 }
 
@@ -87,8 +85,6 @@ void Match::close() {
     this->clients_monitor.join();
     this->running = false;
     this->closed = true;
-
-    std::cout << "CERRE TODO\n";
 }
 
 bool Match::is_closed() {
@@ -124,6 +120,7 @@ void Match::initialize_players() {
 
 void Match::remove_disconnected_players() {
     bool creator_disconnected = false;
+
     std::unique_lock<std::mutex> lock(mtx);
     for (auto th_player = this->thread_players.begin(); th_player != this->thread_players.end();) {
         int32_t ID = (*th_player).first;
@@ -152,7 +149,7 @@ void Match::apply_update(UpdateRace update) {
 void Match::step() {
     FramesSynchronizer::sync_FPS(FRAMES_PER_SECOND);
     std::unique_lock<std::mutex> lock(mtx);
-   // this->plugins_manager.execute();
+    //this->plugins_manager.execute();
     this->race.update();
 }
 
@@ -174,15 +171,13 @@ void Match::wait_match_creator_decision() {
     int32_t creator_ID = 0;
 
     for (auto& player : this->players) {
-        if (player.second.is_called(this->match_creator)) {
+        if (player.second.is_called(this->match_creator))
             creator_ID = player.first;
-        }
     }
 
     for (auto& th_player : this->thread_players) {
-        if (th_player.first != creator_ID) {
+        if (th_player.first != creator_ID)
             th_player.second.set_on_hold();
-        }
     }
 
     this->clients_monitor.set_on_restart_mode();
@@ -232,9 +227,9 @@ void Match::set_restart_option(UpdateRace update) {
             creator_ID = player.first;
     }
 
+    /*Some command can be remaining on the queue*/
     if (!update.is_from(creator_ID))
         return;
-
 
     if (update.apply_restart_option(this->race, this->players, this))
         this->clients_monitor.set_on_running_game_mode();

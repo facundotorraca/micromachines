@@ -50,11 +50,9 @@ void ThreadMatchOptions::run_match_options(ProtectedQueue<std::shared_ptr<Match>
 void ThreadMatchOptions::run_player_options() {
     try {
         uint8_t option = 0;
-
         option = this->player.receive_option();
-        this->player.set_car_model(option);
 
-        /*FALTAS MAS OPCIONES DE JUGADOR*/
+        /* for futures options*/
 
         this->match->add_player(std::move(player));
         this->dead = true;

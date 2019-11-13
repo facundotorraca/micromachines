@@ -12,8 +12,8 @@
 class Race {
     LapCounter lap_counter;
     RacingTrack racing_track;
-    ModifierSpawner modifier_spawner;
     PositionManager position_manager;
+    ModifierSpawner modifier_spawner;
 
     std::unordered_map<int32_t, Car> cars;
 
