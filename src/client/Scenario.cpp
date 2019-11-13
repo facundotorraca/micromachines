@@ -2,24 +2,26 @@
 // Created by javif on 30/10/2019.
 //
 
-#include <client/Menu/NoMenu.h>
 #include "Scenario.h"
 
-Scenario::Scenario() : my_car_id(-1) {}
+Scenario::Scenario(Bot& bot) : bot(bot), my_car_id(-1) {}
 
 void Scenario::addTile(TileInfo &info) {
+    bot.add_tile(info);
     std::unique_lock<std::mutex> lock(mtx);
     map.addTile(info);
     minimap.addTile(info);
 }
 
 void Scenario::setOwnID(int32_t id) {
+    bot.set_id(id);
     std::unique_lock<std::mutex> lock(mtx);
     this->my_car_id = id;
     minimap.setMyID(id);
 }
 
 void Scenario::updateCar(CarInfo &info, Camera& camera) {
+    bot.update_car(info);
     std::unique_lock<std::mutex> lock(mtx);
     auto car = cars.emplace(std::piecewise_construct,
                             std::forward_as_tuple(info.car_id),
@@ -111,10 +113,6 @@ void Scenario::addFinishedPlayer(std::string& player_name) {
 void Scenario::showScreenEffect(int32_t effect, int32_t duration) {
     std::unique_lock<std::mutex> lock(mtx);
     screen_effect.show(effect, duration);
-}
-
-void Scenario::addConnectionLostMessage() {
-    //nothing
 }
 
 void Scenario::setRacePosition(int32_t number) {

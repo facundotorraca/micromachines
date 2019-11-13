@@ -6,7 +6,7 @@
 
 Scene::Scene(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue, Bot &bot):
         queue(queue),
-        bot(bot),
+        scenario(bot),
         menu(new NoMenu)
 {}
 

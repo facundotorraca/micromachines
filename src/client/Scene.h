@@ -21,7 +21,6 @@ class Scene {
     Camera camera;
     ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
     Scenario scenario;
-    Bot &bot;
     std::unique_ptr<Menu> menu;
     std::mutex mtx;
 public:

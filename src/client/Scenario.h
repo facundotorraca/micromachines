@@ -15,8 +15,10 @@
 #include "Entities.h"
 #include "Entities/TileInfo.h"
 #include "ScreenEffectDrawer.h"
+#include "Bot.h"
 
 class Scenario {
+    Bot& bot;
     Map map;
     Hud hud;
     LoadingScreen l_screen;
@@ -28,7 +30,7 @@ class Scenario {
     std::map<int32_t, Car> cars;
     std::mutex mtx;
 public:
-    Scenario();
+    explicit Scenario(Bot& bot);
     void addTile(TileInfo& info);
     void setOwnID(int32_t id);
     void updateCar(CarInfo& info, Camera& camera);
@@ -42,7 +44,6 @@ public:
     void removeModifier(int32_t x, int32_t y);
     void addFinishedPlayer(std::string& player_name);
     void showScreenEffect(int32_t effect, int32_t duration);
-    void addConnectionLostMessage();
     void setRacePosition(int32_t number);
     void draw(Camera& camera);
     void reset();
