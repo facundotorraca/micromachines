@@ -15,11 +15,16 @@ class Podium {
     Coordinate s_place;
     Coordinate t_place;
 
+    size_t current_unranked_place;
+    std::vector<Coordinate> unranked_places;
+
     //ID and Place;
     std::unordered_map<int32_t, Coordinate> podium;
 
     public:
         Podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
+
+        void add_unranked_place(Coordinate unranked_place);
 
         void add_car(Car& car, int32_t ID);
 

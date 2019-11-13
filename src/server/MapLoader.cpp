@@ -20,7 +20,6 @@
 #define ORIENTATION_PROPERTY_POS 0
 #define EXPLOSIVE_PROPERTY_POS 0
 
-
 #define ORIENTATION_UP 1
 #define ORIENTATION_DOWN 2
 #define ORIENTATION_LEFT 3
@@ -111,8 +110,8 @@ void MapLoader::add_tile_behaviour(int32_t type_ID, int32_t i, int32_t j, int32_
             podium.insert(std::pair<int32_t, Coordinate>(3, Coordinate(float(i), float(j), float(rot))));
             break;
         case TYPE_NO_PODIUM_PLACE:
+            this->unranked_places.emplace_back(float(i), float(j), float(rot));
             break;
-            //podium.insert(std::pair<int32_t, Coordinate>(3, Coordinate(float(i), float(j), float(tile_rotation))));
         default:
             break;
     }
@@ -175,6 +174,9 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
 
     if (finish_line.size() == 2) racing_track.set_finish_line(finish_line[0], finish_line[1]);
     if (podium.size() == 3) racing_track.set_podium(podium.at(1), podium.at(2), podium.at(3));
+
+    for (auto& coordinate : this->unranked_places)
+        racing_track.set_unranked_place(coordinate);
 }
 
 
