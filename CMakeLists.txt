@@ -15,6 +15,7 @@ set (CMAKE_CXX_EXTENSIONS OFF) # -std=c++11 en lugar de -std=gnu++11
 # Todos los #include son relativos a src
 include_directories(src)
 include_directories(libs)
+
 #-------------------SOLO MAC--------------------------
 include_directories(include)
 include_directories(lib)
@@ -33,7 +34,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}
 
 set(CMAKE_CXX_FLAGS "-fPIC")
 
-
 find_package(Qt5Widgets REQUIRED)
 
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
@@ -42,12 +42,12 @@ add_subdirectory(src/client/QT_views)
 add_subdirectory(src/model/Modifiers)
 add_subdirectory(src/model/Terrains)
 add_subdirectory(src/model/Vehicle)
+add_subdirectory(src/plugings)
 add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)
 add_subdirectory(src/model)
 add_subdirectory(libs/json)
-add_subdirectory(src/plugings)
 
 # add sprites directory
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
@@ -64,10 +64,6 @@ target_link_libraries(micromachines-server model server common)
 # Generar el cliente
 add_executable(micromachines-client src/client/main.cpp)
 target_link_libraries(micromachines-client client viewManager)
-
-# Genero un ejecutable que prueba qt
-add_executable(qt-client pruebas_qt/main.cpp)
-target_link_libraries(qt-client common viewManager)
 
 add_executable(client-old src/client/main.old.cpp)
 target_link_libraries(client-old client)

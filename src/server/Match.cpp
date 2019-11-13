@@ -80,8 +80,8 @@ void Match::kill() {
 
 void Match::close() {
     /*Close is used by the MatchTable,
-    a non started  match is also not running,
-    but not dead*/
+    a non started  match is also not
+    running, but not dead*/
     this->timer.join();
     this->updates_race.close();
     this->clients_monitor.join();
