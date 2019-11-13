@@ -39,7 +39,8 @@ Match::Match(std::string match_creator, std::string match_name):
 
 void Match::add_player(Player&& player) {
     try {
-        if (this->running)
+        if (this->running || (this->players.size() + 1) >= 8)
+            /*+1 because creator is addead at end*/
             player.send((uint8_t)ERROR_MATCH_JOIN_FLAG);
         else {
             player.send((uint8_t)SUCCESS_MATCH_JOIN_FLAG);
