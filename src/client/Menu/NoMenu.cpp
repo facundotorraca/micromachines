@@ -12,9 +12,11 @@ void NoMenu::draw(Camera& camera) {
 
 std::unique_ptr<Menu> NoMenu::handleKey(SDL_Keycode key, SDL_EventType type,
         ProtectedQueue<std::unique_ptr<ServerCommand>>& queue, bool& response) {
-    if (key == SDLK_ESCAPE && type == SDL_KEYDOWN){
-        response = true;
-        return std::unique_ptr<Menu>(new PauseMenu());
+    if (type == SDL_KEYDOWN){
+        if (key == SDLK_ESCAPE){
+            response = true;
+            return std::unique_ptr<Menu>(new PauseMenu());
+        }
     }
     auto command = ServerCommand::create(key, type);
     if (command)

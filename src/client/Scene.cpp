@@ -24,6 +24,12 @@ void Scene::draw() {
     std::unique_lock<std::mutex> lock(mtx);
     camera.clear();
     this->scenario.draw(camera);
+    if (camera.isRecording()){
+        camera.setRecordingTarget();
+        this->scenario.draw(camera);
+        camera.sendToRecorder();
+        camera.setDefaultTarget();
+    }
     menu->draw(camera);
     camera.draw();
 }
@@ -36,14 +42,16 @@ void Scene::receiveMessage(ProtocolSocket &socket) {
     }
 }
 
-void Scene::togglePause() {
-}
-
-bool Scene::quit() {
-}
-
 void Scene::showConnectionLostMenu() {
     auto new_state = std::unique_ptr<Menu>(new LostConnectionMenu);
     std::unique_lock<std::mutex> lock(mtx);
     menu.swap(new_state);
+}
+
+void Scene::toggleRecording() {
+    std::unique_lock<std::mutex> lock(mtx);
+    if (camera.isRecording())
+        camera.stopRecording();
+    else
+        camera.startRecording();
 }

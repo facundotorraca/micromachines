@@ -20,11 +20,12 @@ Camera::Camera() :
     t_factory(nullptr),
     t_drawer(nullptr),
     renderer(nullptr),
-    window(nullptr)
+    window(nullptr),
+    recording(false)
 {
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow("Micromachines", 0, 0, width, height,
-            SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
+            SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1,
             SDL_RENDERER_ACCELERATED);
     t_factory = std::move(TextureFactory(renderer));
@@ -76,6 +77,8 @@ void Camera::clear() {
     int32_t w, h;
     SDL_GetWindowSize(window, &w, &h);
     if (!(w==width && h==height)) {
+        if (this->isRecording())
+            this->stopRecording();
         width = w;
         height = h;
         window_scale = (((float) width / 1920) + ((float) height / 1080)) / 2;
@@ -147,4 +150,28 @@ void Camera::drawText(const std::string &text, float posx, float posy,
 void Camera::drawFullScreenTexture(int32_t id) {
     Texture tex = t_factory.getTexture(id);
     copyRender(tex.tex, 0, 0, 0, width, height);
+}
+
+bool Camera::isRecording() {
+    return recorder.isRecording();
+}
+
+void Camera::startRecording() {
+    recorder.startRecording(renderer, width, height);
+}
+
+void Camera::stopRecording() {
+    recorder.stopRecording();
+}
+
+void Camera::setRecordingTarget() {
+    SDL_SetRenderTarget(renderer, recorder.getRecordingTexture());
+}
+
+void Camera::setDefaultTarget() {
+    SDL_SetRenderTarget(renderer, nullptr);
+}
+
+void Camera::sendToRecorder() {
+    recorder.recordFrame(renderer);
 }
