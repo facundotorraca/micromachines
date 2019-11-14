@@ -16,7 +16,7 @@ void ScreenRecorder::startRecording(SDL_Renderer* renderer, int width, int heigh
     recording_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_TARGET, width, height);
     buffer.clear();
     buffer.resize(width*height*3);
-    ctx = sws_getContext(width, height, AV_PIX_FMT_RGB24, 640, 480, AV_PIX_FMT_YUV420P, 0, 0, 0, 0);
+    ctx = sws_getContext(width, height, AV_PIX_FMT_RGB24, 1280, 720, AV_PIX_FMT_YUV420P, 0, 0, 0, 0);
     auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     std::string video_name(ctime(&time));
     video_name.erase(video_name.length()-1);
