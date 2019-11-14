@@ -29,7 +29,7 @@ void Modifier::add_to_world(b2World &world) {
 }
 
 void Modifier::apply_effect(Body *body) {
-    if (body->get_ID() == TYPE_CAR)
+    if (body->get_ID() == TYPE_CAR && !this->is_dead())
         this->apply_modifier_effect(body);
 }
 

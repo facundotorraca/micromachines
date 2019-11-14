@@ -58,9 +58,9 @@ void MapLoader::set_begin_distance_to_tiles() {
 
 
 void send_tile(int32_t type_ID, int32_t x_map, int32_t y_map, int32_t rot, ClientUpdater &updater) {
-    int32_t x = METER_TO_PIXEL * ((x_map * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
-    int32_t y = METER_TO_PIXEL * ((y_map * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE*0.5);
-    std::vector<int32_t> update_info {MSG_SEND_TILE, type_ID, x, y, rot};
+    int32_t x = METER_TO_PIXEL * ((x_map * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE * 0.5);
+    int32_t y = METER_TO_PIXEL * ((y_map * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE * 0.5);
+    std::vector<int32_t> update_info{MSG_SEND_TILE, type_ID, x, y, rot};
     updater.send_to_all(UpdateClient(std::move(update_info)));
 }
 

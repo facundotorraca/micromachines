@@ -31,9 +31,11 @@ void SocketAcceptor::bind(const std::string& port) {
     hints.ai_flags = AI_PASSIVE;        //AI_PASSIVE for server, 0 for client
     getaddrinfo(nullptr, port.c_str(), &hints, &result);
 
+    int yes=1;
     struct addrinfo *rst_iter = result;
     while (rst_iter) {
         this->fd = socket(rst_iter->ai_family, rst_iter->ai_socktype, rst_iter->ai_protocol);
+        setsockopt(this->fd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
 
         if (::bind(this->fd, rst_iter->ai_addr, rst_iter->ai_addrlen) == SUCCESS) {
             freeaddrinfo(result);

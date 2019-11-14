@@ -12,11 +12,15 @@
 #define SUCCESS 0
 #define INVALID_FD -1
 /*--------------------------PUBLIC------------------------------*/
-Socket::Socket() : is_connect(false),
-                   fd(INVALID_FD) {}
+Socket::Socket() :
+    is_connect(false),
+    fd(INVALID_FD)
+{}
 
-Socket::Socket(int fd) : is_connect(true),
-                          fd(fd){}
+Socket::Socket(int fd) :
+    is_connect(true),
+    fd(fd)
+{}
 
 Socket::Socket(Socket&& other) noexcept {
     this->fd = other.fd;

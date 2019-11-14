@@ -6,7 +6,7 @@
 #include <common/MsgTypes.h>
 #include <model/RacingTrack.h>
 
-#define TIME_OF_LIFE 6000 //10 sec
+#define TIME_OF_LIFE 100 //20 sec
 
 static double get_uniform_number() {
     std::random_device rd;
@@ -28,20 +28,17 @@ ModifierSpawner::ModifierSpawner(float probability, RacingTrack &racing_track):
                                           Configs::get_configs().mod_boost_prob} )
 {
     this->probability = probability;
-    std::vector<Coordinate>& pit_stop = this->racing_track.get_pit_stop_position();
-    this->pit_stop_modifiers.resize(pit_stop.size());
 }
 
 void ModifierSpawner::send_modifiers_update(ClientUpdater& updater) {
     double number = get_uniform_number();
 
     if (number < this->probability) {
-        this->try_spawn_modifier(updater);
         this->reload_pit_stop(updater);
+        this->try_spawn_modifier(updater);
     } else {
         this->try_despawn_modifier(updater);
     }
-
 }
 
 void ModifierSpawner::update() {
@@ -111,19 +108,19 @@ std::shared_ptr<Modifier> ModifierSpawner::generate_fix_or_boost_modifier(Client
 }
 
 void ModifierSpawner::reload_pit_stop(ClientUpdater& updater) {
-    std::vector<Coordinate> pit_stop = this->racing_track.get_pit_stop_position();
+    std::vector<Coordinate>& pit_stop = this->racing_track.get_pit_stop_position();
 
     if (this->pit_stop_modifiers.empty()) {
         for (auto &coordinate: pit_stop) {
             std::shared_ptr<Modifier> new_modifier = generate_fix_or_boost_modifier(updater, coordinate);
-            this->pit_stop_modifiers.push_back(new_modifier);
+            this->pit_stop_modifiers.emplace_back(std::move(new_modifier));
         }
     } else {
         for (size_t i = 0; i < this->pit_stop_modifiers.size(); i++) {
             if (pit_stop_modifiers[i]->is_dead()) {
                 Coordinate coord = pit_stop_modifiers[i]->get_coordinate();
                 std::shared_ptr<Modifier> new_modifier = generate_fix_or_boost_modifier(updater, coord);
-                this->pit_stop_modifiers.at(i) = new_modifier;
+                this->pit_stop_modifiers.at(i) = std::move(new_modifier);
             }
         }
     }
