@@ -23,7 +23,7 @@
 #include <common/ProtectedQueue.h>
 #include <model/CountdownTimer.h>
 #include "ThreadClientEventMonitor.h"
-#include "PlugingsManager.h"
+#include "PluginsManager.h"
 
 class Match : public Thread {
     std::string match_name;
@@ -40,7 +40,7 @@ class Match : public Thread {
     Race race;
 
     CountdownTimer timer;
-    PlugingsManager plugins_manager;
+    PluginsManager plugins_manager;
 
     std::mutex mtx;
     std::atomic<bool> waiting_restart;

@@ -1,7 +1,3 @@
-//
-// Created by alejoacevedo on 11/9/19.
-//
-
 #ifndef MICROMACHINES_CONFIGS_H
 #define MICROMACHINES_CONFIGS_H
 
@@ -17,13 +13,26 @@ class Configs {
     Configs();
 
 public:
-    static Configs& get_instance();
-    template <typename T>
-    T get(const std::string &key) {
-        return this->conf_json[key].get<T>();
-    }
+    int max_players;
+    int max_len_name;
+    int time_to_start;
+    int server_frames;
+    int socket_pending_connections;
 
+    float respawn_time;
+    float modifier_spawn_prob;
+    float mod_oil_prob;
+    float mod_mud_prob;
+    float mod_fix_prob;
+    float mod_rock_prob;
+    float mod_boost_prob;
+
+    std::string server_port;
+    std::string map_path;
+    std::string map_name;
+    std::string plugins_path;
+
+    static Configs& get_configs();
 };
-
 
 #endif //MICROMACHINES_CONFIGS_H

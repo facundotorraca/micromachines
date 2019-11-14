@@ -4,8 +4,8 @@
 #include <common/Socket.h>
 #include <common/MsgTypes.h>
 
-#define INVALID_ID -1
 #define JOIN_MODE 1
+#define INVALID_ID -1
 
 #define KEY_VALUE_POS 0
 #define KEY_STATE_POS 1

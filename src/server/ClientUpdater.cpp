@@ -1,7 +1,7 @@
 #include "ClientUpdater.h"
 
 void ClientUpdater::create_update_queue(int32_t ID, size_t max_size) {
-    this->updates_players.emplace(ID, 10000/*queue len*/);
+    this->updates_players.emplace(ID, 100/*queue len*/);
 }
 
 UpdateClient ClientUpdater::get_update(int32_t ID) {

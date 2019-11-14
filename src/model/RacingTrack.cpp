@@ -111,3 +111,11 @@ RacingTrack::~RacingTrack() {
     delete this->podium;
     delete this->finish_line;
 }
+
+void RacingTrack::add_pit_stop(Coordinate pit_stop) {
+    this->pit_stops.push_back(pit_stop);
+}
+
+std::vector<Coordinate>& RacingTrack::get_pit_stop_position() {
+    return this->pit_stops;
+}

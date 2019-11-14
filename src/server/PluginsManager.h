@@ -2,8 +2,8 @@
 // Created by alejo on 7/11/19.
 //
 
-#ifndef MICROMACHINES_PLUGINGSMANAGER_H
-#define MICROMACHINES_PLUGINGSMANAGER_H
+#ifndef MICROMACHINES_PLUGINSMANAGER_H
+#define MICROMACHINES_PLUGINSMANAGER_H
 
 #define PLUG_INIT "init"
 #define PLUG_EXECUTE "execute"
@@ -15,7 +15,7 @@
 #include <model/Race.h>
 #include <dirent.h>
 
-class PlugingsManager {
+class PluginsManager {
 
     Race &race;
     int32_t life;
@@ -24,12 +24,12 @@ class PlugingsManager {
     std::vector<void*> libs_attrs;
 
 public:
-    explicit PlugingsManager(Race &race, std::string path);
-    void load_plugings();
+    explicit PluginsManager(Race &race, std::string path);
+    void load_plugins();
     void execute();
-    ~PlugingsManager();
+    ~PluginsManager();
 
 };
 
 
-#endif //MICROMACHINES_PLUGINGSMANAGER_H
+#endif //MICROMACHINES_PLUGINSMANAGER_H

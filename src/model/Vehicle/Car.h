@@ -22,7 +22,6 @@ class Car : public Body {
 
     b2Body* car_body;
     std::vector<Wheel*> wheels;
-
     b2RevoluteJoint* front_left_joint;
     b2RevoluteJoint* front_right_joint;
 
@@ -74,6 +73,8 @@ class Car : public Body {
         /*-------------Race_handlers---------*/
         void modify_laps(LapCounter& lap_counter, int32_t car_ID);
 
+        void change_lap_state(std::unique_ptr<LapState> new_lap_state);
+
         void set_begin_distance(int32_t begin_distance);
 
         void set_respawn(Coordinate respawn);
@@ -90,13 +91,9 @@ class Car : public Body {
 
         void apply_boost_effect();
 
-        void restart_lap();
-
-        void complete_lap();
+        void explode();
 
         void repair();
-
-        void explode();
 };
 
 #endif //MICROMACHINES_CAR_H

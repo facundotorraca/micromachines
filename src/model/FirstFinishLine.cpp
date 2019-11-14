@@ -1,6 +1,3 @@
-//
-// Created by facundotorraca on 1/11/19.
-//
 #include "Box2D/Box2D.h"
 #include <common/Sizes.h>
 #include <common/EntityType.h>
@@ -42,8 +39,10 @@ FirstFinishLine::FirstFinishLine(Coordinate begin, Coordinate end, bool& cross_f
 void FirstFinishLine::apply_effect(Body *body) {
     if (body->get_ID() != TYPE_CAR)
         return;
-    if (this->cross_second)
-        ((Car*)body)->restart_lap();
+    if (this->cross_second) {
+        std::unique_ptr<LapState> lap_state(new LapRestarted());
+        ((Car*) body)->change_lap_state(std::move(lap_state));
+    }
 
     this->cross_first = true;
     this->cross_second = false;

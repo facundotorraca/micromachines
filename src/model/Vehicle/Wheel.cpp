@@ -127,9 +127,7 @@ void Wheel::reduce_max_speed(float proportion) {
     this->speed_proportion = proportion;
 }
 
-void Wheel::collide(Body *static_object) {
-    std::cout << "WHEEL: ME LA PUSE\n";
-}
+void Wheel::collide(Body *static_object) {}
 
 int32_t Wheel::get_ID() {
     return TYPE_WHEEL;

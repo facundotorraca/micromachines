@@ -62,6 +62,23 @@ void ProtocolSocket::receive(std::vector<int32_t>& buffer) {
     }
 }
 
+void ProtocolSocket::receive_n(std::string &message, size_t n) {
+    uint8_t len_next_message = 0;
+    this->socket.receive(&len_next_message, 1);
+
+    if (len_next_message > n) {
+        size_t bytes_recv = this->socket.receive((uint8_t *) message.data(), n);
+        message.resize(bytes_recv);
+        /*receive the rest and discard*/
+        int32_t remaining = len_next_message - n;
+        std::string remaining_buff(remaining, '\0');
+        this->socket.receive((uint8_t*)remaining_buff.data(), remaining);
+    } else {
+        size_t bytes_recv = this->socket.receive((uint8_t*)message.data(), len_next_message);
+        message.resize(bytes_recv);
+    }
+}
+
 void ProtocolSocket::close() {
     this->socket.close();
 }

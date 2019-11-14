@@ -3,8 +3,6 @@
 
 #include "CarState.h"
 
-#define MAX_ALLOWED_DISTANCE 2 //3 tiles
-
 class Alive : public CarState {
 
     public:

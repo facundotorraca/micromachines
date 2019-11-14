@@ -14,7 +14,7 @@ class ModifierFactory {
 
         std::shared_ptr<Modifier> get_modifier_randomly(int32_t time_of_life, int32_t map_x, int32_t map_y);
 
-
+        static std::shared_ptr<Modifier> get_life_or_boost(int32_t time_of_life, int32_t map_x, int32_t map_y);
 };
 
 

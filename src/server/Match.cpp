@@ -2,44 +2,37 @@
 #include <utility>
 #include "Match.h"
 #include "Player.h"
-#include <common/Sizes.h>
 #include <model/DTO_Info.h>
+#include <common/Configs.h>
+#include <common/MsgTypes.h>
 #include <common/SocketError.h>
 #include "ThreadClientEventMonitor.h"
 #include <server/FramesSyncronizer.h>
-#include <common/MsgTypes.h>
-
-#define MAP_PATH "maps/"
-#define MAP_NAME "track_01.json"
-#define PLUGINS_PATH "plugings/"
-
-#define ERROR_MATCH_JOIN_FLAG 1
 
 #define OPEN_MATCH_FLAG "0"
 #define CLOSE_MATCH_FLAG "1"
 
-#define SUCCESS_MATCH_JOIN_FLAG 0
-
 #define START_MATCH_FLAG 0
-#define TIME_START 3
+#define ERROR_MATCH_JOIN_FLAG 1
+#define SUCCESS_MATCH_JOIN_FLAG 0
 
 #define UPDATE_QUEUE_MAX_SIZE 1000
 
 Match::Match(std::string match_creator, std::string match_name):
         closed(false),
         waiting_restart(false),
-        updates_race(10000),
         match_name(std::move(match_name)),
-        race(3, MAP_PATH, MAP_NAME),
+        updates_race(UPDATE_QUEUE_MAX_SIZE),
         match_creator(std::move(match_creator)),
-        plugins_manager(this->race, PLUGINS_PATH),
         clients_monitor(this, this->updates_race),
-        timer(TIME_START,this->race, this->client_updater)
+        plugins_manager(this->race, Configs::get_configs().plugins_path),
+        timer(Configs::get_configs().time_to_start,this->race, this->client_updater),
+        race(3, Configs::get_configs().map_path, Configs::get_configs().map_name)
 {}
 
 void Match::add_player(Player&& player) {
     try {
-        if (this->running || (this->players.size() + 1) >= 8)
+        if (this->running || (this->players.size() + 1) >= Configs::get_configs().max_players)
             /*+1 because creator is added at end*/
             player.send((uint8_t)ERROR_MATCH_JOIN_FLAG);
         else {
@@ -147,7 +140,7 @@ void Match::apply_update(UpdateRace update) {
 }
 
 void Match::step() {
-    FramesSynchronizer::sync_FPS(FRAMES_PER_SECOND);
+    FramesSynchronizer::sync_FPS(Configs::get_configs().server_frames);
     std::unique_lock<std::mutex> lock(mtx);
     //this->plugins_manager.execute();
     this->race.update();
@@ -197,7 +190,7 @@ bool Match::all_players_finished() {
 }
 
 void Match::run() {
-    this->plugins_manager.load_plugings();
+    this->plugins_manager.load_plugins();
     this->initialize_players();
 
     this->clients_monitor.start();

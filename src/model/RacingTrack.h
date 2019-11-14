@@ -28,6 +28,7 @@ class RacingTrack {
 
     Podium* podium;
     FinishLine* finish_line;
+    std::vector<Coordinate> pit_stops;
     std::vector<Coordinate> spawn_points;
 
     std::vector<std::unique_ptr<Terrain>> track;
@@ -49,7 +50,11 @@ class RacingTrack {
 
         Coordinate get_random_track_position();
 
+        std::vector<Coordinate>& get_pit_stop_position();
+
         void prepare_track(ClientUpdater& updater);
+
+        void add_pit_stop(Coordinate pit_stop);
 
         void add_car_to_podium(Car& car, int32_t ID);
 

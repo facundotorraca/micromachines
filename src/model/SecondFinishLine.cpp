@@ -43,7 +43,8 @@ void SecondFinishLine::apply_effect(Body *body) {
     if (this->cross_first) {
         this->cross_first = false;
         this->cross_second = false;
-        ((Car*)body)->complete_lap();
+        std::unique_ptr<LapState> lap_state(new LapCompleted());
+        ((Car*) body)->change_lap_state(std::move(lap_state));
     } else {
         this->cross_first = false;
         this->cross_second = true;

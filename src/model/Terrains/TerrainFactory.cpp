@@ -15,9 +15,6 @@
 #define BEG_GRASS_IDS 56
 #define END_GRASS_IDS 59
 
-#define BEG_SAND_IDS 60
-#define END_SAND_IDS 89
-
 std::unique_ptr<Terrain> TerrainFactory::create_terrain(int32_t ID, int32_t x, int32_t y) {
     if (ID >= BEG_ASPHALT_IDS && ID <= END_ASPHALT_IDS )
         return std::unique_ptr<Terrain> (new Asphalt(ID, x, y));

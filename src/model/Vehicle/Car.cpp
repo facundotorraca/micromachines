@@ -165,14 +165,9 @@ int32_t Car::get_ID() {
     return TYPE_CAR;
 }
 
-void Car::complete_lap() {
+void Car::change_lap_state(std::unique_ptr<LapState> new_lap_state) {
+    this->lap_state = std::move(new_lap_state);
     this->lap_altered = true;
-    this->lap_state.reset(new LapCompleted());
-}
-
-void Car::restart_lap() {
-    this->lap_altered = true;
-    this->lap_state.reset(new LapRestarted());
 }
 
 void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
@@ -244,7 +239,7 @@ void Car::apply_rock_effect() {
     for (auto& wheel : this->wheels) {
         wheel->apply_effect(std::unique_ptr<Effect>(new RockEffect()));
     }
-    this->life.make_damage(10);
+    this->make_damage(10);
 }
 
 void Car::apply_boost_effect() {

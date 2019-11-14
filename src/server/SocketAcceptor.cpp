@@ -9,6 +9,7 @@
 #include <cstring>
 #include <netdb.h>
 #include <string>
+#include <common/Configs.h>
 
 #define ERROR -1
 #define SUCCESS 0
@@ -46,7 +47,7 @@ void SocketAcceptor::bind(const std::string& port) {
 }
 
 void SocketAcceptor::listen() {
-    if (::listen(this->fd, MAX_PENDING_CONNECTIONS) == ERROR) {
+    if (::listen(this->fd, Configs::get_configs().socket_pending_connections) == ERROR) {
         throw SocketAcceptorError("SocketAceptor: LISTEN ERROR");
     }
 }

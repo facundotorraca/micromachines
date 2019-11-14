@@ -1,9 +1,9 @@
 #ifndef MICROMACHINES_DTO_INFO_H
 #define MICROMACHINES_DTO_INFO_H
 
+#include <cstdint>
 #include <common/Sizes.h>
 #include <model/Vehicle/CarSpecs.h>
-#include <cstdint>
 
 typedef struct {
     int32_t max_life;

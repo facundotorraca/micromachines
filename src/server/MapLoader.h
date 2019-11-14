@@ -16,6 +16,7 @@ class MapLoader {
     std::string map_name;
     std::string map_paths;
 
+    std::vector<Coordinate> pit_stops;
     std::vector<Coordinate> finish_line;
     std::vector<Coordinate> unranked_places;
     std::vector<std::unique_ptr<Terrain>> track;
@@ -23,6 +24,8 @@ class MapLoader {
 
     private:
         void set_begin_distance_to_tiles();
+
+        void load_racing_track(RacingTrack& racingTrack);
 
         void open_files(nlohmann::json& map_file, nlohmann::json& tiles_file);
 

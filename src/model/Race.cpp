@@ -1,15 +1,14 @@
 #include "Race.h"
 #include <unordered_map>
 #include <common/MsgTypes.h>
+#include <common/Configs.h>
 #include <server/ClientUpdater.h>
-
-#define SPAWN_PROBABILITY 0.003f//0.0015f
 
 Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
     lap_counter(total_laps),
     position_manager(this->cars),
     racing_track(map_path, map_name),
-    modifier_spawner(SPAWN_PROBABILITY, this->racing_track)
+    modifier_spawner(Configs::get_configs().modifier_spawn_prob, this->racing_track)
 {}
 
 void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {

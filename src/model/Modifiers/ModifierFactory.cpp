@@ -41,3 +41,13 @@ std::shared_ptr<Modifier> ModifierFactory::get_modifier_randomly(int32_t time_of
         return std::shared_ptr<Modifier>(new Boost(time_of_life, map_x, map_y));
     }
 }
+
+std::shared_ptr<Modifier> ModifierFactory::get_life_or_boost(int32_t time_of_life, int32_t map_x, int32_t map_y) {
+    double rand = get_uniform_number();
+
+    if (rand < 0.5)
+        return std::shared_ptr<Modifier>(new Fix(time_of_life, map_x, map_y));
+    else
+        return std::shared_ptr<Modifier>(new Boost(time_of_life, map_x, map_y));
+
+}

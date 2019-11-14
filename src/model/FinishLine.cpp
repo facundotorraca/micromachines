@@ -1,8 +1,4 @@
 #include "FinishLine.h"
-#include "RacingTrack.h"
-#include <common/Sizes.h>
-#include <common/EntityType.h>
-#include <model/Vehicle/Car.h>
 
 FinishLine::FinishLine(Coordinate begin, Coordinate end, b2World& track):
     cross_first(false),

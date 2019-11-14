@@ -25,7 +25,9 @@ class Terrain : public Sensor {
 
         Terrain(Terrain&& other) noexcept;
 
-        void add_to_world(b2World& world);
+        void set_orientation(Orientation new_orientation);
+
+        virtual void apply_terrain_effect(Body* body) = 0;
 
         void set_begin_distance(int32_t distance);
 
@@ -33,15 +35,13 @@ class Terrain : public Sensor {
 
         void apply_effect(Body* body) override;
 
-        void set_orientation(Orientation new_orientation);
-
-        virtual void apply_terrain_effect(Body* body) = 0;
+        void add_to_world(b2World& world);
 
         Coordinate get_map_coordinate();
 
-       void set_as_limit();
+        void set_as_limit();
 
-       int32_t get_ID();
+        int32_t get_ID();
 };
 
 #endif //MICROMACHINES_TERRAIN_H

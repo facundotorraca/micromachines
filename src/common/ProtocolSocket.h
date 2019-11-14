@@ -26,6 +26,8 @@ class ProtocolSocket {
 
         void receive(int32_t& word);
 
+        void receive_n(std::string& message, size_t n);
+
         void receive(std::string& message);
 
         void receive(std::vector<int32_t>& buffer);

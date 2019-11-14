@@ -1,5 +1,3 @@
-#include <iostream>
-#include "UpdateClient.h"
 #include <common/SocketError.h>
 #include "ThreadUpdateSender.h"
 

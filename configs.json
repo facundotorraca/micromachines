@@ -1,2 +1,23 @@
-{"test": "ESTO ES UN TEST",
-"max_players": 8}
+{
+"max_players": 8, 
+"server_port": "7777",
+
+"map_path":  "maps/",
+"map_name": "track_01.json",
+"plugins_path":"plugings/",
+
+"time_to_start": 3,
+
+"server_frames": 60,
+"socket_pending_connections":10,
+"max_len_name":20,
+
+"modifier_spawn_prob": 0.003,
+"mod_oil_prob": 0.2,
+"mod_mud_prob": 0.2,
+"mod_fix_prob": 0.2,
+"mod_rock_prob": 0.2,
+"mod_boost_prob": 0.2,
+
+"respawn_time": 1 
+}

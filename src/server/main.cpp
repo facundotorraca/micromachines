@@ -1,12 +1,10 @@
-#include <string>
 #include "Server.h"
+#include <common/Configs.h>
 
 #define SUCCESS 0
 
 int main() {
-    std::string port("7777");
-
-    Server server(port);
+    Server server(Configs::get_configs().server_port);
     server.start();
 
     return SUCCESS;

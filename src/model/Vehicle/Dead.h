@@ -2,6 +2,7 @@
 #define MICROMACHINES_DEAD_H
 
 #include <cstdint>
+#include <common/Configs.h>
 #include "CarState.h"
 
 #define RESPAWN_TIME 60 //1.5sec
@@ -12,7 +13,9 @@ class Dead : public CarState {
         int32_t remaining_time;
 
     public:
-        Dead() { this->remaining_time = RESPAWN_TIME; }
+        Dead() {
+
+            this->remaining_time = Configs::get_configs().server_frames * Configs::get_configs().respawn_time; }
 
         bool try_respawn(Coordinate respawn_point, b2Body* car_body, std::vector<Wheel*> wheels) override {
             this->remaining_time -= 1;

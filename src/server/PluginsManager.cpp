@@ -1,21 +1,19 @@
-//
-// Created by alejo on 7/11/19.
-//
-
-#include "PlugingsManager.h"
 #include <dlfcn.h>
 
-#define MAX_LIFE 20 //1/3 sec
+#include <utility>
+#include "PluginsManager.h"
 
-PlugingsManager::PlugingsManager(Race &race,
-                                 std::string path) : race(race),
-                                                     path(path),
-                                                     libs()
+#define PLUGIN_REFRESH_LIFE 20 // 1/3 sec
+
+PluginsManager::PluginsManager(Race &race, std::string path) :
+    race(race),
+    path(std::move(path)),
+    libs()
 {
-    this->life = MAX_LIFE;
+    this->life = PLUGIN_REFRESH_LIFE;
 }
 
-void PlugingsManager::load_plugings() {
+void PluginsManager::load_plugins() {
     struct dirent *entry;
     void* (*fun_dl)();
     DIR *pDIR = opendir(this->path.c_str());
@@ -39,11 +37,11 @@ void PlugingsManager::load_plugings() {
     closedir(pDIR);
 }
 
-void PlugingsManager::execute() {
+void PluginsManager::execute() {
     this->life -= 1;
     if (this->life > 0)
         return;
-    this->life = MAX_LIFE;
+    this->life = PLUGIN_REFRESH_LIFE;
     void (*fun_dl)(void*, DTO_Info*);
     DTO_Info params;
     race.get_dto_data(params);
@@ -56,7 +54,7 @@ void PlugingsManager::execute() {
     this->race.apply_plugin(params);
 };
 
-PlugingsManager::~PlugingsManager() {
+PluginsManager::~PluginsManager() {
     void (*fun_dl)(void*);
     for (size_t ind = 0; ind < this->libs.size(); ind++ ) {
         *(void**) (&fun_dl) = dlsym(this->libs[ind], PLUG_DESTROY);

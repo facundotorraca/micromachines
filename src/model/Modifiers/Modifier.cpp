@@ -43,7 +43,7 @@ bool Modifier::is_dead() {
 }
 
 Coordinate Modifier::get_coordinate() {
-    return {float(this->map_x), float(this->map_y), 0};
+    return {float(this->map_x), float(this->map_y)};
 }
 
 Modifier::~Modifier() {
