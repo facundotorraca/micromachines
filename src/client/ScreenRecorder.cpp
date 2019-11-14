@@ -6,21 +6,18 @@
 #include <SDL_messagebox.h>
 #include "ScreenRecorder.h"
 
-ScreenRecorder::ScreenRecorder() : recording(false), format(), current_output(nullptr),
-    ctx(nullptr), width(0), height(0), recording_texture(nullptr){
+ScreenRecorder::ScreenRecorder() : width(0), height(0), recording(false), recording_texture(nullptr){
 }
 
-void ScreenRecorder::startRecording(SDL_Renderer* renderer, int width, int height) {
-    this->width = width;
-    this->height = height;
+void ScreenRecorder::startRecording(SDL_Renderer* renderer, int w, int h) {
+    this->width = w;
+    this->height = h;
     recording_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_TARGET, width, height);
     buffer.clear();
     buffer.resize(width*height*3);
-    ctx = sws_getContext(width, height, AV_PIX_FMT_RGB24, 1280, 720, AV_PIX_FMT_YUV420P, 0, 0, 0, 0);
-    auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-    std::string video_name(ctime(&time));
-    video_name.erase(video_name.length()-1);
-    current_output.reset(new OutputFormat(format, video_name+".mpeg"));
+    queue.reset(new ProtectedQueue<std::vector<uint8_t>>(1));
+    writer.reset(new ThreadWriter(queue, w, h));
+    writer->start();
     this->recording = true;
 }
 
@@ -30,16 +27,18 @@ void ScreenRecorder::recordFrame(SDL_Renderer *renderer) {
         if (res){
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "RendererReadPixels error", SDL_GetError(), nullptr);
         }
-        current_output->writeFrame(buffer.data(), ctx, width);
+        if (queue->empty())
+            queue->push(buffer);
     }
 }
 
 void ScreenRecorder::stopRecording() {
     this->recording = false;
-    current_output->close();
-    sws_freeContext(ctx);
-    ctx = nullptr;
-    current_output.reset(nullptr);
+    queue->close();
+    //writer->shutdown();
+    writer->join();
+    writer.reset();
+    queue.reset();
     SDL_DestroyTexture(recording_texture);
 }
 
@@ -48,7 +47,8 @@ bool ScreenRecorder::isRecording() {
 }
 
 ScreenRecorder::~ScreenRecorder() {
-    sws_freeContext(ctx);
+    if (recording)
+        stopRecording();
     if (recording_texture){
         SDL_DestroyTexture(recording_texture);
     }

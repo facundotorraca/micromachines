@@ -71,10 +71,10 @@ void OutputFormat::initFrame() {
     this->currentPts = 0;
 }
 
-void OutputFormat::writeFrame(const uint8_t* data, SwsContext* ctx, int w) {
+void OutputFormat::writeFrame(const uint8_t* data, SwsContext* ctx, int w, int h) {
     // El ancho del video x3 por la cantidad de bytes
     int width = w * 3;
-    sws_scale(ctx, &data, &width, 0, frame->height, frame->data, frame->linesize);
+    sws_scale(ctx, &data, &width, 0, h, frame->data, frame->linesize);
     //drawFrame(frame, data);
     frame->pts = currentPts;
     currentPts++;
@@ -85,8 +85,8 @@ void OutputFormat::writeFrame(const uint8_t* data, SwsContext* ctx, int w) {
 void OutputFormat::codecContextInit(AVCodec* codec){
     this->codecContext = avcodec_alloc_context3(codec);
     // La resolución debe ser múltiplo de 2
-    this->codecContext->width = 1280;
-    this->codecContext->height = 720;
+    this->codecContext->width = 640;
+    this->codecContext->height = 480;
     this->codecContext->time_base = {1,25};
     this->codecContext->framerate = {25,1};
     this->codecContext->pix_fmt = AV_PIX_FMT_YUV420P;

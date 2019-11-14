@@ -5,24 +5,18 @@
 #ifndef MICROMACHINES_SCREENRECORDER_H
 #define MICROMACHINES_SCREENRECORDER_H
 
-#include "ffmpeg/FormatContext.h"
-#include "ffmpeg/OutputFormat.h"
-extern "C" {
-    #include <libswscale/swscale.h>
-    #include <libavformat/avformat.h>
-}
 #include <vector>
 #include <SDL2/SDL_render.h>
 #include <memory>
+#include <client/ffmpeg/ThreadWriter.h>
 
 class ScreenRecorder {
-    bool recording;
-    FormatContext format;
-    std::unique_ptr<OutputFormat> current_output;
-    SwsContext* ctx;
     int width, height;
+    bool recording;
     std::vector<uint8_t> buffer;
     SDL_Texture* recording_texture;
+    std::unique_ptr<ThreadWriter> writer;
+    std::shared_ptr<ProtectedQueue<std::vector<uint8_t>>> queue;
 public:
     ScreenRecorder();
     void startRecording(SDL_Renderer* renderer, int width, int height);

@@ -22,7 +22,7 @@ public:
     ~OutputFormat();
     // Escribe un frame a disco. Utiliza `swsContext` para convertir
     // de RGB24 a YUV420p
-    void writeFrame(const uint8_t* data, SwsContext* swsContext, int width);
+    void writeFrame(const uint8_t* data, SwsContext* swsContext, int width, int height);
     // Cierra el stream de video
     void close();
 private:

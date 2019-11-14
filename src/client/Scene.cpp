@@ -23,13 +23,13 @@ bool Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
 void Scene::draw() {
     std::unique_lock<std::mutex> lock(mtx);
     camera.clear();
+    this->scenario.draw(camera);
     if (camera.isRecording()){
         camera.setRecordingTarget();
         this->scenario.draw(camera);
         camera.sendToRecorder();
         camera.setDefaultTarget();
     }
-    this->scenario.draw(camera);
     menu->draw(camera);
     camera.draw();
 }
