@@ -12,6 +12,7 @@
 #include <common/Sizes.h>
 #include "TextureFactory.h"
 #include "TextDrawer.h"
+#include "ScreenRecorder.h"
 
 struct CarData{
     int32_t x;
@@ -32,6 +33,8 @@ class Camera {
     TextDrawer t_drawer;
     SDL_Renderer* renderer;
     SDL_Window* window;
+    ScreenRecorder recorder;
+    bool recording;
     bool isInCamera(int x, int y, int w, int h);
     void copyRender(SDL_Texture* tex, int32_t x, int32_t y, int32_t rot,
             int32_t w, int32_t h);
@@ -40,7 +43,12 @@ public:
     void update(int32_t posx, int32_t posy, int32_t carvel, int32_t rot);
     void draw();
     void clear();
-
+    bool isRecording();
+    void startRecording();
+    void stopRecording();
+    void setRecordingTarget();
+    void setDefaultTarget();
+    void sendToRecorder();
     void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t sizex, int32_t sizey, int32_t rot);
     void drawScreenTexture(int32_t id, float posx, float posy, float scale);
     void drawScreenTexture(int32_t id, float posx, float posy, float sizex, float sizey);
@@ -48,7 +56,6 @@ public:
     void drawText(const std::string& text, float posx, float posy, float size, size_t padding);
     void drawFullScreenTexture(int32_t id);
     ~Camera();
-
 };
 
 

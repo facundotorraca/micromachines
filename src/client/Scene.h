@@ -24,20 +24,12 @@ class Scene {
     std::unique_ptr<Menu> menu;
     std::mutex mtx;
 public:
-
-        explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue, Bot &bot);
-
-        bool handleKeyEvent(SDL_Keycode key, SDL_EventType type);
-
-        void receiveMessage(ProtocolSocket& socket);
-
-        void draw();
-
-        void togglePause();
-
-        void showConnectionLostMenu();
-
-        bool quit();
+    explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue, Bot &bot);
+    bool handleKeyEvent(SDL_Keycode key, SDL_EventType type);
+    void receiveMessage(ProtocolSocket& socket);
+    void draw();
+    void showConnectionLostMenu();
+    void toggleRecording();
 };
 
 
