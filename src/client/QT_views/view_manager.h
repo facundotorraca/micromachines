@@ -13,9 +13,11 @@
 class ViewManager {
     QApplication mainApp;
     Socket sck;
+    bool arranged;
  public:
     ViewManager(int argc, char *argv[]);
     ProtocolSocket run();
+    bool is_game_arranged();
     ~ViewManager() {}
 };
 

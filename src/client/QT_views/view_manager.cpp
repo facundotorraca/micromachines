@@ -3,25 +3,33 @@
 //
 
 #include "view_manager.h"
-#include "views/ConectView.h"
-#include "views/MainWindow.h"
+#include "./views/menuwindow.h"
+#include "./views/connectview.cpp"
 #include <iostream>
 
 ViewManager::ViewManager(int argc, char *argv[])
                         : mainApp(argc, argv),
-                        sck() {}
+                        sck(),
+                        arranged(false) {}
 
 ProtocolSocket ViewManager::run() {
-    ConectView conect_view(this->sck);
-    conect_view.show();
+    ConnectView connectView(this->sck);
+    connectView.show();
     this->mainApp.exec();
     ProtocolSocket ps(std::move(this->sck));
-    if(ps.is_connected()) {
-        MainWindow main_window(ps);
-        main_window.show();
-        this->mainApp.exec();
-        if(!main_window.is_fixed())
-            return std::move(ProtocolSocket(std::move(Socket())));
+    if (!ps.is_connected()) {
+        return std::move(ps);
     }
+    MenuWindow menuWindow(ps);
+    menuWindow.show();
+    this->mainApp.exec();
+    if (!menuWindow.is_game_arranged()){
+        return std::move(ps);
+    }
+    this->arranged = true;
     return std::move(ps);
+}
+
+bool ViewManager::is_game_arranged() {
+    return arranged;
 }
