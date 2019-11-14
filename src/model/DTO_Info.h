@@ -5,6 +5,15 @@
 #include <common/Sizes.h>
 #include <model/Vehicle/CarSpecs.h>
 
+typedef enum {
+    MUD,
+    OIL,
+    FIX,
+    ROCK,
+    BOOST,
+    NO_MODIFIER
+} modifier_t;
+
 typedef struct {
     int32_t max_life;
     int32_t current_life;
@@ -16,6 +25,7 @@ typedef struct {
     CarSpecs specs;
     DTO_CarLife life;
     int32_t position;
+    modifier_t modifier;
 } DTO_Car;
 
 typedef struct {

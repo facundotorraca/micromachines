@@ -257,8 +257,30 @@ void Car::apply_mud_effect() {
 void Car::get_dto_info(int32_t ID, DTO_Car &car_info) {
     car_info.ID = ID;
     car_info.specs = this->specs;
-    car_info.position = 1; //Cambiarlo
+    car_info.modifier = NO_MODIFIER;
     this->life.get_dto_info(car_info.life);
+}
+
+void apply_modifier_plugin(Car* car, modifier_t modifier) {
+    switch (modifier) {
+        case OIL:
+            car->apply_oil_effect();
+            break;
+        case FIX:
+            car->repair();
+            break;
+        case ROCK:
+            car->apply_rock_effect();
+            break;
+        case MUD:
+            car->apply_mud_effect();
+            break;
+        case BOOST:
+            car->apply_boost_effect();
+            break;
+        case NO_MODIFIER:
+            break;
+    }
 }
 
 void Car::apply_plugin(DTO_Car &car_info) {
@@ -284,6 +306,7 @@ void Car::apply_plugin(DTO_Car &car_info) {
 
     this->life.apply_plugin(car_info.life);
     this->specs = car_info.specs;
+    apply_modifier_plugin(this, car_info.modifier);
 }
 
 void Car::make_damage(int32_t damage) {
