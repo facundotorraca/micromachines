@@ -45,7 +45,7 @@ OutputFormat::OutputFormat(FormatContext& context,
         throw std::runtime_error("No se encontró formato de salida");
     }
     // h.264 es bastante popular, pero hay mejores
-    this->avOutputFormat->video_codec = AV_CODEC_ID_H264;
+    this->avOutputFormat->video_codec = AV_CODEC_ID_MPEG2VIDEO;
     AVCodec *codec = avcodec_find_encoder(this->avOutputFormat->video_codec);
     if (!codec) {
         throw std::runtime_error("No se pudo instanciar codec");
