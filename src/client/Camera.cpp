@@ -25,7 +25,7 @@ Camera::Camera() :
 {
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow("Micromachines", 0, 0, width, height,
-            SDL_WINDOW_OPENGL);
+            SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1,
             SDL_RENDERER_ACCELERATED);
     t_factory = std::move(TextureFactory(renderer));
