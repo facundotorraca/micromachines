@@ -2,7 +2,6 @@
 // Created by javier on 10/11/19.
 //
 
-#include <chrono>
 #include <SDL_messagebox.h>
 #include "ScreenRecorder.h"
 
