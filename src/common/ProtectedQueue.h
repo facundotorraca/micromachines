@@ -68,7 +68,7 @@ class ProtectedQueue {
         }
 
         bool is_full() {
-            return this->max_q_len >= this->queue.size();
+            return this->max_q_len <= this->queue.size();
         }
 
         T pop() {

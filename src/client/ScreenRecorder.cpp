@@ -15,7 +15,7 @@ void ScreenRecorder::startRecording(SDL_Renderer* renderer, int w, int h) {
     recording_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_TARGET, width, height);
     buffer.clear();
     buffer.resize(width*height*3);
-    queue.reset(new ProtectedQueue<std::vector<uint8_t>>(1));
+    queue.reset(new ProtectedQueue<std::vector<uint8_t>>(1000));
     writer.reset(new ThreadWriter(queue, w, h));
     writer->start();
     this->recording = true;
@@ -27,7 +27,7 @@ void ScreenRecorder::recordFrame(SDL_Renderer *renderer) {
         if (res){
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "RendererReadPixels error", SDL_GetError(), nullptr);
         }
-        if (queue->empty())
+        if (!queue->is_full())
             queue->push(buffer);
     }
 }
