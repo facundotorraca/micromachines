@@ -18,6 +18,9 @@ int main(int argc, char *argv[])
         std::cout << "Flag MATCH =! 0 ERROR\n";
         return SUCCESS; // Deberia ser success?
     }
+    if (!view_manager.is_game_arranged()) {
+        return SUCCESS;
+    }
     /* Aca empieza SDL
      * "ps" es el ProtocolSocket ya conectado al servidor
      * se debería conectar en la ventana de qt

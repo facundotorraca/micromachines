@@ -29,7 +29,6 @@ end
 
 function updateCar(newCar)
   car.inited = true
-  print("CAR UPDATED")
   for key, value in pairs(newCar) do
     car[key] = value
   end

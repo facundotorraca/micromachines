@@ -7,10 +7,12 @@
 
 #define IMPULSE_MODIFIER 1.5f
 #define FORCE_MODIFIER 1.5f
+#define BEFORE_BOOST 20
 
 typedef struct self {
     uint32_t step;
     int32_t last_boosted_id;
+    int32_t last_id;
     bool boosted;
 } BoostLast_t;
 
@@ -31,28 +33,30 @@ void reset_specs(CarSpecs *specs) {
 void run(BoostLast_t *self, DTO_Info *params) {
     size_t last = 0;
     int32_t last_id = -1;
-    CarSpecs *last_specs = nullptr;
-    if(self->step % 50 != 0) {
-        self->step++;
-        return;
-    }
+    DTO_Car *last_car = nullptr;
     for (size_t ind = 0; ind < params->cars; ind++) {
         if (params->car_info[ind].position > last) {
             last = params->car_info[ind].position;
-            last_specs = &(params->car_info[ind].specs);
+            last_car = &(params->car_info[ind]);
             last_id = params->car_info[ind].ID;
         }
         if (params->car_info[ind].ID == self->last_boosted_id && self->boosted) {
             self->boosted = false;
-            reset_specs(&(params->car_info[ind].specs));
+            last_car->modifier = NO_MODIFIER;
         }
     }
-    if (self->last_boosted_id != last_id && !self->boosted) {
-        modify_specs(last_specs);
+    if (self->last_id == last_id) {
+        self->step++;
+    }
+    if (self->last_id != last_id) {
+        self->step = 0;
+    }
+    self->last_id = last_id;
+    if (self->last_boosted_id != last_id && !self->boosted && self->step > BEFORE_BOOST) {
+        last_car->modifier = BOOST;
         self->last_boosted_id = last_id;
         self->boosted = true;
     }
-    self->step++;
 }
 
 extern "C" {
@@ -61,6 +65,7 @@ extern "C" {
         self->step = 0;
         self->boosted = false;
         self->last_boosted_id = -1;
+        self->last_id = -1;
         return self;
     }
     void execute(BoostLast_t *self, DTO_Info *params) {
