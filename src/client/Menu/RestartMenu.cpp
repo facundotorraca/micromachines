@@ -9,10 +9,10 @@
 
 void RestartMenu::draw(Camera &camera) {
     std::string quit("[R] Restart Race");
-    camera.drawScreenTexture(PAUSE_MENU_TEX, 0.38, 0.38, 0.35, 0.35);
-    camera.drawText(quit, 0.45, 0.50, 0.5, quit.size());
+    camera.drawScreenTexture(PAUSE_MENU_TEX, 0, 0.8, 1, 0.2);
+    camera.drawText(quit, 0.6, 0.9, 0.5, quit.size());
     std::string resume("[Q] Quit");
-    camera.drawText(resume, 0.45, 0.55, 0.5, resume.size());
+    camera.drawText(resume, 0.2, 0.9, 0.5, resume.size());
 }
 
 std::unique_ptr<Menu>
