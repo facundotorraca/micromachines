@@ -23,12 +23,13 @@ void ScreenRecorder::startRecording(SDL_Renderer* renderer, int w, int h) {
 
 void ScreenRecorder::recordFrame(SDL_Renderer *renderer) {
     if (recording) {
+        buffer.resize(width*height*3);
         int res = SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_RGB24, buffer.data(), width*3);
         if (res){
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "RendererReadPixels error", SDL_GetError(), nullptr);
         }
         if (queue->empty())
-            queue->push(buffer);
+            queue->push(std::move(buffer));
     }
 }
 

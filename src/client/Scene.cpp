@@ -1,5 +1,6 @@
 #include <client/Menu/NoMenu.h>
 #include <client/Menu/LostConnectionMenu.h>
+#include "Commands/Command.h"
 #include "Scene.h"
 
 #define KEY_VALUE_POS 0
@@ -23,10 +24,16 @@ bool Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
 void Scene::draw() {
     std::unique_lock<std::mutex> lock(mtx);
     camera.clear();
-    this->scenario.draw(camera);
+    {
+        std::unique_lock<std::mutex> scenario_lock(scenario_mtx);
+        this->scenario.draw(camera);
+    }
     if (camera.isRecording()){
         camera.setRecordingTarget();
-        this->scenario.draw(camera);
+        {
+            std::unique_lock<std::mutex> scenario_lock(scenario_mtx);
+            this->scenario.draw(camera);
+        }
         camera.sendToRecorder();
         camera.setDefaultTarget();
     }
@@ -35,10 +42,15 @@ void Scene::draw() {
 }
 
 void Scene::receiveMessage(ProtocolSocket &socket) {
-    auto new_state = menu->receiveMessage(socket, scenario, camera);
-    if (new_state){
-        std::unique_lock<std::mutex> lock(mtx);
-        menu.swap(new_state);
+    auto command = Command::create(scenario, socket, camera);
+    if (command){
+        auto new_state = std::unique_ptr<Menu>();
+        {std::unique_lock<std::mutex> scenario_lock(scenario_mtx);
+        new_state = command->apply();}
+        if (new_state){
+            std::unique_lock<std::mutex> lock(mtx);
+            menu.swap(new_state);
+        }
     }
 }
 
