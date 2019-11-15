@@ -67,6 +67,10 @@ class ProtectedQueue {
             return this->q_closed;
         }
 
+        bool is_full() {
+            return this->max_q_len >= this->queue.size();
+        }
+
         T pop() {
             std::unique_lock<std::mutex> lock(this->q_mtx);
             while (this->queue.empty() && !this->q_closed) {
