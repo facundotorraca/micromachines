@@ -2,7 +2,6 @@
 // Created by javier on 10/11/19.
 //
 
-#include <chrono>
 #include <SDL_messagebox.h>
 #include "ScreenRecorder.h"
 
@@ -15,7 +14,7 @@ void ScreenRecorder::startRecording(SDL_Renderer* renderer, int w, int h) {
     recording_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_TARGET, width, height);
     buffer.clear();
     buffer.resize(width*height*3);
-    queue.reset(new ProtectedQueue<std::vector<uint8_t>>(1000));
+    queue.reset(new ProtectedQueue<std::vector<uint8_t>>(60*60));
     writer.reset(new ThreadWriter(queue, w, h));
     writer->start();
     this->recording = true;
@@ -23,12 +22,13 @@ void ScreenRecorder::startRecording(SDL_Renderer* renderer, int w, int h) {
 
 void ScreenRecorder::recordFrame(SDL_Renderer *renderer) {
     if (recording) {
+        buffer.resize(width*height*3);
         int res = SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_RGB24, buffer.data(), width*3);
         if (res){
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "RendererReadPixels error", SDL_GetError(), nullptr);
         }
-        if (!queue->is_full())
-            queue->push(buffer);
+        if (!queue->full())
+            queue->push(std::move(buffer));
     }
 }
 

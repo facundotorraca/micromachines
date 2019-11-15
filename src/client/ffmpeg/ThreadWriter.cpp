@@ -2,8 +2,9 @@
 // Created by javier on 14/11/19.
 //
 
-#include <SDL_render.h>
 #include "ThreadWriter.h"
+#include <chrono>
+#include "OutputFormat.h"
 
 void ThreadWriter::run() {
     while (this->running) {

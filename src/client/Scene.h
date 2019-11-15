@@ -23,6 +23,7 @@ class Scene {
     Scenario scenario;
     std::unique_ptr<Menu> menu;
     std::mutex mtx;
+    std::mutex scenario_mtx;
 public:
     explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue, Bot &bot);
     bool handleKeyEvent(SDL_Keycode key, SDL_EventType type);

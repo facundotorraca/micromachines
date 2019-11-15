@@ -8,21 +8,21 @@ Scenario::Scenario(Bot& bot) : bot(bot), my_car_id(-1) {}
 
 void Scenario::addTile(TileInfo &info) {
     bot.add_tile(info);
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     map.addTile(info);
     minimap.addTile(info);
 }
 
 void Scenario::setOwnID(int32_t id) {
     bot.set_id(id);
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     this->my_car_id = id;
     minimap.setMyID(id);
 }
 
 void Scenario::updateCar(CarInfo &info, Camera& camera) {
     bot.update_car(info);
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     auto car = cars.emplace(std::piecewise_construct,
                             std::forward_as_tuple(info.car_id),
                             std::forward_as_tuple());
@@ -39,7 +39,7 @@ void Scenario::updateCar(CarInfo &info, Camera& camera) {
 }
 
 void Scenario::draw(Camera& camera) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     map.draw(camera);
     entities.draw(camera);
     for (auto& car : cars){
@@ -53,7 +53,7 @@ void Scenario::draw(Camera& camera) {
 }
 
 void Scenario::setCarHealth(int32_t id, int32_t health) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     try{
         cars.at(id);
     } catch (std::out_of_range& e) {
@@ -66,23 +66,23 @@ void Scenario::setCarHealth(int32_t id, int32_t health) {
 }
 
 void Scenario::setBackground(int32_t type, int32_t width, int32_t height) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     map.setBackground(type, width, height);
     minimap.setSize(width, height);
 }
 
 void Scenario::setLapNumber(int32_t lap) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     hud.setLap(lap);
 }
 
 void Scenario::setTotalLaps(int32_t laps) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     hud.setTotalLaps(laps);
 }
 
 void Scenario::setLoadingScreen(bool show) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     if (show){
         l_screen.show();
     } else {
@@ -91,37 +91,37 @@ void Scenario::setLoadingScreen(bool show) {
 }
 
 void Scenario::showCountdownNumber(int32_t number) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     countdown.show(number);
 }
 
 void Scenario::addModifier(int32_t type, int32_t x, int32_t y) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     entities.addModifier(type, x, y);
 }
 
 void Scenario::removeModifier(int32_t x, int32_t y) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     entities.removeModifier(x, y);
 }
 
 void Scenario::addFinishedPlayer(std::string& player_name) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     hud.addFinishedPlayer(player_name);
 }
 
 void Scenario::showScreenEffect(int32_t effect, int32_t duration) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     screen_effect.show(effect, duration);
 }
 
 void Scenario::setRacePosition(int32_t number) {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     hud.setRacePosition(number);
 }
 
 void Scenario::reset() {
-    std::unique_lock<std::mutex> lock(mtx);
+    //std::unique_lock<std::mutex> lock(mtx);
     hud.reset();
 }
 
