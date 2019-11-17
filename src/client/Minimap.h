@@ -12,6 +12,7 @@
 #include <common/Sizes.h>
 #include "Camera.h"
 #include <SDL2/SDL.h>
+#include <unordered_map>
 
 #define MINIMAP_WIDTH 0.12f
 #define MINIMAP_HEIGHT 0.213f
@@ -25,7 +26,7 @@ class Minimap {
     int32_t my_car_id;
     int32_t size_x;
     int32_t size_y;
-    std::map<int32_t, MiniCar>cars;
+    std::unordered_map<int32_t, MiniCar>cars;
     SDL_Surface* surface;
     SDL_Surface* white_s;
     SDL_Surface* black_s;

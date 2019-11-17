@@ -14,7 +14,9 @@
 
 GameMain::GameMain(ProtocolSocket &socket):
     socket(std::move(socket))
-{}
+{
+    SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
+}
 
 void GameMain::start() {
     ProtectedQueue<std::unique_ptr<ServerCommand>> sender_queue(10000);
@@ -45,4 +47,8 @@ void GameMain::start() {
 
     drawer.shutdown();
     drawer.join();
+}
+
+GameMain::~GameMain() {
+    SDL_Quit();
 }

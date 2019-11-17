@@ -16,6 +16,7 @@
 #include "Entities/TileInfo.h"
 #include "ScreenEffectDrawer.h"
 #include "Bot.h"
+#include "SoundSystem.h"
 
 class Scenario {
     Bot& bot;
@@ -26,8 +27,9 @@ class Scenario {
     ScreenEffectDrawer screen_effect;
     Minimap minimap;
     Entities entities;
+    SoundSystem sound;
     int32_t my_car_id;
-    std::map<int32_t, Car> cars;
+    std::unordered_map<int32_t, Car> cars;
     std::mutex mtx;
 public:
     explicit Scenario(Bot& bot);
@@ -47,6 +49,7 @@ public:
     void setRacePosition(int32_t number);
     void draw(Camera& camera);
     void reset();
+    ~Scenario();
 };
 
 

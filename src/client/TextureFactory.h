@@ -9,6 +9,7 @@
 #include <SDL2/SDL.h>
 #include <common/EntityType.h>
 #include <iostream>
+#include <unordered_map>
 
 #define CAR_TEX 4500
 #define DMG_CAR_TEX 4501
@@ -50,7 +51,7 @@ struct Texture{
 };
 
 class TextureFactory {
-    std::map<int32_t, Texture> textures;
+    std::unordered_map<int32_t, Texture> textures;
     static Texture createTexture(SDL_Renderer* renderer, const char* path){
         SDL_Surface* surface = IMG_Load(path);
         if (surface){

@@ -31,6 +31,7 @@ target_link_libraries(client
         SDL2
         SDL2_image
         SDL2_ttf
+        SDL2_mixer
         pthread
         lua
         dl

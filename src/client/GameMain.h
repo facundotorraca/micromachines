@@ -8,7 +8,7 @@ class GameMain {
 
     public:
         explicit GameMain(ProtocolSocket &socket);
-
+        ~GameMain();
         void start();
 };
 
