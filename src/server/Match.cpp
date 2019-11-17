@@ -105,7 +105,7 @@ void Match::initialize_players() {
             this->players.erase(player.first);
             this->thread_players.at(ID).join();
             this->thread_players.erase(ID);
-            this->race.player_left_game(ID);
+            this->race.player_left_game(ID, client_updater);
         }
     }
     this->race.prepare(this->client_updater);
@@ -119,7 +119,7 @@ void Match::remove_disconnected_players() {
         int32_t ID = (*th_player).first;
         if ((*th_player).second.dead()) {
             (*th_player).second.join();
-            this->race.player_left_game(ID);
+            this->race.player_left_game(ID, this->client_updater);
             if (this->players.at(ID).is_called(this->match_creator))
                 creator_disconnected = true;
             this->players.erase(ID);

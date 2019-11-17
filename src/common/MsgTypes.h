@@ -1,6 +1,7 @@
 #ifndef MICROMACHINES_MSGTYPES_H
 #define MICROMACHINES_MSGTYPES_H
 
+/*---------------GameMessages-------------------*/
 #define MSG_UPDATE_ENTITY 41
 #define MSG_SEND_TILE 42
 #define MSG_CAR_ID 44
@@ -20,5 +21,15 @@
 #define MSG_SET_POSITION 58
 #define MSG_RESTART_RACE 59
 #define MSG_RESET 60
+#define MSG_REMOVE_CAR 61
+/*----------------------------------------------*/
+
+/*--------------ServerMessages------------------*/
+#define MSG_SET_USERNAME 31
+#define MSG_SET_MATCH_NAME 32
+#define MSG_CHANGE_MODE 33
+#define MSG_GET_MATCHES 34
+/*----------------------------------------------*/
+
 
 #endif //MICROMACHINES_MSGTYPES_H

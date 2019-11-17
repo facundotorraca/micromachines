@@ -43,8 +43,13 @@ bool MatchTable::match_name_available(std::string &match_name) {
 
 bool MatchTable::username_available(std::string &username, std::string &match_name) {
     std::lock_guard<std::mutex> lock(this->mtx);
-    std::shared_ptr<Match> match = this->map[match_name];
-    return !match->has_username(username);
+    try {
+        std::shared_ptr<Match> match = this->map.at(match_name);
+        return !match->has_username(username);
+    } catch (const std::out_of_range& e) {
+        /* when the client try to set username before match*/
+        return false;
+    }
 }
 
 

@@ -17,6 +17,10 @@ class ThreadIncomingPlayer : public Thread {
 
     std::atomic<bool> dead;
 
+    bool match_mode_set;
+    bool username_set;
+    bool match_name_set;
+
     private:
         void run() override;
 

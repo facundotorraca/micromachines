@@ -2,6 +2,7 @@
 #include <iostream>
 #include "GameMain.h"
 #include <common/Socket.h>
+#include <common/MsgTypes.h>
 #include <common/ProtocolSocket.h>
 
 #define SUCCESS 0
@@ -25,9 +26,6 @@ int main(int argc, char *argv[]) {
     std::string host("127.0.0.1");
 
     Socket s;
-    //ViewManager view_manager(argc, argv, s);
-    //view_manager.run();
-    //std::cout << "SALI DE LAS VISTAS";
     s.connect(host, port);
     ProtocolSocket ps(std::move(s));
 
@@ -46,6 +44,16 @@ int main(int argc, char *argv[]) {
         ps.send(start);
     }
 
+    uint8_t flag_error_username = 1;
+    ps.send((uint8_t)MSG_SET_USERNAME);
+    std::cout << "Write your username..." << "\n";
+    std::string username; std::cin >> username;
+    ps.send(username);
+    ps.receive(flag_error_username);
+    std::cout << "Answer: " << unsigned(flag_error_username) << "\n";
+
+
+    ps.send((uint8_t)MSG_SET_MATCH_NAME);
     uint8_t flag_error_match = 1;
     while (flag_error_match == 1) {
         std::cout << "Write match name..." << "\n";
@@ -55,7 +63,8 @@ int main(int argc, char *argv[]) {
         std::cout << "Answer: " << unsigned(flag_error_match) << "\n";
     }
 
-    uint8_t flag_error_username = 1;
+    ps.send((uint8_t)MSG_SET_USERNAME);
+    flag_error_username = 1;
     while (flag_error_username == 1) {
         std::cout << "Write your username..." << "\n";
         std::string username; std::cin >> username;
@@ -63,6 +72,7 @@ int main(int argc, char *argv[]) {
         ps.receive(flag_error_username);
         std::cout << "Answer: " << unsigned(flag_error_username) << "\n";
     }
+
 
     if (mode == "2") {
         int any_key;
