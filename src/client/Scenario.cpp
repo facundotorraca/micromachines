@@ -35,7 +35,9 @@ void Scenario::updateCar(CarInfo &info, Camera& camera) {
     if (info.car_id == this->my_car_id){
         camera.update(info.carx, info.cary, info.carvel, info.carrot);
         hud.setSpeed(info.carvel);
+        sound.center(info.carx, info.cary);
     }
+    sound.playEngineSound(info.car_id, info.carx, info.cary, info.carvel);
 }
 
 void Scenario::draw(Camera& camera) {
@@ -59,8 +61,10 @@ void Scenario::setCarHealth(int32_t id, int32_t health) {
     } catch (std::out_of_range& e) {
         std::cerr << "setCarHealth: invalid ID" << std::endl;
     }
-    if (id == this->my_car_id)
+    if (id == this->my_car_id){
         hud.setHealth(health);
+        sound.playHealthChanged(health);
+    }
 
     cars.at(id).setHealth(health);
 }
@@ -87,12 +91,14 @@ void Scenario::setLoadingScreen(bool show) {
         l_screen.show();
     } else {
         l_screen.hide();
+        sound.playBackgroundMusic();
     }
 }
 
 void Scenario::showCountdownNumber(int32_t number) {
     //std::unique_lock<std::mutex> lock(mtx);
     countdown.show(number);
+    sound.playCountdownSound(number);
 }
 
 void Scenario::addModifier(int32_t type, int32_t x, int32_t y) {
@@ -113,6 +119,7 @@ void Scenario::addFinishedPlayer(std::string& player_name) {
 void Scenario::showScreenEffect(int32_t effect, int32_t duration) {
     //std::unique_lock<std::mutex> lock(mtx);
     screen_effect.show(effect, duration);
+    sound.playEffectSound(effect);
 }
 
 void Scenario::setRacePosition(int32_t number) {
@@ -124,4 +131,6 @@ void Scenario::reset() {
     //std::unique_lock<std::mutex> lock(mtx);
     hud.reset();
 }
+
+Scenario::~Scenario() = default;
 

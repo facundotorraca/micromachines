@@ -23,11 +23,12 @@ Camera::Camera() :
     window(nullptr),
     recording(false)
 {
-    SDL_Init(SDL_INIT_VIDEO);
-    window = SDL_CreateWindow("Micromachines", 0, 0, width, height,
+    /*window = SDL_CreateWindow("Micromachines", 0, 0, width, height,
             SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1,
             SDL_RENDERER_ACCELERATED);
+    */
+    SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer);
     t_factory = std::move(TextureFactory(renderer));
     t_drawer = std::move(TextDrawer(renderer));
     //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
@@ -98,7 +99,6 @@ bool Camera::isInCamera(int x,int y, int w, int h){
 Camera::~Camera() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    SDL_Quit();
 }
 
 void Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t sizex,
