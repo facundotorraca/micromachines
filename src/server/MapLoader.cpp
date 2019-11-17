@@ -159,38 +159,44 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
     for (int i = 0; i < map_height; i++) {
         for (int j = 0; j < map_width; j++) {
 
-            auto ID_pos = unsigned(json_map_data["layers"][TILES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
-            int32_t type_ID = json_tiles_data["tiles"][ID_pos]["properties"][ID_PROPERTY_POS]["value"];
-            int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS]["value"];
-            bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS]["value"];
-            auto info_pos = unsigned(json_map_data["layers"][PROPERTIES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
+            auto ID_pos = 0;
+            try {
+                ID_pos = unsigned(json_map_data["layers"][TILES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
+                int32_t type_ID = json_tiles_data["tiles"][ID_pos]["properties"][ID_PROPERTY_POS]["value"];
+                int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS]["value"];
+                bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS]["value"];
+                auto info_pos = unsigned(json_map_data["layers"][PROPERTIES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
 
-            send_tile(type_ID, i, j, tile_rotation, updater);
 
-            if (is_static)
-                racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID, i, j)));
-            else {
-                if (is_track(type_ID) && type_ID == BEGIN_TRACK_TILE)
-                    begin_tile = std::move(TerrainFactory::create_terrain(type_ID, i, j));
-                else if (is_track(type_ID) && ((type_ID == TYPE_FINISH_LINE_BORDER) || (type_ID == TYPE_FINISH_LINE_CENTER)))
-                    racing_track.add_track((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
-                else if (is_track(type_ID)) {
-                    this->track.push_back((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
-                    int32_t orientation = json_tiles_data["tiles"][info_pos]["properties"][ORIENTATION_PROPERTY_POS]["value"];
-                    set_orientation(this->track.back(), orientation);
-                }
+                send_tile(type_ID, i, j, tile_rotation, updater);
+
+                if (is_static)
+                    racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID, i, j)));
                 else {
-                    bool is_limit = json_tiles_data["tiles"][info_pos]["properties"][EXPLOSIVE_PROPERTY_POS]["value"];
-                    std::unique_ptr<Terrain> terrain = std::move(TerrainFactory::create_terrain(type_ID, i, j));
-                    if (is_limit)
-                        terrain->set_as_limit();
-                    racing_track.add_terrain(std::move(terrain));
+                    if (is_track(type_ID) && type_ID == BEGIN_TRACK_TILE)
+                        begin_tile = std::move(TerrainFactory::create_terrain(type_ID, i, j));
+                    else if (is_track(type_ID) && ((type_ID == TYPE_FINISH_LINE_BORDER) || (type_ID == TYPE_FINISH_LINE_CENTER)))
+                        racing_track.add_track((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
+                    else if (is_track(type_ID)) {
+                        this->track.push_back((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
+                        int32_t orientation = json_tiles_data["tiles"][info_pos]["properties"][ORIENTATION_PROPERTY_POS]["value"];
+                        set_orientation(this->track.back(), orientation);
+                    }
+                    else {
+                        bool is_limit = json_tiles_data["tiles"][info_pos]["properties"][EXPLOSIVE_PROPERTY_POS]["value"];
+                        std::unique_ptr<Terrain> terrain = std::move(TerrainFactory::create_terrain(type_ID, i, j));
+                        if (is_limit)
+                            terrain->set_as_limit();
+                        racing_track.add_terrain(std::move(terrain));
+                    }
                 }
+                this->add_tile_behaviour(type_ID, i, j, tile_rotation, racing_track);
+
+            } catch (const nlohmann::detail::type_error& e) {
+                    std::cerr << "TILE ERROR: " << ID_pos <<  " X: " << i << " Y: " << j << "\n";
             }
-            this->add_tile_behaviour(type_ID, i, j, tile_rotation, racing_track);
         }
     }
-
     this->track.push_back(std::move(begin_tile));
     this->set_begin_distance_to_tiles();
     this->load_racing_track(racing_track);

@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tiles",
  "spacing":0,
- "tilecount":420,
+ "tilecount":425,
  "tiledversion":"1.2.5",
  "tileheight":129,
  "tiles":[
@@ -9185,6 +9185,116 @@
                  "name":"explosive",
                  "type":"bool",
                  "value":false
+                }]
+        }, 
+        {
+         "id":420,
+         "image":"..\/assets\/sprites\/TrackObjects\/TS_2.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":146
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"Static",
+                 "type":"bool",
+                 "value":true
+                }]
+        }, 
+        {
+         "id":421,
+         "image":"..\/assets\/sprites\/TrackObjects\/TB_2d.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":147
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":180
+                }, 
+                {
+                 "name":"Static",
+                 "type":"bool",
+                 "value":true
+                }]
+        }, 
+        {
+         "id":422,
+         "image":"..\/assets\/sprites\/TrackObjects\/TB_2c.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":147
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":270
+                }, 
+                {
+                 "name":"Static",
+                 "type":"bool",
+                 "value":true
+                }]
+        }, 
+        {
+         "id":423,
+         "image":"..\/assets\/sprites\/TrackObjects\/TB_2b.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":147
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":90
+                }, 
+                {
+                 "name":"Static",
+                 "type":"bool",
+                 "value":true
+                }]
+        }, 
+        {
+         "id":424,
+         "image":"..\/assets\/sprites\/TrackObjects\/TB_2a.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":147
+                }, 
+                {
+                 "name":"R",
+                 "type":"int",
+                 "value":0
+                }, 
+                {
+                 "name":"Static",
+                 "type":"bool",
+                 "value":true
                 }]
         }],
  "tilewidth":129,

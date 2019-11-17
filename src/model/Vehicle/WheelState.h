@@ -16,6 +16,7 @@ class WheelState {
     float max_backward_speed;
     float max_lateral_impulse;
 
+    bool effect_changed;
     std::mutex mtx;
 
     public:
@@ -26,18 +27,23 @@ class WheelState {
             this->max_backward_speed = max_backward_speed;
             this->max_forward_speed = max_forward_speed;
             this->max_driver_force = max_driver_force; /*Capacity of changing speed*/
+
+            this->effect_changed = false;
         }
 
         void apply_effect(std::unique_ptr<Effect> new_effect) {
             std::unique_lock<std::mutex> lock(this->mtx);
             this->effect = std::move(new_effect);
+            this->effect_changed = true;
         }
 
         void update() {
             std::unique_lock<std::mutex> lock(this->mtx);
             this->effect->update();
-            if (this->effect->is_over())
+            if (this->effect->is_over()) {
                 this->effect = this->effect->get_next_effect();
+                this->effect_changed = true;
+            }
         }
 
         float get_max_lateral_impulse() {
@@ -57,7 +63,10 @@ class WheelState {
         }
 
         void send_effect_update(int32_t ID, ClientUpdater& updater) {
-            this->effect->send_effect_update(ID, updater);
+            if (this->effect_changed) {
+                this->effect->send_effect_update(ID, updater);
+                this->effect_changed = false;
+            }
         }
 
         void apply_plugin(float plugin_forward_speed, float plugin_backward_speed, float plugin_driver_force, float plugin_lateral_impulse) {
