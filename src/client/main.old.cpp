@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
     ps.receive(flag_start_match);
 
     if (flag_start_match == 0) {
-        GameMain game(ps);
+        GameMain game(ps, false);
         game.start();
     } else {
         std::cout << "Flag MATCH: " << unsigned(flag_start_match) << " ERROR\n";

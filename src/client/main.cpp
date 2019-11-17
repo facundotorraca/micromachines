@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
      */
     bool continue_receiving = true;
     
-    GameMain game(ps);game.start();
+    GameMain game(ps, view_manager.use_bot());game.start();
 
     return SUCCESS;
 }
