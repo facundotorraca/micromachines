@@ -9,7 +9,7 @@ class GameMain {
 
     public:
         explicit GameMain(ProtocolSocket &socket, bool use_bot);
-
+        ~GameMain();
         void start();
 };
 
