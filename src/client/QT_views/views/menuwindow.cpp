@@ -49,6 +49,10 @@ bool MenuWindow::is_game_arranged() {
     return arranged;
 }
 
+bool MenuWindow::get_bot_check() {
+    return this->ui.botBox->isChecked();
+}
+
 void MenuWindow::on_createBtn_clicked() {
     this->command = CREATE_COMMAND;
     this->ui.stackedWidget->setCurrentIndex(CREATE_PAGE);
@@ -130,6 +134,14 @@ void MenuWindow::on_startBtn_clicked() {
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
     this->close();
+}
+
+void MenuWindow::on_stackedWidget_currentChanged(int new_page) {
+    std::cout << new_page << std::endl;/*
+    if (new_page == CREATE_PAGE)
+        this->ui.createBtnBox->setFocus();
+    if (new_page == JOIN_PAGE)
+        this->ui.joinBtnBox->setFocus();*/
 }
 
 

@@ -21,6 +21,7 @@ class MenuWindow : public QMainWindow {
 public:
     explicit MenuWindow(ProtocolSocket &ps, QWidget *parent = nullptr);
     bool is_game_arranged();
+    bool get_bot_check();
     ~MenuWindow();
 
 private slots:
@@ -33,6 +34,7 @@ private slots:
     void on_createBtnBox_accepted();
     void on_createBtnBox_rejected();
     void on_startBtn_clicked();
+    void on_stackedWidget_currentChanged(int new_page);
     void wait_start();
 
 
@@ -43,6 +45,7 @@ private:
     std::string matches;
     std::string command;
     bool arranged;
+
 };
 
 #endif // MENUWINDOW_H
