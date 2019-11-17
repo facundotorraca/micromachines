@@ -2,7 +2,6 @@
 #define MICROMACHINES_SYNCHRONIZER_H
 
 #include <thread>
-#include <client/ThreadBot.h>
 
 class FramesSynchronizer {
     public:
