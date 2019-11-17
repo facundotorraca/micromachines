@@ -50,7 +50,7 @@ En la raiz del proyecto ejecutar:
 ```
 docker build -t micromachines-server .
 
-docker run -p 7777:7777 -it --rm --name my-micromachines-server micromachines-srver
+docker run -p 7777:7777 -it --rm --name my-micromachines-server micromachines-server
 ```
 
 ## Documentacion
