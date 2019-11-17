@@ -12,7 +12,7 @@
 "socket_pending_connections":10,
 "max_len_name":20,
 
-"modifier_spawn_prob": 0.003,
+"modifier_spawn_prob": 0.005,
 "mod_oil_prob": 0.2,
 "mod_mud_prob": 0.2,
 "mod_fix_prob": 0.2,

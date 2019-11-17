@@ -6,7 +6,7 @@
 #include <common/MsgTypes.h>
 #include <model/RacingTrack.h>
 
-#define TIME_OF_LIFE 100 //20 sec
+#define TIME_OF_LIFE 6000 //20 sec
 
 static double get_uniform_number() {
     std::random_device rd;

@@ -12,8 +12,9 @@
 #include <memory>
 #include "ServerCommands/ServerCommand.h"
 
-GameMain::GameMain(ProtocolSocket &socket):
-    socket(std::move(socket))
+GameMain::GameMain(ProtocolSocket &socket, bool use_bot):
+    socket(std::move(socket)),
+    use_bot(use_bot)
 {
     SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
 }
@@ -24,20 +25,23 @@ void GameMain::start() {
     Scene scene(sender_queue, bot);
 
     ThreadDrawer drawer(scene);
-    //ThreadBot threadBot(bot);
+    ThreadBot threadBot(bot);
     ThreadKeyMonitor key_monitor(scene);
     ThreadReceiver receiver(socket, scene);
     ThreadSender sender(socket, sender_queue);
 
     drawer.start();
     key_monitor.start();
-    //threadBot.start();
+    if (this->use_bot)
+        threadBot.start();
     receiver.start();
     sender.start();
 
     key_monitor.join();
-    //threadBot.shutdown();
-    //threadBot.join();
+    if (this->use_bot) {
+        threadBot.shutdown();
+        threadBot.join();
+    }
     sender_queue.close();
     sender.shutdown();
     sender.join();

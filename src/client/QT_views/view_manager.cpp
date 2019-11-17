@@ -10,7 +10,8 @@
 ViewManager::ViewManager(int argc, char *argv[])
                         : mainApp(argc, argv),
                         sck(),
-                        arranged(false) {}
+                        arranged(false),
+                        box_check(false) {}
 
 ProtocolSocket ViewManager::run() {
     ConnectView connectView(this->sck);
@@ -26,10 +27,15 @@ ProtocolSocket ViewManager::run() {
     if (!menuWindow.is_game_arranged()){
         return std::move(ps);
     }
+    this->box_check = menuWindow.get_bot_check();
     this->arranged = true;
     return std::move(ps);
 }
 
 bool ViewManager::is_game_arranged() {
-    return arranged;
+    return this->arranged;
+}
+
+bool ViewManager::use_bot() {
+    return this->box_check;
 }

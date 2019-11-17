@@ -14,10 +14,12 @@ class ViewManager {
     QApplication mainApp;
     Socket sck;
     bool arranged;
+    bool box_check;
  public:
     ViewManager(int argc, char *argv[]);
     ProtocolSocket run();
     bool is_game_arranged();
+    bool use_bot();
     ~ViewManager() {}
 };
 

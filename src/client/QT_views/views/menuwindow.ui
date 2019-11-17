@@ -62,6 +62,16 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="botBox">
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string>Usar Bot</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QPushButton" name="optionsBtn">
@@ -109,7 +119,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="createPage">
+      <widget class="QDialog" name="createPage">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <spacer name="horizontalSpacer_5">
@@ -258,7 +268,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="joinPage">
+      <widget class="QDialog" name="joinPage">
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
          <spacer name="horizontalSpacer_8">
@@ -387,6 +397,13 @@
             </property>
             <property name="margin">
              <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QPushButton" name="updateBtn">
+            <property name="text">
+             <string>Actualizar Partidas</string>
             </property>
            </widget>
           </item>

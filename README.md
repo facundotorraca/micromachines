@@ -41,6 +41,18 @@ make
 ./micromachines-server
 ```
 
+## Docker
+
+Se implemento un Dockerfile para crear una imagen modificada a partir de la imagen gcc de Docker. En esta imagen correra el server
+
+En la raiz del proyecto ejecutar:
+
+```
+docker build -t micromachines-server .
+
+docker run -p 7777:7777 -it --rm --name my-micromachines-server micromachines-srver
+```
+
 ## Documentacion
 
 La documentacion de la implementacion se encuentra en [GITHUB](https://github.com/facutorraca/Micromachines/blob/master/DOC.md)

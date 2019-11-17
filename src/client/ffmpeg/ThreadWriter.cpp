@@ -18,8 +18,7 @@ void ThreadWriter::run() {
 }
 
 ThreadWriter::ThreadWriter(
-        std::shared_ptr<ProtectedQueue<std::vector<uint8_t>>>& queue, int w,
-        int h) : queue(queue), width(w), height(h){
+        std::shared_ptr<ProtectedQueue<std::vector<uint8_t>>>& queue, int w, int h) : queue(queue), width(w), height(h){
     ctx = sws_getContext(width, height, AV_PIX_FMT_RGB24, 640, 480, AV_PIX_FMT_YUV420P, 0, 0, 0, 0);
     auto time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     std::string video_name(ctime(&time));
