@@ -68,7 +68,7 @@ public:
     }
     void draw(Camera& camera){
         camera.drawSurface(surface, 0.05, 0.75, MINIMAP_WIDTH, MINIMAP_HEIGHT);
-        int32_t tex = GREY_DOT;
+        int32_t tex;
         for (auto& car : cars) {
             if (car.first == my_car_id)
                 tex = RED_DOT;
