@@ -1,10 +1,9 @@
 #include "Server.h"
 #include <iostream>
 
+#define EXIT_INPUT_FLAG 'q'
 #define MAX_PLAYERS_WAITLIST 30
 #define MAX_MATCHES_WAITLIST 10
-
-#define EXIT_INPUT_FLAG 'q'
 
 Server::Server(const std::string &port):
     incoming_players(MAX_PLAYERS_WAITLIST),

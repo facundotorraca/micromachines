@@ -221,6 +221,9 @@ void Car::send_updates(int32_t ID, ClientUpdater &client_updater) {
         params.emplace_back(int32_t(wheel->get_angle()));
     }
 
+    if (this->throttle == BRAKE)
+        client_updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_CAR_SLOWDOWN, ID}));
+
     client_updater.send_to_all(UpdateClient(std::move(params)));
     this->life.send_updates(ID, client_updater);
     this->wheels[L_BACK_WHEEL_POS]->send_effect_update(ID, client_updater);

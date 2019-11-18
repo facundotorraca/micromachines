@@ -89,7 +89,7 @@ SoundSystem::SoundSystem() : posx(0), posy(0) {
 }
 
 SoundSystem::~SoundSystem() {
-    for (auto& sound : sounds){
+    for (auto& sound : sounds) {
         Mix_FreeChunk(sound.second);
     }
     Mix_FreeMusic(music);

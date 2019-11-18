@@ -9,10 +9,10 @@
 
 void RestartMenu::draw(Camera &camera) {
     std::string quit("[R] Restart Race");
-    camera.drawScreenTexture(PAUSE_MENU_TEX, 0, 0.8, 1, 0.2);
-    camera.drawText(quit, 0.6, 0.9, 0.5, quit.size());
+    camera.drawScreenTexture(PAUSE_MENU_TEX, 0, 0, 1, 0.13);
+    camera.drawText(quit, 0.6, 0.05, 0.5, quit.size());
     std::string resume("[Q] Quit");
-    camera.drawText(resume, 0.2, 0.9, 0.5, resume.size());
+    camera.drawText(resume, 0.2, 0.05, 0.5, resume.size());
 }
 
 std::unique_ptr<Menu>
@@ -20,7 +20,7 @@ RestartMenu::handleKey(SDL_Keycode key, SDL_EventType type,
                        ProtectedQueue<std::unique_ptr<ServerCommand>> &queue,
                        bool &response) {
     if (type == SDL_KEYDOWN){
-        if (key == SDLK_r){
+        if (key == SDLK_r) {
             response = true;
             auto command = std::unique_ptr<ServerCommand> (new RestartRaceCommand());
             queue.push(std::move(command));
@@ -46,12 +46,12 @@ RestartMenu::receiveMessage(ProtocolSocket &socket, Scenario &scenario,
             int32_t entity_type = command[1];
             switch (entity_type) {
                 case TYPE_CAR: {
-                    CarInfo info{command[2], command[3],
-                                 command[4], command[5], command[6],
-                                 command[7], command[8], command[9],
-                                 command[10], command[11], command[12],
-                                 command[13], command[14], command[15],
-                                 command[16], command[17], command[18]};
+                    CarInfo info{command[2],  command[3],
+                                  command[4], command[5],  command[6],
+                                  command[7],  command[8],  command[9],
+                                  command[10], command[11], command[12],
+                                  command[13], command[14], command[15],
+                                  command[16], command[17], command[18]};
                     scenario.updateCar(info, camera); break;
                 }
                 default:

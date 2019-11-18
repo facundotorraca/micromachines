@@ -44,15 +44,6 @@ int main(int argc, char *argv[]) {
         ps.send(start);
     }
 
-    uint8_t flag_error_username = 1;
-    ps.send((uint8_t)MSG_SET_USERNAME);
-    std::cout << "Write your username..." << "\n";
-    std::string username; std::cin >> username;
-    ps.send(username);
-    ps.receive(flag_error_username);
-    std::cout << "Answer: " << unsigned(flag_error_username) << "\n";
-
-
     ps.send((uint8_t)MSG_SET_MATCH_NAME);
     uint8_t flag_error_match = 1;
     while (flag_error_match == 1) {
@@ -64,7 +55,7 @@ int main(int argc, char *argv[]) {
     }
 
     ps.send((uint8_t)MSG_SET_USERNAME);
-    flag_error_username = 1;
+    uint8_t flag_error_username = 1;
     while (flag_error_username == 1) {
         std::cout << "Write your username..." << "\n";
         std::string username; std::cin >> username;

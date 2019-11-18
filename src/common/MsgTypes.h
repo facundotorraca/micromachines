@@ -18,10 +18,12 @@
 #define MSG_EFFECT_MUD 55
 #define MSG_EFFECT_ROCK 56
 #define MSG_EFFECT_BOOST 57
-#define MSG_SET_POSITION 58
-#define MSG_RESTART_RACE 59
-#define MSG_RESET 60
-#define MSG_REMOVE_CAR 61
+#define MSG_EFFECT_OIL 58
+#define MSG_SET_POSITION 59
+#define MSG_RESTART_RACE 60
+#define MSG_RESET 61
+#define MSG_REMOVE_CAR 62
+#define MSG_CAR_SLOWDOWN 63
 /*----------------------------------------------*/
 
 /*--------------ServerMessages------------------*/
