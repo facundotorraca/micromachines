@@ -15,30 +15,29 @@ bool Scene::handleKeyEvent(SDL_Keycode key, SDL_EventType type) {
     bool response = true;
     auto new_state = menu->handleKey(key, type, queue, response);
     if (new_state){
-        std::unique_lock<std::mutex> lock(mtx);
+        std::unique_lock<std::mutex> lock(camera_mtx);
         this->menu.swap(new_state);
     }
     return response;
 }
 
+
+
 void Scene::draw() {
-    std::unique_lock<std::mutex> lock(mtx);
+    std::unique_lock<std::mutex> lock(camera_mtx);
     camera.clear();
-    {
-        std::unique_lock<std::mutex> scenario_lock(scenario_mtx);
-        this->scenario.draw(camera);
-    }
+    drawScenario();
     if (camera.isRecording()){
         camera.drawRecordingTexture();
         camera.setRecordingTarget();
-        {
-            std::unique_lock<std::mutex> scenario_lock(scenario_mtx);
-            this->scenario.draw(camera);
-        }
+        drawScenario();
         camera.sendToRecorder();
         camera.setDefaultTarget();
     }
+    lock.unlock();
+    std::unique_lock<std::mutex> menu_lock(menu_mtx);
     menu->draw(camera);
+    lock.lock();
     camera.draw();
 }
 
@@ -46,12 +45,9 @@ void Scene::receiveMessage(ProtocolSocket &socket) {
     auto command = Command::create(scenario, socket, camera);
     if (command){
         auto new_state = std::unique_ptr<Menu>();
-        {
-            std::unique_lock<std::mutex> scenario_lock(scenario_mtx);
-            new_state = command->apply();
-        }
+        new_state = applyCommand(*command);
         if (new_state){
-            std::unique_lock<std::mutex> lock(mtx);
+            std::lock_guard<std::mutex> lock(menu_mtx);
             menu.swap(new_state);
         }
     }
@@ -59,14 +55,26 @@ void Scene::receiveMessage(ProtocolSocket &socket) {
 
 void Scene::showConnectionLostMenu() {
     auto new_state = std::unique_ptr<Menu>(new LostConnectionMenu);
-    std::unique_lock<std::mutex> lock(mtx);
+    std::lock_guard<std::mutex> lock(menu_mtx);
     menu.swap(new_state);
 }
 
 void Scene::toggleRecording() {
-    std::unique_lock<std::mutex> lock(mtx);
+    std::cerr << "stopping: getting lock" << std::endl;
+    std::lock_guard<std::mutex> lock(camera_mtx);
+    std::cerr << "stopping: got lock" << std::endl;
     if (camera.isRecording())
         camera.stopRecording();
     else
         camera.startRecording();
+}
+
+void Scene::drawScenario() {
+    std::lock_guard<std::mutex> scenario_lock(scenario_mtx);
+    this->scenario.draw(camera);
+}
+
+std::unique_ptr<Menu> Scene::applyCommand(Command &command) {
+    std::lock_guard<std::mutex> scenario_lock(scenario_mtx);
+    return command.apply();
 }
