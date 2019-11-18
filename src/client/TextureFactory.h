@@ -51,6 +51,7 @@
 #define PAUSE_MENU_TEX 4512
 #define EXPLOSION_TEX 10000
 #define GREY_DOT 4513
+#define RECORDING_TEX 4514
 
 
 struct Texture{
@@ -128,6 +129,7 @@ public:
             textures.emplace(MUD_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/mud.png"));
             textures.emplace(ROCK_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/rock.png"));
             textures.emplace(BOOST_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/boost.png"));
+            textures.emplace(RECORDING_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/recording.png"));
 
             /*-------------------------------SCREEN EFFECT TEXTURES--------------------------------*/
             textures.emplace(EXPLOSION_TEX, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_00.png"));

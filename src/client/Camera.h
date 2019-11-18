@@ -55,6 +55,7 @@ public:
     void drawSurface(SDL_Surface* surface, float posx, float posy, float width, float height);
     void drawText(const std::string& text, float posx, float posy, float size, size_t padding);
     void drawFullScreenTexture(int32_t id);
+    void drawRecordingTexture();
     ~Camera();
 };
 

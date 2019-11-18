@@ -175,3 +175,7 @@ void Camera::setDefaultTarget() {
 void Camera::sendToRecorder() {
     recorder.recordFrame(renderer);
 }
+
+void Camera::drawRecordingTexture() {
+    drawFullScreenTexture(RECORDING_TEX);
+}

@@ -7,6 +7,9 @@
 #include "Wheel.h"
 #include "CarInfo.h"
 
+#define ACCELERATION_SOUND_TOP -100
+#define ACCELERATION_SOUND_BOTTOM -60
+
 class Car : public Entity{
     int32_t car_tex;
     int32_t dmg_tex;
@@ -61,7 +64,7 @@ public:
             velocities.erase(velocities.begin());
         velocities.emplace_back(info.carvel);
         auto accel = this->getAccel();
-        if (accel < -60 && accel > -100 && info.carvel > 200*3.6/METER_TO_PIXEL){
+        if (accel < ACCELERATION_SOUND_BOTTOM && accel > ACCELERATION_SOUND_TOP && info.carvel > 200*3.6/METER_TO_PIXEL){
             sound.playBrakesSound(posX, posY);
         }
         posX = info.carx; posY = info.cary; rot = info.carrot;

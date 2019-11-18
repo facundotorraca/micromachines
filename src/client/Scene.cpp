@@ -29,6 +29,7 @@ void Scene::draw() {
         this->scenario.draw(camera);
     }
     if (camera.isRecording()){
+        camera.drawRecordingTexture();
         camera.setRecordingTarget();
         {
             std::unique_lock<std::mutex> scenario_lock(scenario_mtx);

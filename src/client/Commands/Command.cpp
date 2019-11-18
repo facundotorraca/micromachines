@@ -78,6 +78,7 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, ProtocolSocket& soc
                 socket.receive(player_name);
                 return std::unique_ptr<Command>(new PlayerFinished(scenario, player_name));
             }
+        case MSG_EFFECT_OIL:
         case MSG_EFFECT_BOOST:
         case MSG_EFFECT_MUD:
         case MSG_EFFECT_ROCK:

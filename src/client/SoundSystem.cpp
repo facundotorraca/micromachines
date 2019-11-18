@@ -43,7 +43,8 @@ void SoundSystem::playCountdownSound(int32_t number) {
 }
 
 void SoundSystem::playEffectSound(int32_t effect) {
-    if (effect == MSG_EFFECT_ROCK || effect == MSG_EFFECT_BOOST || effect == MSG_EFFECT_MUD){
+    if (effect == MSG_EFFECT_ROCK || effect == MSG_EFFECT_BOOST ||
+    effect == MSG_EFFECT_MUD || effect == MSG_EFFECT_OIL){
         Mix_PlayChannel(15, sounds.at(effect), 0);
     }
 }
@@ -85,6 +86,7 @@ SoundSystem::SoundSystem() : posx(0), posy(0) {
     sounds.emplace(MSG_EFFECT_MUD, Mix_LoadWAV("assets/sounds/mud.wav"));
     sounds.emplace(MSG_EFFECT_BOOST, Mix_LoadWAV("assets/sounds/boost.wav"));
     sounds.emplace(MSG_EFFECT_ROCK, Mix_LoadWAV("assets/sounds/glass.wav"));
+    sounds.emplace(MSG_EFFECT_OIL, Mix_LoadWAV("assets/sounds/oil.wav"));
 
     /*------------------------------LOAD MUSIC--------------------------------*/
     music = Mix_LoadMUS("assets/sounds/music.mp3");
