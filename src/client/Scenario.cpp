@@ -25,19 +25,18 @@ void Scenario::updateCar(CarInfo &info, Camera& camera) {
     //std::unique_lock<std::mutex> lock(mtx);
     auto car = cars.emplace(std::piecewise_construct,
                             std::forward_as_tuple(info.car_id),
-                            std::forward_as_tuple());
+                            std::forward_as_tuple(info.car_id));
     if (car.second){
         minimap.addCar(info.car_id, info.carx, info.cary);
     } else {
         minimap.updateCar(info.car_id, info.carx, info.cary);
-        cars.at(info.car_id).update_all(info);
+        cars.at(info.car_id).update_all(info, sound);
     }
     if (info.car_id == this->my_car_id){
         camera.update(info.carx, info.cary, info.carvel, info.carrot);
         hud.setSpeed(info.carvel);
         sound.center(info.carx, info.cary);
     }
-    sound.playEngineSound(info.car_id, info.carx, info.cary, info.carvel);
 }
 
 void Scenario::draw(Camera& camera) {
@@ -63,10 +62,9 @@ void Scenario::setCarHealth(int32_t id, int32_t health) {
     }
     if (id == this->my_car_id){
         hud.setHealth(health);
-        sound.playHealthChanged(health);
     }
 
-    cars.at(id).setHealth(health);
+    cars.at(id).setHealth(health, sound);
 }
 
 void Scenario::setBackground(int32_t type, int32_t width, int32_t height) {

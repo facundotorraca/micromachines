@@ -11,8 +11,16 @@
 #include <iostream>
 #include <unordered_map>
 
-#define CAR_TEX 4500
-#define DMG_CAR_TEX 4501
+#define CAR_1_TEX 9001
+#define CAR_2_TEX 9002
+#define CAR_3_TEX 9003
+#define CAR_4_TEX 9004
+#define CAR_5_TEX 9005
+#define DMG_CAR_1_TEX 8001
+#define DMG_CAR_2_TEX 8002
+#define DMG_CAR_3_TEX 8003
+#define DMG_CAR_4_TEX 8004
+#define DMG_CAR_5_TEX 8005
 #define WRECKED_CAR_TEX 45011
 #define WHEEL_TEX 4502
 #define SPEEDOMETER_TEX 4503
@@ -67,8 +75,20 @@ class TextureFactory {
 public:
     explicit TextureFactory(SDL_Renderer* renderer){
         if (renderer) {
-            textures.emplace(CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png"));
-            textures.emplace(DMG_CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png"));
+
+            /*--------------------------------------- CAR TEXTURES ------------------------------------------------------------*/
+            textures.emplace(CAR_1_TEX, createTexture(renderer, "assets/sprites/Cars/Car red striped/Car red striped front.png"));
+            textures.emplace(DMG_CAR_1_TEX, createTexture(renderer, "assets/sprites/Cars/Car red striped/Red striped car crashed.png"));
+            textures.emplace(CAR_2_TEX, createTexture(renderer, "assets/sprites/Cars/Car yellow/Car yellow front.png"));
+            textures.emplace(DMG_CAR_2_TEX, createTexture(renderer, "assets/sprites/Cars/Car yellow/Yellow car crashed.png"));
+            textures.emplace(CAR_3_TEX, createTexture(renderer, "assets/sprites/Cars/Car red/Car red front.png"));
+            textures.emplace(DMG_CAR_3_TEX, createTexture(renderer, "assets/sprites/Cars/Car red/Red car crashed.png"));
+            textures.emplace(CAR_4_TEX, createTexture(renderer, "assets/sprites/Cars/Car grey/Car grey front.png"));
+            textures.emplace(DMG_CAR_4_TEX, createTexture(renderer, "assets/sprites/Cars/Car grey/Grey car crashed.png"));
+            textures.emplace(CAR_5_TEX, createTexture(renderer, "assets/sprites/Cars/Car blue/Car blue front.png"));
+            textures.emplace(DMG_CAR_5_TEX, createTexture(renderer, "assets/sprites/Cars/Car blue/Blue car crashed.png"));
+
+            /*--------------------------------------- GUI TEXTURES ------------------------------------------------------------*/
             textures.emplace(WRECKED_CAR_TEX, createTexture(renderer, "assets/sprites/Cars/Dead car front.png"));
             textures.emplace(WHEEL_TEX, createTexture(renderer, "assets/sprites/wheel_3.png"));
             textures.emplace(SPEEDOMETER_TEX, createTexture(renderer, "assets/sprites/speedometer.png"));

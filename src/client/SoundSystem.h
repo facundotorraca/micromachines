@@ -13,17 +13,19 @@ class SoundSystem {
     Mix_Music* music;
     int32_t posx;
     int32_t posy;
-    int32_t health;
     bool isOnScreen(int32_t x, int32_t y);
 public:
     SoundSystem();
     void center(int32_t x, int32_t y);
     void playBackgroundMusic();
-    void pauseBackgroundMusic();
+
     void playEngineSound(int32_t id, int32_t x, int32_t y, int32_t vel);
     void playCountdownSound(int32_t number);
     void playEffectSound(int32_t effect);
-    void playHealthChanged(int32_t health);
+
+    void playExplosionSound(int32_t x, int32_t y);
+    void playFixSound(int32_t x, int32_t y);
+    void playCrashSound(int32_t x, int32_t y);
     ~SoundSystem();
 };
 
