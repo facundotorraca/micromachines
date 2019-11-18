@@ -50,6 +50,7 @@
 #define BOOST_TEX 4511
 #define PAUSE_MENU_TEX 4512
 #define EXPLOSION_TEX 10000
+#define GREY_DOT 4513
 
 
 struct Texture{
@@ -97,6 +98,7 @@ public:
             textures.emplace(LOADING_SCR, createTexture(renderer, "assets/sprites/loading_screen.jpg"));
             textures.emplace(WHITE_BLOCK, createTexture(renderer, "assets/sprites/white_block.png"));
             textures.emplace(RED_DOT, createTexture(renderer, "assets/sprites/red_dot.png"));
+            textures.emplace(GREY_DOT, createTexture(renderer, "assets/sprites/gray_dot.png"));
             textures.emplace(HEALTH_01, createTexture(renderer, "assets/sprites/HealthBar/100.png"));
             textures.emplace(HEALTH_02, createTexture(renderer, "assets/sprites/HealthBar/92.png"));
             textures.emplace(HEALTH_03, createTexture(renderer, "assets/sprites/HealthBar/85.png"));

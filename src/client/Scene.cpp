@@ -45,8 +45,10 @@ void Scene::receiveMessage(ProtocolSocket &socket) {
     auto command = Command::create(scenario, socket, camera);
     if (command){
         auto new_state = std::unique_ptr<Menu>();
-        {std::unique_lock<std::mutex> scenario_lock(scenario_mtx);
-        new_state = command->apply();}
+        {
+            std::unique_lock<std::mutex> scenario_lock(scenario_mtx);
+            new_state = command->apply();
+        }
         if (new_state){
             std::unique_lock<std::mutex> lock(mtx);
             menu.swap(new_state);

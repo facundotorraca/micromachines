@@ -136,6 +136,7 @@ void Scenario::carSlowdown(int32_t id) {
 
 void Scenario::removeCar(int32_t id) {
     cars.erase(id);
+    minimap.removeCar(id);
 }
 
 Scenario::~Scenario() = default;

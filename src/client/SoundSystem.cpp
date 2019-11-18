@@ -23,7 +23,7 @@ void SoundSystem::center(int32_t x, int32_t y) {
 }
 
 bool SoundSystem::isOnScreen(int32_t x, int32_t y){
-    return hypot(x-posx, y-posy) < 30;
+    return hypot(x-posx, y-posy) < 1900;
 }
 
 void SoundSystem::playEngineSound(int32_t id, int32_t x, int32_t y, int32_t vel) {

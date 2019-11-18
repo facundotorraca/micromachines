@@ -63,11 +63,20 @@ public:
     void addCar(int32_t id, int32_t x, int32_t y){
         cars.emplace(id, MiniCar{MINIMAP_WIDTH*x/size_x, MINIMAP_HEIGHT*y/size_y+(1-MINIMAP_WIDTH)});
     }
+    void removeCar(int32_t id){
+        cars.erase(id);
+    }
     void draw(Camera& camera){
         camera.drawSurface(surface, 0.05, 0.75, MINIMAP_WIDTH, MINIMAP_HEIGHT);
-        for (auto& car : cars)
-            camera.drawScreenTexture(RED_DOT, car.second.x + 0.05,
+        int32_t tex = GREY_DOT;
+        for (auto& car : cars) {
+            if (car.first == my_car_id)
+                tex = RED_DOT;
+            else
+                tex = GREY_DOT;
+            camera.drawScreenTexture(tex, car.second.x + 0.05,
                                      car.second.y - 0.05, 0.5);
+        }
     }
     void setSize(int32_t w, int32_t h){
         size_x = w*TILE_TERRAIN_SIZE*METER_TO_PIXEL;
