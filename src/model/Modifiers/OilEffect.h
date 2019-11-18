@@ -3,6 +3,7 @@
 
 #include "Effect.h"
 #include "NoEffect.h"
+#include <common/MsgTypes.h>
 
 #define OIL_EFFECT_DURATION 360 //6 sec
 
@@ -15,7 +16,10 @@ class OilEffect : public Effect {
             return std::unique_ptr<Effect>(new NoEffect());
         }
 
-        void send_effect_update(int32_t ID, ClientUpdater& updater) override {};
+        void send_effect_update(int32_t ID, ClientUpdater& updater) override {
+            UpdateClient effect_info(std::vector<int32_t>{MSG_EFFECT_OIL, OIL_EFFECT_DURATION/FRAMES_PER_SECOND});
+            updater.send_to(ID, effect_info);
+        };
 
 };
 
