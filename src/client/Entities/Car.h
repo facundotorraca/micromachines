@@ -43,8 +43,9 @@ public:
         int32_t size_h = CAR_HEIGHT * METER_TO_PIXEL;
         if (health <= 0){
             camera.drawWorldTexture(WRECKED_CAR_TEX, posX, posY, size_w, size_h, rot);
-            if (i <= 7)
-                camera.drawWorldTexture(EXPLOSION_TEX+(int)i, posX, posY, size_w, size_w, rot);
+            if (i <= 7) {
+                camera.drawWorldTexture(EXPLOSION_TEX+(int)i, posX, posY, 2.5*size_w, 2.5*size_w, rot);
+            }
             i+=0.08;
         } else {
             i = 0;
