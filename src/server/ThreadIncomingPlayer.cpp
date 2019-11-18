@@ -38,24 +38,29 @@ void ThreadIncomingPlayer::receive_match_name(std::string& match_name, uint8_t m
     size_t max_len_name = Configs::get_configs().max_len_name;
 
     this->p_socket.receive_n(match_name, max_len_name);
-    while (mode == CREATE_MODE && !this->matches.match_name_available(match_name)){
+    if (mode == CREATE_MODE && !this->matches.match_name_available(match_name)){
         match_name.clear(); match_name.resize(max_len_name);
         this->p_socket.send((uint8_t)BIT_ERROR);
-        this->p_socket.receive_n(match_name, max_len_name);
+        //this->p_socket.receive_n(match_name, max_len_name);
+        return;
     }
     this->p_socket.send((uint8_t)BIT_SUCCESS);
+    this->match_name_set = true;
 }
 
 void ThreadIncomingPlayer::receive_username(std::string& username, std::string& match_name, uint8_t mode) {
     size_t max_len_name = Configs::get_configs().max_len_name;
 
     this->p_socket.receive_n(username, max_len_name);
-    while (mode == JOIN_MODE && !this->matches.username_available(username, match_name)){
+    if (mode == JOIN_MODE && !this->matches.username_available(username, match_name)){
         username.clear(); username.resize(max_len_name);
         this->p_socket.send((uint8_t)BIT_ERROR);
-        this->p_socket.receive_n(username, max_len_name);
+        //this->p_socket.receive_n(username, max_len_name);
+        return;
     }
     this->p_socket.send((uint8_t)BIT_SUCCESS);
+    this->username_set = true;
+
 }
 
 void ThreadIncomingPlayer::run() {
@@ -66,7 +71,6 @@ void ThreadIncomingPlayer::run() {
 
         uint8_t mode;
         this->p_socket.receive(mode);
-
         uint8_t option;
         std::string username;
         std::string match_name;
@@ -82,13 +86,13 @@ void ThreadIncomingPlayer::run() {
                         this->p_socket.send((uint8_t)BIT_ERROR);
                     } else {
                         this->receive_username(username, match_name, mode);
-                        this->username_set = true;
+                        //this->username_set = true;
                     }
                     break;
                 case MSG_SET_MATCH_NAME:
                     match_name.resize(max_len_name, '\0');
                     this->receive_match_name(match_name, mode);
-                    this->match_name_set = true;
+                    //this->match_name_set = true;
                     break;
                 case MSG_CHANGE_MODE:
                     this->p_socket.receive(mode);
