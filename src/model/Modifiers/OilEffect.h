@@ -23,5 +23,4 @@ class OilEffect : public Effect {
 
 };
 
-
 #endif //MICROMACHINES_OILEFFECT_H

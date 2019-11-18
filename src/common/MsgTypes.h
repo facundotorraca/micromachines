@@ -23,6 +23,7 @@
 #define MSG_RESTART_RACE 60
 #define MSG_RESET 61
 #define MSG_REMOVE_CAR 62
+#define MSG_CAR_SLOWDOWN 63
 /*----------------------------------------------*/
 
 /*--------------ServerMessages------------------*/
