@@ -222,7 +222,7 @@ void Car::send_updates(int32_t ID, ClientUpdater &client_updater) {
     }
 
     if (this->throttle == BRAKE)
-        client_updater.send_to(ID, UpdateClient(std::vector<int32_t>{MSG_CAR_SLOWDOWN}));
+        client_updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_CAR_SLOWDOWN, ID}));
 
     client_updater.send_to_all(UpdateClient(std::move(params)));
     this->life.send_updates(ID, client_updater);
