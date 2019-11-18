@@ -31,18 +31,7 @@ MenuWindow::MenuWindow(ProtocolSocket &ps, QWidget *parent) : QMainWindow(parent
     ui.setupUi(this);
     ui.errorJoinName->setVisible(false);
     ui.errorMatchName->setVisible(false);
-    QStringList matches_list;
-    splitMatchs(this->matches, matches_list);
-    for(size_t ind = 0; ind < matches_list.length(); ind++) {
-        QString match = matches_list.at(ind);
-        size_t last_char_pos = match.size() - 1;
-        QChar last_char = match.at(last_char_pos);
-        match.chop(1);
-        this->ui.matchList->addItem(match);
-        if (last_char == '1') {
-            this->ui.matchList->item(ind)->setTextColor(QColor(255,0,0));
-        }
-    }
+    this->update_matches();
 }
 
 bool MenuWindow::is_game_arranged() {
@@ -74,6 +63,12 @@ void MenuWindow::on_matchList_itemSelectionChanged() {
     } else {
         this->ui.joinBtnBox->setDisabled(false);
     }
+}
+
+void MenuWindow::on_updateBtn_clicked() {
+    this->ps.send((uint8_t) MSG_GET_MATCHES);
+    this->matches = get_matches(this->ps);
+    this->update_matches();
 }
 
 void MenuWindow::on_joinBtnBox_accepted() {
@@ -134,6 +129,21 @@ void MenuWindow::wait_start() {
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
     this->close();
+}
+
+void MenuWindow::update_matches() {
+    QStringList matches_list;
+    splitMatchs(this->matches, matches_list);
+    for(size_t ind = 0; ind < matches_list.length(); ind++) {
+        QString match = matches_list.at(ind);
+        size_t last_char_pos = match.size() - 1;
+        QChar last_char = match.at(last_char_pos);
+        match.chop(1);
+        this->ui.matchList->addItem(match);
+        if (last_char == '1') {
+            this->ui.matchList->item(ind)->setTextColor(QColor(255,0,0));
+        }
+    }
 }
 
 bool MenuWindow::set_user_name(std::string user_name) {

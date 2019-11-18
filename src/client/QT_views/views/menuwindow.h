@@ -29,6 +29,7 @@ private slots:
     void on_joinBtn_clicked();
     void on_quitBtn_clicked();
     void on_matchList_itemSelectionChanged();
+    void on_updateBtn_clicked();
     void on_joinBtnBox_accepted();
     void on_joinBtnBox_rejected();
     void on_createBtnBox_accepted();
@@ -41,6 +42,7 @@ private slots:
 private:
     bool set_user_name(std::string user_name);
     bool set_match_name(std::string match_name);
+    void update_matches();
 
     Ui::MenuWindow ui;
     ProtocolSocket &ps;
