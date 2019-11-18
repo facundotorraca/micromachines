@@ -54,7 +54,7 @@ bool Race::car_complete_laps(int32_t ID) {
 void Race::player_left_game(const int32_t ID, ClientUpdater& updater) {
     this->racing_track.remove_car(this->cars.at(ID));
     this->cars.erase(ID);
-    updater.send_to(ID, UpdateClient(std::vector<int32_t >{MSG_REMOVE_CAR}));
+    updater.send_to_all(UpdateClient(std::vector<int32_t >{MSG_REMOVE_CAR, ID}));
 }
 
 void Race::prepare(ClientUpdater& updater) {

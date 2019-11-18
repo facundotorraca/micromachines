@@ -5,6 +5,7 @@
 
 #include <string>
 #include "json/json.hpp"
+#include <model/Vehicle/CarSpecs.h>
 
 using json = nlohmann::json;
 
@@ -26,6 +27,8 @@ public:
     float mod_fix_prob;
     float mod_rock_prob;
     float mod_boost_prob;
+
+    CarSpecs specs;
 
     std::string server_port;
     std::string map_path;
