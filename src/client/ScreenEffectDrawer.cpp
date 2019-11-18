@@ -26,10 +26,10 @@ void ScreenEffectDrawer::draw(Camera &camera) {
 }
 
 void ScreenEffectDrawer::show(int32_t number, int32_t duration) {
-    showing = true;
     this->duration = duration;
     frames_drawing = 0;
     effect = number;
+    showing = true;
 }
 
 ScreenEffectDrawer::ScreenEffectDrawer() : showing(false), effect(-1), frames_drawing(0),

@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <SDL_mixer.h>
 #include <common/MsgTypes.h>
+#include <common/Sizes.h>
 #include "SoundSystem.h"
 
 #define SOUND_ENGINE 1
@@ -19,13 +20,16 @@ void SoundSystem::center(int32_t x, int32_t y) {
     posy = y;
 }
 
+bool SoundSystem::isOnScreen(int32_t x, int32_t y){
+    return hypot(x-posx, y-posy) < 20;
+}
+
 void SoundSystem::playEngineSound(int32_t id, int32_t x, int32_t y, int32_t vel) {
-    if (id > 0 && id < 14){
-        int distance = hypot(x-posx, y-posy);
+    if ((id+1) > 0 && (id+1) < 14 && isOnScreen(x, y) && !Mix_Playing(id+1)){
         auto chunk = sounds.at(SOUND_ENGINE);
-        Mix_Volume(id, MIX_MAX_VOLUME-distance*3);
-        Mix_PlayChannel(id, chunk, 0);
+        Mix_PlayChannel((id+1), chunk, 0);
     }
+    Mix_Volume((id+1), vel*3.6/METER_TO_PIXEL);
 }
 
 void SoundSystem::playCountdownSound(int32_t number) {
@@ -42,17 +46,18 @@ void SoundSystem::playEffectSound(int32_t effect) {
 }
 
 void SoundSystem::playHealthChanged(int32_t health) {
-    if (health == 0)
+    if (health <= 0)
         Mix_PlayChannel(16, sounds.at(SOUND_EXPLOSION), 0);
     else if (health > this->health)
         Mix_PlayChannel(16, sounds.at(SOUND_FIX), 0);
-    else if (health < this->health)
-        Mix_PlayChannel(16, sounds.at(SOUND_CRASH), 0);
+    else if (health < this->health && !Mix_Playing(16))
+            Mix_PlayChannel(16, sounds.at(SOUND_CRASH), 0);
     this->health = health;
 }
 
 void SoundSystem::playBackgroundMusic() {
     Mix_PlayMusic(music, -1);
+    Mix_VolumeMusic(95);
 }
 
 void SoundSystem::pauseBackgroundMusic() {
