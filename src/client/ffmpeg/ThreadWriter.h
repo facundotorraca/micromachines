@@ -18,15 +18,18 @@ extern "C" {
 }
 
 class ThreadWriter : public Thread {
-    std::shared_ptr<ProtectedQueue<std::vector<uint8_t>>> queue;
+    ProtectedQueue<std::vector<uint8_t>>& queue;
     FormatContext format;
     std::unique_ptr<OutputFormat> current_output;
     SwsContext* ctx;
     int width, height;
+    std::mutex mtx;
 public:
-    ThreadWriter(std::shared_ptr<ProtectedQueue<std::vector<uint8_t>>>& queue,
-                 int w, int h);
+    explicit ThreadWriter(ProtectedQueue<std::vector<uint8_t>>& queue);
     void run() override;
+    void setup(int w, int h);
+
+    void saveVideo();
     ~ThreadWriter() override;
 };
 

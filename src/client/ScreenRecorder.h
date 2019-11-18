@@ -15,8 +15,8 @@ class ScreenRecorder {
     bool recording;
     std::vector<uint8_t> buffer;
     SDL_Texture* recording_texture;
-    std::unique_ptr<ThreadWriter> writer;
-    std::shared_ptr<ProtectedQueue<std::vector<uint8_t>>> queue;
+    ProtectedQueue<std::vector<uint8_t>> queue;
+    ThreadWriter writer;
 public:
     ScreenRecorder();
     void startRecording(SDL_Renderer* renderer, int width, int height);

@@ -25,7 +25,6 @@ bool SoundSystem::isOnScreen(int32_t x, int32_t y){
 
 void SoundSystem::playEngineSound(int32_t id, int32_t x, int32_t y, int32_t vel) {
     if ((id+1) > 0 && (id+1) < 14 && isOnScreen(x, y) && !Mix_Playing(id+1)){
-        std::cerr << "playing engine" << std::endl;
         auto chunk = sounds.at(SOUND_ENGINE);
         Mix_PlayChannel((id+1), chunk, 0);
     }
