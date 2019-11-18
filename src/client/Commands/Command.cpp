@@ -21,6 +21,7 @@
 #include "ShowRestartMenu.h"
 #include "ResetRace.h"
 #include "CarSlowdown.h"
+#include "RemoveCar.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
@@ -89,6 +90,8 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, ProtocolSocket& soc
             return std::unique_ptr<Command>(new ResetRace(scenario));
         case MSG_CAR_SLOWDOWN:
             return std::unique_ptr<Command>(new CarSlowdown(scenario, command[1]));
+        case MSG_REMOVE_CAR:
+            return std::unique_ptr<Command>(new RemoveCar(scenario, command[1]));
         default:
             return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
     }

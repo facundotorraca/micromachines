@@ -134,5 +134,9 @@ void Scenario::carSlowdown(int32_t id) {
     cars.at(id).slowdown(sound);
 }
 
+void Scenario::removeCar(int32_t id) {
+    cars.erase(id);
+}
+
 Scenario::~Scenario() = default;
 
