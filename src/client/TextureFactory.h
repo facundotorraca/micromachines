@@ -41,7 +41,7 @@
 #define ROCK_TEX 4510
 #define BOOST_TEX 4511
 #define PAUSE_MENU_TEX 4512
-
+#define EXPLOSION_TEX 10000
 
 
 struct Texture{
@@ -106,6 +106,16 @@ public:
             textures.emplace(MUD_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/mud.png"));
             textures.emplace(ROCK_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/rock.png"));
             textures.emplace(BOOST_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/boost.png"));
+
+            /*-------------------------------SCREEN EFFECT TEXTURES--------------------------------*/
+            textures.emplace(EXPLOSION_TEX, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_00.png"));
+            textures.emplace(EXPLOSION_TEX+1, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_01.png"));
+            textures.emplace(EXPLOSION_TEX+2, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_02.png"));
+            textures.emplace(EXPLOSION_TEX+3, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_03.png"));
+            textures.emplace(EXPLOSION_TEX+4, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_04.png"));
+            textures.emplace(EXPLOSION_TEX+5, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_05.png"));
+            textures.emplace(EXPLOSION_TEX+6, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_06.png"));
+            textures.emplace(EXPLOSION_TEX+7, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_07.png"));
 
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             int tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;

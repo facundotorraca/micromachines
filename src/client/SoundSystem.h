@@ -14,6 +14,7 @@ class SoundSystem {
     int32_t posx;
     int32_t posy;
     int32_t health;
+    bool isOnScreen(int32_t x, int32_t y);
 public:
     SoundSystem();
     void center(int32_t x, int32_t y);

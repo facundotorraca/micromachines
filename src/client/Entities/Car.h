@@ -12,6 +12,7 @@ class Car : public Entity{
     Wheel wheel3;
     Wheel wheel4;
     int32_t health = 100;
+    float i = 0;
 public:
     void draw(Camera& camera) override {
         wheel1.draw(camera);
@@ -22,10 +23,18 @@ public:
         int32_t size_h = CAR_HEIGHT * METER_TO_PIXEL;
         if (health <= 0){
             camera.drawWorldTexture(WRECKED_CAR_TEX, posX, posY, size_w, size_h, rot);
-        } else if (health <= 50){
-            camera.drawWorldTexture(DMG_CAR_TEX, posX, posY, size_w, size_h, rot);
+            if (i <= 7)
+                camera.drawWorldTexture(EXPLOSION_TEX+(int)i, posX, posY, size_w, size_w, rot);
+            i+=0.08;
         } else {
-            camera.drawWorldTexture(CAR_TEX, posX, posY, size_w, size_h, rot);
+            i = 0;
+            if (health <= 50) {
+                camera.drawWorldTexture(DMG_CAR_TEX, posX, posY, size_w, size_h,
+                                        rot);
+            } else {
+                camera.drawWorldTexture(CAR_TEX, posX, posY, size_w, size_h,
+                                        rot);
+            }
         }
     }
 
