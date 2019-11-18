@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <model/Vehicle/CarSpecs.h>
 #include "Configs.h"
 
 Configs::Configs() {
@@ -27,6 +28,14 @@ Configs::Configs() {
     time_to_start = this->conf_json["time_to_start"]; //seconds
     modifier_spawn_prob = this->conf_json["modifier_spawn_prob"]; //0-1
     socket_pending_connections = this->conf_json["socket_pending_connections"];
+
+    specs.max_life = this->conf_json["max_life"];
+    specs.max_forward_speed = this->conf_json["max_forward_speed"];
+    specs.max_backward_speed = this->conf_json["max_backward_speed"];
+    specs.back_wheel_max_force = this->conf_json["back_wheel_max_force"];
+    specs.front_wheel_max_force = this->conf_json["front_wheel_max_force"];
+    specs.back_max_lateral_impulse = this->conf_json["back_max_lateral_impulse"];
+    specs.front_max_lateral_impulse = this->conf_json["front_max_lateral_impulse"];
 }
 
 Configs& Configs::get_configs() {

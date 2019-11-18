@@ -89,7 +89,7 @@ void Match::initialize_players() {
     for (auto& player : players) {
         int32_t ID = player.first;
 
-        CarSpecs specs{100, 120, -20, 130, 150, 8.5, 7.5};
+        CarSpecs specs = Configs::get_configs().specs;
         this->race.add_car_with_specs(player.first, specs);
 
         this->client_updater.create_update_queue(ID, UPDATE_QUEUE_MAX_SIZE);

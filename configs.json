@@ -19,5 +19,13 @@
 "mod_rock_prob": 0.2,
 "mod_boost_prob": 0.2,
 
-"respawn_time": 1 
+"respawn_time": 1, 
+
+"max_life":100,
+"max_forward_speed":120,
+"max_backward_speed":-20,
+"back_wheel_max_force":120,
+"front_wheel_max_force":150,
+"back_max_lateral_impulse":8.5,
+"front_max_lateral_impulse":7.5
 }
