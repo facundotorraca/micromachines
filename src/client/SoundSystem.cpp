@@ -1,6 +1,3 @@
-//
-// Created by javier on 17/11/19.
-//
 
 #include <cstdint>
 #include <SDL_mixer.h>
@@ -66,7 +63,7 @@ void SoundSystem::playCrashSound(int32_t x, int32_t y) {
 
 void SoundSystem::playBackgroundMusic() {
     Mix_PlayMusic(music, -1);
-    Mix_VolumeMusic(95);
+    Mix_VolumeMusic(50);
 }
 
 SoundSystem::SoundSystem() : posx(0), posy(0) {
@@ -88,6 +85,7 @@ SoundSystem::SoundSystem() : posx(0), posy(0) {
     sounds.emplace(MSG_EFFECT_ROCK, Mix_LoadWAV("assets/sounds/glass.wav"));
     sounds.emplace(MSG_EFFECT_OIL, Mix_LoadWAV("assets/sounds/oil.wav"));
 
+    Mix_VolumeChunk(sounds.at(SOUND_ENGINE), 40);
     /*------------------------------LOAD MUSIC--------------------------------*/
     music = Mix_LoadMUS("assets/sounds/music.mp3");
 }
