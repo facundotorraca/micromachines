@@ -7,8 +7,6 @@
 #include "Wheel.h"
 #include "CarInfo.h"
 
-#define ACCELERATION_SOUND_TOP -100
-#define ACCELERATION_SOUND_BOTTOM -60
 
 class Car : public Entity{
     int32_t car_tex;
@@ -20,7 +18,7 @@ class Car : public Entity{
     int32_t health = 100;
     std::list<int32_t> velocities;
     float i = 0;
-    float getAccel();
+    float getAccel(int32_t new_velocity);
 public:
     explicit Car(int32_t id);
     void draw(Camera& camera) override;

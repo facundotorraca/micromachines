@@ -4,6 +4,10 @@
 
 #include "Car.h"
 
+#define ACCELERATION_SOUND_TOP -100
+#define ACCELERATION_SOUND_BOTTOM -75
+#define ACCELS_SAVED 5
+
 Car::Car(int32_t id) {
     int32_t texture = id%5;
     switch (texture){
@@ -41,10 +45,7 @@ void Car::draw(Camera& camera){
 
 void Car::updateAll(CarInfo& info, SoundSystem& sound) {
     sound.playEngineSound(info.car_id, posX, posY, info.carvel);
-    if (velocities.size() > 5)
-        velocities.erase(velocities.begin());
-    velocities.emplace_back(info.carvel);
-    auto accel = this->getAccel();
+    auto accel = this->getAccel(info.carvel);
     if (accel < ACCELERATION_SOUND_BOTTOM && accel > ACCELERATION_SOUND_TOP && info.carvel > 200*3.6/METER_TO_PIXEL){
         sound.playBrakesSound(posX, posY);
     }
@@ -55,16 +56,25 @@ void Car::updateAll(CarInfo& info, SoundSystem& sound) {
     wheel4.update_position(info.w4x, info.w4y, info.w4rot);
 }
 
-float Car::getAccel(){
-    int c = 0;
-    if (velocities.empty() || velocities.size() == 1)
+float Car::getAccel(int32_t new_velocity){
+
+    if (velocities.size() >= ACCELS_SAVED){
+        velocities.erase(velocities.begin());
+    }
+    velocities.emplace_back(new_velocity);
+
+    if (velocities.empty() || velocities.size() == 1) {
         return 0;
+    }
+
+    int c = 0;
     auto prev_vel = *velocities.begin();
     for (auto iter = velocities.begin()++; iter != velocities.end(); iter++){
         c += (*iter - prev_vel);
         prev_vel = *iter;
     }
-    return (float)c/velocities.size();
+
+    return (float)c/(velocities.size()-1);
 }
 
 void Car::setHealth(int32_t health, SoundSystem& sound){
