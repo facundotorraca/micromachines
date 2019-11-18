@@ -15,6 +15,7 @@
 #define SOUND_CRASH 5
 #define SOUND_FIX 8
 #define SOUND_EXPLOSION 9
+#define SOUND_BRAKE 10
 
 void SoundSystem::center(int32_t x, int32_t y) {
     posx = x;
@@ -80,6 +81,7 @@ SoundSystem::SoundSystem() : posx(0), posy(0) {
     sounds.emplace(SOUND_CRASH, Mix_LoadWAV("assets/sounds/crash.wav"));
     sounds.emplace(SOUND_FIX, Mix_LoadWAV("assets/sounds/fix.wav"));
     sounds.emplace(SOUND_EXPLOSION, Mix_LoadWAV("assets/sounds/explosion.wav"));
+    sounds.emplace(SOUND_BRAKE, Mix_LoadWAV("assets/sounds/brake.wav"));
     sounds.emplace(MSG_EFFECT_MUD, Mix_LoadWAV("assets/sounds/mud.wav"));
     sounds.emplace(MSG_EFFECT_BOOST, Mix_LoadWAV("assets/sounds/boost.wav"));
     sounds.emplace(MSG_EFFECT_ROCK, Mix_LoadWAV("assets/sounds/glass.wav"));
@@ -94,4 +96,9 @@ SoundSystem::~SoundSystem() {
     }
     Mix_FreeMusic(music);
     Mix_Quit();
+}
+
+void SoundSystem::playBrakesSound(int32_t x, int32_t y) {
+    if (isOnScreen(x, y))
+        Mix_PlayChannel(16, sounds.at(SOUND_BRAKE), 0);
 }

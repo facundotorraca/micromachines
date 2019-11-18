@@ -18,14 +18,13 @@ public:
     SoundSystem();
     void center(int32_t x, int32_t y);
     void playBackgroundMusic();
-
     void playEngineSound(int32_t id, int32_t x, int32_t y, int32_t vel);
     void playCountdownSound(int32_t number);
     void playEffectSound(int32_t effect);
-
     void playExplosionSound(int32_t x, int32_t y);
     void playFixSound(int32_t x, int32_t y);
     void playCrashSound(int32_t x, int32_t y);
+    void playBrakesSound(int32_t x, int32_t y);
     ~SoundSystem();
 };
 

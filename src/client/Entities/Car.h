@@ -15,7 +15,7 @@ class Car : public Entity{
     Wheel wheel3;
     Wheel wheel4;
     int32_t health = 100;
-    int32_t vel = 0;
+    std::list<int32_t> velocities;
     float i = 0;
 public:
     Car(int32_t id) {
@@ -57,11 +57,30 @@ public:
 
     void update_all(CarInfo& info, SoundSystem& sound) {
         sound.playEngineSound(info.car_id, posX, posY, info.carvel);
+        if (velocities.size() > 5)
+            velocities.erase(velocities.begin());
+        velocities.emplace_back(info.carvel);
+        auto accel = this->getAccel();
+        if (accel < -60 && accel > -100 && info.carvel > 200*3.6/METER_TO_PIXEL){
+            sound.playBrakesSound(posX, posY);
+        }
         posX = info.carx; posY = info.cary; rot = info.carrot;
         wheel1.update_position(info.w1x, info.w1y, info.w1rot);
         wheel2.update_position(info.w2x, info.w2y, info.w2rot);
         wheel3.update_position(info.w3x, info.w3y, info.w3rot);
         wheel4.update_position(info.w4x, info.w4y, info.w4rot);
+    }
+
+    float getAccel(){
+        int c = 0;
+        if (velocities.empty() || velocities.size() == 1)
+            return 0;
+        auto prev_vel = *velocities.begin();
+        for (auto iter = velocities.begin()++; iter != velocities.end(); iter++){
+            c += (*iter - prev_vel);
+            prev_vel = *iter;
+        }
+        return (float)c/velocities.size();
     }
 
     void setHealth(int32_t health, SoundSystem& sound){
@@ -72,6 +91,10 @@ public:
         else if (health < this->health && !Mix_Playing(16))
             sound.playCrashSound(posX, posY);
         this->health = health;
+    }
+
+    void slowdown(SoundSystem& sound){
+
     }
 };
 

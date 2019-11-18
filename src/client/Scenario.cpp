@@ -130,5 +130,9 @@ void Scenario::reset() {
     hud.reset();
 }
 
+void Scenario::carSlowdown(int32_t id) {
+    cars.at(id).slowdown(sound);
+}
+
 Scenario::~Scenario() = default;
 
