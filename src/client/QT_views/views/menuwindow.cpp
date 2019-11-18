@@ -1,8 +1,8 @@
 #include "menuwindow.h"
 #include <client/QT_views/ui_menuwindow.h>
 #include <common/SocketError.h>
+#include <common/MsgTypes.h>
 #include <iostream>
-#include <thread>
 #include <QTimer>
 
 std::string get_matches(ProtocolSocket &ps) {
@@ -54,12 +54,12 @@ bool MenuWindow::get_bot_check() {
 }
 
 void MenuWindow::on_createBtn_clicked() {
-    this->command = CREATE_COMMAND;
+    this->ps.send((uint8_t) CREATE_COMMAND);
     this->ui.stackedWidget->setCurrentIndex(CREATE_PAGE);
 }
 
 void MenuWindow::on_joinBtn_clicked() {
-    this->command = JOIN_COMMAND;
+    this->ps.send((uint8_t) JOIN_COMMAND);
     this->ui.stackedWidget->setCurrentIndex(JOIN_PAGE);
 }
 
@@ -77,18 +77,11 @@ void MenuWindow::on_matchList_itemSelectionChanged() {
 }
 
 void MenuWindow::on_joinBtnBox_accepted() {
-    uint8_t flag_error_matchname = 1;
-    std::string selectedMatch = this->ui.matchList->selectedItems()[0]->text().toStdString();
-    std::string match_name = selectedMatch.substr(0, selectedMatch.find(" "));
-    uint8_t flag_error_username = 1;
-    std::string username = this->ui.userJoinInput->text().toStdString();
-    uint8_t start = 1;
-    this->ps.send(start);
-    ps.send(match_name);
-    ps.receive(flag_error_matchname);
-    ps.send(username);
-    ps.receive(flag_error_username);
-    if(flag_error_username == 1) {
+    std::string selected_match = this->ui.matchList->selectedItems()[0]->text().toStdString();
+    std::string match_name = selected_match.substr(0, selected_match.find(" "));
+    std::string user_name = this->ui.userJoinInput->text().toStdString();
+    this->set_match_name(match_name);
+    if(!this->set_user_name(user_name)) {
         this->ui.errorJoinName->setVisible(true);
         return;
     }
@@ -98,31 +91,25 @@ void MenuWindow::on_joinBtnBox_accepted() {
 }
 
 void MenuWindow::on_joinBtnBox_rejected(){
+    this->ps.send((uint8_t) MSG_CHANGE_MODE);
     this->ui.stackedWidget->setCurrentIndex(MAIN_PAGE);
 }
 
 void MenuWindow::on_createBtnBox_accepted() {
-    uint8_t flag_error_matchname = 1;
     std::string match_name_raw = this->ui.matchCreateInput->text().toStdString();
     std::string match_name = match_name_raw.substr(0, match_name_raw.find(" "));
-    uint8_t flag_error_username = 1;
-    std::string username = this->ui.userCreateInput->text().toStdString();
-    uint8_t start = 2;
-    this->ps.send(start);
-    ps.send(match_name);
-    ps.receive(flag_error_matchname);
-    if(flag_error_matchname == 1) {
+    std::string user_name = this->ui.userCreateInput->text().toStdString();
+    if(!this->set_match_name(match_name)) {
         this->ui.errorMatchName->setVisible(true);
         return;
-    } else {
-        this->arranged = true;
     }
-    ps.send(username);
-    ps.receive(flag_error_username);
+    this->set_user_name(user_name);
+    this->arranged = true;
     this->ui.stackedWidget->setCurrentIndex(START_PAGE);
 }
 
 void MenuWindow::on_createBtnBox_rejected(){
+    this->ps.send((uint8_t) MSG_CHANGE_MODE);
     this->ui.stackedWidget->setCurrentIndex(MAIN_PAGE);
 }
 
@@ -136,13 +123,6 @@ void MenuWindow::on_startBtn_clicked() {
     this->close();
 }
 
-void MenuWindow::on_stackedWidget_currentChanged(int new_page) {
-    std::cout << new_page << std::endl;/*
-    if (new_page == CREATE_PAGE)
-        this->ui.createBtnBox->setFocus();
-    if (new_page == JOIN_PAGE)
-        this->ui.joinBtnBox->setFocus();*/
-}
 
 
 void MenuWindow::wait_start() {
@@ -154,6 +134,22 @@ void MenuWindow::wait_start() {
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
     this->close();
+}
+
+bool MenuWindow::set_user_name(std::string user_name) {
+    uint8_t flag_error_username = 1;
+    ps.send((uint8_t) MSG_SET_USERNAME);
+    ps.send(user_name);
+    ps.receive(flag_error_username);
+    return flag_error_username == 0;
+}
+
+bool MenuWindow::set_match_name(std::string match_name) {
+    uint8_t flag_error_matchname = 1;
+    ps.send((uint8_t) MSG_SET_MATCH_NAME);
+    ps.send(match_name);
+    ps.receive(flag_error_matchname);
+    return flag_error_matchname == 0;
 }
 
 MenuWindow::~MenuWindow() {}

@@ -12,8 +12,8 @@
 #define START_PAGE 3
 #define WAIT_PAGE 4
 
-#define JOIN_COMMAND "1"
-#define CREATE_COMMAND "2"
+#define JOIN_COMMAND 1
+#define CREATE_COMMAND 2
 
 class MenuWindow : public QMainWindow {
     Q_OBJECT
@@ -34,12 +34,14 @@ private slots:
     void on_createBtnBox_accepted();
     void on_createBtnBox_rejected();
     void on_startBtn_clicked();
-    void on_stackedWidget_currentChanged(int new_page);
     void wait_start();
 
 
 
 private:
+    bool set_user_name(std::string user_name);
+    bool set_match_name(std::string match_name);
+
     Ui::MenuWindow ui;
     ProtocolSocket &ps;
     std::string matches;
