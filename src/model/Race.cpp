@@ -3,6 +3,7 @@
 #include <common/MsgTypes.h>
 #include <common/Configs.h>
 #include <server/ClientUpdater.h>
+#include <thread>
 
 Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
     lap_counter(total_laps),
@@ -35,7 +36,7 @@ void Race::update() {
         car.second.update();
         car.second.modify_laps(this->lap_counter, car.first);
         if (this->lap_counter.car_complete_laps(car.first))
-            this->racing_track.add_car_to_podium(car.second, car.first );
+            this->racing_track.add_car_to_podium(car.second, car.first);
     }
     this->racing_track.update();
     this->modifier_spawner.update();
@@ -60,6 +61,8 @@ void Race::prepare(ClientUpdater& updater) {
     updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_BEGIN_LOADING}));
     this->racing_track.prepare_track(updater);
     this->racing_track.set_spawn_points_to_cars(this->cars);
+    for (auto& car : this->cars)
+        send_updates(car.first, updater);
     updater.send_to_all(UpdateClient(std::vector<int32_t>{MSG_FINISH_LOADING}));
 }
 

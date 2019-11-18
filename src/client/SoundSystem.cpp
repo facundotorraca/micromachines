@@ -56,7 +56,6 @@ void SoundSystem::playBackgroundMusic() {
 }
 
 void SoundSystem::pauseBackgroundMusic() {
-
 }
 
 SoundSystem::SoundSystem() : posx(0), posy(0), health(100) {
@@ -81,7 +80,7 @@ SoundSystem::SoundSystem() : posx(0), posy(0), health(100) {
 }
 
 SoundSystem::~SoundSystem() {
-    for (auto& sound : sounds){
+    for (auto& sound : sounds) {
         Mix_FreeChunk(sound.second);
     }
     Mix_FreeMusic(music);

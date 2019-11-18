@@ -54,6 +54,7 @@ void Podium::add_car(Car &car, int32_t ID) {
 
 void Podium::restart() {
     this->podium.clear();
+    this->on_podium.clear();
     this->f_place_free = true;
     this->s_place_free = true;
     this->t_place_free = true;

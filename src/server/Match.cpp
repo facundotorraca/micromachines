@@ -85,6 +85,7 @@ bool Match::is_closed() {
 }
 
 void Match::initialize_players() {
+
     for (auto& player : players) {
         int32_t ID = player.first;
 
