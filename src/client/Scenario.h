@@ -49,7 +49,7 @@ public:
     void setRacePosition(int32_t number);
     void draw(Camera& camera);
     void reset();
-    void carSlowdown(int32_t id);
+
     void removeCar(int32_t id);
     ~Scenario();
 };

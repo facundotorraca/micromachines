@@ -30,7 +30,7 @@ void Scenario::updateCar(CarInfo &info, Camera& camera) {
         minimap.addCar(info.car_id, info.carx, info.cary);
     } else {
         minimap.updateCar(info.car_id, info.carx, info.cary);
-        cars.at(info.car_id).update_all(info, sound);
+        cars.at(info.car_id).updateAll(info, sound);
     }
     if (info.car_id == this->my_car_id){
         camera.update(info.carx, info.cary, info.carvel, info.carrot);
@@ -128,10 +128,6 @@ void Scenario::setRacePosition(int32_t number) {
 void Scenario::reset() {
     //std::unique_lock<std::mutex> lock(mtx);
     hud.reset();
-}
-
-void Scenario::carSlowdown(int32_t id) {
-    cars.at(id).slowdown(sound);
 }
 
 void Scenario::removeCar(int32_t id) {
