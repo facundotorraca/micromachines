@@ -38,16 +38,17 @@ void DynamicTrackObject::add_to_world(b2World &world) {
     body_def.type = b2_dynamicBody;
     this->object_body = world.CreateBody(&body_def);
 
-    b2PolygonShape polygon_shape;
+    b2CircleShape circle_shape;
     int32_t x_pos = this->map_x * (TILE_TERRAIN_SIZE);
     int32_t y_pos = this->map_y * (TILE_TERRAIN_SIZE);
-    polygon_shape.SetAsBox(TILE_TERRAIN_SIZE/2, TILE_TERRAIN_SIZE/2);
+    circle_shape.m_radius = TILE_TERRAIN_SIZE/2;
     this->object_body->SetTransform(b2Vec2(x_pos, y_pos), 0);
 
     b2FixtureDef fixtureDef;
     fixtureDef.density = 5;
     fixtureDef.friction = 1;
-    fixtureDef.shape = &polygon_shape;
+    fixtureDef.restitution = 0.8f;
+    fixtureDef.shape = &circle_shape;
 
     this->object_body->CreateFixture(&fixtureDef);
     this->object_body->SetUserData(this); //Set a self reference to handler collisions

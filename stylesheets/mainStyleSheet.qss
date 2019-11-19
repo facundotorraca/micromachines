@@ -1,23 +1,4 @@
 QMainWindow {
-    background-color: black
+    background-color: purple
 }
 
-*#mainPage {
-    background-image: url("backgrounds/test.jpg")
-}
-
-*#createPage {
-    background-image: url("backgrounds/test.jpg")
-}
-
-*#joinPage {
-    background-image: url("backgrounds/test.jpg")
-}
-
-*#waitPage {
-    background-image: url("backgrounds/test.jpg")
-}
-
-*#startPaige {
-    background-image: url("backgrounds/test.jpg")
-}
