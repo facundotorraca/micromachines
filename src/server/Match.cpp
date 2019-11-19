@@ -159,6 +159,7 @@ void Match::update_players() {
         if (!this->players.at(ID).is_playing())
             this->players.at(ID).update_view(players.size(), client_updater);
     }
+    this->race.send_dynamic_objects(this->client_updater);
 }
 
 void Match::wait_match_creator_decision() {

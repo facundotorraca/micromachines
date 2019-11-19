@@ -21,6 +21,8 @@
 #include "ShowRestartMenu.h"
 #include "ResetRace.h"
 #include "RemoveCar.h"
+#include "AddDynamicObject.h"
+#include "UpdateDynamicObject.h"
 #include <common/EntityType.h>
 #include <client/Entities/CarInfo.h>
 
@@ -43,6 +45,8 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, ProtocolSocket& soc
                                  command[16], command[17], command[18]};
                     return std::unique_ptr<Command>(new UpdateCar(info, scenario, camera));
                 }
+                case TYPE_DYNAMIC_OBJECT:
+                    return std::unique_ptr<Command>( new UpdateDynamicObject(command[2], command[3], command[4],scenario));
                 default:
                     break;
             }
@@ -50,6 +54,8 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, ProtocolSocket& soc
         }
         case MSG_CAR_ID:
             return std::unique_ptr<Command>(new CarID(command[1], scenario));
+        case MSG_ADD_DYNAMIC_OBJECT:
+            return std::unique_ptr<Command>(new AddDynamicObject(command[1], command[2], command[3], command[4], scenario));
         case MSG_SEND_TILE: {
             TileInfo info{command[1], command[2], command[3], command[4]};
             return std::unique_ptr<Command>(new AddTile(info, scenario));

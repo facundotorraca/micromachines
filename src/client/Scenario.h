@@ -16,6 +16,7 @@
 #include "Entities/TileInfo.h"
 #include "ScreenEffectDrawer.h"
 #include "Bot.h"
+#include "Entities/DynamicEntity.h"
 #include "SoundSystem.h"
 
 class Scenario {
@@ -30,10 +31,12 @@ class Scenario {
     SoundSystem sound;
     int32_t my_car_id;
     std::unordered_map<int32_t, Car> cars;
+    std::unordered_map<int32_t, DynamicEntity> dyn_entities;
     std::mutex mtx;
 public:
     explicit Scenario(Bot& bot);
     void addTile(TileInfo& info);
+    void addDynamicObject(int32_t ID, int32_t type, int32_t x, int32_t y);
     void setOwnID(int32_t id);
     void updateCar(CarInfo& info, Camera& camera);
     void setCarHealth(int32_t id, int32_t health);
@@ -45,6 +48,7 @@ public:
     void addModifier(int32_t type, int32_t x, int32_t y);
     void removeModifier(int32_t x, int32_t y);
     void addFinishedPlayer(std::string& player_name);
+    void updateDynamicObject(int32_t ID, int32_t x, int32_t y);
     void showScreenEffect(int32_t effect, int32_t duration);
     void setRacePosition(int32_t number);
     void draw(Camera& camera);

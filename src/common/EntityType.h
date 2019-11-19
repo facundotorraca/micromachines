@@ -3,7 +3,8 @@
 
 #define TYPE_CAR 0
 #define TYPE_WHEEL 15
-#define TYPE_STATIC_OBJECT 10
+#define TYPE_STATIC_OBJECT 16
+#define TYPE_DYNAMIC_OBJECT 17
 
 /*---------TRACK_TILES---------*/
 #define TYPE_SAND 63

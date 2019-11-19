@@ -101,15 +101,12 @@ void RacingTrack::prepare_track(ClientUpdater &updater) {
 void RacingTrack::restart() {
     if (this->podium)
         this->podium->restart();
+    for (auto& dyn_object : this->dynamic_track_objects)
+        dyn_object.restart_position();
 }
 
 void RacingTrack::remove_car(Car& car) {
    car.remove_from_race(this->racing_track);
-}
-
-RacingTrack::~RacingTrack() {
-    delete this->podium;
-    delete this->finish_line;
 }
 
 void RacingTrack::add_pit_stop(Coordinate pit_stop) {
@@ -118,4 +115,19 @@ void RacingTrack::add_pit_stop(Coordinate pit_stop) {
 
 std::vector<Coordinate>& RacingTrack::get_pit_stop_position() {
     return this->pit_stops;
+}
+
+void RacingTrack::add_dynamic_track_object(DynamicTrackObject &&object) {
+    this->dynamic_track_objects.push_back(std::move(object));
+    this->dynamic_track_objects.back().add_to_world(this->racing_track);
+}
+
+void RacingTrack::send_dynamic_object_update(ClientUpdater& updater) {
+    for (auto& dyn_object : this->dynamic_track_objects)
+        dyn_object.send_updates(updater);
+}
+
+RacingTrack::~RacingTrack() {
+    delete this->podium;
+    delete this->finish_line;
 }
