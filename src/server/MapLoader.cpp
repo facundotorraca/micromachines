@@ -8,6 +8,7 @@
 #include <model/Dijkstra.h>
 #include <model/Terrains/TerrainFactory.h>
 #include <common/MsgTypes.h>
+#include <common/Configs.h>
 
 #define PIT_STOP_TILE 25
 #define BEGIN_TRACK_TILE 26
@@ -175,7 +176,11 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
                 int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS]["value"];
                 bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS]["value"];
                 auto info_pos = unsigned(json_map_data["layers"][PROPERTIES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
-                auto dyn_ID_pos = unsigned(json_map_data["layers"][DYNAMIC_LAYER]["data"][j * (int) json_map_data["height"] + i]);
+
+                /*If dynamic objects are deactivated, dyn_ID is always 0 and the objects are never loaded*/
+                int32_t dyn_ID_pos = 0;
+                if (Configs::get_configs().use_dynamic_objects)
+                    dyn_ID_pos = unsigned(json_map_data["layers"][DYNAMIC_LAYER]["data"][j * (int) json_map_data["height"] + i]);
 
                 send_tile(type_ID, i, j, tile_rotation, updater);
 

@@ -28,6 +28,8 @@ public:
     float mod_rock_prob;
     float mod_boost_prob;
 
+    bool use_dynamic_objects;
+
     CarSpecs specs;
 
     std::string server_port;

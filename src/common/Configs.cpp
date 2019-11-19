@@ -36,6 +36,8 @@ Configs::Configs() {
     specs.front_wheel_max_force = this->conf_json["front_wheel_max_force"];
     specs.back_max_lateral_impulse = this->conf_json["back_max_lateral_impulse"];
     specs.front_max_lateral_impulse = this->conf_json["front_max_lateral_impulse"];
+
+    use_dynamic_objects = this->conf_json["use_dynamic_objects"];
 }
 
 Configs& Configs::get_configs() {
