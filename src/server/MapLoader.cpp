@@ -8,12 +8,14 @@
 #include <model/Dijkstra.h>
 #include <model/Terrains/TerrainFactory.h>
 #include <common/MsgTypes.h>
+#include <common/Configs.h>
 
 #define PIT_STOP_TILE 25
 #define BEGIN_TRACK_TILE 26
 
 #define TILES_LAYER 0
 #define PROPERTIES_LAYER 1
+#define DYNAMIC_LAYER 2
 
 #define ID_PROPERTY_POS 0
 #define ROTATION_PROPERTY_POS 1
@@ -61,6 +63,13 @@ void send_tile(int32_t type_ID, int32_t x_map, int32_t y_map, int32_t rot, Clien
     int32_t x = METER_TO_PIXEL * ((x_map * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE * 0.5);
     int32_t y = METER_TO_PIXEL * ((y_map * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE * 0.5);
     std::vector<int32_t> update_info{MSG_SEND_TILE, type_ID, x, y, rot};
+    updater.send_to_all(UpdateClient(std::move(update_info)));
+}
+
+void send_dynamic_object(int32_t ID, int32_t type_ID, int32_t x_map, int32_t y_map, ClientUpdater &updater) {
+    int32_t x = METER_TO_PIXEL * ((x_map * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE * 0.5);
+    int32_t y = METER_TO_PIXEL * ((y_map * (TILE_TERRAIN_SIZE)) - TILE_TERRAIN_SIZE * 0.5);
+    std::vector<int32_t> update_info{MSG_ADD_DYNAMIC_OBJECT, ID, type_ID, x, y};
     updater.send_to_all(UpdateClient(std::move(update_info)));
 }
 
@@ -154,6 +163,7 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
     UpdateClient map_info(std::vector<int32_t>{MSG_SET_BACKGROUND , TYPE_GRASS, map_height, map_width});
     updater.send_to_all(map_info);
 
+    int32_t dyn_ID = 0;
     std::unique_ptr<Terrain> begin_tile(nullptr); //used to store the begin tile.
 
     for (int i = 0; i < map_height; i++) {
@@ -167,11 +177,21 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
                 bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS]["value"];
                 auto info_pos = unsigned(json_map_data["layers"][PROPERTIES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
 
+                /*If dynamic objects are deactivated, dyn_ID is always 0 and the objects are never loaded*/
+                int32_t dyn_ID_pos = 0;
+                if (Configs::get_configs().use_dynamic_objects)
+                    dyn_ID_pos = unsigned(json_map_data["layers"][DYNAMIC_LAYER]["data"][j * (int) json_map_data["height"] + i]);
 
                 send_tile(type_ID, i, j, tile_rotation, updater);
 
                 if (is_static)
                     racing_track.add_static_track_object(std::move(StaticTrackObject(type_ID, i, j)));
+                else if (dyn_ID_pos > 0) {
+                    int32_t dyn_type_ID = json_tiles_data["tiles"][dyn_ID_pos - 1]["properties"][ID_PROPERTY_POS]["value"];
+                    racing_track.add_dynamic_track_object(std::move(DynamicTrackObject(dyn_ID, i, j)));
+                    send_dynamic_object(dyn_ID, dyn_type_ID, i, j, updater);
+                    dyn_ID++;
+                }
                 else {
                     if (is_track(type_ID) && type_ID == BEGIN_TRACK_TILE)
                         begin_tile = std::move(TerrainFactory::create_terrain(type_ID, i, j));

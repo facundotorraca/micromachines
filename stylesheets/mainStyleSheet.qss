@@ -1,29 +1,23 @@
 QMainWindow {
-    background-color: black
+    background-color: purple
 }
 
-*#centralwidget {
-    width: 1px;
-    height: 1px;
-}
-
-*#mainPage {
-    background-image: url("backgrounds/test.jpg");
-    background-position: center center;
+#mainPage {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#createPage {
-    background-image: url("backgrounds/test.jpg")
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#joinPage {
-    background-image: url("backgrounds/test.jpg")
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#waitPage {
-    background-image: url("backgrounds/test.jpg")
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
-*#startPage {
-    background-image: url("backgrounds/test.jpg")
+*#startPaige {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }

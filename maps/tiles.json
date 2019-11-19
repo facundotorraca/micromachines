@@ -8,7 +8,7 @@
  "margin":0,
  "name":"tiles",
  "spacing":0,
- "tilecount":425,
+ "tilecount":428,
  "tiledversion":"1.2.5",
  "tileheight":129,
  "tiles":[
@@ -9295,6 +9295,42 @@
                  "name":"Static",
                  "type":"bool",
                  "value":true
+                }]
+        }, 
+        {
+         "id":425,
+         "image":"..\/assets\/sprites\/TrackObjects\/tires_red.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":148
+                }]
+        }, 
+        {
+         "id":426,
+         "image":"..\/assets\/sprites\/TrackObjects\/tires_white.png",
+         "imageheight":128,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":149
+                }]
+        }, 
+        {
+         "id":427,
+         "image":"..\/assets\/sprites\/TrackObjects\/cone_straight.png",
+         "imageheight":125,
+         "imagewidth":128,
+         "properties":[
+                {
+                 "name":"ID",
+                 "type":"int",
+                 "value":150
                 }]
         }],
  "tilewidth":129,

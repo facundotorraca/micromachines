@@ -58,7 +58,6 @@ file(COPY backgrounds DESTINATION ${CMAKE_BINARY_DIR})
 
 #file(COPY plugings DESTINATION ${CMAKE_BINARY_DIR})
 
-
 file(COPY maps DESTINATION ${CMAKE_BINARY_DIR})
 # Generar el servidor
 add_executable(micromachines-server src/server/main.cpp)

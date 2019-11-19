@@ -53,7 +53,6 @@ void ThreadMatchOptions::run_player_options() {
         option = this->player.receive_option();
 
         /* for futures options*/
-
         this->match->add_player(std::move(player));
         this->dead = true;
     } catch (const SocketError& exception) {

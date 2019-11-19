@@ -4,6 +4,7 @@
 #include <common/Sizes.h>
 #include <common/EntityType.h>
 #include <model/Vehicle/Car.h>
+#include <model/DynamicTrackObject.h>
 
 Terrain::Terrain(int32_t ID, int32_t x, int32_t y):
     coordinate(x,y)
@@ -48,7 +49,8 @@ Terrain::Terrain(Terrain &&other) noexcept:
 void Terrain::apply_effect(Body *body) {
     if (body->get_ID() == TYPE_CAR && this->begin_distance != INFINITE)
         ((Car*)body)->set_begin_distance(this->begin_distance);
-     this->apply_terrain_effect(body);
+    this->apply_terrain_effect(body);
+
 }
 
 Coordinate Terrain::get_map_coordinate() {

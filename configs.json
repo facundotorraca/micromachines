@@ -27,5 +27,7 @@
 "back_wheel_max_force":120,
 "front_wheel_max_force":150,
 "back_max_lateral_impulse":8.5,
-"front_max_lateral_impulse":7.5
+"front_max_lateral_impulse":7.5,
+
+"use_dynamic_objects":true
 }

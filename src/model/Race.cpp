@@ -100,3 +100,7 @@ void Race::restart() {
         car.second.repair();
     }
 }
+
+void Race::send_dynamic_objects(ClientUpdater &updater) {
+    this->racing_track.send_dynamic_object_update(updater);
+}

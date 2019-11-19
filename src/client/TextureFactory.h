@@ -240,6 +240,9 @@ public:
             textures.emplace(145, createTexture(renderer,"assets/sprites/TrackObjects/PT_1b.png"));
             textures.emplace(146, createTexture(renderer,"assets/sprites/TrackObjects/TS_2.png"));
             textures.emplace(147, createTexture(renderer,"assets/sprites/TrackObjects/TB_2a.png"));
+
+            textures.emplace(148, createTexture(renderer,"assets/sprites/TrackObjects/tires_red.png"));
+            textures.emplace(149, createTexture(renderer,"assets/sprites/TrackObjects/tires_white.png"));
         }
     }
 

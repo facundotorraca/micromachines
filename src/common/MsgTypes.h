@@ -24,6 +24,7 @@
 #define MSG_RESET 61
 #define MSG_REMOVE_CAR 62
 #define MSG_CAR_SLOWDOWN 63
+#define MSG_ADD_DYNAMIC_OBJECT 64
 /*----------------------------------------------*/
 
 /*--------------ServerMessages------------------*/

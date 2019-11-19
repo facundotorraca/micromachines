@@ -36,6 +36,8 @@ class Race {
 
         void apply_plugin(DTO_Info& info);
 
+        void send_dynamic_objects(ClientUpdater& updater);
+
         void add_car_with_specs(int32_t ID, CarSpecs specs);
 
         void send_updates(int32_t ID, ClientUpdater &updater);

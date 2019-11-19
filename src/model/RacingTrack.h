@@ -16,6 +16,7 @@
 #include <model/Modifiers/Modifier.h>
 #include <server/MapLoader.h>
 #include "model/Terrains/Terrain.h"
+#include "DynamicTrackObject.h"
 
 class RacingTrack {
     MapLoader map_loader;
@@ -34,6 +35,7 @@ class RacingTrack {
     std::vector<std::unique_ptr<Terrain>> track;
     std::list<std::unique_ptr<Terrain>> terrains;
     std::list<StaticTrackObject> static_track_objects;
+    std::list<DynamicTrackObject> dynamic_track_objects;
 
     ContactListener contact_listener;
 
@@ -66,11 +68,15 @@ class RacingTrack {
 
         void add_terrain(std::unique_ptr<Terrain>&& terrain);
 
-        void add_modifier(const std::shared_ptr<Modifier>& modifier);
+        void send_dynamic_object_update(ClientUpdater& updater);
 
         void add_finish_line(Coordinate begin, Coordinate end);
 
         void add_static_track_object(StaticTrackObject&& object);
+
+        void add_dynamic_track_object(DynamicTrackObject&& object);
+
+        void add_modifier(const std::shared_ptr<Modifier>& modifier);
 
         void set_spawn_points_to_cars(std::unordered_map<int32_t, Car>& cars);
 

@@ -86,13 +86,11 @@ void ThreadIncomingPlayer::run() {
                         this->p_socket.send((uint8_t)BIT_ERROR);
                     } else {
                         this->receive_username(username, match_name, mode);
-                        //this->username_set = true;
                     }
                     break;
                 case MSG_SET_MATCH_NAME:
                     match_name.resize(max_len_name, '\0');
                     this->receive_match_name(match_name, mode);
-                    //this->match_name_set = true;
                     break;
                 case MSG_CHANGE_MODE:
                     this->p_socket.receive(mode);
