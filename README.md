@@ -3,13 +3,31 @@
 Micromachines es un juego online de carreras. Por un lado se debe levantar el servidor y por el otro se ejecutan
 tantos clientes como jugadores.
 
-## Requerimientos
+## Librerías requeridas para compilar
 
 - CMAKE
 - SDL2
 - LUA
+- QT5
+- FFMPEG
 
-## Compilacion
+#### Instalación en Ubuntu:
+```
+sudo apt install build-essential libreadline-dev cmake libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev qtbase5-dev qtdeclarative5-dev libavutil-dev libswresample-dev libavformat-dev libavcodec-dev libswscale-dev   
+```
+
+#### Instalación de Lua:
+```
+$ mkdir lua_build
+$ cd lua_build
+$ curl -R -O http://www.lua.org/ftp/lua-5.3.4.tar.gz
+$ tar -zxf lua-5.3.4.tar.gz
+$ cd lua-5.3.4
+$ make linux test
+$ sudo make install
+```
+
+## Instalación del juego
 
 Micromachines usa [CMake](http://www.cmake.org) para soportar la compilacion multiplataforma. Los pasos basicos para compilarse son:
 
@@ -34,7 +52,7 @@ cmake ..
 make
 ```
 
-5. Ahora puede ejecutar el cliente y el servidor:
+5. Ahora desde la carpeta 'build' puede ejecutar el cliente y el servidor:
 
 ```
 ./micromachines-client
