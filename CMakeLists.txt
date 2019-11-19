@@ -42,7 +42,7 @@ add_subdirectory(src/client/QT_views)
 add_subdirectory(src/model/Modifiers)
 add_subdirectory(src/model/Terrains)
 add_subdirectory(src/model/Vehicle)
-add_subdirectory(src/plugings)
+add_subdirectory(src/plugins)
 add_subdirectory(src/common)
 add_subdirectory(src/server)
 add_subdirectory(src/client)
@@ -56,7 +56,7 @@ file(COPY configs.json DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY stylesheets DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY backgrounds DESTINATION ${CMAKE_BINARY_DIR})
 
-#file(COPY plugings DESTINATION ${CMAKE_BINARY_DIR})
+#file(COPY plugins DESTINATION ${CMAKE_BINARY_DIR})
 
 file(COPY maps DESTINATION ${CMAKE_BINARY_DIR})
 # Generar el servidor
