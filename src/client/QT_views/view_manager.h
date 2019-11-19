@@ -9,6 +9,8 @@
 #include <common/ProtocolSocket.h>
 #include <QApplication>
 
+#define STYLESHEET_PATH "stylesheets/mainStyleSheet.qss"
+
 
 class ViewManager {
     QApplication mainApp;
