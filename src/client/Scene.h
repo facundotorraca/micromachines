@@ -16,14 +16,18 @@
 #include "Scenario.h"
 #include "Bot.h"
 #include <client/Menu/Menu.h>
+#include "Commands/Command.h"
 
 class Scene {
     Camera camera;
     ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
     Scenario scenario;
     std::unique_ptr<Menu> menu;
-    std::mutex mtx;
+    std::mutex camera_mtx;
     std::mutex scenario_mtx;
+    std::mutex menu_mtx;
+    void drawScenario();
+    std::unique_ptr<Menu> applyCommand(Command& command);
 public:
     explicit Scene(ProtectedQueue<std::unique_ptr<ServerCommand>> &queue, Bot &bot);
     bool handleKeyEvent(SDL_Keycode key, SDL_EventType type);
