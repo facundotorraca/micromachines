@@ -2,3 +2,22 @@ QMainWindow {
     background-color: purple
 }
 
+#mainPage {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+}
+
+*#createPage {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+}
+
+*#joinPage {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+}
+
+*#waitPage {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+}
+
+*#startPaige {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+}
