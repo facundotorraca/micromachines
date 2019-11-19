@@ -62,21 +62,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="botBox">
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="text">
-             <string>Usar Bot</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QPushButton" name="optionsBtn">
+             <widget class="QPushButton" name="botBtn">
               <property name="text">
-               <string>Opciones</string>
+               <string>Usar Bot</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
               </property>
              </widget>
             </item>

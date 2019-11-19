@@ -39,7 +39,7 @@ bool MenuWindow::is_game_arranged() {
 }
 
 bool MenuWindow::get_bot_check() {
-    return this->ui.botBox->isChecked();
+    return this->ui.botBtn->isChecked();
 }
 
 void MenuWindow::on_createBtn_clicked() {

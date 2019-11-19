@@ -2,8 +2,14 @@ QMainWindow {
     background-color: black
 }
 
+*#centralwidget {
+    width: 1px;
+    height: 1px;
+}
+
 *#mainPage {
-    background-image: url("backgrounds/test.jpg")
+    background-image: url("backgrounds/test.jpg");
+    background-position: center center;
 }
 
 *#createPage {
@@ -18,6 +24,6 @@ QMainWindow {
     background-image: url("backgrounds/test.jpg")
 }
 
-*#startPaige {
+*#startPage {
     background-image: url("backgrounds/test.jpg")
 }
