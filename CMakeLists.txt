@@ -53,6 +53,9 @@ add_subdirectory(libs/json)
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY lua DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY configs.json DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY stylesheets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY backgrounds DESTINATION ${CMAKE_BINARY_DIR})
+
 #file(COPY plugings DESTINATION ${CMAKE_BINARY_DIR})
 
 

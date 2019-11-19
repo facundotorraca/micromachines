@@ -6,12 +6,18 @@
 #include "./views/menuwindow.h"
 #include "./views/connectview.cpp"
 #include <iostream>
+#include <QtCore/QFile>
 
 ViewManager::ViewManager(int argc, char *argv[])
                         : mainApp(argc, argv),
                         sck(),
                         arranged(false),
-                        box_check(false) {}
+                        box_check(false) {
+    QFile styleFile(STYLESHEET_PATH);
+    styleFile.open(QFile::ReadOnly);
+    QString StyleSheet = styleFile.readAll();
+    this->mainApp.setStyleSheet(StyleSheet);
+}
 
 ProtocolSocket ViewManager::run() {
     ConnectView connectView(this->sck);
