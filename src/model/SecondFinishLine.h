@@ -14,7 +14,7 @@ class SecondFinishLine : Sensor {
     bool& cross_second;
 
     public:
-        SecondFinishLine(Coordinate begin, Coordinate end, bool& cross_first ,bool& cross_second, b2World& track);
+        SecondFinishLine(Coordinate begin, Coordinate end, Orientation orientation, bool& cross_first ,bool& cross_second, b2World& track);
 
         void apply_effect(Body* body) override;
 

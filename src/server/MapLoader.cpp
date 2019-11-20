@@ -92,7 +92,23 @@ void set_orientation(std::unique_ptr<Terrain>& track, int orientation) {
     }
 }
 
+Orientation get_orientation(int32_t orientation) {
+    switch (orientation) {
+        case ORIENTATION_UP:
+            return UP;
+        case ORIENTATION_DOWN:
+            return DOWN;
+        case ORIENTATION_RIGHT:
+            return RIGHT;
+        case ORIENTATION_LEFT:
+            return LEFT;
+        default:
+            return NOT_ORIENTED;
+    }
+}
+
 MapLoader::MapLoader(std::string map_path, std::string map_name) {
+    this->finish_line_orientation = NOT_ORIENTED;
     this->map_paths = std::move(map_path);
     this->map_name = std::move(map_name);
 }
@@ -144,10 +160,17 @@ void MapLoader::add_tile_behaviour(int32_t type_ID, int32_t i, int32_t j, int32_
 void MapLoader::load_racing_track(RacingTrack& racing_track) {
     for (auto& track_part : track)
         racing_track.add_track(std::move(track_part));
+
     if (finish_line.size() == 2)
-        racing_track.add_finish_line(finish_line[0], finish_line[1]);
+        racing_track.add_finish_line(finish_line[0], finish_line[1], this->finish_line_orientation);
+    else
+        std::cerr << "FINISH LINE NOT FOUND";
+
     if (podium.size() == 3)
         racing_track.add_podium(podium.at(1), podium.at(2), podium.at(3));
+    else
+        std::cerr << "PODIUM NOT FOUND";
+
     for (auto& coordinate : this->unranked_places)
         racing_track.add_unranked_place(coordinate);
 }
@@ -169,18 +192,21 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
     for (int i = 0; i < map_height; i++) {
         for (int j = 0; j < map_width; j++) {
 
-            auto ID_pos = 0;
+            int32_t ID_pos = 0;
+
             try {
+
+                /*--------------------------------------LOAD_MAP/TILES_INFO------------------------------------------------------------*/
                 ID_pos = unsigned(json_map_data["layers"][TILES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
                 int32_t type_ID = json_tiles_data["tiles"][ID_pos]["properties"][ID_PROPERTY_POS]["value"];
                 int32_t tile_rotation = json_tiles_data["tiles"][ID_pos]["properties"][ROTATION_PROPERTY_POS]["value"];
                 bool is_static = json_tiles_data["tiles"][ID_pos]["properties"][STATIC_PROPERTY_POS]["value"];
                 auto info_pos = unsigned(json_map_data["layers"][PROPERTIES_LAYER]["data"][j * (int) json_map_data["height"] + i]) - 1;
-
                 /*If dynamic objects are deactivated, dyn_ID is always 0 and the objects are never loaded*/
                 int32_t dyn_ID_pos = 0;
                 if (Configs::get_configs().use_dynamic_objects)
                     dyn_ID_pos = unsigned(json_map_data["layers"][DYNAMIC_LAYER]["data"][j * (int) json_map_data["height"] + i]);
+                /*---------------------------------------------------------------------------------------------------------------------*/
 
                 send_tile(type_ID, i, j, tile_rotation, updater);
 
@@ -195,8 +221,13 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
                 else {
                     if (is_track(type_ID) && type_ID == BEGIN_TRACK_TILE)
                         begin_tile = std::move(TerrainFactory::create_terrain(type_ID, i, j));
-                    else if (is_track(type_ID) && ((type_ID == TYPE_FINISH_LINE_BORDER) || (type_ID == TYPE_FINISH_LINE_CENTER)))
+                    else if (is_track(type_ID) && (type_ID == TYPE_FINISH_LINE_CENTER))
                         racing_track.add_track((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
+                    else if (is_track(type_ID) && (type_ID == TYPE_FINISH_LINE_BORDER)) {
+                        racing_track.add_track((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
+                        int32_t orientation = json_tiles_data["tiles"][info_pos]["properties"][ORIENTATION_PROPERTY_POS]["value"];
+                        this->finish_line_orientation = get_orientation(orientation);
+                    }
                     else if (is_track(type_ID)) {
                         this->track.push_back((std::move(TerrainFactory::create_terrain(type_ID, i, j))));
                         int32_t orientation = json_tiles_data["tiles"][info_pos]["properties"][ORIENTATION_PROPERTY_POS]["value"];
@@ -210,13 +241,15 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
                         racing_track.add_terrain(std::move(terrain));
                     }
                 }
+
                 this->add_tile_behaviour(type_ID, i, j, tile_rotation, racing_track);
 
             } catch (const nlohmann::detail::type_error& e) {
-                    std::cerr << "TILE ERROR: " << ID_pos <<  " X: " << i << " Y: " << j << "\n";
+                    std::cerr << "TILE ERROR ID: " << ID_pos <<  " X: " << i << " Y: " << j << "\n";
             }
         }
     }
+
     this->track.push_back(std::move(begin_tile));
     this->set_begin_distance_to_tiles();
     this->load_racing_track(racing_track);

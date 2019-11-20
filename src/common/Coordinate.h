@@ -24,11 +24,6 @@ class Coordinate {
         float get_y();
 
         float get_angle();
-
-        float x_distance_with(Coordinate other);
-
-        float y_distance_with(Coordinate other);
-
 };
 
 

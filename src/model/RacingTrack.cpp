@@ -51,8 +51,8 @@ void RacingTrack::add_static_track_object(StaticTrackObject&& object) {
     this->static_track_objects.back().add_to_world(this->racing_track);
 }
 
-void RacingTrack::add_finish_line(Coordinate begin, Coordinate end) {
-    this->finish_line = new FinishLine(begin, end, this->racing_track);
+void RacingTrack::add_finish_line(Coordinate begin, Coordinate end, Orientation orientation) {
+    this->finish_line = new FinishLine(begin, end, this->racing_track, orientation);
 }
 
 void RacingTrack::add_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place) {

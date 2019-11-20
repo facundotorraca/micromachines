@@ -16,7 +16,7 @@ class FinishLine {
     bool cross_second;
 
     public:
-        FinishLine(Coordinate begin, Coordinate end, b2World& track);
+        FinishLine(Coordinate begin, Coordinate end, b2World& track, Orientation orientation);
 
 };
 

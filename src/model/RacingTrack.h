@@ -70,8 +70,6 @@ class RacingTrack {
 
         void send_dynamic_object_update(ClientUpdater& updater);
 
-        void add_finish_line(Coordinate begin, Coordinate end);
-
         void add_static_track_object(StaticTrackObject&& object);
 
         void add_dynamic_track_object(DynamicTrackObject&& object);
@@ -81,6 +79,8 @@ class RacingTrack {
         void set_spawn_points_to_cars(std::unordered_map<int32_t, Car>& cars);
 
         void add_podium(Coordinate f_place, Coordinate s_place, Coordinate t_place);
+
+        void add_finish_line(Coordinate begin, Coordinate end, Orientation orientation);
 
         ~RacingTrack();
 };

@@ -103,10 +103,10 @@ Camera::~Camera() {
 
 void Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t sizex,
                          int32_t sizey, int32_t rot) {
-    Texture tex = t_factory.getTexture(id);
     int32_t draw_x = (0.5f*width) - draw_scale*(posx-px);
     int32_t draw_y = (0.5f*height) - draw_scale*(posy-py);
     if (isInCamera(draw_x, draw_y, sizex*draw_scale, sizey*draw_scale)){
+        Texture tex = t_factory.getTexture(id);
         copyRender(tex.tex, draw_x, draw_y, rot, sizex*draw_scale, sizey*draw_scale);
     }
 }
