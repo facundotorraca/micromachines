@@ -1,11 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "target":"..\/build\/maps"
-        }
-    },
  "height":200,
  "infinite":false,
  "layers":[
@@ -28,7 +21,7 @@
          "name":"Capa de patrones 2",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":200,
          "x":0,
          "y":0
