@@ -59,12 +59,3 @@ bool Coordinate::is_adjacent_to(Coordinate other) {
         return (other.x + 1 == this->x) || (other.x - 1 == this->x);
 }
 
-float Coordinate::x_distance_with(Coordinate other) {
-    return std::abs(this->x - other.x);
-}
-
-
-float Coordinate::y_distance_with(Coordinate other) {
-    return std::abs(this->y - other.y);
-}
-

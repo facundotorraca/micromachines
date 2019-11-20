@@ -1,6 +1,6 @@
 {
 "max_players": 8, 
-"server_port": "7777",
+"server_port": "7778",
 
 "map_path":  "maps/",
 "map_name": "track_01.json",

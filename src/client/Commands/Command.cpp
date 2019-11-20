@@ -79,10 +79,10 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, ProtocolSocket& soc
         case MSG_REMOVE_MODIFIER:
             return std::unique_ptr<Command>(new RemoveModifier(scenario, command[1], command[2]));
         case MSG_PLAYER_FINISHED: {
-                std::string player_name(MAX_LEN_NAME, '\0');
-                socket.receive(player_name);
-                return std::unique_ptr<Command>(new PlayerFinished(scenario, player_name));
-            }
+            std::string player_name(MAX_LEN_NAME, '\0');
+            socket.receive(player_name);
+            return std::unique_ptr<Command>(new PlayerFinished(scenario, player_name));
+        }
         case MSG_EFFECT_OIL:
         case MSG_EFFECT_BOOST:
         case MSG_EFFECT_MUD:

@@ -1,23 +1,27 @@
 QMainWindow {
-    background-color: purple
+    background-color: black
+}
+
+*#ConnectView {
+    background-color: red
 }
 
 #mainPage {
     border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
-*#createPage {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+#createPage {
+    background-color: #9c0f0f
 }
 
-*#joinPage {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+#joinPage {
+    background-color: #9c0f0f
 }
 
 *#waitPage {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+    background-color: #9c0f0f
 }
 
 *#startPaige {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+    background-color: #9c0f0f
 }
