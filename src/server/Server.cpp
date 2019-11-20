@@ -12,6 +12,7 @@ Server::Server(const std::string &port):
     this->acceptor = new ThreadAcceptor(port, this->incoming_players, this->matches);
     this->player_locator = new ThreadPlayerLocator(this->incoming_players,this->matches,this->not_ready_matches);
     this->match_starter = new ThreadMatchStarter(this->matches,this->running_matches,this->not_ready_matches);
+    std::cout << "Server listening in port: " << port << std::endl;
 }
 
 void Server::wait_quit() {
