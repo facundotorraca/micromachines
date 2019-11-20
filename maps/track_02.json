@@ -35,7 +35,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/build\/maps\/tiles.json"
+         "source":"tiles.json"
         }, 
         {
          "firstgid":429,
