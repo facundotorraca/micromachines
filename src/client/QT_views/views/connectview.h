@@ -19,7 +19,7 @@ class ConnectView : public QDialog {
     void on_connectionBtnBox_rejected();
 
  private:
-    Ui::ConectView ui;
+    Ui::ConnectView ui;
     Socket &socket;
 };
 
