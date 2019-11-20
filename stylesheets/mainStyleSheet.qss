@@ -2,6 +2,10 @@ QMainWindow {
     background-color: purple
 }
 
+*#ConnectView {
+    background-color: red
+}
+
 #mainPage {
     border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
