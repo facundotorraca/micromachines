@@ -5,11 +5,8 @@
 #include "Minimap.h"
 
 Minimap::Minimap() : my_car_id(-1), size_x(1), size_y(1) {
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    surface = SDL_CreateRGBSurface(0, 300, 300, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-#else
-    surface = SDL_CreateRGBSurface(0, 300, 300, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-#endif
+    surface = SDL_CreateRGBSurfaceWithFormat(0, 300, 300, 32,
+            SDL_PIXELFORMAT_RGBA32);
     white_s = SDL_CreateRGBSurface(0, 7, 7, 32, 0, 0, 0, 0);
     SDL_FillRect(white_s, nullptr,
                  SDL_MapRGB(white_s->format, 255, 255, 255));
