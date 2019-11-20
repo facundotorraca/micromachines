@@ -40,7 +40,7 @@ public:
     void setOwnID(int32_t id);
     void updateCar(CarInfo& info, Camera& camera);
     void setCarHealth(int32_t id, int32_t health);
-    void setBackground(int32_t type, int32_t width, int32_t height);
+    void setBackground(int32_t type, int32_t width, int32_t height, Camera& camera);
     void setLapNumber(int32_t lap);
     void setTotalLaps(int32_t laps);
     void setLoadingScreen(bool show);

@@ -56,6 +56,7 @@
 
 struct Texture{
     SDL_Texture* tex;
+    SDL_Surface* surf;
     int32_t width;
     int32_t height;
 };
@@ -67,12 +68,11 @@ class TextureFactory {
         if (surface){
             SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, surface);
             int w = surface->w, h = surface->h;
-            SDL_FreeSurface(surface);
-            return {tex, w, h};
+            return {tex, surface, w, h};
         } else {
             std::cerr << "Error loading texture: " << path << std::endl;
         }
-        return {nullptr, 0, 0};
+        return {nullptr, nullptr, 0, 0};
     }
 public:
     explicit TextureFactory(SDL_Renderer* renderer){
@@ -261,8 +261,10 @@ public:
     }
 
     ~TextureFactory(){
-        for (auto& tex : textures)
+        for (auto& tex : textures){
             SDL_DestroyTexture(tex.second.tex);
+            SDL_FreeSurface(tex.second.surf);
+        }
     }
 };
 

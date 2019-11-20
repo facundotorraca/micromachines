@@ -111,6 +111,15 @@ void Camera::drawWorldTexture(int32_t id, int32_t px, int32_t py, int32_t sizex,
     }
 }
 
+void Camera::drawExternalWorldTexture(SDL_Texture* texture, int32_t px, int32_t py,
+                              int32_t sizex, int32_t sizey, int32_t rot, bool force) {
+    int32_t draw_x = (0.5f*width) - draw_scale*(posx-px);
+    int32_t draw_y = (0.5f*height) - draw_scale*(posy-py);
+    if (isInCamera(draw_x, draw_y, sizex*draw_scale, sizey*draw_scale) || force){
+        copyRender(texture, draw_x, draw_y, rot, sizex*draw_scale, sizey*draw_scale);
+    }
+}
+
 void Camera::drawScreenTexture(int32_t id, float posx, float posy, float sizex, float sizey) {
     Texture tex = t_factory.getTexture(id);
     int x = posx*width;
@@ -178,4 +187,12 @@ void Camera::sendToRecorder() {
 
 void Camera::drawRecordingTexture() {
     drawFullScreenTexture(RECORDING_TEX);
+}
+
+Texture Camera::getTexture(int32_t id) {
+    return t_factory.getTexture(id);
+}
+
+SDL_Texture *Camera::createTexture(SDL_Surface *texture) {
+    return SDL_CreateTextureFromSurface(renderer, texture);
 }

@@ -63,7 +63,7 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, ProtocolSocket& soc
         case MSG_SET_HEALTH:
             return std::unique_ptr<Command>(new SetCarHealth(scenario, command[1], command[2]));
         case MSG_SET_BACKGROUND:
-            return std::unique_ptr<Command>(new SetBackground(scenario, command[1], command[2], command[3]));
+            return std::unique_ptr<Command>(new SetBackground(scenario, camera, command[1], command[2], command[3]));
         case MSG_SET_LAP:
             return std::unique_ptr<Command>(new SetLap(scenario, command[1]));
         case MSG_TOTAL_LAPS:

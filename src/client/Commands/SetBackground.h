@@ -11,15 +11,17 @@ class SetBackground : public Command{
     int32_t type;
     int32_t width;
     int32_t height;
+    Camera& camera;
 public:
-    explicit SetBackground(Scenario& scenario, int32_t type, int32_t width, int32_t height):
+    explicit SetBackground(Scenario& scenario, Camera& camera, int32_t type, int32_t width, int32_t height):
             Command(scenario),
             type(type),
             width(width),
-            height(height){}
+            height(height),
+            camera(camera){}
 
     std::unique_ptr<Menu> apply() override {
-        scenario.setBackground(type, width, height);
+        scenario.setBackground(type, width, height, camera);
         return std::unique_ptr<Menu>();
     }
 };

@@ -50,12 +50,15 @@ public:
     void setDefaultTarget();
     void sendToRecorder();
     void drawWorldTexture(int32_t id, int32_t posx, int32_t posy, int32_t sizex, int32_t sizey, int32_t rot);
+    void drawExternalWorldTexture(SDL_Texture* texture, int32_t posx, int32_t posy, int32_t sizex, int32_t sizey, int32_t rot, bool force);
     void drawScreenTexture(int32_t id, float posx, float posy, float scale);
     void drawScreenTexture(int32_t id, float posx, float posy, float sizex, float sizey);
     void drawSurface(SDL_Surface* surface, float posx, float posy, float width, float height);
     void drawText(const std::string& text, float posx, float posy, float size, size_t padding);
     void drawFullScreenTexture(int32_t id);
     void drawRecordingTexture();
+    Texture getTexture(int32_t id);
+    SDL_Texture* createTexture(SDL_Surface* surf);
     ~Camera();
 };
 

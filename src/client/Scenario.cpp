@@ -74,8 +74,8 @@ void Scenario::setCarHealth(int32_t id, int32_t health) {
     cars.at(id).setHealth(health, sound);
 }
 
-void Scenario::setBackground(int32_t type, int32_t width, int32_t height) {
-    map.setBackground(type, width, height);
+void Scenario::setBackground(int32_t type, int32_t width, int32_t height, Camera& camera) {
+    map.setBackground(type, width, height, camera);
     minimap.setSize(width, height);
 }
 

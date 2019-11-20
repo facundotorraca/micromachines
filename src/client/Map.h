@@ -19,16 +19,19 @@ struct Background{
     int32_t type;
     int32_t width;
     int32_t height;
+    int32_t n_mega_tiles;
 };
 
 class Map {
+    SDL_Texture* back_tex;
     std::list<Tile> tiles;
     Background back;
 public:
     Map();
     void draw(Camera& camera);
     void addTile(TileInfo& info);
-    void setBackground(int32_t type, int32_t width, int32_t height);
+    void setBackground(int32_t type, int32_t width, int32_t height, Camera& camera);
+    ~Map();
 };
 
 
