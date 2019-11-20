@@ -14,7 +14,7 @@ Configs::Configs() {
 
     map_name = this->conf_json["map_name"]; //Max 8!
     map_path = this->conf_json["map_path"];
-    server_port = this->conf_json["server_port"];
+    server_port = std::getenv("PORT")? std::getenv("PORT"): this->conf_json["server_port"];
     max_players = this->conf_json["max_players"];
     plugins_path = this->conf_json["plugins_path"];
     max_len_name = this->conf_json["max_len_name"];
