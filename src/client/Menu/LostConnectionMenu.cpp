@@ -13,12 +13,6 @@ void LostConnectionMenu::draw(Camera &camera) {
 }
 
 std::unique_ptr<Menu>
-LostConnectionMenu::receiveMessage(ProtocolSocket &socket, Scenario &scenario,
-                                   Camera &camera) {
-    return std::unique_ptr<Menu>(nullptr);
-}
-
-std::unique_ptr<Menu>
 LostConnectionMenu::handleKey(SDL_Keycode key, SDL_EventType type,
                               ProtectedQueue<std::unique_ptr<ServerCommand>> &queue,
                               bool &response) {
