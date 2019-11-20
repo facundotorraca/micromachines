@@ -35,6 +35,7 @@ public:
     void draw();
     void showConnectionLostMenu();
     void toggleRecording();
+    void toggleFullscreen();
 };
 
 
