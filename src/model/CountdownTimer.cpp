@@ -14,7 +14,7 @@ CountdownTimer::CountdownTimer(int32_t time, Race& race, ClientUpdater& client_u
 }
 
 void CountdownTimer::run() {
-    std::this_thread::sleep_for(std::chrono::milliseconds(int(ONE_SECOND * 1.5)));
+    std::this_thread::sleep_for(std::chrono::milliseconds(int(ONE_SECOND * 5)));
     int32_t remaining_time = this->max_time;
     this->send_remaining_time(remaining_time);
     while (remaining_time > 0) {
