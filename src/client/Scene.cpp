@@ -78,3 +78,8 @@ std::unique_ptr<Menu> Scene::applyCommand(Command &command) {
     std::lock_guard<std::mutex> scenario_lock(scenario_mtx);
     return command.apply();
 }
+
+void Scene::toggleFullscreen(){
+    std::lock_guard<std::mutex> lock(camera_mtx);
+    camera.toggleFullscreen();
+}

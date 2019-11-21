@@ -196,3 +196,14 @@ Texture Camera::getTexture(int32_t id) {
 SDL_Texture *Camera::createTexture(SDL_Surface *texture) {
     return SDL_CreateTextureFromSurface(renderer, texture);
 }
+
+void Camera::toggleFullscreen(){
+    auto w_flags = SDL_GetWindowFlags(window);
+    if (w_flags & SDL_WINDOW_FULLSCREEN) { 
+        SDL_ShowCursor(SDL_ENABLE);
+        SDL_SetWindowFullscreen(window, 0);
+    } else {
+        SDL_ShowCursor(SDL_DISABLE);
+        SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    }
+}

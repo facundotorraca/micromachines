@@ -97,6 +97,7 @@ std::unique_ptr<Command> Command::create(Scenario& scenario, ProtocolSocket& soc
         case MSG_REMOVE_CAR:
             return std::unique_ptr<Command>(new RemoveCar(scenario, command[1]));
         default:
-            return std::unique_ptr<Command>(nullptr); //aca hacer un unknown commnad
+            return std::unique_ptr<Command>(nullptr); 
     }
+    return std::unique_ptr<Command>(nullptr); 
 }
