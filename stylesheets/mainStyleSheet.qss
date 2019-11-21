@@ -1,27 +1,33 @@
-QMainWindow {
-    background-color: black
+*{
+    background-color: #bb333333;
+    font: bold 11px;
+    min-width: 5em;
 }
 
-*#ConnectView {
-    background-color: red
+QLabel {
+    background-color: #bb333333
+}
+
+#ConnectView {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
 #mainPage {
     border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
-#createPage {
-    background-color: #9c0f0f
+*#createPage {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
-#joinPage {
-    background-color: #9c0f0f
+*#joinPage {
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#waitPage {
-    background-color: #9c0f0f
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#startPaige {
-    background-color: #9c0f0f
+    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
 }
