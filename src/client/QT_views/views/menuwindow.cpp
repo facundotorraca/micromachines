@@ -72,6 +72,8 @@ void MenuWindow::on_updateBtn_clicked() {
 }
 
 void MenuWindow::on_joinBtnBox_accepted() {
+    if (this->ui.matchList->selectedItems().length() == 0 || this->ui.userJoinInput->text().isEmpty())
+        return;
     std::string selected_match = this->ui.matchList->selectedItems()[0]->text().toStdString();
     std::string match_name = selected_match.substr(0, selected_match.find(" "));
     std::string user_name = this->ui.userJoinInput->text().toStdString();
@@ -91,6 +93,8 @@ void MenuWindow::on_joinBtnBox_rejected(){
 }
 
 void MenuWindow::on_createBtnBox_accepted() {
+    if (this->ui.matchCreateInput->text().isEmpty() || this->ui.userCreateInput->text().isEmpty())
+        return;
     std::string match_name_raw = this->ui.matchCreateInput->text().toStdString();
     std::string match_name = match_name_raw.substr(0, match_name_raw.find(" "));
     std::string user_name = this->ui.userCreateInput->text().toStdString();
