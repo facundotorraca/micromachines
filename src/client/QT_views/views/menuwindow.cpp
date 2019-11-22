@@ -132,6 +132,7 @@ void MenuWindow::on_startBtn_clicked() {
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
     ps.send((uint8_t)1);
+
     this->arranged = true;
     this->close();
 }
