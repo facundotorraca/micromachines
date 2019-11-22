@@ -8,6 +8,8 @@ ConnectView::ConnectView(Socket &sck, QWidget *parent) : QDialog(parent),
 }
 
 void ConnectView::on_connectionBtnBox_accepted() {
+    if(this->ui.ipInput->text().isEmpty() || this->ui.serviceInput->text().isEmpty())
+        return;
     auto ip = this->ui.ipInput->text().toStdString();
     auto service = this->ui.serviceInput->text().toStdString();
     try {

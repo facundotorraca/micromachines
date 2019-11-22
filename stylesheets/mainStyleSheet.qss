@@ -1,7 +1,12 @@
 *{
     background-color: #bb333333;
-    font: bold 11px;
+    font: bold 20px;
     min-width: 5em;
+    color: orange
+}
+
+#centralwidget {
+	background-color: orange
 }
 
 QLabel {
@@ -13,19 +18,19 @@ QLabel {
 }
 
 #mainPage {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#createPage {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#joinPage {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#waitPage {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#startPaige {

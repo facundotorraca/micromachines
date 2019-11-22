@@ -35,6 +35,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}
 set(CMAKE_CXX_FLAGS "-fPIC")
 
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Multimedia REQUIRED)
 
 include_directories(${Qt5Widgets_INCLUDE_DIRS})
 

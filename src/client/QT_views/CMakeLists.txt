@@ -39,4 +39,4 @@ add_library(viewManager
 
 target_link_libraries(connectView common Qt5::Widgets)
 target_link_libraries(menuWindow common Qt5::Widgets)
-target_link_libraries(viewManager common menuWindow connectView Qt5::Widgets)
+target_link_libraries(viewManager common menuWindow connectView Qt5::Widgets Qt5::Multimedia)
