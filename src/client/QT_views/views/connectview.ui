@@ -92,17 +92,17 @@
    <item row="2" column="1">
     <layout class="QVBoxLayout" name="IPVLayout">
      <property name="topMargin">
-      <number>5</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>5</number>
+      <number>0</number>
      </property>
      <item>
       <widget class="QLineEdit" name="ipInput">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>100</horstretch>
+         <verstretch>100</verstretch>
         </sizepolicy>
        </property>
        <property name="inputMask">
@@ -118,17 +118,17 @@
    <item row="4" column="1">
     <layout class="QVBoxLayout" name="ServicVLayout">
      <property name="topMargin">
-      <number>5</number>
+      <number>0</number>
      </property>
      <property name="bottomMargin">
-      <number>5</number>
+      <number>0</number>
      </property>
      <item>
       <widget class="QLineEdit" name="serviceInput">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Ignored">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>100</horstretch>
+         <verstretch>100</verstretch>
         </sizepolicy>
        </property>
        <property name="placeholderText">

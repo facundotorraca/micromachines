@@ -1,6 +1,6 @@
 *{
     background-color: #bb333333;
-    font: bold 11px;
+    font: bold 20px;
     min-width: 5em;
 }
 
