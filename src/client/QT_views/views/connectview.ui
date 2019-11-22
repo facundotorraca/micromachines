@@ -109,7 +109,7 @@
         <string/>
        </property>
        <property name="placeholderText">
-        <string>Ingrese el numero de IP</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -132,7 +132,7 @@
         </sizepolicy>
        </property>
        <property name="placeholderText">
-        <string>Ingrese el puerto del servicio</string>
+        <string/>
        </property>
       </widget>
      </item>

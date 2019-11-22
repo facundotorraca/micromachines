@@ -14,10 +14,10 @@ struct Modifier{
     int32_t y;
 };
 
-class Entities {
+class ModifiersContainer {
     std::unordered_map<int64_t, Modifier> modifiers;
 public:
-    Entities();
+    ModifiersContainer();
     void addModifier(int32_t type, int32_t x, int32_t y);
     void removeModifier(int32_t x, int32_t y);
     void draw(Camera& camera);
