@@ -40,8 +40,10 @@ void ThreadMatchOptions::run_match_options(ProtectedQueue<std::shared_ptr<Match>
             option = this->player.receive_option();
             /*MATCH APPLY OPTION*/
         }
-        if (option == CANCEL_MATCH)
+        if (option == CANCEL_MATCH) {
+            this->match->send_cancel_match_flag();
             matches.remove_match(this->match->get_match_name());
+        }
         else {
             /*Put the creator on the match*/
             this->match->add_player(std::move(player));

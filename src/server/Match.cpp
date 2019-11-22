@@ -13,6 +13,7 @@
 #define CLOSE_MATCH_FLAG "1"
 
 #define START_MATCH_FLAG 0
+#define CANCEL_MATCH_FLAG 1
 #define ERROR_MATCH_JOIN_FLAG 1
 #define SUCCESS_MATCH_JOIN_FLAG 0
 
@@ -252,5 +253,10 @@ void Match::select_new_creator() {
 
 std::string Match::get_match_name() {
     return this->match_name;
+}
+
+void Match::send_cancel_match_flag() {
+    for (auto& player : this->players)
+        player.second.send(CANCEL_MATCH_FLAG);
 }
 

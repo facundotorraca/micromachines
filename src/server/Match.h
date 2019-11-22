@@ -79,6 +79,8 @@ class Match : public Thread {
 
         std::string get_match_name();
 
+        void send_cancel_match_flag();
+
         void restart_match();
 
         bool is_closed();

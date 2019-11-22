@@ -64,7 +64,6 @@ int main(int argc, char *argv[]) {
         std::cout << "Answer: " << unsigned(flag_error_username) << "\n";
     }
 
-
     if (mode == "2") {
         int any_key;
         std::cout << "Press 1 to start or 2 to cancel" << "\n";
