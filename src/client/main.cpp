@@ -5,7 +5,7 @@
 #include <iostream>
 #include <common/Socket.h>
 #include <common/ProtocolSocket.h>
-#include <client/QT_views/view_manager.h>
+#include <client/QT_views/ViewManager.h>
 #include "GameMain.h"
 
 #define SUCCESS 0
