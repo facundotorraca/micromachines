@@ -11,7 +11,7 @@ ThreadMatchStarter::ThreadMatchStarter(MatchTable& matches, std::list<std::share
     matches(matches)
 {}
 
-void ThreadMatchStarter::close_ended_matches() {
+void ThreadMatchStarter::close_finished_matches() {
     for (auto running_match = this->running_matches.begin(); running_match != this->running_matches.end();) {
         if ((*running_match)->dead()) {
             (*running_match)->join();
@@ -32,7 +32,7 @@ void ThreadMatchStarter::run() {
             std::shared_ptr<Match> new_running_match = this->not_ready_matches.pop();
             new_running_match->start();
             this->running_matches.push_back(new_running_match);
-            this->close_ended_matches();
+            this->close_finished_matches();
         } catch (ProtectedQueueError& exception) {
             this->server_running = false;
         }
