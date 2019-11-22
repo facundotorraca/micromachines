@@ -1,6 +1,6 @@
 *{
     background-color: #bb333333;
-    font: bold 20px;
+    font: bold 20 px;
     min-width: 5em;
     color: orange
 }
@@ -14,26 +14,26 @@ QLabel {
 }
 
 #ConnectView {
-    border-image: url("backgrounds/connect_screen_bg.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("assets/backgrounds/connect_screen_bg.jpg") 0 0 0 0 stretch stretch;
     background-color: orange
 }
 
 #mainPage {
-    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("assets/backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#createPage {
-    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("assets/backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#joinPage {
-    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("assets/backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#waitPage {
-    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("assets/backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
 *#startPage {
-    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("assets/backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }

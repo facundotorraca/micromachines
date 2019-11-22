@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>795</width>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,6 +17,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="mainPage">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
@@ -49,6 +52,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="createBtn">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Crear Partida</string>
             </property>
@@ -56,6 +62,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="joinBtn">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Unirse a una Partida</string>
             </property>
@@ -65,6 +74,9 @@
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QPushButton" name="botBtn">
+              <property name="styleSheet">
+               <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+              </property>
               <property name="text">
                <string>Usar Bot</string>
               </property>
@@ -75,6 +87,9 @@
             </item>
             <item>
              <widget class="QPushButton" name="quitBtn">
+              <property name="styleSheet">
+               <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+              </property>
               <property name="text">
                <string>Salir</string>
               </property>
@@ -144,6 +159,9 @@
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_3">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Nombre del Usuario</string>
             </property>
@@ -157,6 +175,9 @@
           </item>
           <item row="4" column="1">
            <widget class="QDialogButtonBox" name="createBtnBox">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="standardButtons">
              <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
             </property>
@@ -204,6 +225,9 @@
               </disabled>
              </palette>
             </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Nombre de partida ya utilizado.</string>
             </property>
@@ -220,6 +244,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
            </widget>
           </item>
           <item row="3" column="1">
@@ -230,10 +257,16 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
            </widget>
           </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_4">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Nombre de la Partida</string>
             </property>
@@ -334,6 +367,9 @@
               </disabled>
              </palette>
             </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Nombre de usuario ya utilizado.</string>
             </property>
@@ -344,6 +380,9 @@
           </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_7">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Nombre del Usuario</string>
             </property>
@@ -357,13 +396,20 @@
           </item>
           <item row="5" column="1">
            <widget class="QDialogButtonBox" name="joinBtnBox">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="standardButtons">
              <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
             </property>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QListWidget" name="matchList"/>
+           <widget class="QListWidget" name="matchList">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
+           </widget>
           </item>
           <item row="6" column="1">
            <spacer name="verticalSpacer_11">
@@ -386,6 +432,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
            </widget>
           </item>
           <item row="0" column="1">
@@ -403,6 +452,9 @@
           </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_8">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Partidas Existentes:</string>
             </property>
@@ -416,6 +468,9 @@
           </item>
           <item row="5" column="0">
            <widget class="QPushButton" name="updateBtn">
+            <property name="styleSheet">
+             <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+            </property>
             <property name="text">
              <string>Actualizar Partidas</string>
             </property>
@@ -458,6 +513,9 @@
         </item>
         <item row="1" column="2">
          <widget class="QLabel" name="label">
+          <property name="styleSheet">
+           <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+          </property>
           <property name="text">
            <string>Presione el boton para iniciar la partida</string>
           </property>
@@ -510,6 +568,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+          </property>
           <property name="text">
            <string>EMPEZAR</string>
           </property>
@@ -547,6 +608,9 @@
         </item>
         <item>
          <widget class="QLabel" name="waitLabel">
+          <property name="styleSheet">
+           <string notr="true">font: 75 22pt &quot;Kenney Pixel&quot;;</string>
+          </property>
           <property name="text">
            <string>ESPERANDO QUE LA PARTIDA SEA INICIADA</string>
           </property>
@@ -576,7 +640,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>795</width>
      <height>22</height>
     </rect>
    </property>
