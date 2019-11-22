@@ -17,6 +17,7 @@
 #define ERROR_MATCH_JOIN_FLAG 1
 #define SUCCESS_MATCH_JOIN_FLAG 0
 
+#define TIMEOUT_TIME 2500 /*2.5 sec*/
 #define UPDATE_QUEUE_MAX_SIZE 1000
 
 Match::Match(std::string match_creator, std::string match_name):
@@ -85,6 +86,25 @@ bool Match::is_closed() {
     return this->closed;
 }
 
+void timeout_recv(Player& player, std::atomic<bool>& received) {
+    try {
+        player.receive_option();
+        received = true;
+    } catch (const SocketError& e) {}
+}
+
+void receive_connect_confirmation(Player& player, std::atomic<bool>& received) {
+    std::thread thread_recv(timeout_recv, std::ref(player), std::ref(received));
+    int32_t time = 0;
+    while (!received && time <= TIMEOUT_TIME) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(int(1)));
+        time++;
+    }
+    if (!received)
+        player.kill();
+    thread_recv.join();
+}
+
 void Match::initialize_players() {
 
     for (auto player = this->players.begin(); player != this->players.end();) {
@@ -92,28 +112,33 @@ void Match::initialize_players() {
 
         try {
             this->players.at(ID).send((uint8_t)START_MATCH_FLAG);
-            this->players.at(ID).receive_option();
 
-            CarSpecs specs = Configs::get_configs().specs;
-            this->race.add_car_with_specs(ID, specs);
+            std::atomic<bool> received(false);
+            receive_connect_confirmation((*player).second, received);
 
-            this->client_updater.create_update_queue(ID, UPDATE_QUEUE_MAX_SIZE);
-            this->thread_players.emplace(std::piecewise_construct, std::forward_as_tuple(ID),
-                                                                   std::forward_as_tuple(this->client_updater,
-                                                                                          updates_race, (*player).second));
+            if (!received) {
+                player = this->players.erase(player);
+                if ((*player).second.is_called(this->match_creator))
+                    this->select_new_creator();
+            }
+            else {
+                CarSpecs specs = Configs::get_configs().specs;
+                this->race.add_car_with_specs(ID, specs);
 
-            this->thread_players.at(ID).start();
-            this->race.send_info_to_player(ID, this->client_updater);
-            player++;
+                this->client_updater.create_update_queue(ID, UPDATE_QUEUE_MAX_SIZE);
+                this->thread_players.emplace(std::piecewise_construct, std::forward_as_tuple(ID),
+                                             std::forward_as_tuple(this->client_updater,
+                                                                   updates_race, (*player).second));
 
+                this->thread_players.at(ID).start();
+                this->race.send_info_to_player(ID, this->client_updater);
+                player++;
+            }
         } catch (const SocketError& exception) {
             std::cerr << "Player disconnected\n";
             player = this->players.erase(player);
         }
-
-
     }
-
     this->race.prepare(this->client_updater);
 }
 
@@ -262,4 +287,5 @@ void Match::send_cancel_match_flag() {
     for (auto& player : this->players)
         player.second.send(CANCEL_MATCH_FLAG);
 }
+
 
