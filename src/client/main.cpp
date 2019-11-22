@@ -16,9 +16,11 @@ int main(int argc, char *argv[])
     ProtocolSocket ps(view_manager.run());
     if (!ps.is_connected()) {
         std::cout << "Flag MATCH =! 0 ERROR\n";
+        ps.close();
         return SUCCESS; // Deberia ser success?
     }
     if (!view_manager.is_game_arranged()) {
+        ps.close();
         return SUCCESS;
     }
     /* Aca empieza SDL
