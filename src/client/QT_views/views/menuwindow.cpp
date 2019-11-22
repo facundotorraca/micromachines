@@ -135,9 +135,12 @@ void MenuWindow::wait_start() {
     ps.receive(flag_join_match);
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
-    if (flag_start_match == START_MATCH)
+    if (flag_start_match == START_MATCH) {
         this->arranged = true;
-    this->close();
+        this->close();
+        return;
+    }
+    this->ui.waitLabel->setText("EL CREADOR DE LA PARTIDA CERRO EL JUEGO");
 }
 
 void MenuWindow::update_matches() {
