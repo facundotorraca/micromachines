@@ -44,11 +44,10 @@ bool MenuWindow::get_bot_check() {
 }
 
 void MenuWindow::keyPressEvent(QKeyEvent *event) {
-    std::cout << event->key() << std::endl;
     if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
         if (this->ui.stackedWidget->currentIndex() == CREATE_PAGE)
             this->ui.createBtnBox->accepted();
-        if (this->ui.stackedWidget->currentIndex() == JOIN_PAGE)
+        if (this->ui.stackedWidget->currentIndex() == JOIN_PAGE &&  this->ui.joinBtnBox->button(QDialogButtonBox::Ok)->isEnabled())
             this->ui.joinBtnBox->accepted();
     }
 }
