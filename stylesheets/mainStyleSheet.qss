@@ -6,7 +6,7 @@
 }
 
 #centralwidget {
-	background-color: orange
+    background-color: orange
 }
 
 QLabel {
@@ -14,7 +14,8 @@ QLabel {
 }
 
 #ConnectView {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+    border-image: url("backgrounds/connect_screen_bg.jpg") 0 0 0 0 stretch stretch;
+    background-color: orange
 }
 
 #mainPage {
