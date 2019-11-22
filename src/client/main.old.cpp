@@ -66,14 +66,14 @@ int main(int argc, char *argv[]) {
 
     if (mode == "2") {
         int any_key;
-        std::cout << "Press 1 to start or 2 to cancel" << "\n";
+        std::cout << "Press 0 to start or 1 to cancel" << "\n";
         std::cin >> any_key;
-        if (any_key == 1)  {
-            uint8_t start_game = 1;
+        if (any_key == 0)  {
+            uint8_t start_game = 0;
             ps.send(start_game);
             std::cout << "ENTRE\n";
         } else {
-            uint8_t cancel_game = 2;
+            uint8_t cancel_game = 1;
             ps.send(cancel_game);
             return SUCCESS;
         }
@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
      * se debería conectar en la ventana de qt
      */
 
-    uint8_t flag_start_match = 1;
+    uint8_t flag_start_match = 2;
     ps.receive(flag_start_match);
 
     if (flag_start_match == 0) {

@@ -1,4 +1,3 @@
-#include <iostream>
 #include <utility>
 #include "server/Player.h"
 #include "ThreadMatchOptions.h"
@@ -6,8 +5,8 @@
 #include "common/ProtectedQueue.h"
 #include "MatchTable.h"
 
-#define START_MATCH 1
-#define CANCEL_MATCH 2
+#define START_MATCH 0
+#define CANCEL_MATCH 1
 
 ThreadMatchOptions::ThreadMatchOptions(Player&& player, std::shared_ptr<Match>&& match):
     player(std::move(player)),
@@ -34,7 +33,7 @@ void ThreadMatchOptions::stop() {
 
 void ThreadMatchOptions::run_match_options(ProtectedQueue<std::shared_ptr<Match>>* not_ready_matches, MatchTable& matches) {
     try {
-        uint8_t option = 0;
+        uint8_t option = 2;
 
         while (option != START_MATCH && option != CANCEL_MATCH) {
             option = this->player.receive_option();
