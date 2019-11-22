@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     /*Todo esto es lo que hizo facu
     * Habría que reemplazarlo por Qt*/
 
-    std::string port("7777");
+    std::string port("7778");
     std::string host("127.0.0.1");
 
     Socket s;
@@ -67,10 +67,17 @@ int main(int argc, char *argv[]) {
 
     if (mode == "2") {
         int any_key;
-        std::cout << "Press any key to START" << "\n";
+        std::cout << "Press 1 to start or 2 to cancel" << "\n";
         std::cin >> any_key;
-        uint8_t start_game = 1;
-        ps.send(start_game);
+        if (any_key == 1)  {
+            uint8_t start_game = 1;
+            ps.send(start_game);
+            std::cout << "ENTRE\n";
+        } else {
+            uint8_t cancel_game = 2;
+            ps.send(cancel_game);
+            return SUCCESS;
+        }
     } else {
         std::cout << "Waiting for the game to START \n";
         uint8_t car = 1;

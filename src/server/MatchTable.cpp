@@ -52,6 +52,14 @@ bool MatchTable::username_available(std::string &username, std::string &match_na
     }
 }
 
+void MatchTable::remove_match(std::string match_name) {
+    std::lock_guard<std::mutex> lock(this->mtx);
+    try {
+        this->map.at(match_name);
+        this->map.erase(match_name);
+    } catch (const std::out_of_range& e) {}
+}
+
 
 
 

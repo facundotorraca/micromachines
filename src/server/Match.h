@@ -77,6 +77,8 @@ class Match : public Thread {
 
         void add_player(Player&& player);
 
+        std::string get_match_name();
+
         void restart_match();
 
         bool is_closed();

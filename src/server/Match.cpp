@@ -250,3 +250,7 @@ void Match::select_new_creator() {
         this->match_creator = (*this->players.begin()).second.get_username();
 }
 
+std::string Match::get_match_name() {
+    return this->match_name;
+}
+

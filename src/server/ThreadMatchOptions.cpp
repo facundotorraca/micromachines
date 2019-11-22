@@ -4,8 +4,10 @@
 #include "ThreadMatchOptions.h"
 #include <common/SocketError.h>
 #include "common/ProtectedQueue.h"
+#include "MatchTable.h"
 
 #define START_MATCH 1
+#define CANCEL_MATCH 2
 
 ThreadMatchOptions::ThreadMatchOptions(Player&& player, std::shared_ptr<Match>&& match):
     player(std::move(player)),
@@ -13,8 +15,8 @@ ThreadMatchOptions::ThreadMatchOptions(Player&& player, std::shared_ptr<Match>&&
     dead(false)
 {}
 
-void ThreadMatchOptions::start_match_options(ProtectedQueue<std::shared_ptr<Match>>* not_ready_matches) {
-    this->thread = std::thread(&ThreadMatchOptions::run_match_options, this, not_ready_matches);
+void ThreadMatchOptions::start_match_options(ProtectedQueue<std::shared_ptr<Match>>* not_ready_matches,  MatchTable& matches) {
+    this->thread = std::thread(&ThreadMatchOptions::run_match_options, this, not_ready_matches, std::ref(matches));
 }
 
 void ThreadMatchOptions::start_player_options() {
@@ -30,20 +32,25 @@ void ThreadMatchOptions::stop() {
     this->dead = true;
 }
 
-void ThreadMatchOptions::run_match_options(ProtectedQueue<std::shared_ptr<Match>>* not_ready_matches) {
+void ThreadMatchOptions::run_match_options(ProtectedQueue<std::shared_ptr<Match>>* not_ready_matches, MatchTable& matches) {
     try {
         uint8_t option = 0;
 
-        while (option != START_MATCH) {
+        while (option != START_MATCH && option != CANCEL_MATCH) {
             option = this->player.receive_option();
             /*MATCH APPLY OPTION*/
         }
-        /*Put the creator on the match*/
-        this->match->add_player(std::move(player));
-        not_ready_matches->push(this->match);
+        if (option == CANCEL_MATCH)
+            matches.remove_match(this->match->get_match_name());
+        else {
+            /*Put the creator on the match*/
+            this->match->add_player(std::move(player));
+            not_ready_matches->push(this->match);
+        }
         this->dead = true;
     } catch (const SocketError& exception) {
         this->dead = true;
+        matches.remove_match(this->match->get_match_name());
     }
 }
 

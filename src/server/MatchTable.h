@@ -26,6 +26,8 @@ class MatchTable {
 
         void send_matches(ProtocolSocket &p_socket);
 
+        void remove_match(std::string match_name);
+
         void remove_end_matches();
 };
 

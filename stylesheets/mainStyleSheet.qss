@@ -32,6 +32,6 @@ QLabel {
     border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }
 
-*#startPaige {
-    border-image: url("backgrounds/test.jpg") 0 0 0 0 stretch stretch;
+*#startPage {
+    border-image: url("backgrounds/test_2.jpg") 0 0 0 0 stretch stretch;
 }

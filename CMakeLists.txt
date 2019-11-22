@@ -69,6 +69,3 @@ target_link_libraries(micromachines-client client viewManager)
 
 add_executable(client-old src/client/main.old.cpp)
 target_link_libraries(client-old client)
-
-add_executable(main-bot src/client/main.lua.cpp)
-target_link_libraries(main-bot client common)

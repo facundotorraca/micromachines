@@ -54,7 +54,7 @@ void ThreadPlayerLocator::run() {
 
                 auto* setter = new ThreadMatchOptions(std::move(new_player), std::move(new_match));
                 this->options_setters.push_back(setter);
-                setter->start_match_options(&this->not_ready_matches);
+                setter->start_match_options(&this->not_ready_matches, this->matches);
             }
 
             this->remove_dead_setters();
