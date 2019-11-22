@@ -50,8 +50,9 @@ void ThreadMatchOptions::run_match_options(ProtectedQueue<std::shared_ptr<Match>
         }
         this->dead = true;
     } catch (const SocketError& exception) {
-        this->dead = true;
         matches.remove_match(this->match->get_match_name());
+        this->match->send_cancel_match_flag();
+        this->dead = true;
     }
 }
 
@@ -60,8 +61,9 @@ void ThreadMatchOptions::run_player_options() {
         uint8_t option = 0;
         option = this->player.receive_option();
 
-        /* for futures options*/
         this->match->add_player(std::move(player));
+
+        /* for futures options*/
         this->dead = true;
     } catch (const SocketError& exception) {
         this->dead = true;

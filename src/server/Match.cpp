@@ -87,29 +87,33 @@ bool Match::is_closed() {
 
 void Match::initialize_players() {
 
-    for (auto& player : players) {
-        int32_t ID = player.first;
-
-        CarSpecs specs = Configs::get_configs().specs;
-        this->race.add_car_with_specs(player.first, specs);
-
-        this->client_updater.create_update_queue(ID, UPDATE_QUEUE_MAX_SIZE);
-        this->thread_players.emplace(std::piecewise_construct, std::forward_as_tuple(ID),
-                                                               std::forward_as_tuple(this->client_updater,
-                                                                                      updates_race, player.second));
+    for (auto player = this->players.begin(); player != this->players.end();) {
+        int32_t ID = (*player).first;
 
         try {
             this->players.at(ID).send((uint8_t)START_MATCH_FLAG);
+            this->players.at(ID).receive_option();
+
+            CarSpecs specs = Configs::get_configs().specs;
+            this->race.add_car_with_specs(ID, specs);
+
+            this->client_updater.create_update_queue(ID, UPDATE_QUEUE_MAX_SIZE);
+            this->thread_players.emplace(std::piecewise_construct, std::forward_as_tuple(ID),
+                                                                   std::forward_as_tuple(this->client_updater,
+                                                                                          updates_race, (*player).second));
+
             this->thread_players.at(ID).start();
             this->race.send_info_to_player(ID, this->client_updater);
+            player++;
+
         } catch (const SocketError& exception) {
             std::cerr << "Player disconnected\n";
-            this->players.erase(player.first);
-            this->thread_players.at(ID).join();
-            this->thread_players.erase(ID);
-            this->race.player_left_game(ID, client_updater);
+            player = this->players.erase(player);
         }
+
+
     }
+
     this->race.prepare(this->client_updater);
 }
 
@@ -195,7 +199,6 @@ bool Match::all_players_finished() {
 void Match::run() {
     this->plugins_manager.load_plugins();
     this->initialize_players();
-
     this->clients_monitor.start();
     this->timer.start();
 

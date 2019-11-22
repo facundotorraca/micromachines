@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     if (flag_start_match == 0) {
         GameMain game(ps, false);
         game.start();
-    } else {
+    } else /*flag_start_match == 1*/ {
         std::cout << "Flag MATCH: " << unsigned(flag_start_match) << " ERROR\n";
     }
 

@@ -131,6 +131,7 @@ void MenuWindow::on_startBtn_clicked() {
     ps.receive(flag_join_match);
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
+    ps.send((uint8_t)1);
     this->arranged = true;
     this->close();
 }
@@ -141,15 +142,20 @@ void MenuWindow::wait_start() {
     std::cout << "ESPERANDO QUE EMPIECE LA PARTIDA" << std::endl;
     uint8_t car = 1;
     ps.send(car);
+
     uint8_t flag_join_match;
     ps.receive(flag_join_match);
+
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
+    ps.send((uint8_t)1);
+
     if (flag_start_match == START_MATCH) {
         this->arranged = true;
         this->close();
         return;
     }
+
     this->ui.waitLabel->setText("EL CREADOR DE LA PARTIDA CERRO EL JUEGO");
 }
 
