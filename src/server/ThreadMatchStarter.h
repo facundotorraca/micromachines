@@ -16,7 +16,7 @@ class ThreadMatchStarter : public Thread {
     private:
         void run() override;
 
-        void close_ended_matches();
+        void close_finished_matches();
 
     public:
         ThreadMatchStarter(MatchTable& matches, std::list<std::shared_ptr<Match>>& running_matches, ProtectedQueue<std::shared_ptr<Match>>& not_ready_matches);
