@@ -112,7 +112,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QDialog" name="createPage">
+      <widget class="QWidget" name="createPage">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <spacer name="horizontalSpacer_5">
@@ -261,7 +261,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QDialog" name="joinPage">
+      <widget class="QWidget" name="joinPage">
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
          <spacer name="horizontalSpacer_8">
