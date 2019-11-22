@@ -2,9 +2,9 @@
 // Created by javier on 6/11/19.
 //
 
-#include "Entities.h"
+#include "ModifiersContainer.h"
 
-Entities::Entities() {}
+ModifiersContainer::ModifiersContainer() {}
 
 /*-----------OLD HASH FUNCTION---------------*/
 /*             good but slow                 */
@@ -30,17 +30,17 @@ uint64_t hash_coord(int32_t x, int32_t y) {
     return (x * 0x1f1f1f1f) ^ y;
 }
 
-void Entities::addModifier(int32_t type, int32_t x, int32_t y) {
+void ModifiersContainer::addModifier(int32_t type, int32_t x, int32_t y) {
     uint64_t hash = hash_coord(x,y);
     auto modifier = modifiers.emplace(hash, Modifier{type, x, y});
 }
 
-void Entities::removeModifier(int32_t x, int32_t y) {
+void ModifiersContainer::removeModifier(int32_t x, int32_t y) {
     uint64_t hash = hash_coord(x,y);
     modifiers.erase(hash);
 }
 
-void Entities::draw(Camera &camera) {
+void ModifiersContainer::draw(Camera &camera) {
     for (auto& modifier : modifiers){
         auto size = TILE_TERRAIN_SIZE*METER_TO_PIXEL;
         switch (modifier.second.type){
