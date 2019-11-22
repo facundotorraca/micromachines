@@ -7,6 +7,9 @@
 #include "./views/connectview.cpp"
 #include <iostream>
 #include <QtCore/QFile>
+#include <QtMultimedia/QMediaPlayer>
+#include <QtCore/QFileInfo>
+
 
 ViewManager::ViewManager(int argc, char *argv[])
                         : mainApp(argc, argv),
@@ -17,6 +20,13 @@ ViewManager::ViewManager(int argc, char *argv[])
     styleFile.open(QFile::ReadOnly);
     QString StyleSheet = styleFile.readAll();
     this->mainApp.setStyleSheet(StyleSheet);
+    this->set_playlist();
+}
+
+void ViewManager::set_playlist() {
+    this->playlist.addMedia(QUrl::fromLocalFile(QFileInfo(MUSIC_PATH).absoluteFilePath()));
+    this->playlist.setPlaybackMode(QMediaPlaylist::Loop);
+    this->player.setPlaylist(&this->playlist);
 }
 
 ProtocolSocket ViewManager::run() {
@@ -27,9 +37,11 @@ ProtocolSocket ViewManager::run() {
     if (!ps.is_connected()) {
         return std::move(ps);
     }
+    this->player.play();
     MenuWindow menuWindow(ps);
     menuWindow.show();
     this->mainApp.exec();
+    this->player.stop();
     if (!menuWindow.is_game_arranged()){
         return std::move(ps);
     }
