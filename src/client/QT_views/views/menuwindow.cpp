@@ -42,6 +42,11 @@ bool MenuWindow::get_bot_check() {
     return this->ui.botBtn->isChecked();
 }
 
+void MenuWindow::closeEvent(QCloseEvent *event) {
+    if (this->ui.stackedWidget->currentIndex() == START_PAGE && !this->arranged)
+        this->ps.send((uint8_t) CANCEL_MATCH);
+}
+
 void MenuWindow::on_createBtn_clicked() {
     this->ps.send((uint8_t) CREATE_COMMAND);
     this->ui.stackedWidget->setCurrentIndex(CREATE_PAGE);
@@ -82,7 +87,6 @@ void MenuWindow::on_joinBtnBox_accepted() {
         this->ui.errorJoinName->setVisible(true);
         return;
     }
-    this->arranged = true;
     this->ui.stackedWidget->setCurrentIndex(WAIT_PAGE);
     QTimer::singleShot(50, this, SLOT(wait_start()));
 }
@@ -103,7 +107,6 @@ void MenuWindow::on_createBtnBox_accepted() {
         return;
     }
     this->set_user_name(user_name);
-    this->arranged = true;
     this->ui.stackedWidget->setCurrentIndex(START_PAGE);
 }
 
@@ -113,12 +116,12 @@ void MenuWindow::on_createBtnBox_rejected(){
 }
 
 void MenuWindow::on_startBtn_clicked() {
-    uint8_t start_game = 1;
-    ps.send(start_game);
+    ps.send((uint8_t) START_MATCH);
     uint8_t flag_join_match;
     ps.receive(flag_join_match);
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
+    this->arranged = true;
     this->close();
 }
 
@@ -132,6 +135,8 @@ void MenuWindow::wait_start() {
     ps.receive(flag_join_match);
     uint8_t flag_start_match = 1;
     ps.receive(flag_start_match);
+    if (flag_start_match == START_MATCH)
+        this->arranged = true;
     this->close();
 }
 

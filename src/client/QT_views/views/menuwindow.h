@@ -12,6 +12,9 @@
 #define START_PAGE 3
 #define WAIT_PAGE 4
 
+#define START_MATCH 0
+#define CANCEL_MATCH 1
+
 #define JOIN_COMMAND 1
 #define CREATE_COMMAND 2
 
@@ -40,6 +43,7 @@ private slots:
 
 
 private:
+    void closeEvent(QCloseEvent *event);
     bool set_user_name(std::string user_name);
     bool set_match_name(std::string match_name);
     void update_matches();
