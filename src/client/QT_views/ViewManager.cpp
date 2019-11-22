@@ -37,7 +37,7 @@ ProtocolSocket ViewManager::run() {
     if (!ps.is_connected()) {
         return std::move(ps);
     }
-    //this->player.play();
+    this->player.play();
     MenuWindow menuWindow(ps);
     menuWindow.show();
     this->mainApp.exec();
