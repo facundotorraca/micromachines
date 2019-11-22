@@ -13,6 +13,26 @@ QLabel {
     background-color: #bb333333
 }
 
+#startLabel {
+    background-color: #00000000
+}
+
+#waitLabel {
+    background-color: #00000000
+}
+
+#startBtn {
+    min-width: 200;
+    min-height: 100;
+}
+
+#MenuWindow {
+    min-width: 900;
+    max-width: 900;
+    min-height: 700;
+    max-height: 700
+}
+
 #ConnectView {
     border-image: url("assets/backgrounds/connect_screen_bg.jpg") 0 0 0 0 stretch stretch;
     background-color: orange
