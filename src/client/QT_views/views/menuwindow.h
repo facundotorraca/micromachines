@@ -43,6 +43,7 @@ private slots:
 
 
 private:
+    void keyPressEvent(QKeyEvent *event);
     void closeEvent(QCloseEvent *event);
     bool set_user_name(std::string user_name);
     bool set_match_name(std::string match_name);

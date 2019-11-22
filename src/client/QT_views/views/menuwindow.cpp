@@ -4,6 +4,7 @@
 #include <common/MsgTypes.h>
 #include <iostream>
 #include <QTimer>
+#include <QKeyEvent>
 
 std::string get_matches(ProtocolSocket &ps) {
     std::string matches(1024, '\0');
@@ -42,6 +43,16 @@ bool MenuWindow::get_bot_check() {
     return this->ui.botBtn->isChecked();
 }
 
+void MenuWindow::keyPressEvent(QKeyEvent *event) {
+    std::cout << event->key() << std::endl;
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+        if (this->ui.stackedWidget->currentIndex() == CREATE_PAGE)
+            this->ui.createBtnBox->accepted();
+        if (this->ui.stackedWidget->currentIndex() == JOIN_PAGE)
+            this->ui.joinBtnBox->accepted();
+    }
+}
+
 void MenuWindow::closeEvent(QCloseEvent *event) {
     if (this->ui.stackedWidget->currentIndex() == START_PAGE && !this->arranged)
         this->ps.send((uint8_t) CANCEL_MATCH);
@@ -64,9 +75,9 @@ void MenuWindow::on_quitBtn_clicked(){
 void MenuWindow::on_matchList_itemSelectionChanged() {
     QColor color = this->ui.matchList->selectedItems()[0]->textColor();
     if(color == QColor(255,0,0)) {
-        this->ui.joinBtnBox->setDisabled(true);
+        this->ui.joinBtnBox->button(QDialogButtonBox::Ok)->setDisabled(true);
     } else {
-        this->ui.joinBtnBox->setDisabled(false);
+        this->ui.joinBtnBox->button(QDialogButtonBox::Ok)->setDisabled(false);
     }
 }
 
