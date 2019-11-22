@@ -12,7 +12,7 @@
 #include "LoadingScreen.h"
 #include "Countdown.h"
 #include "Minimap.h"
-#include "Entities.h"
+#include "ModifiersContainer.h"
 #include "Entities/TileInfo.h"
 #include "ScreenEffectDrawer.h"
 #include "Bot.h"
@@ -27,7 +27,7 @@ class Scenario {
     Countdown countdown;
     ScreenEffectDrawer screen_effect;
     Minimap minimap;
-    Entities entities;
+    ModifiersContainer entities;
     SoundSystem sound;
     int32_t my_car_id;
     std::unordered_map<int32_t, Car> cars;
