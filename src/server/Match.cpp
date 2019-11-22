@@ -117,9 +117,11 @@ void Match::initialize_players() {
             receive_connect_confirmation((*player).second, received);
 
             if (!received) {
-                player = this->players.erase(player);
-                if ((*player).second.is_called(this->match_creator))
+                if ((*player).second.is_called(this->match_creator)) {
+                    player = this->players.erase(player);
                     this->select_new_creator();
+                } else
+                    player = this->players.erase(player);
             }
             else {
                 CarSpecs specs = Configs::get_configs().specs;
