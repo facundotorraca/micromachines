@@ -103,7 +103,6 @@ void MenuWindow::on_joinBtnBox_accepted() {
     connect(&this->wait_thread, SIGNAL(started()), &this->waiter_worker, SLOT(wait_response()));
     connect(&this->waiter_worker, SIGNAL(resultReady(int)), this, SLOT(handle_wait(int)));
     this->wait_thread.start();
-    std::cout << "YA ARRANQUE EL HILO CHAU" << std::endl;
     //QTimer::singleShot(50, this, SLOT(wait_start()));
 }
 
