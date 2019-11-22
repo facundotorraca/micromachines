@@ -5,6 +5,8 @@
 #include <common/Socket.h>
 #include <client/QT_views/ui_menuwindow.h>
 #include <common/ProtocolSocket.h>
+#include <QtCore/QThread>
+#include <client/QT_views/Waiter.h>
 
 #define MAIN_PAGE 0
 #define CREATE_PAGE 1
@@ -17,6 +19,9 @@
 
 #define JOIN_COMMAND 1
 #define CREATE_COMMAND 2
+
+#define GOOD_FLAG 0
+#define BAD_FLAG 1
 
 class MenuWindow : public QMainWindow {
     Q_OBJECT
@@ -38,9 +43,9 @@ private slots:
     void on_createBtnBox_accepted();
     void on_createBtnBox_rejected();
     void on_startBtn_clicked();
-    void wait_start();
 
-
+public slots:
+    void handle_wait(int result);
 
 private:
     void keyPressEvent(QKeyEvent *event);
@@ -54,6 +59,8 @@ private:
     std::string matches;
     std::string command;
     bool arranged;
+    QThread wait_thread;
+    Waiter waiter_worker;
 
 };
 

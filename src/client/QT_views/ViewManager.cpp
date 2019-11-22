@@ -2,7 +2,7 @@
 // Created by Alejo Acevedo on 18/10/2019.
 //
 
-#include "view_manager.h"
+#include "ViewManager.h"
 #include "./views/menuwindow.h"
 #include "./views/connectview.cpp"
 #include <iostream>
@@ -37,7 +37,7 @@ ProtocolSocket ViewManager::run() {
     if (!ps.is_connected()) {
         return std::move(ps);
     }
-    this->player.play();
+    //this->player.play();
     MenuWindow menuWindow(ps);
     menuWindow.show();
     this->mainApp.exec();

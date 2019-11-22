@@ -33,10 +33,13 @@ add_library (menuWindow
         ${UIS_HEADERS}
         )
 
+add_library(waiter
+        Waiter.cpp)
 
 add_library(viewManager
-        view_manager.cpp)
+        ViewManager.cpp)
 
+target_link_libraries(waiter common Qt5::Widgets)
 target_link_libraries(connectView common Qt5::Widgets)
-target_link_libraries(menuWindow common Qt5::Widgets)
+target_link_libraries(menuWindow common waiter Qt5::Widgets)
 target_link_libraries(viewManager common menuWindow connectView Qt5::Widgets Qt5::Multimedia)

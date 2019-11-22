@@ -28,7 +28,8 @@ MenuWindow::MenuWindow(ProtocolSocket &ps, QWidget *parent) : QMainWindow(parent
                                                               ui(),
                                                               ps(ps),
                                                               matches(get_matches(this->ps)),
-                                                              arranged(false) {
+                                                              arranged(false),
+                                                              waiter_worker(this->ps) {
     ui.setupUi(this);
     ui.errorJoinName->setVisible(false);
     ui.errorMatchName->setVisible(false);
@@ -98,7 +99,11 @@ void MenuWindow::on_joinBtnBox_accepted() {
         return;
     }
     this->ui.stackedWidget->setCurrentIndex(WAIT_PAGE);
-    QTimer::singleShot(50, this, SLOT(wait_start()));
+    this->waiter_worker.moveToThread(&wait_thread);
+    connect(&this->wait_thread, SIGNAL(started()), &this->waiter_worker, SLOT(wait_response()));
+    connect(&this->waiter_worker, SIGNAL(resultReady(int)), this, SLOT(handle_wait(int)));
+    this->wait_thread.start();
+    //QTimer::singleShot(50, this, SLOT(wait_start()));
 }
 
 void MenuWindow::on_joinBtnBox_rejected(){
@@ -129,36 +134,23 @@ void MenuWindow::on_startBtn_clicked() {
     ps.send((uint8_t) START_MATCH);
     uint8_t flag_join_match;
     ps.receive(flag_join_match);
-    uint8_t flag_start_match = 1;
+    uint8_t flag_start_match = BAD_FLAG;
     ps.receive(flag_start_match);
-    ps.send((uint8_t)1);
-
+    ps.send((uint8_t)GOOD_FLAG);
     this->arranged = true;
     this->close();
 }
 
-
-
-void MenuWindow::wait_start() {
-    std::cout << "ESPERANDO QUE EMPIECE LA PARTIDA" << std::endl;
-    uint8_t car = 1;
-    ps.send(car);
-
-    uint8_t flag_join_match;
-    ps.receive(flag_join_match);
-
-    uint8_t flag_start_match = 1;
-    ps.receive(flag_start_match);
-    ps.send((uint8_t)1);
-
-    if (flag_start_match == START_MATCH) {
+void MenuWindow::handle_wait(int result) {
+    if (result == START_MATCH) {
+        this->ps.send(START_MATCH);
         this->arranged = true;
         this->close();
         return;
     }
-
     this->ui.waitLabel->setText("EL CREADOR DE LA PARTIDA CERRO EL JUEGO");
-}
+};
+
 
 void MenuWindow::update_matches() {
     QStringList matches_list;
@@ -176,19 +168,22 @@ void MenuWindow::update_matches() {
 }
 
 bool MenuWindow::set_user_name(std::string user_name) {
-    uint8_t flag_error_username = 1;
+    uint8_t flag_error_username = BAD_FLAG;
     ps.send((uint8_t) MSG_SET_USERNAME);
     ps.send(user_name);
     ps.receive(flag_error_username);
-    return flag_error_username == 0;
+    return flag_error_username == GOOD_FLAG;
 }
 
 bool MenuWindow::set_match_name(std::string match_name) {
-    uint8_t flag_error_matchname = 1;
+    uint8_t flag_error_matchname = BAD_FLAG;
     ps.send((uint8_t) MSG_SET_MATCH_NAME);
     ps.send(match_name);
     ps.receive(flag_error_matchname);
     return flag_error_matchname == 0;
 }
 
-MenuWindow::~MenuWindow() {}
+MenuWindow::~MenuWindow() {
+    this->wait_thread.quit();
+    this->wait_thread.wait();
+}
