@@ -6,9 +6,9 @@
 #include <unordered_map>
 #include "model/Vehicle/Car.h"
 
-class Player;
 class Race;
 class Match;
+class Player;
 
 class UpdateRace {
     int32_t key;
