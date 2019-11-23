@@ -10,9 +10,7 @@ Race::Race(int32_t total_laps,  std::string map_path, std::string map_name):
     position_manager(this->cars),
     racing_track(map_path, map_name),
     modifier_spawner(Configs::get_configs().modifier_spawn_prob, this->racing_track)
-{
-    std::cout << "MOD: " <<Configs::get_configs().modifier_spawn_prob << "\n";
-}
+{}
 
 void Race::add_car_with_specs(int32_t ID, CarSpecs specs) {
     this->cars.emplace(std::piecewise_construct, std::forward_as_tuple(ID),
