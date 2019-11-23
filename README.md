@@ -73,16 +73,16 @@ docker run -p 7777:7777 -it --rm --name my-micromachines-server micromachines-se
 
 ## Documentacion
 
-###Manual Tecnico
+### * Manual Tecnico
 https://www.overleaf.com/read/tqgbrjjhfhhc
 
-###Manual de Usuario - Server
+### * Manual de Usuario - Server
 https://www.overleaf.com/read/nbyxnftwfbpp
 
-###Manual de Usuario - Client
+### * Manual de Usuario - Client
 https://www.overleaf.com/read/nkgfnpdvqcfr
 
-###Manual de Proyecto
+### * Manual de Proyecto
 https://www.overleaf.com/read/spmvnqqqjvcw
 
 
