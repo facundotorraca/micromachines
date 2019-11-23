@@ -12,7 +12,7 @@
 #include <QtMultimedia/QMediaPlaylist>
 
 #define STYLESHEET_PATH "stylesheets/mainStyleSheet.qss"
-#define MUSIC_PATH "assets/sounds/music.mp3"
+#define MUSIC_PATH "assets/sounds/menu_music.mp3"
 
 
 class ViewManager {
