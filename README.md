@@ -27,6 +27,16 @@ $ make linux test
 $ sudo make install
 ```
 
+## Instalacion de la fuente 
+
+1. Diríjase al direcotirio raiz de Micromachines y escriba:
+
+```
+sudo gnome-font-viewer assets/fonts/Kenney\ Pixel.ttf
+```
+2. Aprete el boton "Install" en la esquina superior derecha.
+
+
 ## Instalación del juego
 
 Micromachines usa [CMake](http://www.cmake.org) para soportar la compilacion multiplataforma. Los pasos basicos para compilarse son:
