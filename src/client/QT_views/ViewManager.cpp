@@ -18,7 +18,6 @@ ViewManager::ViewManager(int argc, char *argv[])
                         arranged(false),
                         box_check(false) {
     QFontDatabase::addApplicationFont(QFileInfo("assets/fonts/Kenney Pixel.ttf").absoluteFilePath());
-    QFontDatabase::addApplicationFont(QFileInfo("assets/fonts/joystix.ttf").absoluteFilePath());
     QFile styleFile(STYLESHEET_PATH);
     styleFile.open(QFile::ReadOnly);
     QString StyleSheet = styleFile.readAll();
