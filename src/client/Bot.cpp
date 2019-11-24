@@ -8,17 +8,12 @@
 #include <common/Sizes.h>
 
 Bot::Bot(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue) : state(luaL_newstate()),
-                                                        lua_path("lua/bot.lua"),
-                                                        lua_init("init"),
-                                                        lua_add_tile("addTile"),
-                                                        lua_update_car("updateCar"),
-                                                        lua_fun("decide"),
                                                         queue(queue) {
     std::lock_guard<std::mutex> lock(this->mutex);
     luaL_openlibs(this->state);
-    this->check_error_lua(luaL_loadfile(this->state, this->lua_path.c_str()));
+    this->check_error_lua(luaL_loadfile(this->state, BOT_PATH));
     this->check_error_lua(lua_pcall(this->state, 0, 0, 0));
-    this->check_error_lua(lua_getglobal(this->state, this->lua_init.c_str()));
+    this->check_error_lua(lua_getglobal(this->state, INIT_FUN));
     this->load_definitions();
     this->check_error_lua(lua_pcall(this->state, 2, 0, 0));
 }
@@ -27,7 +22,7 @@ void Bot::execute() {
     std::lock_guard<std::mutex> lock(this->mutex);
     //this->release_old_keys();
     auto key_event = std::vector<int32_t>();
-    this->check_error_lua(lua_getglobal(this->state, this->lua_fun.c_str()));
+    this->check_error_lua(lua_getglobal(this->state, DECIDE_FUN));
     this->check_error_lua(lua_pcall(this->state, 0, 2, 0));
     auto key = lua_tonumber(this->state, -1);
     lua_pop(this->state, 1);
@@ -46,7 +41,7 @@ void Bot::set_id(int32_t id) {
 
 void Bot::add_tile(TileInfo &tailInfo) {
     std::lock_guard<std::mutex> lock(this->mutex);
-    this->check_error_lua(lua_getglobal(this->state, this->lua_add_tile.c_str()));
+    this->check_error_lua(lua_getglobal(this->state, ADD_TILE_FUN));
     lua_pushnumber(this->state, tailInfo.posx/METER_TO_PIXEL);
     lua_pushnumber(this->state, tailInfo.posx/METER_TO_PIXEL + TILE_TERRAIN_SIZE);
     lua_pushnumber(this->state, tailInfo.posy/METER_TO_PIXEL);
@@ -60,7 +55,7 @@ void Bot::update_car(CarInfo &carInfo) {
     if (carInfo.car_id != this->my_id) {
         return;
     }
-    this->check_error_lua(lua_getglobal(this->state, this->lua_update_car.c_str()));
+    this->check_error_lua(lua_getglobal(this->state, UPDATE_CAR_FUN));
     lua_newtable(this->state);
     this->push_table_int("posX", carInfo.carx/METER_TO_PIXEL);
     this->push_table_int("posY", carInfo.cary/METER_TO_PIXEL);

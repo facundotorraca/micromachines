@@ -26,11 +26,6 @@ extern "C" {
 
 class Bot {
     lua_State *state;
-    std::string lua_path;
-    std::string lua_init;
-    std::string lua_add_tile;
-    std::string lua_update_car;
-    std::string lua_fun;
     int32_t my_id;
     ProtectedQueue<std::unique_ptr<ServerCommand>>& queue;
     std::mutex mutex;
