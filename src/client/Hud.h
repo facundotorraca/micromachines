@@ -13,6 +13,8 @@ class Hud {
     int32_t lap;
     int32_t total_laps;
     int32_t speed;
+    bool finished;
+    int32_t frames_drawed_effect;
     std::string race_position;
     std::list<std::string> scoreboard;
 public:

@@ -49,11 +49,12 @@
 #define ROCK_TEX 4510
 #define BOOST_TEX 4511
 #define PAUSE_MENU_TEX 4512
-#define EXPLOSION_TEX 10000
 #define GREY_DOT 4513
 #define RECORDING_TEX 4514
 
+#define EXPLOSION_TEX 10000
 
+#define CONFETTI_TEX 20000
 struct Texture{
     SDL_Texture* tex;
     SDL_Surface* surf;
@@ -131,7 +132,7 @@ public:
             textures.emplace(BOOST_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/boost.png"));
             textures.emplace(RECORDING_TEX, createTexture(renderer, "assets/sprites/ScreenEffects/recording.png"));
 
-            /*-------------------------------SCREEN EFFECT TEXTURES--------------------------------*/
+            /*-------------------------------EXPLOSION ANIMATION-----------------------------------*/
             textures.emplace(EXPLOSION_TEX, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_00.png"));
             textures.emplace(EXPLOSION_TEX+1, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_01.png"));
             textures.emplace(EXPLOSION_TEX+2, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_02.png"));
@@ -140,6 +141,53 @@ public:
             textures.emplace(EXPLOSION_TEX+5, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_05.png"));
             textures.emplace(EXPLOSION_TEX+6, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_06.png"));
             textures.emplace(EXPLOSION_TEX+7, createTexture(renderer, "assets/sprites/Animations/Explosion animation/pixels_07.png"));
+
+            /*-------------------------------CONFETTI ANIMATION-----------------------------------*/
+            textures.emplace(CONFETTI_TEX, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_00.png"));
+            textures.emplace(CONFETTI_TEX+1, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_01.png"));
+            textures.emplace(CONFETTI_TEX+2, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_02.png"));
+            textures.emplace(CONFETTI_TEX+3, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_03.png"));
+            textures.emplace(CONFETTI_TEX+4, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_04.png"));
+            textures.emplace(CONFETTI_TEX+5, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_05.png"));
+            textures.emplace(CONFETTI_TEX+6, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_06.png"));
+            textures.emplace(CONFETTI_TEX+7, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_07.png"));
+            textures.emplace(CONFETTI_TEX+8, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_08.png"));
+            textures.emplace(CONFETTI_TEX+9, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_09.png"));
+            textures.emplace(CONFETTI_TEX+10, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_10.png"));
+            textures.emplace(CONFETTI_TEX+11, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_11.png"));
+            textures.emplace(CONFETTI_TEX+12, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_12.png"));
+            textures.emplace(CONFETTI_TEX+13, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_13.png"));
+            textures.emplace(CONFETTI_TEX+14, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_14.png"));
+            textures.emplace(CONFETTI_TEX+15, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_15.png"));
+            textures.emplace(CONFETTI_TEX+16, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_16.png"));
+            textures.emplace(CONFETTI_TEX+17, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_17.png"));
+            textures.emplace(CONFETTI_TEX+18, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_18.png"));
+            textures.emplace(CONFETTI_TEX+19, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_19.png"));
+            textures.emplace(CONFETTI_TEX+20, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_20.png"));
+            textures.emplace(CONFETTI_TEX+21, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_21.png"));
+            textures.emplace(CONFETTI_TEX+22, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_22.png"));
+            textures.emplace(CONFETTI_TEX+23, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_23.png"));
+            textures.emplace(CONFETTI_TEX+24, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_24.png"));
+            textures.emplace(CONFETTI_TEX+25, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_25.png"));
+            textures.emplace(CONFETTI_TEX+26, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_26.png"));
+            textures.emplace(CONFETTI_TEX+27, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_27.png"));
+            textures.emplace(CONFETTI_TEX+28, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_28.png"));
+            textures.emplace(CONFETTI_TEX+29, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_29.png"));
+            textures.emplace(CONFETTI_TEX+30, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_30.png"));
+            textures.emplace(CONFETTI_TEX+31, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_31.png"));
+            textures.emplace(CONFETTI_TEX+32, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_32.png"));
+            textures.emplace(CONFETTI_TEX+33, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_33.png"));
+            textures.emplace(CONFETTI_TEX+34, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_34.png"));
+            textures.emplace(CONFETTI_TEX+35, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_35.png"));
+            textures.emplace(CONFETTI_TEX+36, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_36.png"));
+            textures.emplace(CONFETTI_TEX+37, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_37.png"));
+            textures.emplace(CONFETTI_TEX+38, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_38.png"));
+            textures.emplace(CONFETTI_TEX+39, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_39.png"));
+            textures.emplace(CONFETTI_TEX+40, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_40.png"));
+            textures.emplace(CONFETTI_TEX+41, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_41.png"));
+            textures.emplace(CONFETTI_TEX+42, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_42.png"));
+            textures.emplace(CONFETTI_TEX+43, createTexture(renderer, "assets/sprites/Animations/Confetti animation/frame_43.png"));
+            
 
             /*-------------------------------ASPHALT_ROADS-----------------------------------------*/
             int tile_width = TILE_TERRAIN_SIZE*METER_TO_PIXEL+5;
