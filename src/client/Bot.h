@@ -5,6 +5,12 @@
 #ifndef MICROMACHINES_BOT_H
 #define MICROMACHINES_BOT_H
 
+#define BOT_PATH "lua/bot.lua"
+#define INIT_FUN "init"
+#define ADD_TILE_FUN "addTile"
+#define UPDATE_CAR_FUN "updateCar"
+#define DECIDE_FUN "decide"
+
 #include <string>
 #include <common/ProtectedQueue.h>
 

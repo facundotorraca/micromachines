@@ -17,7 +17,7 @@ Bot::Bot(ProtectedQueue<std::unique_ptr<ServerCommand>>& queue) : state(luaL_new
     std::lock_guard<std::mutex> lock(this->mutex);
     luaL_openlibs(this->state);
     this->check_error_lua(luaL_loadfile(this->state, this->lua_path.c_str()));
-    this->check_error_lua(lua_pcall    // DEBERIA TIRAR UNA EXCEPT?(this->state, 0, 0, 0));
+    this->check_error_lua(lua_pcall(this->state, 0, 0, 0));
     this->check_error_lua(lua_getglobal(this->state, this->lua_init.c_str()));
     this->load_definitions();
     this->check_error_lua(lua_pcall(this->state, 2, 0, 0));
