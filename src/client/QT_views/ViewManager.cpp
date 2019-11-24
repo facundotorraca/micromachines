@@ -45,8 +45,8 @@ ProtocolSocket ViewManager::run() {
     if (!menuWindow.is_game_arranged()){
         return std::move(ps);
     }
-    this->box_check = menuWindow.get_bot_check();
-    this->arranged = true;    bool continue_receiving = true;
+    this->bot_set = menuWindow.get_bot_check();
+    this->arranged = true;
     return std::move(ps);
 }
 
@@ -55,5 +55,5 @@ bool ViewManager::is_game_arranged() {
 }
 
 bool ViewManager::use_bot() {
-    return this->box_check;
+    return this->bot_set;
 }

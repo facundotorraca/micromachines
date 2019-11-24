@@ -21,7 +21,7 @@ class ViewManager {
     QMediaPlaylist playlist;
     Socket sck;
     bool arranged;
-    bool box_check;
+    bool bot_set;
  public:
     ViewManager(int argc, char *argv[]);
     ProtocolSocket run();
