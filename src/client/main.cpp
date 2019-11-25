@@ -23,13 +23,13 @@ int main(int argc, char *argv[])
         ps.close();
         return SUCCESS;
     }
-    /* Aca empieza SDL
-     * "ps" es el ProtocolSocket ya conectado al servidor
-     * se debería conectar en la ventana de qt
-     */
-    bool continue_receiving = true;
-    
-    GameMain game(ps, view_manager.use_bot());game.start();
 
+    /* ----------------------------------------------------*/
+    /* Aca empieza SDL                                     */
+    /* "ps" es el ProtocolSocket ya conectado al servidor  */
+    /*  se debería conectar en la ventana de QT             */
+    /*-----------------------------------------------------*/
+
+    GameMain game(ps, view_manager.use_bot());game.start();
     return SUCCESS;
 }
