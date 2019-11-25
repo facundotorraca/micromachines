@@ -291,6 +291,7 @@ public:
 
             textures.emplace(148, createTexture(renderer,"assets/sprites/TrackObjects/tires_red.png"));
             textures.emplace(149, createTexture(renderer,"assets/sprites/TrackObjects/tires_white.png"));
+            textures.emplace(150, createTexture(renderer,"assets/sprites/TrackObjects/cone_straight.png"));
         }
     }
 
