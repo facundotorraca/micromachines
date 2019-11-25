@@ -39,7 +39,6 @@ Car::Car(CarSpecs specs):
     car_state( new Alive()),
     respawn(0, 0, 0)
 {
-    this->on_podium = false;
     this->car_body = nullptr;
     this->front_left_joint = nullptr;
     this->front_right_joint = nullptr;
@@ -112,7 +111,7 @@ void Car::create_wheels(b2World& world) {
 }
 
 void Car::update() {
-    if (!on_podium && this->car_state->try_respawn(this->respawn, this->car_body, this->wheels)) {
+    if (this->car_state->try_respawn(this->respawn, this->car_body, this->wheels)) {
         this->car_state.reset(new Alive());
         this->life.restart_life();
         this->turn_on();
@@ -175,7 +174,6 @@ void Car::modify_laps(LapCounter& lap_counter, int32_t car_ID) {
     if (lap_altered) {//Just for performance
         this->lap_state = this->lap_state->modify_car_laps(lap_counter, car_ID);
         if (lap_counter.car_complete_laps(car_ID)) {
-            this->on_podium = true;
             this->throttle = NOT_PRESSED;
             this->life.restart_life();
             this->engine_state.reset(new EngineOff());

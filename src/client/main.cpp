@@ -8,17 +8,20 @@
 #include <client/QT_views/ViewManager.h>
 #include "GameMain.h"
 
+#define ERROR 1
 #define SUCCESS 0
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
+
     ViewManager view_manager(argc, argv);
     ProtocolSocket ps(view_manager.run());
+
     if (!ps.is_connected()) {
-        std::cout << "Flag MATCH =! 0 ERROR\n";
+        std::cout << "Connection ERROR\n";
         ps.close();
-        return SUCCESS; // Deberia ser success?
+        return ERROR;
     }
+
     if (!view_manager.is_game_arranged()) {
         ps.close();
         return SUCCESS;

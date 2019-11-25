@@ -48,7 +48,7 @@ ProtocolSocket ViewManager::run() {
         return std::move(ps);
     }
     this->box_check = menuWindow.get_bot_check();
-    this->arranged = true;    bool continue_receiving = true;
+    this->arranged = true;
     return std::move(ps);
 }
 

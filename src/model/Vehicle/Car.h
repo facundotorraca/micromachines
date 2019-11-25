@@ -28,7 +28,6 @@ class Car : public Body {
     int32_t throttle;
     int32_t steering_wheel;
 
-    bool on_podium;
     bool lap_altered;
     Coordinate respawn;
     int32_t begin_distance;
