@@ -67,7 +67,7 @@ void Scenario::setCarHealth(int32_t id, int32_t health) {
     } catch (std::out_of_range& e) {
         std::cerr << "setCarHealth: invalid ID" << std::endl;
     }
-    if (id == this->my_car_id){
+    if (id == this->my_car_id) {
         hud.setHealth(health);
     }
 
@@ -80,7 +80,7 @@ void Scenario::setBackground(int32_t type, int32_t width, int32_t height, Camera
 }
 
 void Scenario::setLapNumber(int32_t lap) {
-    hud.setLap(lap);
+    hud.setLap(sound, lap);
 }
 
 void Scenario::setTotalLaps(int32_t laps) {

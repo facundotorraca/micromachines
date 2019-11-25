@@ -13,6 +13,9 @@
 #define SOUND_FIX 8
 #define SOUND_EXPLOSION 9
 #define SOUND_BRAKE 10
+#define SOUND_LAP_UP 11
+#define SOUND_LAP_DOWN 12
+#define SOUND_FINISH 13
 
 void SoundSystem::center(int32_t x, int32_t y) {
     posx = x;
@@ -79,6 +82,9 @@ SoundSystem::SoundSystem() : posx(0), posy(0) {
     sounds.emplace(SOUND_FIX, Mix_LoadWAV("assets/sounds/fix.wav"));
     sounds.emplace(SOUND_EXPLOSION, Mix_LoadWAV("assets/sounds/explosion.wav"));
     sounds.emplace(SOUND_BRAKE, Mix_LoadWAV("assets/sounds/brake.wav"));
+    sounds.emplace(SOUND_LAP_UP, Mix_LoadWAV("assets/sounds/lap_up.wav"));
+    sounds.emplace(SOUND_LAP_DOWN, Mix_LoadWAV("assets/sounds/lap_down.wav"));
+    sounds.emplace(SOUND_FINISH, Mix_LoadWAV("assets/sounds/finish.wav"));
     sounds.emplace(MSG_EFFECT_MUD, Mix_LoadWAV("assets/sounds/mud.wav"));
     sounds.emplace(MSG_EFFECT_BOOST, Mix_LoadWAV("assets/sounds/boost.wav"));
     sounds.emplace(MSG_EFFECT_ROCK, Mix_LoadWAV("assets/sounds/glass.wav"));
@@ -89,15 +95,27 @@ SoundSystem::SoundSystem() : posx(0), posy(0) {
     music = Mix_LoadMUS("assets/sounds/music.mp3");
 }
 
+void SoundSystem::playLapUpSound() {
+    Mix_PlayChannel(16, sounds.at(SOUND_LAP_UP), 0);
+}
+
+void SoundSystem::playLapDownSound() {
+    Mix_PlayChannel(16, sounds.at(SOUND_LAP_DOWN), 0);
+}
+
+void SoundSystem::playBrakesSound(int32_t x, int32_t y) {
+    if (isOnScreen(x, y))
+        Mix_PlayChannel(16, sounds.at(SOUND_BRAKE), 0);
+}
+
+void SoundSystem::playFinishSound() {
+    Mix_PlayChannel(16, sounds.at(SOUND_FINISH), 0);
+}
+
 SoundSystem::~SoundSystem() {
     for (auto& sound : sounds) {
         Mix_FreeChunk(sound.second);
     }
     Mix_FreeMusic(music);
     Mix_Quit();
-}
-
-void SoundSystem::playBrakesSound(int32_t x, int32_t y) {
-    if (isOnScreen(x, y))
-        Mix_PlayChannel(16, sounds.at(SOUND_BRAKE), 0);
 }

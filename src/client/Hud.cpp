@@ -81,16 +81,22 @@ void Hud::draw(Camera &camera) {
     /*--------------------------DRAW RACE POSITION----------------------------*/
 
     camera.drawText(race_position, 0.07, 0.14, 1.6, 2);
-
 }
 
 Hud::Hud() : health(100), lap(0), total_laps(0), speed(0), 
             finished(false), frames_drawed_effect(0), race_position("?"){}
 
-void Hud::setLap(int32_t l) {
+void Hud::setLap(SoundSystem& sound_system, int32_t l) {
+    if (lap >= 0 && l > lap)
+        sound_system.playLapUpSound();
+    else if (lap > 0 && l < lap)
+        sound_system.playLapDownSound();
+
     this->lap = l;
-    if (lap > total_laps){
+
+    if (lap > total_laps) {
         this->finished = true;
+        sound_system.playFinishSound();
     }
 }
 
