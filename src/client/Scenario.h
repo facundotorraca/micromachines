@@ -32,7 +32,6 @@ class Scenario {
     int32_t my_car_id;
     std::unordered_map<int32_t, Car> cars;
     std::unordered_map<int32_t, DynamicEntity> dyn_entities;
-    std::mutex mtx;
 public:
     explicit Scenario(Bot& bot);
     void addTile(TileInfo& info);

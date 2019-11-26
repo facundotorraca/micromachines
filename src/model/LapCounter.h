@@ -10,6 +10,8 @@
 class LapCounter {
 
     int32_t total_laps;
+
+    std::map<int32_t /*ID*/, bool> change;
     std::map<int32_t /*ID*/, int32_t> laps;
 
     public:

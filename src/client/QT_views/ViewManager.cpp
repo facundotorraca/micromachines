@@ -9,6 +9,7 @@
 #include <QtCore/QFile>
 #include <QtMultimedia/QMediaPlayer>
 #include <QtCore/QFileInfo>
+#include <QFontDatabase>
 
 
 ViewManager::ViewManager(int argc, char *argv[])
@@ -16,6 +17,7 @@ ViewManager::ViewManager(int argc, char *argv[])
                         sck(),
                         arranged(false),
                         box_check(false) {
+    QFontDatabase::addApplicationFont(QFileInfo("assets/fonts/Kenney Pixel.ttf").absoluteFilePath());
     QFile styleFile(STYLESHEET_PATH);
     styleFile.open(QFile::ReadOnly);
     QString StyleSheet = styleFile.readAll();

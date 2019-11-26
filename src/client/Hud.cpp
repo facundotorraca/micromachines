@@ -55,9 +55,19 @@ void Hud::draw(Camera &camera) {
     }
 
     /*---------------------------DRAW LAP COUNTER-----------------------------*/
-    std::string laps_text = std::string("LAP: ")+
-            std::to_string(lap)+"/"+std::to_string(total_laps);
-    camera.drawText(laps_text, 0.07, 0.07, 0.6, 7);
+    
+    if (!finished){
+        std::string laps_text = std::string("LAP: ")+
+                std::to_string(lap)+"/"+std::to_string(total_laps);
+        camera.drawText(laps_text, 0.07, 0.07, 0.6, 7);
+    }
+
+    if (finished){
+        if (frames_drawed_effect <= 172){
+            camera.drawFullScreenTexture(CONFETTI_TEX+(frames_drawed_effect/4)%43);
+            frames_drawed_effect++;
+        }
+    }
 
     /*--------------------------DRAW FINISHED PLAYERS-------------------------*/
     int i = 1;
@@ -71,14 +81,23 @@ void Hud::draw(Camera &camera) {
     /*--------------------------DRAW RACE POSITION----------------------------*/
 
     camera.drawText(race_position, 0.07, 0.14, 1.6, 2);
-
 }
 
-Hud::Hud() : health(100), lap(0), total_laps(0), speed(0), race_position("?"){
-}
+Hud::Hud() : health(100), lap(0), total_laps(0), speed(0), 
+            finished(false), frames_drawed_effect(0), race_position("?"){}
 
-void Hud::setLap(int32_t l) {
+void Hud::setLap(SoundSystem& sound_system, int32_t l) {
+    if (lap >= 0 && l > lap)
+        sound_system.playLapUpSound();
+    else if (lap > 0 && l < lap)
+        sound_system.playLapDownSound();
+
     this->lap = l;
+
+    if (lap > total_laps) {
+        this->finished = true;
+        sound_system.playFinishSound();
+    }
 }
 
 void Hud::setTotalLaps(int32_t laps) {
@@ -110,6 +129,8 @@ void Hud::setRacePosition(int32_t position) {
 
 void Hud::reset() {
     scoreboard.clear();
+    finished = false;
+    frames_drawed_effect = 0;
     lap = 0;
 }
 

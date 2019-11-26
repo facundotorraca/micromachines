@@ -14,8 +14,8 @@ class Dead : public CarState {
 
     public:
         Dead() {
-
-            this->remaining_time = Configs::get_configs().server_frames * Configs::get_configs().respawn_time; }
+            this->remaining_time = float(Configs::get_configs().server_frames) * Configs::get_configs().respawn_time;
+        }
 
         bool try_respawn(Coordinate respawn_point, b2Body* car_body, std::vector<Wheel*> wheels) override {
             this->remaining_time -= 1;
