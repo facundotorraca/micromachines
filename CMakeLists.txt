@@ -66,6 +66,3 @@ target_link_libraries(micromachines-server model server common)
 # Generar el cliente
 add_executable(micromachines-client src/client/main.cpp)
 target_link_libraries(micromachines-client client viewManager)
-
-add_executable(client-old src/client/main.old.cpp)
-target_link_libraries(client-old client)
