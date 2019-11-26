@@ -257,4 +257,6 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
 
 void MapLoader::change_map(std::string new_map) {
     this->map_name = std::move(new_map);
+
+    std::cout << this->map_name << "\n";
 }
