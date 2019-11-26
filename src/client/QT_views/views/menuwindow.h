@@ -58,14 +58,14 @@ private:
     bool set_user_name(std::string user_name);
     bool set_match_name(std::string match_name);
     void update_matches();
+    void update_maps();
 
     Ui::MenuWindow ui;
     ProtocolSocket &ps;
-    std::string matches;
-    std::string command;
     bool arranged;
     QThread wait_thread;
     Waiter waiter_worker;
+    uint8_t map_selected;
 
 };
 

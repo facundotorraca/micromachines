@@ -6,13 +6,16 @@
 #include <QTimer>
 #include <QKeyEvent>
 
-std::string get_matches(ProtocolSocket &ps) {
+std::string receive_list(ProtocolSocket &ps) {
     std::string matches(1024, '\0');
+    std::cout << "RECIBO; " << std::endl;
     ps.receive(matches);
+    std::cout << matches << std::endl;
+    std::cout << "FIN" <<std::endl;
     return matches;
 }
 
-void splitMatchs(std::string input, QStringList &match) {
+void split_list(std::string input, QStringList &match) {
     std::string delimiter = "\n";
     int last = 0;
     int next = input.find(delimiter);
@@ -27,9 +30,9 @@ void splitMatchs(std::string input, QStringList &match) {
 MenuWindow::MenuWindow(ProtocolSocket &ps, QWidget *parent) : QMainWindow(parent),
                                                               ui(),
                                                               ps(ps),
-                                                              matches(get_matches(this->ps)),
                                                               arranged(false),
-                                                              waiter_worker(this->ps) {
+                                                              waiter_worker(this->ps),
+                                                              map_selected(0) {
     ui.setupUi(this);
     ui.errorMainLabel->setVisible(false);
     ui.errorJoinLabel->setVisible(false);
@@ -62,6 +65,7 @@ void MenuWindow::closeEvent(QCloseEvent *event) {
 
 void MenuWindow::on_createBtn_clicked() {
     this->ps.send((uint8_t) CREATE_COMMAND);
+    this->update_maps();
     this->ui.stackedWidget->setCurrentIndex(CREATE_PAGE);
 }
 
@@ -92,7 +96,6 @@ void MenuWindow::on_matchList_itemSelectionChanged() {
 void MenuWindow::on_updateBtn_clicked() {
     this->ps.send((uint8_t) MSG_GET_MATCHES);
     try {
-        this->matches = get_matches(this->ps);
         this->update_matches();
     } catch (SocketError &error) {
         this->ui.stackedWidget->setCurrentIndex(ERROR_SERVER_PAGE);
@@ -144,6 +147,7 @@ void MenuWindow::on_createBtnBox_accepted() {
         this->ui.stackedWidget->setCurrentIndex(ERROR_SERVER_PAGE);
         return;
     }
+    this->map_selected = this->ui.mapsCombo->currentIndex();
     this->ui.stackedWidget->setCurrentIndex(START_PAGE);
 }
 
@@ -154,6 +158,9 @@ void MenuWindow::on_createBtnBox_rejected(){
 
 void MenuWindow::on_startBtn_clicked() {
     try {
+        std::cout << (unsigned) this->map_selected << std::endl;
+        ps.send((uint8_t) MSG_SET_MAP);
+        ps.send(this->map_selected);
         ps.send((uint8_t) START_MATCH);
         uint8_t flag_join_match;
         ps.receive(flag_join_match);
@@ -180,20 +187,34 @@ void MenuWindow::handle_wait(int result) {
     }
 };
 
+void MenuWindow::update_maps() {
+    std::cout << "UPDATE MAPS" << std::endl;
+    this->ps.send((uint8_t) MSG_GET_MAP);
+    QStringList maps_list;
+    split_list(receive_list(this->ps), maps_list);
+    this->ui.mapsCombo->clear();
+    this->ui.mapsCombo->addItems(maps_list);
+}
+
 
 void MenuWindow::update_matches() {
-    this->ui.matchList->clear();
-    QStringList matches_list;
-    splitMatchs(this->matches, matches_list);
-    for(size_t ind = 0; ind < matches_list.length(); ind++) {
-        QString match = matches_list.at(ind);
-        size_t last_char_pos = match.size() - 1;
-        QChar last_char = match.at(last_char_pos);
-        match.chop(1);
-        this->ui.matchList->addItem(match);
-        if (last_char == '1') {
-            this->ui.matchList->item(ind)->setTextColor(QColor(255,0,0));
+    std::cout << "UPDATE MATCHS" << std::endl;
+    try {
+        this->ui.matchList->clear();
+        QStringList matches_list;
+        split_list(receive_list(this->ps), matches_list);
+        for(size_t ind = 0; ind < matches_list.length(); ind++) {
+            QString match = matches_list.at(ind);
+            size_t last_char_pos = match.size() - 1;
+            QChar last_char = match.at(last_char_pos);
+            match.chop(1);
+            this->ui.matchList->addItem(match);
+            if (last_char == '1') {
+                this->ui.matchList->item(ind)->setTextColor(QColor(255,0,0));
+            }
         }
+    } catch (SocketError &error){
+        this->ui.stackedWidget->setCurrentIndex(ERROR_SERVER_PAGE);
     }
 }
 
@@ -212,7 +233,6 @@ bool MenuWindow::set_match_name(std::string match_name) {
     ps.receive(flag_error_matchname);
     return flag_error_matchname == 0;
 }
-
 
 MenuWindow::~MenuWindow() {
     this->wait_thread.quit();
