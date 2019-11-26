@@ -11,12 +11,13 @@ Configs::Configs() {
     if (!conf_file.is_open())
         std::cerr << "Config File ERROR: Not found" << std::endl;
 
+    conf_file >> this->conf_json;
+
     total_maps = this->conf_json["total_maps"];
     for (size_t i = 0; i < total_maps; i++) {
         maps.push_back( this->conf_json["maps"][i] );
     }
 
-    conf_file >> this->conf_json;
     map_path = this->conf_json["map_path"];
     server_port = std::getenv("PORT")? std::getenv("PORT"): this->conf_json["server_port"];
     max_players = this->conf_json["max_players"];

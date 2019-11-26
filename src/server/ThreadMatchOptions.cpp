@@ -9,7 +9,6 @@
 
 #define START_MATCH 0
 #define CANCEL_MATCH 1
-#define CHOOSE_MAP 2
 
 ThreadMatchOptions::ThreadMatchOptions(Player&& player, std::shared_ptr<Match>&& match):
     player(std::move(player)),
