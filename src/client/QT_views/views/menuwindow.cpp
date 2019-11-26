@@ -8,10 +8,7 @@
 
 std::string receive_list(ProtocolSocket &ps) {
     std::string matches(1024, '\0');
-    std::cout << "RECIBO; " << std::endl;
     ps.receive(matches);
-    std::cout << matches << std::endl;
-    std::cout << "FIN" <<std::endl;
     return matches;
 }
 
@@ -158,7 +155,6 @@ void MenuWindow::on_createBtnBox_rejected(){
 
 void MenuWindow::on_startBtn_clicked() {
     try {
-        std::cout << (unsigned) this->map_selected << std::endl;
         ps.send((uint8_t) MSG_SET_MAP);
         ps.send(this->map_selected);
         ps.send((uint8_t) START_MATCH);
@@ -175,7 +171,6 @@ void MenuWindow::on_startBtn_clicked() {
 }
 
 void MenuWindow::handle_wait(int result) {
-    std::cout << result << std::endl;
     if (result == START_MATCH) {
         this->ps.send(START_MATCH);
         this->arranged = true;
@@ -188,7 +183,6 @@ void MenuWindow::handle_wait(int result) {
 };
 
 void MenuWindow::update_maps() {
-    std::cout << "UPDATE MAPS" << std::endl;
     this->ps.send((uint8_t) MSG_GET_MAP);
     QStringList maps_list;
     split_list(receive_list(this->ps), maps_list);
@@ -198,7 +192,6 @@ void MenuWindow::update_maps() {
 
 
 void MenuWindow::update_matches() {
-    std::cout << "UPDATE MATCHS" << std::endl;
     try {
         this->ui.matchList->clear();
         QStringList matches_list;
