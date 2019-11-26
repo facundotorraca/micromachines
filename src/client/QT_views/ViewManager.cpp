@@ -16,7 +16,7 @@ ViewManager::ViewManager(int argc, char *argv[])
                         : mainApp(argc, argv),
                         sck(),
                         arranged(false),
-                        box_check(false) {
+                        bot_set(false) {
     QFontDatabase::addApplicationFont(QFileInfo("assets/fonts/Kenney Pixel.ttf").absoluteFilePath());
     QFile styleFile(STYLESHEET_PATH);
     styleFile.open(QFile::ReadOnly);
