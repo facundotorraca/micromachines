@@ -75,6 +75,12 @@ void MenuWindow::on_quitBtn_clicked(){
 }
 
 void MenuWindow::on_matchList_itemSelectionChanged() {
+    if (this->ui.matchList->count() == 0 ) {
+        return;
+    }
+    if (this->ui.matchList->selectedItems().count() == 0){
+        return;
+    }
     QColor color = this->ui.matchList->selectedItems()[0]->textColor();
     if(color == QColor(255,0,0)) {
         this->ui.joinBtnBox->button(QDialogButtonBox::Ok)->setDisabled(true);
@@ -176,6 +182,7 @@ void MenuWindow::handle_wait(int result) {
 
 
 void MenuWindow::update_matches() {
+    this->ui.matchList->clear();
     QStringList matches_list;
     splitMatchs(this->matches, matches_list);
     for(size_t ind = 0; ind < matches_list.length(); ind++) {
