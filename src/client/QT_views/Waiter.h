@@ -5,6 +5,9 @@
 #ifndef MICROMACHINES_WAITER_H
 #define MICROMACHINES_WAITER_H
 
+#define BAD_FLAG 1
+#define CLOSE_CONNECTION 3
+
 #include <common/ProtocolSocket.h>
 #include <iostream>
 #include <QtCore/QObject>
