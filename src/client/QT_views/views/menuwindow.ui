@@ -306,6 +306,12 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="font">
+             <font>
+              <family>Kenney Pixel</family>
+              <pointsize>22</pointsize>
+             </font>
+            </property>
             <property name="currentIndex">
              <number>-1</number>
             </property>
