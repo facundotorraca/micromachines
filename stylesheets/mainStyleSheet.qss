@@ -1,5 +1,6 @@
 *{
     background-color: #bb333333;
+    font-family: Kenney Pixel;
     font: bold 20 px;
     min-width: 5em;
     color: orange
