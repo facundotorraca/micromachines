@@ -16,7 +16,8 @@ GameMain::GameMain(ProtocolSocket &socket, bool use_bot):
     socket(std::move(socket)),
     use_bot(use_bot)
 {
-    SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
+    SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO|SDL_INIT_JOYSTICK);
+    SDL_JoystickOpen(0);
 }
 
 void GameMain::start() {
@@ -54,5 +55,6 @@ void GameMain::start() {
 }
 
 GameMain::~GameMain() {
+    SDL_JoystickClose(0);
     SDL_Quit();
 }
