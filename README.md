@@ -5,13 +5,11 @@ tantos clientes como jugadores.
 
 ## Documentacion
 
-[Manual Técnico](https://www.overleaf.com/read/tqgbrjjhfhhc)
+[Manual de Usuario](https://github.com/facutorraca/Micromachines/blob/master/Micromachines_Manual_de_Usuario.pdf)
 
-[Manual de Usuario - Server](https://www.overleaf.com/read/nbyxnftwfbpp)
+[Manual Técnico](https://github.com/facutorraca/Micromachines/blob/master/Micromachines_Manual_Tecnico.pdf)
 
-[Manual de Usuario - Cliente](https://www.overleaf.com/read/nkgfnpdvqcfr)
-
-[Manual de Proyecto](https://www.overleaf.com/read/spmvnqqqjvcw)
+[Manual de Proyecto](https://github.com/facutorraca/Micromachines/blob/master/Micromachines_Manual_de_Proyecto.pdf)
 
 
 
