@@ -48,7 +48,6 @@ void ThreadMatchOptions::run_match_options(ProtectedQueue<std::shared_ptr<Match>
                 uint8_t new_map_index = this->player.receive_option();
                 if (new_map_index < Configs::get_configs().maps.size())
                     this->match->change_map(Configs::get_configs().maps.at(new_map_index));
-
             } else {
                 /*Put the creator on the match*/
                 this->match->add_player(std::move(player));
