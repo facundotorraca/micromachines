@@ -160,7 +160,6 @@ end
 
 function decide()
   if(not car.inited) then
-    print("CAR NOT INITED", car.inited)
     return stop()
   end
   local dirX, dirY = getDirections(car.rot)
