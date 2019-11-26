@@ -31,8 +31,10 @@ MenuWindow::MenuWindow(ProtocolSocket &ps, QWidget *parent) : QMainWindow(parent
                                                               arranged(false),
                                                               waiter_worker(this->ps) {
     ui.setupUi(this);
-    ui.errorJoinName->setVisible(false);
-    ui.errorMatchName->setVisible(false);
+    ui.errorMainLabel->setVisible(false);
+    ui.errorJoinLabel->setVisible(false);
+    ui.errorCreateLabel->setVisible(false);
+    ui.errorStartLabel->setVisible(false);
     this->update_matches();
 }
 
@@ -83,8 +85,12 @@ void MenuWindow::on_matchList_itemSelectionChanged() {
 
 void MenuWindow::on_updateBtn_clicked() {
     this->ps.send((uint8_t) MSG_GET_MATCHES);
-    this->matches = get_matches(this->ps);
-    this->update_matches();
+    try {
+        this->matches = get_matches(this->ps);
+        this->update_matches();
+    } catch (SocketError &error) {
+        this->ui.stackedWidget->setCurrentIndex(ERROR_SERVER_PAGE);
+    }
 }
 
 void MenuWindow::on_joinBtnBox_accepted() {
@@ -93,9 +99,14 @@ void MenuWindow::on_joinBtnBox_accepted() {
     std::string selected_match = this->ui.matchList->selectedItems()[0]->text().toStdString();
     std::string match_name = selected_match.substr(0, selected_match.find(" "));
     std::string user_name = this->ui.userJoinInput->text().toStdString();
-    this->set_match_name(match_name);
-    if(!this->set_user_name(user_name)) {
-        this->ui.errorJoinName->setVisible(true);
+    try {
+        this->set_match_name(match_name);
+        if(!this->set_user_name(user_name)) {
+            this->ui.errorJoinLabel->setVisible(true);
+            return;
+        }
+    } catch (SocketError &error) {
+        this->ui.stackedWidget->setCurrentIndex(ERROR_SERVER_PAGE);
         return;
     }
     this->ui.stackedWidget->setCurrentIndex(WAIT_PAGE);
@@ -117,11 +128,16 @@ void MenuWindow::on_createBtnBox_accepted() {
     std::string match_name_raw = this->ui.matchCreateInput->text().toStdString();
     std::string match_name = match_name_raw.substr(0, match_name_raw.find(" "));
     std::string user_name = this->ui.userCreateInput->text().toStdString();
-    if(!this->set_match_name(match_name)) {
-        this->ui.errorMatchName->setVisible(true);
+    try {
+        if(!this->set_match_name(match_name)) {
+            this->ui.errorCreateLabel->setVisible(true);
+            return;
+        }
+        this->set_user_name(user_name);
+    } catch (SocketError &error) {
+        this->ui.stackedWidget->setCurrentIndex(ERROR_SERVER_PAGE);
         return;
     }
-    this->set_user_name(user_name);
     this->ui.stackedWidget->setCurrentIndex(START_PAGE);
 }
 
@@ -131,24 +147,31 @@ void MenuWindow::on_createBtnBox_rejected(){
 }
 
 void MenuWindow::on_startBtn_clicked() {
-    ps.send((uint8_t) START_MATCH);
-    uint8_t flag_join_match;
-    ps.receive(flag_join_match);
-    uint8_t flag_start_match = BAD_FLAG;
-    ps.receive(flag_start_match);
-    ps.send((uint8_t)GOOD_FLAG);
-    this->arranged = true;
-    this->close();
+    try {
+        ps.send((uint8_t) START_MATCH);
+        uint8_t flag_join_match;
+        ps.receive(flag_join_match);
+        uint8_t flag_start_match = BAD_FLAG;
+        ps.receive(flag_start_match);
+        ps.send((uint8_t)GOOD_FLAG);
+        this->arranged = true;
+        this->close();
+    } catch (SocketError &error) {
+        this->ui.stackedWidget->setCurrentIndex(ERROR_SERVER_PAGE);
+    }
 }
 
 void MenuWindow::handle_wait(int result) {
+    std::cout << result << std::endl;
     if (result == START_MATCH) {
         this->ps.send(START_MATCH);
         this->arranged = true;
         this->close();
-        return;
+    } else if (result == CLOSE_CONNECTION) {
+        this->ui.stackedWidget->setCurrentIndex(ERROR_SERVER_PAGE);
+    } else {
+        this->ui.waitLabel->setText("EL CREADOR DE LA PARTIDA CERRO EL JUEGO");
     }
-    this->ui.waitLabel->setText("EL CREADOR DE LA PARTIDA CERRO EL JUEGO");
 };
 
 
@@ -182,6 +205,7 @@ bool MenuWindow::set_match_name(std::string match_name) {
     ps.receive(flag_error_matchname);
     return flag_error_matchname == 0;
 }
+
 
 MenuWindow::~MenuWindow() {
     this->wait_thread.quit();

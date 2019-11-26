@@ -8,11 +8,14 @@
 #include <QtCore/QThread>
 #include <client/QT_views/Waiter.h>
 
+#define ERROR_CONN_MSG "PROBLEMA DE CONEXION CON EL SERVIDOR"
+
 #define MAIN_PAGE 0
 #define CREATE_PAGE 1
 #define JOIN_PAGE 2
 #define START_PAGE 3
 #define WAIT_PAGE 4
+#define ERROR_SERVER_PAGE 5
 
 #define START_MATCH 0
 #define CANCEL_MATCH 1
@@ -22,6 +25,8 @@
 
 #define GOOD_FLAG 0
 #define BAD_FLAG 1
+
+#define CLOSE_CONNECTION 3
 
 class MenuWindow : public QMainWindow {
     Q_OBJECT
@@ -48,8 +53,8 @@ public slots:
     void handle_wait(int result);
 
 private:
-    void keyPressEvent(QKeyEvent *event);
-    void closeEvent(QCloseEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
     bool set_user_name(std::string user_name);
     bool set_match_name(std::string match_name);
     void update_matches();
