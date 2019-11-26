@@ -8,7 +8,7 @@ ThreadClientEventMonitor::ThreadClientEventMonitor(Match* match, ProtectedQueue<
 {}
 
 void ThreadClientEventMonitor::run() {
-    while (this->running){
+    while (this->running) {
         try {
             auto update = updates.pop();
 

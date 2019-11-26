@@ -3,6 +3,7 @@
 #include "Player.h"
 #include <common/Socket.h>
 #include <common/MsgTypes.h>
+#include <common/SocketError.h>
 
 #define JOIN_MODE 1
 #define INVALID_ID -1
@@ -75,8 +76,9 @@ void Player::kill() {
 
 UpdateRace Player::receive_update() {
     std::vector<int32_t> buffer;
-    this->p_socket.receive(buffer);
+
     try {
+        this->p_socket.receive(buffer);
         return {this->ID, buffer.at(KEY_VALUE_POS), buffer.at(KEY_STATE_POS)};
     } catch (const std::out_of_range& e) {
         return {this->ID, NOT_PRESSED, NOT_PRESSED};

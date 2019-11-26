@@ -66,8 +66,11 @@ bool Match::has_username(std::string& username) {
 }
 
 void Match::kill() {
+    std::unique_lock<std::mutex> lock(mtx);
     for (auto &player : this->players)
         player.second.kill();
+    lock.unlock();
+
     this->remove_disconnected_players();
 }
 
