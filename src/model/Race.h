@@ -36,6 +36,8 @@ class Race {
 
         void apply_plugin(DTO_Info& info);
 
+        void change_map(std::string  new_map);
+
         void send_dynamic_objects(ClientUpdater& updater);
 
         void add_car_with_specs(int32_t ID, CarSpecs specs);
@@ -45,7 +47,6 @@ class Race {
         void player_left_game(int32_t ID, ClientUpdater& updater);
 
         void send_info_to_player(int32_t ID, ClientUpdater& client_updater);
-
 };
 
 

@@ -63,6 +63,21 @@ void ThreadIncomingPlayer::receive_username(std::string& username, std::string& 
 
 }
 
+void send_maps(ProtocolSocket& p_socket) {
+    std::string maps_to_send;
+
+    for(auto& map : Configs::get_configs().maps) {
+        int index = map.find(".json");
+        if (index !=  std::string::npos )
+            map.replace(index, 5,"");
+
+        maps_to_send.append(map);
+        maps_to_send.append("\n");
+    }
+
+    p_socket.send(maps_to_send);
+}
+
 void ThreadIncomingPlayer::run() {
     try {
         this->matches.send_matches(this->p_socket);
@@ -71,6 +86,8 @@ void ThreadIncomingPlayer::run() {
 
         uint8_t mode;
         this->p_socket.receive(mode);
+
+        uint8_t map = 0; /*default*/
         uint8_t option;
         std::string username;
         std::string match_name;
@@ -99,6 +116,9 @@ void ThreadIncomingPlayer::run() {
                     break;
                 case MSG_GET_MATCHES:
                     this->matches.send_matches(this->p_socket);
+                    break;
+                case MSG_GET_MAP:
+                    send_maps(this->p_socket);
                     break;
                 default:
                     break;

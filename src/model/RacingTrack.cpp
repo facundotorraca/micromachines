@@ -131,3 +131,7 @@ RacingTrack::~RacingTrack() {
     delete this->podium;
     delete this->finish_line;
 }
+
+void RacingTrack::change_map(std::string new_map) {
+    this->map_loader.change_map(std::move(new_map));
+}

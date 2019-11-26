@@ -52,6 +52,8 @@ class RacingTrack {
 
         Coordinate get_random_track_position();
 
+        void change_map(std::string new_map);
+
         std::vector<Coordinate>& get_pit_stop_position();
 
         void prepare_track(ClientUpdater& updater);

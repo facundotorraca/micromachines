@@ -35,6 +35,8 @@ class MapLoader {
         explicit MapLoader(std::string map_path, std::string map_name);
 
         void load_map(RacingTrack& racing_track, ClientUpdater& updater);
+
+        void change_map(std::string new_map);
 };
 
 #endif //MICROMACHINES_MAPLOADER_H

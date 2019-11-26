@@ -254,3 +254,7 @@ void MapLoader::load_map(RacingTrack &racing_track, ClientUpdater& updater) {
     this->set_begin_distance_to_tiles();
     this->load_racing_track(racing_track);
 }
+
+void MapLoader::change_map(std::string new_map) {
+    this->map_name = std::move(new_map);
+}

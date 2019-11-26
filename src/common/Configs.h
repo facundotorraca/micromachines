@@ -3,6 +3,7 @@
 
 #define CONFIG_PATH "configs.json"
 
+#include <vector>
 #include <string>
 #include "json/json.hpp"
 #include <model/Vehicle/CarSpecs.h>
@@ -30,12 +31,14 @@ public:
 
     bool use_dynamic_objects;
 
-    CarSpecs specs;
+    CarSpecs specs{};
 
-    std::string server_port;
     std::string map_path;
-    std::string map_name;
+    std::string server_port;
     std::string plugins_path;
+
+    int total_maps;
+    std::vector<std::string> maps;
 
     static Configs& get_configs();
 };

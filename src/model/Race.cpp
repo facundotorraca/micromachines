@@ -99,6 +99,10 @@ void Race::restart() {
     }
 }
 
+void Race::change_map(std::string new_map) {
+    this->racing_track.change_map(std::move(new_map));
+}
+
 void Race::send_dynamic_objects(ClientUpdater &updater) {
     this->racing_track.send_dynamic_object_update(updater);
 }

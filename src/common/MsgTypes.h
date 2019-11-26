@@ -32,6 +32,8 @@
 #define MSG_SET_MATCH_NAME 32
 #define MSG_CHANGE_MODE 33
 #define MSG_GET_MATCHES 34
+#define MSG_GET_MAP 35
+#define MSG_SET_MAP 36
 /*----------------------------------------------*/
 
 

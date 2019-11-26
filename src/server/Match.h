@@ -75,6 +75,8 @@ class Match : public Thread {
 
         std::string get_match_name_to_send();
 
+        void change_map(std::string new_map);
+
         void add_player(Player&& player);
 
         std::string get_match_name();

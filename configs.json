@@ -3,7 +3,11 @@
 "server_port": "7778",
 
 "map_path":  "maps/",
-"map_name": "track_01.json",
+
+"total_maps": 2,
+"maps": ["track_01.json", 
+	 "track_02.json"],
+
 "plugins_path":"plugins/",
 
 "time_to_start": 3,

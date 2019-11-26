@@ -29,7 +29,7 @@ Match::Match(std::string match_creator, std::string match_name):
         clients_monitor(this, this->updates_race),
         plugins_manager(this->race, Configs::get_configs().plugins_path),
         timer(Configs::get_configs().time_to_start,this->race, this->client_updater),
-        race(3, Configs::get_configs().map_path, Configs::get_configs().map_name)
+        race(3, Configs::get_configs().map_path, Configs::get_configs().maps[0])
 {}
 
 void Match::add_player(Player&& player) {
@@ -291,6 +291,10 @@ std::string Match::get_match_name() {
 void Match::send_cancel_match_flag() {
     for (auto& player : this->players)
         player.second.send(CANCEL_MATCH_FLAG);
+}
+
+void Match::change_map(std::string  new_map) {
+    this->race.change_map(std::move(new_map));
 }
 
 
