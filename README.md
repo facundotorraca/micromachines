@@ -1,7 +1,8 @@
 # Micromachines
 
-Micromachines es un juego online de carreras. Por un lado se debe levantar el servidor y por el otro se ejecutan
-tantos clientes como jugadores.
+Micromachines es un juego multijugador de carreras. 
+Cada jugador juega en su propio cliente, conectado a un servidor general generado por alguno de los otros jugadores. 
+El cliente y el servidor son entidades separadas. 
 
 ## Documentacion
 
