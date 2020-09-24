@@ -6,11 +6,11 @@ El cliente y el servidor son entidades separadas.
 
 ## Documentacion
 
-[Manual de Usuario](https://github.com/facutorraca/Micromachines/blob/master/Micromachines_Manual_de_Usuario.pdf)
+[Manual de Usuario](https://github.com/facutorraca/Micromachines/blob/master/manuals/Micromachines_Manual_de_Usuario.pdf)
 
-[Manual Técnico](https://github.com/facutorraca/Micromachines/blob/master/Micromachines_Manual_Tecnico.pdf)
+[Manual Técnico](https://github.com/facutorraca/Micromachines/blob/master/manuals/Micromachines_Manual_Tecnico.pdf)
 
-[Manual de Proyecto](https://github.com/facutorraca/Micromachines/blob/master/Micromachines_Manual_de_Proyecto.pdf)
+[Manual de Proyecto](https://github.com/facutorraca/Micromachines/blob/master/manuals/Micromachines_Manual_de_Proyecto.pdf)
 
 
 
